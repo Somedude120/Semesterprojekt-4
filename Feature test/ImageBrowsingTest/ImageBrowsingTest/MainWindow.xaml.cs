@@ -28,6 +28,7 @@ namespace ImageBrowsingTest
 
         private void browseButton_Click(object sender, RoutedEventArgs e)
         {
+	    //Code taken from: http://csharphelper.com/blog/2015/07/load-an-image-at-runtime-in-wpf-and-c/
             var ofdPicture = new OpenFileDialog();
             ofdPicture.Filter = "Image files|*.bmp;*.jpg;*.gif;*.png;*.tif|All files|*.*";
             ofdPicture.FilterIndex = 1;
