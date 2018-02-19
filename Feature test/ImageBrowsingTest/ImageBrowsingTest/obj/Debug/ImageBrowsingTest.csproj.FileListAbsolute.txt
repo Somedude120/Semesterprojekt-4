@@ -13,3 +13,18 @@ D:\Users\Martin\Dropbox\IKT\4.Semester\ImageBrowsingTest\ImageBrowsingTest\obj\D
 D:\Users\Martin\Dropbox\IKT\4.Semester\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest.csproj.CoreCompileInputs.cache
 D:\Users\Martin\Dropbox\IKT\4.Semester\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest.exe
 D:\Users\Martin\Dropbox\IKT\4.Semester\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest.pdb
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\bin\Debug\ImageBrowsingTest.exe.config
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\bin\Debug\ImageBrowsingTest.exe
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\bin\Debug\ImageBrowsingTest.pdb
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest.csprojResolveAssemblyReference.cache
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\MainWindow.g.cs
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\App.g.cs
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest_MarkupCompile.cache
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest_MarkupCompile.lref
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\MainWindow.baml
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest.g.resources
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest.Properties.Resources.resources
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest.csproj.GenerateResource.Cache
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest.csproj.CoreCompileInputs.cache
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest.exe
+D:\Users\Martin\Dropbox\IKT\4.Semester\PROJ4\Semesterprojekt-4\Feature test\ImageBrowsingTest\ImageBrowsingTest\obj\Debug\ImageBrowsingTest.pdb

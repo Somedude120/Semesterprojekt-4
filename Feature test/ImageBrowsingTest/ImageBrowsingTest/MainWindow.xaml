@@ -5,9 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageBrowsingTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="400" Width="700">
     <Grid>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="158,71,0,0" VerticalAlignment="Top" Width="200"/>
-        <Button x:Name="browseButton" Content="Browse" HorizontalAlignment="Left" Margin="223,199,0,0" VerticalAlignment="Top" Width="75" Click="browseButton_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Column="1" Grid.Row="1" x:Name="image" MinHeight="100" MaxWidth="400"/>
+        <Button Grid.Column="1" Grid.Row="2" x:Name="browseButton" Content="Browse" Margin="0,10" Width="Auto" VerticalAlignment="Top" Click="browseButton_Click"/>
     </Grid>
 </Window>
