@@ -32,7 +32,7 @@ namespace Client
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             msg("Client Started");
-            clientSocket.Connect("Localhost", 8888);
+            clientSocket.Connect("localhost", 8888);
             msg("Client connected");
         }
 
