@@ -44,8 +44,9 @@ namespace Client
             serverStream.Flush();
 
             var inStream = new byte[10025];
-            serverStream.Read(inStream, 0, (int)clientSocket.ReceiveBufferSize);
+            serverStream.Read(inStream, 0, inStream.Length);
             var returnData = System.Text.Encoding.ASCII.GetString(inStream);
+            returnData = returnData.Substring(0, returnData.IndexOf("$"));
             msg(returnData);
         }
 
