@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using NAudio.Wave;
 using NAudio.Mixer;
 
+//Implementation is taken from: https://stackoverflow.com/questions/17982468/naudio-record-sound-from-microphone-then-save , by user Corey
+
 namespace MicrophoneInput
 {
     /// <summary>
