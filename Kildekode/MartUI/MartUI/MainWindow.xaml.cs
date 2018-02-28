@@ -36,10 +36,7 @@ namespace MartUI
             {
                 if(Maximized == true)
                 {
-                    this.Left = PrevLeft;
-                    this.Top = PrevTop;
-                    this.Width = PrevWidth;
-                    this.Height = PrevHeight;
+                    ExpandApplication(sender, e);
                     Point Position = Mouse.GetPosition(TitleBar);
                     this.Left = Position.X - 7 - Width/2;
                     this.Top = Position.Y - 10;
