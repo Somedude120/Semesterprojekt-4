@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MartUI" Height="600" Width="1000" MinHeight="600" MinWidth="1000" x:Name="MartUI" 
         AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" 
-        BorderThickness="0" >
+        BorderThickness="0" SizeChanged="MainWindow_SizeChanged" WindowChrome.IsHitTestVisibleInChrome="True">
     
     <Window.Resources>
         <BitmapImage  x:Key="ExitNormal"  UriSource="MartUI_Resources/exit_normal.png"/>
@@ -30,7 +30,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Height="18" Width="Auto" Background="#600000" Grid.ColumnSpan="4" MouseDown="MoveWindow">
+        <Grid Grid.Row="0" Height="18" Width="Auto" Background="#600000" Grid.ColumnSpan="4" MouseDown="MoveWindow" Name="TitleBar">
             <Button Width="24" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" 
                     Click="ExitApplication">
                 <Image Source="{StaticResource ExitNormal}"/>

@@ -22,7 +22,6 @@ namespace MartUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private WindowState PrevState { get; set; }
         private bool Maximized;
         private double PrevLeft, PrevTop, PrevWidth, PrevHeight;
 
@@ -31,10 +30,39 @@ namespace MartUI
             InitializeComponent();
         }
 
-        public void MoveWindow(object sender, MouseButtonEventArgs e)
+        private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if(Maximized == true)
+                {
+                    this.Left = PrevLeft;
+                    this.Top = PrevTop;
+                    this.Width = PrevWidth;
+                    this.Height = PrevHeight;
+                    Point Position = Mouse.GetPosition(TitleBar);
+                    this.Left = Position.X - 7 - Width/2;
+                    this.Top = Position.Y - 10;
+                }
+            }
                 this.DragMove();
+        }
+
+        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                PrevLeft = this.Left;
+                PrevTop = this.Top;
+                PrevWidth = this.Width;
+                PrevHeight = this.Height;
+                this.Width = SystemParameters.WorkArea.Width;
+                this.Height = SystemParameters.WorkArea.Height;
+                this.Top = SystemParameters.WorkArea.Top;
+                this.Left = SystemParameters.WorkArea.Left;
+                Maximized = true;
+            }
         }
 
         private void ExitApplication(object sender, RoutedEventArgs e)
