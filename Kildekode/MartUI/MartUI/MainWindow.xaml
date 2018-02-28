@@ -8,7 +8,7 @@
         Title="MartUI" Height="600" Width="1000" MinHeight="600" MinWidth="1000" x:Name="MartUI" 
         AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" 
         BorderThickness="0" SizeChanged="MainWindow_SizeChanged" WindowChrome.IsHitTestVisibleInChrome="True">
-    
+
     <Window.Resources>
         <BitmapImage  x:Key="ExitNormal"  UriSource="MartUI_Resources/exit_normal.png"/>
         <BitmapImage  x:Key="ExitHover"  UriSource="MartUI_Resources/exit_hover.png"/>
@@ -32,16 +32,16 @@
 
         <Grid Grid.Row="0" Height="18" Width="Auto" Background="#600000" Grid.ColumnSpan="4" MouseDown="MoveWindow" Name="TitleBar">
             <Button Width="24" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" 
-                    Click="ExitApplication">
-                <Image Source="{StaticResource ExitNormal}"/>
+                    Click="ExitApplication" MouseEnter="ExitHover" MouseLeave="ExitNormal" Name="ExitBtn" Style="{StaticResource NoButtonHighlight}">
+                <Image Source="{StaticResource ExitNormal}" Name="ExitImage"/>
             </Button>
             <Button Width="24" HorizontalAlignment="Right" Margin="0,0,24,0" Background="Transparent" BorderBrush="Transparent" 
-                    Click="ExpandApplication">
-                <Image Source="{StaticResource ExpandNormal}"/>
+                    Click="ExpandApplication" MouseEnter="ExpandHover" MouseLeave="ExpandNormal" Name="ExpandBtn" Style="{StaticResource NoButtonHighlight}">
+                <Image Source="{StaticResource ExpandNormal}" Name="ExpandImage"/>
             </Button>
             <Button Width="24" HorizontalAlignment="Right" Margin="0,0,48,0" Background="Transparent" BorderBrush="Transparent" 
-                    Click="MinimizeApplication">
-                <Image Source="{StaticResource MinimizeNormal}"/>
+                    Click="MinimizeApplication" MouseEnter="MinimizeHover" MouseLeave="MinimizeNormal" Name="MinimizeBtn" Style="{StaticResource NoButtonHighlight}">
+                <Image Source="{StaticResource MinimizeNormal}" Name="MinimizeImage"/>
             </Button>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1" Background="#600000" Width="Auto">
