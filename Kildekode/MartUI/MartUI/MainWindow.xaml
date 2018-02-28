@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MartUI"
         mc:Ignorable="d"
-        Title="MartUI" Height="600" Width="1000" MinHeight="600" MinWidth="1000" x:Name="MartUI" AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip">
+        Title="MartUI" Height="600" Width="1000" MinHeight="600" MinWidth="1000" x:Name="MartUI" 
+        AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" 
+        BorderThickness="0" >
     
     <Window.Resources>
         <BitmapImage  x:Key="ExitNormal"  UriSource="MartUI_Resources/exit_normal.png"/>
@@ -28,14 +30,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Height="18" Width="Auto" Background="#600000" Grid.ColumnSpan="4">
-            <Button Width="24" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" >
+        <Grid Grid.Row="0" Height="18" Width="Auto" Background="#600000" Grid.ColumnSpan="4" MouseDown="MoveWindow">
+            <Button Width="24" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" 
+                    Click="ExitApplication">
                 <Image Source="{StaticResource ExitNormal}"/>
             </Button>
-            <Button Width="24" HorizontalAlignment="Right" Margin="0,0,24,0" Background="Transparent" BorderBrush="Transparent" >
+            <Button Width="24" HorizontalAlignment="Right" Margin="0,0,24,0" Background="Transparent" BorderBrush="Transparent" 
+                    Click="ExpandApplication">
                 <Image Source="{StaticResource ExpandNormal}"/>
             </Button>
-            <Button Width="24" HorizontalAlignment="Right" Margin="0,0,48,0" Background="Transparent" BorderBrush="Transparent" >
+            <Button Width="24" HorizontalAlignment="Right" Margin="0,0,48,0" Background="Transparent" BorderBrush="Transparent" 
+                    Click="MinimizeApplication">
                 <Image Source="{StaticResource MinimizeNormal}"/>
             </Button>
         </Grid>
