@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MartUI"
         mc:Ignorable="d"
         Title="MartUI" Height="600" Width="1000" MinHeight="600" MinWidth="1000" x:Name="MartUI" 
-        AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" 
+        AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResize" 
         BorderThickness="0" SizeChanged="MainWindow_SizeChanged" WindowChrome.IsHitTestVisibleInChrome="True">
 
     <Window.Resources>
