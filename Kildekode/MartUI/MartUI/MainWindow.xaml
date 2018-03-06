@@ -6,8 +6,14 @@
         xmlns:local="clr-namespace:MartUI"
         mc:Ignorable="d"
         Title="MartUI" Height="600" Width="1000" MinHeight="600" MinWidth="1000" x:Name="MartUI" 
-        AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResize" 
-        BorderThickness="0" SizeChanged="MainWindow_SizeChanged" WindowChrome.IsHitTestVisibleInChrome="True">
+        WindowStyle="None" ResizeMode="CanResize" 
+        BorderThickness="0" SizeChanged="MainWindow_SizeChanged">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            CaptionHeight="0"
+            ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome> 
 
     <Window.Resources>
         <BitmapImage  x:Key="ExitNormal"  UriSource="MartUI_Resources/exit_normal.png"/>
@@ -16,6 +22,7 @@
         <BitmapImage  x:Key="ExpandHover"  UriSource="MartUI_Resources/expand_hover.png"/>
         <BitmapImage  x:Key="MinimizeNormal"  UriSource="MartUI_Resources/minimize_normal.png"/>
         <BitmapImage  x:Key="MinimizeHover"  UriSource="MartUI_Resources/minimize_hover.png"/>
+        <BitmapImage  x:Key="SettingsNormal"  UriSource="MartUI_Resources/settings_normal_option3.png"/>
     </Window.Resources>
 
     <Grid>
@@ -42,6 +49,10 @@
             <Button Width="24" HorizontalAlignment="Right" Margin="0,0,48,0" Background="Transparent" BorderBrush="Transparent" 
                     Click="MinimizeApplication" MouseEnter="MinimizeHover" MouseLeave="MinimizeNormal" Name="MinimizeBtn" Style="{StaticResource NoButtonHighlight}">
                 <Image Source="{StaticResource MinimizeNormal}" Name="MinimizeImage"/>
+            </Button>
+            <Button Width="24" HorizontalAlignment="Right" Margin="0,0,72,0" Background="Transparent" BorderBrush="Transparent" 
+                    Name="SettingsBtn" Style="{StaticResource NoButtonHighlight}">
+                <Image Source="{StaticResource SettingsNormal}" Name ="SettingsImage"/>
             </Button>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1" Background="#600000" Width="Auto">

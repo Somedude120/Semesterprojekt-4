@@ -36,10 +36,10 @@ namespace MartUI
             {
                 if(Maximized == true)
                 {
-                    ExpandApplication(sender, e);
-                    Point Position = Mouse.GetPosition(TitleBar);
-                    this.Left = Position.X - 7 - Width/2;
-                    this.Top = Position.Y - 10;
+                        ExpandApplication(sender, e);
+                        Point Position = Mouse.GetPosition(TitleBar);
+                        this.Left = Position.X - 7 - Width / 2;
+                        this.Top = Position.Y - 10;
                 }
             }
                 this.DragMove();

@@ -111,5 +111,10 @@
     <Resource Include="MartUI_Resources\minimize_hover.png" />
     <Resource Include="MartUI_Resources\minimize_normal.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MartUI_Resources\settings_normal_option1.png" />
+    <Resource Include="MartUI_Resources\settings_normal_option2.png" />
+    <Resource Include="MartUI_Resources\settings_normal_option3.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
