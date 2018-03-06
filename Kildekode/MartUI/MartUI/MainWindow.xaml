@@ -37,7 +37,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Height="18" Width="Auto" Background="#600000" Grid.ColumnSpan="4" MouseDown="MoveWindow" Name="TitleBar">
+        <Grid Grid.Row="0" Height="18" Width="Auto" Background="#202225" Grid.ColumnSpan="4" MouseDown="MoveWindow" Name="TitleBar">
             <Button Width="24" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" 
                     Click="ExitApplication" MouseEnter="ExitHover" MouseLeave="ExitNormal" Name="ExitBtn" Style="{StaticResource NoButtonHighlight}">
                 <Image Source="{StaticResource ExitNormal}" Name="ExitImage"/>
@@ -55,20 +55,13 @@
                 <Image Source="{StaticResource SettingsNormal}" Name ="SettingsImage"/>
             </Button>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="1" Background="#600000" Width="Auto">
+        <Grid Grid.Column="1" Grid.Row="1" Background="#202225" Width="Auto">
 
         </Grid>
-        <Grid Grid.Column="2" Grid.Row="1" Background="#900000" Width="Auto" >
+        <Grid Grid.Column="2" Grid.Row="1" Background="#2f3136" Width="Auto" >
 
         </Grid>
-        <Grid Grid.Column="3" Grid.Row="1">
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
-                    <GradientStop Color="#A00000" Offset="0"/>
-                    <GradientStop Color="#C00000" Offset="0.4"></GradientStop>
-                    <GradientStop Color="#E00000" Offset="0.7"/>
-                </LinearGradientBrush>
-            </Grid.Background>
+        <Grid Grid.Column="3" Grid.Row="1" Background="#36393e">
         </Grid>
     </Grid>
 </Window>
