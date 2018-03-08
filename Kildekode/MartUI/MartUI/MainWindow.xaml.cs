@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using MahApps.Metro.Controls;
 
 namespace MartUI
 {
@@ -60,36 +61,6 @@ namespace MartUI
                 this.Left = SystemParameters.WorkArea.Left;
                 Maximized = true;
             }
-        }
-
-        private void ExitHover(object sender, MouseEventArgs e)
-        {
-            ExitImage.Source = (BitmapImage)this.Resources["ExitHover"];
-        }
-
-        private void ExitNormal(object sender, MouseEventArgs e)
-        {
-            ExitImage.Source = (BitmapImage)this.Resources["ExitNormal"];
-        }
-
-        private void ExpandHover(object sender, MouseEventArgs e)
-        {
-            ExpandImage.Source = (BitmapImage)this.Resources["ExpandHover"];
-        }
-
-        private void ExpandNormal(object sender, MouseEventArgs e)
-        {
-            ExpandImage.Source = (BitmapImage)this.Resources["ExpandNormal"];
-        }
-
-        private void MinimizeHover(object sender, MouseEventArgs e)
-        {
-            MinimizeImage.Source = (BitmapImage)this.Resources["MinimizeHover"];
-        }
-
-        private void MinimizeNormal(object sender, MouseEventArgs e)
-        {
-            MinimizeImage.Source = (BitmapImage)this.Resources["MinimizeNormal"];
         }
 
         private void ExitApplication(object sender, RoutedEventArgs e)

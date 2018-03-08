@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:MartUI"
         mc:Ignorable="d"
         Title="MartUI" Height="600" Width="1000" MinHeight="600" MinWidth="1000" x:Name="MartUI" 
-        WindowStyle="None" ResizeMode="CanResize" 
+        WindowStyle="None" ResizeMode="CanResize"
         BorderThickness="0" SizeChanged="MainWindow_SizeChanged">
 
     <WindowChrome.WindowChrome>
@@ -14,16 +15,6 @@
             CaptionHeight="0"
             ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome> 
-
-    <Window.Resources>
-        <BitmapImage  x:Key="ExitNormal"  UriSource="MartUI_Resources/exit_normal.png"/>
-        <BitmapImage  x:Key="ExitHover"  UriSource="MartUI_Resources/exit_hover.png"/>
-        <BitmapImage  x:Key="ExpandNormal"  UriSource="MartUI_Resources/expand_normal.png"/>
-        <BitmapImage  x:Key="ExpandHover"  UriSource="MartUI_Resources/expand_hover.png"/>
-        <BitmapImage  x:Key="MinimizeNormal"  UriSource="MartUI_Resources/minimize_normal.png"/>
-        <BitmapImage  x:Key="MinimizeHover"  UriSource="MartUI_Resources/minimize_hover.png"/>
-        <BitmapImage  x:Key="SettingsNormal"  UriSource="MartUI_Resources/settings_normal_option3.png"/>
-    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,28 +29,34 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Height="18" Width="Auto" Background="#202225" Grid.ColumnSpan="4" MouseDown="MoveWindow" Name="TitleBar">
-            <Button Width="24" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" 
-                    Click="ExitApplication" MouseEnter="ExitHover" MouseLeave="ExitNormal" Name="ExitBtn" Style="{StaticResource NoButtonHighlight}">
-                <Image Source="{StaticResource ExitNormal}" Name="ExitImage"/>
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,2,0" Background="White" BorderBrush="Transparent" Height="16"
+                    Click="ExitApplication"  Name="ExitBtn" Style="{StaticResource NoButtonHighlight}">
+                <Button.OpacityMask>
+                    <VisualBrush Visual="{iconPacks:Material Close}"/>
+                </Button.OpacityMask>
             </Button>
-            <Button Width="24" HorizontalAlignment="Right" Margin="0,0,24,0" Background="Transparent" BorderBrush="Transparent" 
-                    Click="ExpandApplication" MouseEnter="ExpandHover" MouseLeave="ExpandNormal" Name="ExpandBtn" Style="{StaticResource NoButtonHighlight}">
-                <Image Source="{StaticResource ExpandNormal}" Name="ExpandImage"/>
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,24,0" Background="White" BorderBrush="Transparent"  Height="16" 
+                    Click="ExpandApplication"  Name="ExpandBtn" Style="{StaticResource NoButtonHighlight}">
+                <Button.OpacityMask>
+                    <VisualBrush Visual="{iconPacks:Material WindowMaximize}"/>
+                </Button.OpacityMask>
             </Button>
-            <Button Width="24" HorizontalAlignment="Right" Margin="0,0,48,0" Background="Transparent" BorderBrush="Transparent" 
-                    Click="MinimizeApplication" MouseEnter="MinimizeHover" MouseLeave="MinimizeNormal" Name="MinimizeBtn" Style="{StaticResource NoButtonHighlight}">
-                <Image Source="{StaticResource MinimizeNormal}" Name="MinimizeImage"/>
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,48,0" Background="White" BorderBrush="Transparent" Height="2"
+                    Click="MinimizeApplication" Name="MinimizeBtn" Style="{StaticResource NoButtonHighlight}">
+                <Button.OpacityMask>
+                    <VisualBrush Visual="{iconPacks:Material WindowMinimize}"/>
+                </Button.OpacityMask>
             </Button>
-            <Button Width="24" HorizontalAlignment="Right" Margin="0,0,72,0" Background="Transparent" BorderBrush="Transparent" 
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,72,0" Background="White" BorderBrush="Transparent" Height="16"
                     Name="SettingsBtn" Style="{StaticResource NoButtonHighlight}">
-                <Image Source="{StaticResource SettingsNormal}" Name ="SettingsImage"/>
+                <Button.OpacityMask>
+                    <VisualBrush Visual="{iconPacks:Modern Settings}"/>
+                </Button.OpacityMask>
             </Button>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1" Background="#202225" Width="Auto">
-
         </Grid>
         <Grid Grid.Column="2" Grid.Row="1" Background="#2f3136" Width="Auto" >
-
         </Grid>
         <Grid Grid.Column="3" Grid.Row="1" Background="#36393e">
         </Grid>

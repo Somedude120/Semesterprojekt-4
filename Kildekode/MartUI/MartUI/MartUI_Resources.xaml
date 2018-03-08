@@ -30,7 +30,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Opacity" Value="0.9" />
+                            <Setter Property="Opacity" Value="0.6"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
