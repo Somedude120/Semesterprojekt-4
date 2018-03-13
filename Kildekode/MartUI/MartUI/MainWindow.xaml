@@ -43,12 +43,12 @@
             </Button>
             <Button Width="16" HorizontalAlignment="Right" Margin="0,0,48,0" Background="White" BorderBrush="Transparent" Height="2"
                     Click="MinimizeApplication" Name="MinimizeBtn" Style="{StaticResource NoButtonHighlight}">
-                <Button.OpacityMask>
+                <Button.OpacityMask >
                     <VisualBrush Visual="{iconPacks:Material WindowMinimize}"/>
                 </Button.OpacityMask>
             </Button>
             <Button Width="16" HorizontalAlignment="Right" Margin="0,0,72,0" Background="White" BorderBrush="Transparent" Height="16"
-                    Name="SettingsBtn" Style="{StaticResource NoButtonHighlight}">
+                    Name="SettingsBtn" Click="OpenSettings" Style="{StaticResource NoButtonHighlight}">
                 <Button.OpacityMask>
                     <VisualBrush Visual="{iconPacks:Modern Settings}"/>
                 </Button.OpacityMask>

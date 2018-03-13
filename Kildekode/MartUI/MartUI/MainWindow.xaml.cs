@@ -96,5 +96,10 @@ namespace MartUI
                 Maximized = true;
             }
         }
+
+        private void OpenSettings(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
