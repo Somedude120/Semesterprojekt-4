@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1134</x>
+      <y>522</y>
+      <w>495</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Class&gt;&gt;
+_sendFile_
+--
+private:
+
+-
+public:
++ sendMsg(NetworkStream filename, long fileSize, NetworkStream io) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>639</y>
+      <w>414</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Class&gt;&gt;
+_sendMsg_
+--
+private:
+
+-
+public
++ sendMsg(NetworkStream listener, string msg) : void </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>765</x>
+      <y>0</y>
+      <w>243</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Class&gt;&gt;
+_Server_
+--
+private:
+
+-
+public:
++ startup : bool
++ updateStatus : bool
++ PORT_ (int) : int
++ IP_(int) : int
++ threads_ : pthread</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>288</x>
+      <y>468</y>
+      <w>27</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1215</x>
+      <y>405</y>
+      <w>108</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>486</x>
+      <y>639</y>
+      <w>414</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Class&gt;&gt;
+_recMsg_
+--
+private:
+
+-
+public
++ recMsg(NetworkStream listener, string msg) : void </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>342</x>
+      <y>468</y>
+      <w>324</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;340.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>90</x>
+      <y>342</y>
+      <w>414</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Class&gt;&gt;
+_Imsg_
+--
+private:
+
+-
+public
++ sendMsg(NetworkStream listener, string msg) : void </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>297</x>
+      <y>207</y>
+      <w>603</w>
+      <h>153</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>650.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>954</x>
+      <y>279</y>
+      <w>495</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Class&gt;&gt;
+_Ifile_
+--
+private:
+
+-
+public:
++ sendMsg(NetworkStream filename, long fileSize, NetworkStream io) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>873</x>
+      <y>207</y>
+      <w>342</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;360.0;80.0</additional_attributes>
+  </element>
+</diagram>
