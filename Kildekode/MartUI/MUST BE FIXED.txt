@@ -6,6 +6,10 @@ FIXES:
 
 NOTE OMKRING MAXIMIZE: Går i fullscreen, siden Win07, fixed ved at gemme position konstant..
 
+
+Omkring MVVM:
+Bruge Microsofts PRISM NotificationObject eller MVVM Lights ViewModelBase i stedet for at lave ObservableObject klassen
+
 EKSTRA:
 
 - Group chat
