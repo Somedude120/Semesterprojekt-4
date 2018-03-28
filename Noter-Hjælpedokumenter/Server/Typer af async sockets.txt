@@ -1,0 +1,9 @@
+There are three ways to communicate with sockets in async way:
+
+1: Open regular socket, but do not read from it (because read() blocks) until you know there it something to be read. You can use select() or poll() to check whether there are data to read from socket(s), and if there is something, read it, as read() won't block.
+
+2: Switch socket to non-blocking I/O, by setting O_NONBLOCK flag with fcntl() function. In this case read() won't block.
+
+3: Set socket's O_ASYNC flag using FIOASYNC option of ioctl() (see man 7 socket for details). In this case you will receive SIGIO signal when there is something to read from socket.
+
+Third approach is async socket.
