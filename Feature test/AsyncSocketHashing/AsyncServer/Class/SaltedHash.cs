@@ -11,8 +11,10 @@ namespace AsyncServer.Class
         public SaltedHash(string password)
         {
             var saltBytes = new byte[32];
+            //Denne her randomizer min saltbytes
             using (var provider = new RNGCryptoServiceProvider())
                 provider.GetNonZeroBytes(saltBytes);
+            //Output Salt og Hash
             Salt = Convert.ToBase64String(saltBytes);
             Hash = ComputeHash(Salt, password);
         }
