@@ -46,7 +46,6 @@
                 </Button.OpacityMask>
             </Button>
         </Grid>
-
         <Grid Grid.Row="1" Background="#36393e" />
         <Grid Grid.Row="1" >
             <ContentControl>
