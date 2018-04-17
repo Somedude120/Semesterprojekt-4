@@ -41,10 +41,10 @@
                     <VisualBrush Visual="{iconPacks:Material WindowMaximize}"/>
                 </Button.OpacityMask>
             </Button>
-            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,48,0" Background="White" BorderBrush="Transparent" Height="2"
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,48,0" Background="White" BorderBrush="Transparent" Height="16"
                     Click="MinimizeApplication" Name="MinimizeBtn" Style="{StaticResource NoButtonHighlight}">
-                <Button.OpacityMask >
-                    <VisualBrush Visual="{iconPacks:Material WindowMinimize}"/>
+                <Button.OpacityMask>
+                    <VisualBrush Visual="{iconPacks:Material WindowMinimize, Height=2}"/>
                 </Button.OpacityMask>
             </Button>
             <Button Width="16" HorizontalAlignment="Right" Margin="0,0,72,0" Background="White" BorderBrush="Transparent" Height="16"
