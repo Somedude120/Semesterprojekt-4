@@ -14,35 +14,38 @@ namespace MartUI.Friend
     {
         public string ReferenceName
         {
-            get { return "Friend"; }
+            get { return "FriendViewModel"; }
         }
 
-        private List<FriendModel> _friendList;
-        private FriendModel _selectedFriend;
+        private List<IFriendModel> _friendList;
+        private IFriendModel _selectedFriend;
         private ICommand _changeFriend;
 
         public FriendViewModel()
         {
-            for (int i = 0; i < 21; i++)
+            for (int i = 0; i < 41; i++)
             {
                 var friend = new FriendModel();
-                friend.UserName = "friend" + i.ToString();
+                friend.UserName = "Friend" + i.ToString();
                 friend.UserID = (100 + i).ToString();
                 FriendList.Add(friend);
             }
+
+            //Tilføj eventuelt et eller andet som første plads i arrayet
+            //Skal bruge metode fra server/database til at få en liste af alle ens venner
         }
 
-        public List<FriendModel> FriendList
+        public List<IFriendModel> FriendList
         {
             get
             {
                 if (_friendList == null)
-                    _friendList = new List<FriendModel>();
+                    _friendList = new List<IFriendModel>();
                 return _friendList;
             }
         }
 
-        public FriendModel SelectedFriend
+        public IFriendModel SelectedFriend
         {
             get { return _selectedFriend; }
             set
@@ -55,7 +58,7 @@ namespace MartUI.Friend
             }
         }
 
-        private void ChangeSelectedFriend(FriendModel friend)
+        private void ChangeSelectedFriend(IFriendModel friend)
         {
             if(!FriendList.Contains(friend))
                 FriendList.Add(friend);
@@ -68,19 +71,21 @@ namespace MartUI.Friend
             {
                 if (_changeFriend == null)
                 {
-                    _changeFriend = new DelegateCommand<FriendModel>(f => ChangeSelectedFriend((FriendModel)f), f => f is FriendModel);
+                    _changeFriend = new DelegateCommand<IFriendModel>(f => ChangeSelectedFriend((IFriendModel)f), f => f is IFriendModel);
                 }
 
                 return _changeFriend;
             }
         }
 
-        public void AddFriend(FriendModel friend)
+        public void AddFriend(IFriendModel friend)
         {
             if (!FriendList.Contains(friend))
                 FriendList.Add(friend);
             else
-                MessageBox.Show(friend.UserName + " is already on your friendlist!");
+                MessageBox.Show("This user is already on your friendlist!");
+
+            //Skal kommunikere med database/server
         }
 
         public void RemoveFriend(FriendModel friend)
@@ -88,7 +93,9 @@ namespace MartUI.Friend
             if (FriendList.Contains(friend))
                 FriendList.Remove(friend);
             else
-                MessageBox.Show(friend.UserName + " is not on your friendlist!");
+                MessageBox.Show("This user is not on your friendlist!");
+
+            //Skal kommunikere med database/server
         }
     }
 }

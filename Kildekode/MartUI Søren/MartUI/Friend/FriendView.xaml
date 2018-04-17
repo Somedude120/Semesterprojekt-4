@@ -22,9 +22,10 @@
                                 <Button Content="{Binding UserName}"
                                         Command="{Binding DataContext.ChangeFriend, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                         CommandParameter="{Binding }"
-                                        Margin="2,5" Style="{StaticResource NoButtonHighlight}"/>
-                                        
-                            </DataTemplate>
+                                        Margin="0,3" Width="185" Height="20"
+                                        Style="{StaticResource RoundCorner}">
+                                </Button>
+                        </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
             </ScrollViewer>

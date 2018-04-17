@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace MartUI.Friend
 {
-    public class FriendModel
+    public class FriendModel : IFriendModel
     {
+        public string ReferenceName { get { return "FriendModel"; } }
+
         private string _userID;
         private string _userName;
 
