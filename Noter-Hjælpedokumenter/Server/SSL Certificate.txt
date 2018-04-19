@@ -27,6 +27,8 @@ Du har nu en .cer certificate fil. Denne kan indlæses i Visual Studio med filsti
 
 Guide til at få IIS Manager:
 
+Guide kan findes her: (http://thesolving.com/server-room/how-to-install-iis-8-on-windows-8-1-and-test-your-website/)
+
 1: Gå til Control panel -> Programs -> Add functionality to windows.
 
 2: Tilføj "Internet Information Services" og tryk OK.
