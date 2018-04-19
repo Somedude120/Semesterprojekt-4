@@ -7,3 +7,6 @@ There are three ways to communicate with sockets in async way:
 3: Set socket's O_ASYNC flag using FIOASYNC option of ioctl() (see man 7 socket for details). In this case you will receive SIGIO signal when there is something to read from socket.
 
 Third approach is async socket.
+
+Kilder:
+https://stackoverflow.com/questions/2331869/what-are-async-sockets
