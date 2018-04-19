@@ -27,11 +27,11 @@ Du har nu en .cer certificate fil. Denne kan indlæses i Visual Studio med filsti
 
 Guide til at få IIS Manager:
 
-1: Gå til Controle panel -> Programs -> Add functionality to windows.
+1: Gå til Control panel -> Programs -> Add functionality to windows.
 
 2: Tilføj "Internet Information Services" og tryk OK.
 
-3: Gå til Controle Panel -> System and security -> Administration.
+3: Gå til Control Panel -> System and security -> Administration.
 
 4: Dobbeltklik "Internet Information Services (IIS) Manager".
 
