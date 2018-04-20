@@ -7,6 +7,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using System.IO.Ports;
 
 //Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
@@ -21,6 +22,7 @@ namespace Examples.System.Net
         {
             serverCertificate = X509Certificate.CreateFromCertFile(certificate);
             // Create a TCP/IP (IPv4) socket and listen for incoming connections.
+            //TcpListener listener = new TcpListener(IPAddress.Any, 8090);
             TcpListener listener = new TcpListener(IPAddress.Any, 443);
             listener.Start();
             while (true)
@@ -29,6 +31,9 @@ namespace Examples.System.Net
                 // Application blocks while waiting for an incoming connection.
                 // Type CNTL-C to terminate the server.
                 TcpClient client = listener.AcceptTcpClient();
+                Console.WriteLine(((IPEndPoint)listener.LocalEndpoint).Address);
+                Console.WriteLine(((IPEndPoint)client.Client.RemoteEndPoint).Port);
+                Console.WriteLine(((IPEndPoint)client.Client.RemoteEndPoint).Address);
                 ProcessClient(client);
             }
         }
@@ -61,6 +66,8 @@ namespace Examples.System.Net
                 byte[] message = Encoding.UTF8.GetBytes("Hello from the server.<EOF>");
                 Console.WriteLine("Sending hello message.");
                 sslStream.Write(message);
+
+                Console.WriteLine();
             }
             catch (AuthenticationException e)
             {
