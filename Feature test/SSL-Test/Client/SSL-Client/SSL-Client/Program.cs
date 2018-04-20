@@ -123,7 +123,7 @@ namespace Examples.System.Net
             //machineName = args[0];
             if (args.Length < 2)
             {
-                serverCertificateName = machineName;
+                //serverCertificateName = machineName;
             }
             else
             {
