@@ -31,9 +31,8 @@ namespace Examples.System.Net
                 // Application blocks while waiting for an incoming connection.
                 // Type CNTL-C to terminate the server.
                 TcpClient client = listener.AcceptTcpClient();
-                Console.WriteLine(((IPEndPoint)listener.LocalEndpoint).Address);
-                Console.WriteLine(((IPEndPoint)client.Client.RemoteEndPoint).Port);
-                Console.WriteLine(((IPEndPoint)client.Client.RemoteEndPoint).Address);
+                Console.WriteLine("Client IP:" + ((IPEndPoint)client.Client.RemoteEndPoint).Address);
+                Console.WriteLine("Client port:" + ((IPEndPoint)client.Client.RemoteEndPoint).Port);
                 ProcessClient(client);
             }
         }
@@ -64,7 +63,7 @@ namespace Examples.System.Net
                 Console.WriteLine("Received: {0}", messageData);
 
                 // Write a message to the client.
-                byte[] message = Encoding.UTF8.GetBytes("Hello from the server.<EOF>");
+                byte[] message = Encoding.UTF8.GetBytes("Access granted<EOF>");
                 Console.WriteLine("Sending hello message.");
                 stream.Write(message, 0, message.Length);
 
@@ -113,6 +112,7 @@ namespace Examples.System.Net
                 // Check for EOF or an empty message.
                 if (messageData.ToString().IndexOf("<EOF>") != -1)
                 {
+                    messageData.Remove(messageData.ToString().IndexOf("<EOF>"), 5);
                     break;
                 }
             } while (bytes != 0);
