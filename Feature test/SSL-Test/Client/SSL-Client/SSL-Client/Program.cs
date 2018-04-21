@@ -63,7 +63,8 @@ namespace Examples.System.Net
             }
             // Encode a test message into a byte array.
             // Signal the end of the message using the "<EOF>".
-            byte[] messsage = Encoding.UTF8.GetBytes("Hello from the client.<EOF>");
+            //byte[] messsage = Encoding.UTF8.GetBytes("Hello from the client.<EOF>");
+            byte[] messsage = Encoding.UTF8.GetBytes("l;UserName;PlaintextPassword<EOF>");
             // Send hello message to the server. 
             sslStream.Write(messsage);
             sslStream.Flush();
@@ -95,6 +96,7 @@ namespace Examples.System.Net
                 // Check for EOF.
                 if (messageData.ToString().IndexOf("<EOF>") != -1)
                 {
+                    messageData.Remove(messageData.ToString().IndexOf("<EOF>"), 5);
                     break;
                 }
             } while (bytes != 0);
