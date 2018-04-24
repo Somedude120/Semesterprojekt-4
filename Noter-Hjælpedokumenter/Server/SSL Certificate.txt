@@ -1,0 +1,40 @@
+Guide til at lave certificate:
+
+(Det meste står på denne side: https://www.sslshopper.com/article-how-to-create-a-self-signed-certificate-in-iis-7.html)
+
+1: Åben Internet Information Services (IIS) Manager. (Har du ikke dette så se guiden i dette dokument).
+
+2: Klik på Server/Computer navn, øverst til venstre. Dobbeltklik "Server Certificates".
+
+3: Tryk på "Create Self-Signed Certificate".
+
+4: Skriv navn på certificate og tryk OK.
+
+5: Under Servercertificates højreklik på det nye certificate og eksporter dette.
+
+6: Vælg destination og adgangskode (12345678 er brugt til test).
+
+Certificate er nu eksporteret som .pfx . Vi vil have det som .cer . Dette kommer nu.
+
+7: Under Servercertificates vælg "Import".
+
+8: Find .pfx filen og sikrer at "Exportable" er valgt. Tryk OK.
+
+9: Eksporter nu igen, men vælg .cer som filtype.
+
+Du har nu en .cer certificate fil. Denne kan indlæses i Visual Studio med filstien i en string hvor den skal bruges.
+
+
+Guide til at få IIS Manager:
+
+Guide kan findes her: (http://thesolving.com/server-room/how-to-install-iis-8-on-windows-8-1-and-test-your-website/)
+
+1: Gå til Control panel -> Programs -> Add functionality to windows.
+
+2: Tilføj "Internet Information Services" og tryk OK.
+
+3: Gå til Control Panel -> System and security -> Administration.
+
+4: Dobbeltklik "Internet Information Services (IIS) Manager".
+
+Du kan nu lave certificates.

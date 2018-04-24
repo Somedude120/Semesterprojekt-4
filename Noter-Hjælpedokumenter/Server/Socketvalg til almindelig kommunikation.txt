@@ -1,0 +1,31 @@
+Threads:
+Hver socket kører i sin egen tråd.
++Nemt
+-Context Switching
+-Langsomt
+-Mange resourcer
+-Dårlig skalering
+
+Select():
+En tråd og mange sockets. Select() finder en socket med ny klient eller ny data. read() eller write() bliver så kaldt, blockende.
++Ingen context switching
+-Blockende
+-Dårlig skalering
+
+Pseudo Eks:
+server = socket(), bind(), listen()
+while(run)
+   status = select(server)
+   if has new client
+       newclient = server.accept()
+       handle add client
+   if has new data
+       read and handle data
+
+Async:
+
+
+
+Kilder: 
+https://stackoverflow.com/questions/14974404/socket-programming-multiple-client-one-server
+https://stackoverflow.com/questions/2331869/what-are-async-sockets
