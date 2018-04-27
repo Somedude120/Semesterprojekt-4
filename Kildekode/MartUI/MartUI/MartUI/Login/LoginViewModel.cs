@@ -1,0 +1,80 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Navigation;
+using MartUI.Helpers;
+using MartUI.Main;
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace MartUI.Login
+{
+    public class
+        LoginViewModel : BindableBase, IViewModel // Using BindableBase from PRISM instead of INotifyPropertyChanged
+    {
+        public string ReferenceName => "Login";
+
+        private string _username;
+        private string _password;
+
+        public ICommand CreateUserCommand { get; set; }
+        public ICommand LoginCommand { get; set; }
+
+        private PersonModel _dataModel;
+        //private DatabaseDummy _database;
+
+        public string Username
+        {
+            get { return _username; }
+            set { SetProperty(ref _username, value); } // if username != value, notify
+        }
+
+        public string Password
+        {
+            get { return _password; }
+            set { SetProperty(ref _password, value); } // if username != value, notify
+        }
+
+        public LoginViewModel()
+        {
+            _dataModel = new PersonModel();
+            _username = _dataModel.Username;
+            _password = _dataModel.Password;
+
+            //_database = new DatabaseDummy();
+            //_database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
+            //_database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
+
+            //Delegates instead of the execute/cant execute
+            //Observes Username and Password to check CanExecute, call RaiseCanExecute
+            LoginCommand = new DelegateCommand(LoginExecute, LoginCanExecute).ObservesProperty(() => Username);
+            CreateUserCommand = new DelegateCommand(CreateUser);
+            // CanExecute behøver ikke være en metode men også en boolean property
+        }
+
+        private void CreateUser()
+        {
+            //MessageBox.Show("hej");
+            //_regionManager.RequestNavigate("MainRegion", "CreateUserView");
+
+            // NAVIGATE TO CREATE USER VIEW 
+        }
+
+        private bool LoginCanExecute()
+        {
+            // Username length  to be above 4 and pass above 5
+            return !String.IsNullOrWhiteSpace(Username) && Username.Length > 4;
+            //  && !String.IsNullOrWhiteSpace(Password) && Password.Length > 5
+        }
+
+        private void LoginExecute()
+        {
+            // Validate name and password with server
+            // Navigate to main window (friend list shows, etc).
+        }
+    }
+}
