@@ -7,17 +7,19 @@ public class Program
 {
     static public void Main(string[] Args)
     {
-        var clients = new Client[1000];
-        for (int i = 0; i < 100; i++)
-        {
-            clients[i] = new Client();
-            clients[i].MakeClient(i);
-        }
+        //var clients = new Client[1000];
+        //for (int i = 0; i < 100; i++)
+        //{
+        //    clients[i] = new Client();
+        //    clients[i].MakeClient(i);
+        //}
 
-        for (int i = 0; i < 100; i++)
-        {
-            clients[i].SendMessage($"{i}");
-        }
+        //for (int i = 0; i < 100; i++)
+        //{
+        //    clients[i].SendMessage($"{i}");
+        //}
+
+        var client = new Client();
 
         Console.ReadLine();
     }
