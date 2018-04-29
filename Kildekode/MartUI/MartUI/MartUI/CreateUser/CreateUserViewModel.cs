@@ -4,26 +4,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Navigation;
+using MartUI.Events;
 using MartUI.Helpers;
 using MartUI.Login;
 using MartUI.Main;
+using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 
 namespace MartUI.CreateUser
 {
     public class CreateUserViewModel : BindableBase, IViewModel
     {
+        private readonly IEventAggregator _eventAggregator;
         private DatabaseDummy _database;
+
+        private ICommand _backButton;
         public string ReferenceName => "CreateUser";
 
-        public CreateUserViewModel()
+        public CreateUserViewModel(IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _database = new DatabaseDummy();
 
             _database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
             _database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
 
         }
+
+        public ICommand BackButton
+        {
+            get
+            {
+                if (_backButton == null)
+                    _backButton = new DelegateCommand(() =>
+                        _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel(_eventAggregator)));
+                return _backButton;
+            }
+        }
+
+
         private void CreateNewUser()
         {
             string Username = "someName";

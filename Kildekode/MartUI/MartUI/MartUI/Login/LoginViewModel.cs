@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using MartUI.CreateUser;
+using MartUI.Events;
 using MartUI.Helpers;
 using MartUI.Main;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 
 namespace MartUI.Login
 {
     public class
         LoginViewModel : BindableBase, IViewModel // Using BindableBase from PRISM instead of INotifyPropertyChanged
     {
+        private readonly IEventAggregator _eventAggregator;
         public string ReferenceName => "Login";
 
         private string _username;
@@ -39,8 +44,10 @@ namespace MartUI.Login
             set { SetProperty(ref _password, value); } // if username != value, notify
         }
 
-        public LoginViewModel()
+        public LoginViewModel(IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
+
             _dataModel = new PersonModel();
             _username = _dataModel.Username;
             _password = _dataModel.Password;
@@ -58,6 +65,7 @@ namespace MartUI.Login
 
         private void CreateUser()
         {
+            _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel(_eventAggregator));
             //MessageBox.Show("hej");
             //_regionManager.RequestNavigate("MainRegion", "CreateUserView");
 

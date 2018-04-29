@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:MartUI.CreateUser"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid >
+
+    <Grid Margin="50" MaxWidth="500">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
@@ -24,32 +25,36 @@
         <TextBlock Grid.ColumnSpan="2"
                    Grid.Column="1"
                    Text="Create new profile"
-                   FontSize="20"/>
+                   FontSize="40"/>
         <TextBlock Grid.Column="0"
                    Grid.Row="1"
                    FontWeight="Bold" 
                    Foreground="Red" 
                    Text="*" 
                    VerticalAlignment="Center"
-                   Margin="0,0,10,0"/>
+                   Margin="0,0,10,0"
+                   FontSize="20"/>
         <TextBlock Grid.Column="1"
                    Grid.Row="1"
                    Text="Name"
                    VerticalAlignment="Center"
-                   HorizontalAlignment="Left"/>
+                   HorizontalAlignment="Left"
+                   FontSize="20"/>
         <TextBox Grid.Column="2"
                  Grid.Row="1"
-                 Margin="10"/>
+                 Margin="10" />
         <TextBlock Grid.Column="0"
                    Grid.Row="2"
                    FontWeight="Bold" 
                    Foreground="Red" 
                    Text="*" 
+                   FontSize="20"
                    VerticalAlignment="Center"
                    Margin="0,0,10,0"/>
         <TextBlock Grid.Column="1"
                    Grid.Row="2"
                    Text="Password"
+                   FontSize="20"
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
         <PasswordBox Grid.Column="2"
                  Grid.Row="2"
@@ -57,6 +62,7 @@
         <TextBlock Grid.Column="1"
                    Grid.Row="3"
                    Text="Tags"
+                   FontSize="20"
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
         <TextBox Grid.Column="2"
                      Grid.Row="3"
@@ -64,6 +70,7 @@
         <TextBlock Grid.Column="1"
                    Grid.Row="4"
                    Text="Picture"
+                   FontSize="20"
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
         <Button Grid.Column="2"
                Grid.Row="4"
@@ -72,17 +79,19 @@
         <Image Grid.Column="2"
                Grid.Row="4"
                Source="../Images/ProfilePicPlaceholder.PNG"
-               HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"/>
+               HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
         <!--Change pic dynamically-->
         <Button Grid.Column="1"
                 Grid.Row="5"
                 Content="Back"
-                HorizontalAlignment="Center" VerticalAlignment="Center" />
+                HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Margin="0,40,10,0"
+                Command="{Binding BackButton}"/>
         <Button Grid.Column="2"
                 Grid.Row="5" 
                 HorizontalAlignment="Right" VerticalAlignment="Center"
                 Content="Register"
-                Margin="0,0,10,0"/>
+                Margin="0,40,10,0"/>
 
     </Grid>
 </UserControl>

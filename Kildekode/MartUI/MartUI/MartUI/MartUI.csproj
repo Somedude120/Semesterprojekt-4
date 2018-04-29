@@ -100,8 +100,15 @@
       <DependentUpon>CreateUserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
+    <Compile Include="Events\ChangeFocusPage.cs" />
+    <Compile Include="Events\ChangeFriendPage.cs" />
+    <Compile Include="Events\ChangeFullPage.cs" />
+    <Compile Include="Events\ChangeSideBarPage.cs" />
     <Compile Include="Helpers\Bootstrapper.cs" />
     <Compile Include="Helpers\DatabaseDummy.cs" />
+    <Compile Include="Login\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="Login\PersonModel.cs" />
     <Compile Include="Settings\SettingsView.xaml.cs">
@@ -117,6 +124,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Friend\FriendView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,6 +211,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ProfilePicPlaceholder.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Misc\Marto-full-icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

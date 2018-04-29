@@ -11,7 +11,9 @@
         xmlns:friend="clr-namespace:MartUI.Friend"
         xmlns:focus="clr-namespace:MartUI.Focus"
         xmlns:login="clr-namespace:MartUI.Login"
-        prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:createuser="clr-namespace:MartUI.CreateUser"
+        xmlns:mvvm="http://prismlibrary.com/"
+        mvvm:ViewModelLocator.AutoWireViewModel="True"
 
         mc:Ignorable="d"
         Title="MartUI" Height="600" Width="1000" MinHeight="600" MinWidth="1000" x:Name="MartUI" 
@@ -25,6 +27,12 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type focus:FocusViewModel}">
             <focus:FocusView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type login:LoginViewModel}">
+            <login:LoginView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type createuser:CreateUserViewModel}">
+            <createuser:CreateUserView DataContext="{Binding}"/>
         </DataTemplate>
     </Window.Resources>
 

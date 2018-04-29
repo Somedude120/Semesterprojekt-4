@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using MartUI.Login;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 
@@ -21,6 +22,15 @@ namespace MartUI.Helpers
         {
             if (Application.Current.MainWindow != null)
                 Application.Current.MainWindow.Show();
+        }
+
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+
+            // Register types
+            //Container.RegisterType(typeof(object), typeof(LoginView), "LoginView");
+           // Container.RegisterType(typeof(object), typeof(DebitView), "DebitView");
         }
     }
 }

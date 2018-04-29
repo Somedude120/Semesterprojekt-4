@@ -5,5 +5,6 @@ namespace MartUI.Events
 {
     public class SelectedFriendEvent : PubSubEvent<FriendModel>
     {
+
     }
 }
