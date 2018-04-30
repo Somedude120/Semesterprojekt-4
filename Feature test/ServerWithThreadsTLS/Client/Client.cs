@@ -23,8 +23,18 @@ namespace Examples.System.Net
               X509Chain chain,
               SslPolicyErrors sslPolicyErrors)
         {
-            if (sslPolicyErrors == SslPolicyErrors.None)
-                return true;
+            //X509ChainPolicy pol = new X509ChainPolicy()
+            //{
+            //    VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority | X509VerificationFlags.IgnoreCertificateAuthorityRevocationUnknown
+            //                        | X509VerificationFlags.IgnoreCtlSignerRevocationUnknown | X509VerificationFlags.IgnoreEndRevocationUnknown
+            //                        | X509VerificationFlags.IgnoreInvalidPolicy | X509VerificationFlags.IgnoreRootRevocationUnknown
+            //                        | X509VerificationFlags.IgnoreWrongUsage | X509VerificationFlags.IgnoreInvalidName
+            //};
+
+            //chain.ChainPolicy = pol;
+            
+            
+            return true;
 
             Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
 
@@ -35,10 +45,11 @@ namespace Examples.System.Net
         {
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
-            TcpClient client = new TcpClient(machineName, 443);
+            TcpClient client = new TcpClient("192.168.173.1", 443);
             //TcpClient client = new TcpClient(machineName, 8090);
             Console.WriteLine("Client connected.");
             // Create an SSL stream that will close the client's stream.
+
             SslStream sslStream = new SslStream(
                 client.GetStream(),
                 false,
@@ -48,6 +59,8 @@ namespace Examples.System.Net
             // The server name must match the name on the server certificate.
             try
             {
+                Console.WriteLine(serverName);
+                
                 sslStream.AuthenticateAsClient(serverName);
             }
             catch (AuthenticationException e)
@@ -113,7 +126,7 @@ namespace Examples.System.Net
         public static int Main(string[] args)
         {
             //string serverCertificateName = null;
-            string serverCertificateName = "Martin-MSI";
+            string serverCertificateName = "Martin-MSIj";
             //string machineName = null;
             string machineName = "Martin-MSI";
             //string machineName = "localhost";
