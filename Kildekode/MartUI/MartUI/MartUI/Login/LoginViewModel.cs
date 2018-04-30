@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using MartUI.CreateUser;
 using MartUI.Events;
-using MartUI.Helpers;
 using MartUI.Main;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using Prism.Regions;
 
 namespace MartUI.Login
 {
@@ -32,17 +25,23 @@ namespace MartUI.Login
         private PersonModel _dataModel;
         //private DatabaseDummy _database;
 
+        //public PersonModel Person
+        //{
+        //    get { MessageBox.Show("getter");return _dataModel; }
+        //    set { SetProperty(ref _dataModel, value); } // if username != value, notify
+        //}
+
         public string Username
         {
             get { return _username; }
             set { SetProperty(ref _username, value); } // if username != value, notify
         }
 
-        public string Password
-        {
-            get { return _password; }
-            set { SetProperty(ref _password, value); } // if username != value, notify
-        }
+        //public string Password
+        //{
+        //    get { return _password; }
+        //    set { SetProperty(ref _password, value); } // if username != value, notify
+        //}
 
         public LoginViewModel(IEventAggregator eventAggregator)
         {
@@ -50,7 +49,7 @@ namespace MartUI.Login
 
             _dataModel = new PersonModel();
             _username = _dataModel.Username;
-            _password = _dataModel.Password;
+           // _password = _dataModel.Password;
 
             //_database = new DatabaseDummy();
             //_database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
@@ -66,14 +65,13 @@ namespace MartUI.Login
         private void CreateUser()
         {
             _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel(_eventAggregator));
-            //MessageBox.Show("hej");
-            //_regionManager.RequestNavigate("MainRegion", "CreateUserView");
 
             // NAVIGATE TO CREATE USER VIEW 
         }
 
         private bool LoginCanExecute()
         {
+            //MessageBox.Show()
             // Username length  to be above 4 and pass above 5
             return !String.IsNullOrWhiteSpace(Username) && Username.Length > 4;
             //  && !String.IsNullOrWhiteSpace(Password) && Password.Length > 5

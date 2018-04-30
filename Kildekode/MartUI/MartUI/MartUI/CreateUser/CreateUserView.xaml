@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MartUI.CreateUser"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="1000">
 
     <Grid Margin="50" MaxWidth="500">
         <Grid.ColumnDefinitions>
@@ -25,7 +25,9 @@
         <TextBlock Grid.ColumnSpan="2"
                    Grid.Column="1"
                    Text="Create new profile"
-                   FontSize="40"/>
+                   FontSize="50" FontStyle="Italic" FontWeight="Bold" Foreground="DarkGreen"
+                   HorizontalAlignment="Center"
+                   Margin="10"/>
         <TextBlock Grid.Column="0"
                    Grid.Row="1"
                    FontWeight="Bold" 
@@ -91,7 +93,7 @@
                 Grid.Row="5" 
                 HorizontalAlignment="Right" VerticalAlignment="Center"
                 Content="Register"
+                Command="{Binding RegisterButton}"
                 Margin="0,40,10,0"/>
-
     </Grid>
 </UserControl>

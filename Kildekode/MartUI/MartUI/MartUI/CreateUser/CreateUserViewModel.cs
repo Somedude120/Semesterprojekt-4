@@ -18,11 +18,15 @@ namespace MartUI.CreateUser
 {
     public class CreateUserViewModel : BindableBase, IViewModel
     {
+        public string ReferenceName => "CreateUser";
+
         private readonly IEventAggregator _eventAggregator;
+
         private DatabaseDummy _database;
 
+        private ICommand _registerButton;
         private ICommand _backButton;
-        public string ReferenceName => "CreateUser";
+
 
         public CreateUserViewModel(IEventAggregator eventAggregator)
         {
@@ -44,6 +48,18 @@ namespace MartUI.CreateUser
                 return _backButton;
             }
         }
+
+        public ICommand RegisterButton
+        {
+            get 
+            {
+                if (_registerButton == null)
+                    _registerButton = new DelegateCommand(CreateNewUser);
+                return _registerButton;
+            }
+        }
+
+
 
 
         private void CreateNewUser()

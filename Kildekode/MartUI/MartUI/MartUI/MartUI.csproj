@@ -100,6 +100,7 @@
       <DependentUpon>CreateUserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
+    <Compile Include="CreateUser\DetailedPersonModel.cs" />
     <Compile Include="Events\ChangeFocusPage.cs" />
     <Compile Include="Events\ChangeFriendPage.cs" />
     <Compile Include="Events\ChangeFullPage.cs" />
@@ -111,6 +112,7 @@
     </Compile>
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="Login\PersonModel.cs" />
+    <Compile Include="Login\ReplaceCharactersInPassword.cs" />
     <Compile Include="Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
