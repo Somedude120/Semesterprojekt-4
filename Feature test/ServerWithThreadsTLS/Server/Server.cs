@@ -67,9 +67,9 @@ namespace Examples.System.Net
                 byte[] message = Encoding.UTF8.GetBytes("Access granted<EOF>");
                 Console.WriteLine("Sending hello message.");
                 sslStream.Write(message);
-                Console.ReadLine();
-
                 Console.WriteLine();
+
+                Console.ReadLine();
             }
             catch (AuthenticationException e)
             {
