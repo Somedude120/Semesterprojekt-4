@@ -1,0 +1,3 @@
+Hvis en exception kommer fra AuthenticateAsServer() så kør server programmet som administrator. Dette bør løse problemet.
+
+Læs mere her: https://stackoverflow.com/questions/37710612/sslstream-authenticateasserver-the-credentials-supplied-to-the-package-were-not

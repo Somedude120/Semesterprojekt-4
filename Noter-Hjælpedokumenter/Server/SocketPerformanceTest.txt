@@ -1,0 +1,7 @@
+Goal:
+To show which type of socket implementation will provide the best performance in terms of speed.
+
+How:
+Set up 1 server (1 server with threads, and 1 server with async sockets) and 1000 clients. Make the clients connect to the server at the same time and send 1 message.
+Have the server receive the 1000 messages and output the amount of time it took from the first message to arrive, and to the last message to arrive.
+Compare the results of the 2 implementations.

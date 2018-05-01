@@ -1,0 +1,27 @@
+Denne guide viser hvordan man kan monitorere trafikken mellem server og klient på én computer:
+
+Download og installer wireshark. (Jeg har sagt ja til alt, men ved ikke om der skal bruges andet end almindelig wireshark.)
+
+Download RawCap (http://www.netresec.com/?page=RawCap), dette program gør det muligt at sniffe på 127.0.0.1 samt et par andre IP addresser som Wireshark ikke selv håndterer korrekt.
+Mere info her: https://wiki.wireshark.org/CaptureSetup/Loopback
+
+Sniffing på 192.168.56.1:
+1:	Åbn RawCap som administrator.
+
+2:	Tryk på tallet ud for 192.168.56.1 (4 i mit tilfælde).
+
+3:	Giv et navn. Eks.: TLSSniffing.pcap
+
+RawCap sniffer nu og viser hvor mange packets der er sniffet.
+
+4:	Kør kommunikation mellem server og klient. Antallet af sniffede pakker bør stige.
+
+5:	Stop RawCap med ctrl+c.
+
+6:	Åben .pcap filen, som bør ligge i samme mappe som RawCap.exe. Filen bør åbnes i WireShark.
+
+7:	Gennemgå de sniffede packets.
+
+8:	???.
+
+9:	Profit.
