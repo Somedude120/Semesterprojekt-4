@@ -13,10 +13,11 @@ namespace ProfileConsole
             using (var db = new BloggingContext())
             {
                 Repository myRepository = new Repository();
-                myRepository.CreateUserInformation("Martin", "Marto");
-                myRepository.ReadUserInformation();
+                //myRepository.CreateUserInformation("Daniel", "Darto");
+                //myRepository.ReadUserInformation();
                 //myRepository.deleteBrugerInformation("Sarto");
                 //myRepository.CreateTag("SupportMain");
+                myRepository.ReadTags();
             }
         }
     }

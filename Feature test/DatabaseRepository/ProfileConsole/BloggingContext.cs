@@ -15,6 +15,7 @@ namespace ProfileConsole
         public virtual DbSet<Chat> Chat { get; set; }
         public virtual DbSet<Emoji> Emoji { get; set; }
         public virtual DbSet<FriendList> FriendList { get; set; }
+        public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<Tags> Tags { get; set; }
         public virtual DbSet<UserInformation> UserInformation { get; set; }
 
@@ -52,6 +53,18 @@ namespace ProfileConsole
                 .Property(e => e.Action_User)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Login>()
+                .Property(e => e.Username)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Login>()
+                .Property(e => e.Salt)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Login>()
+                .Property(e => e.Hash)
+                .IsUnicode(false);
+
             modelBuilder.Entity<Tags>()
                 .HasMany(e => e.UserInformation)
                 .WithMany(e => e.Tags)
@@ -73,17 +86,21 @@ namespace ProfileConsole
                 .HasForeignKey(e => e.Action_User)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<UserInformation>()
-                .HasMany(e => e.FriendList1)
-                .WithRequired(e => e.UserInformation1)
-                .HasForeignKey(e => e.User1)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<UserInformation>()
+            //    .HasMany(e => e.FriendList1)
+            //    .WithRequired(e => e.UserInformation1)
+            //    .HasForeignKey(e => e.User1)
+            //    .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<UserInformation>()
+            //    .HasMany(e => e.FriendList2)
+            //    .WithRequired(e => e.UserInformation2)
+            //    .HasForeignKey(e => e.User2)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserInformation>()
-                .HasMany(e => e.FriendList2)
-                .WithRequired(e => e.UserInformation2)
-                .HasForeignKey(e => e.User2)
-                .WillCascadeOnDelete(false);
+                .HasOptional(e => e.Login)
+                .WithRequired(e => e.UserInformation);
         }
     }
 }
