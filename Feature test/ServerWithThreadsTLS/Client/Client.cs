@@ -33,8 +33,8 @@ namespace Examples.System.Net
 
             //chain.ChainPolicy = pol;
             
-            
-            return true;
+            if (sslPolicyErrors == SslPolicyErrors.None)
+                return true;
 
             Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
 
