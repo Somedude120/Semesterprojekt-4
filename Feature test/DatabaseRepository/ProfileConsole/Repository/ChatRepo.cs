@@ -8,15 +8,24 @@ namespace ProfileConsole.Repository
 {
     class ChatRepo
     {
-        public void CreateChatMessage(string users_messageNumber, string message, string from_User)
+        private int messageNumber = 1;
+        public void CreateChatMessage(int groupId, string message, string sender)
         {
             using (var db = new BloggingContext())
             {
-                var chat = new Chat { Users_MessageNumber = users_messageNumber, Message = message, From_User = from_User };
+                var query = from b in db.Chat select b;
+                foreach (var item in query)
+                {
+                    if (item.MessageNumber == messageNumber && item.GroupId == groupId)
+                    {
+                        messageNumber++;
+                    }
+                }
+                var chat = new Chat { GroupId = groupId, MessageNumber = messageNumber, Message = message, Sender = sender};
                 db.Chat.Add(chat);
                 db.SaveChanges();
 
-                Console.WriteLine("Users and messagenumber: " + users_messageNumber + " added message to their chat: " + message + "\n");
+                Console.WriteLine(sender + " to groupId: " + groupId + ": " + message + "\n");
             }
         }
 
@@ -25,13 +34,13 @@ namespace ProfileConsole.Repository
             using (var db = new BloggingContext())
             {
                 var query = from b in db.Chat
-                            orderby b.Users_MessageNumber
+                            orderby b.GroupId
                             select b;
 
                 Console.WriteLine("All messages in the database:");
                 foreach (var item in query)
                 {
-                    Console.WriteLine("Chatmembers and messagenumber: " + item.Users_MessageNumber + ": " + item.Message + " --- message written by" + item.From_User);
+                    Console.WriteLine("GroupId: " + item.GroupId + ": " + item.Message + " --- message written by " + item.Sender);
                 }
                 Console.WriteLine("\n");
             }

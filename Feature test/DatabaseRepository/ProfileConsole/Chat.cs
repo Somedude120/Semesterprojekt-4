@@ -10,14 +10,22 @@ namespace ProfileConsole
     public partial class Chat
     {
         [Key]
-        [StringLength(255)]
-        public string Users_MessageNumber { get; set; }
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int GroupId { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
+        public int MessageNumber { get; set; }
 
         public string Message { get; set; }
 
-        [Required]
+        [Key]
+        [Column(Order = 2)]
         [StringLength(15)]
-        public string From_User { get; set; }
+        public string Sender { get; set; }
+
+        public virtual ChatGroups ChatGroups { get; set; }
 
         public virtual UserInformation UserInformation { get; set; }
     }
