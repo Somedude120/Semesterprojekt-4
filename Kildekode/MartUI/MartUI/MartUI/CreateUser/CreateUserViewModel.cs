@@ -23,13 +23,32 @@ namespace MartUI.CreateUser
         private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
 
         private DatabaseDummy _database;
+        private DetailedPersonModel _detailedPerson;
 
         private ICommand _registerButton;
         private ICommand _backButton;
 
+        public DetailedPersonModel Person
+        {
+            get
+            {
+                if(_detailedPerson == null)
+                    _detailedPerson = new DetailedPersonModel();
+                return _detailedPerson;
+            }
+            set
+            {
+            MessageBox.Show("seetting"); SetProperty(ref _detailedPerson, value);
+
+            }
+        }
+
+        // instead implement with Onpropertychanged or smth else
+
 
         public CreateUserViewModel()
         {
+            Person.Name = "hej";
             _database = new DatabaseDummy();
 
             _database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
