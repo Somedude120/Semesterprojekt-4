@@ -15,7 +15,7 @@
         mvvm:ViewModelLocator.AutoWireViewModel="True"
 
         mc:Ignorable="d"
-        Title="MartUI" Height="600" Width="1000" MinHeight="600" MinWidth="1000" x:Name="MartUI" 
+        Title="MartUI" Height="618" Width="1000" MinHeight="618" MinWidth="1000" x:Name="MartUI" 
         WindowStyle="None" ResizeMode="CanResize"
         BorderThickness="0"
         Background="#36393e">

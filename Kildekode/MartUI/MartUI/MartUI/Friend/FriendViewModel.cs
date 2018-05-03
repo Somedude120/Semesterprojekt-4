@@ -48,7 +48,12 @@ namespace MartUI.Friend
         // All friends in friend list
         public List<FriendModel> FriendList
         {
-            get => _friendList;
+            get
+            {
+                if (_friendList == null)
+                    _friendList = new List<FriendModel>();
+                return _friendList;
+            }
             set => SetProperty(ref _friendList, value);
         }
 
