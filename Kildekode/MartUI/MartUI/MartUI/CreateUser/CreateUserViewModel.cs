@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace MartUI.CreateUser
         private ICommand _registerButton;
         private ICommand _backButton;
 
+        // Gå i gang med noget onpropertychanged perhaps
         public DetailedPersonModel Person
         {
             get
@@ -38,7 +40,8 @@ namespace MartUI.CreateUser
             }
             set
             {
-            MessageBox.Show("seetting"); SetProperty(ref _detailedPerson, value);
+            MessageBox.Show("seetting");
+                SetProperty(ref _detailedPerson, value);
 
             }
         }
