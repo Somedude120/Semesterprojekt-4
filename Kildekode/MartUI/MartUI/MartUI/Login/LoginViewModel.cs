@@ -37,11 +37,16 @@ namespace MartUI.Login
             set { SetProperty(ref _username, value); } // if username != value, notify
         }
 
-        //public string Password
-        //{
-        //    get { return _password; }
-        //    set { SetProperty(ref _password, value); } // if username != value, notify
-        //}
+        public string Password
+        {
+            get { return _password; }
+            set { SetProperty(ref _password, value); } // if username != value, notify
+        }
+
+        private void SetPassword(string pass)
+        {
+            Password = pass;
+        }
 
         public LoginViewModel()
         {
@@ -50,6 +55,7 @@ namespace MartUI.Login
             _username = _dataModel.Username;
            // _password = _dataModel.Password;
 
+            _eventAggregator.GetEvent<PasswordChanged>().Subscribe(SetPassword);
             //var data = this.
             //_database = new DatabaseDummy();
             //_database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
@@ -57,7 +63,7 @@ namespace MartUI.Login
 
             //Delegates instead of the execute/cant execute
             //Observes Username and Password to check CanExecute, call RaiseCanExecute
-            LoginCommand = new DelegateCommand(LoginExecute, LoginCanExecute).ObservesProperty(() => Username);
+            LoginCommand = new DelegateCommand(LoginExecute, LoginCanExecute).ObservesProperty(() => Username).ObservesProperty(() => Password);
 
             CreateUserCommand = new DelegateCommand(CreateUser);
             // CanExecute behøver ikke være en metode men også en boolean property
@@ -73,10 +79,10 @@ namespace MartUI.Login
 
         private bool LoginCanExecute()
         {
-            //MessageBox.Show()
+            //MessageBox.Show(Password);
             // Username length  to be above 4 and pass above 5
-            return !String.IsNullOrWhiteSpace(Username) && Username.Length > 4;
-            //  && !String.IsNullOrWhiteSpace(Password) && Password.Length > 5
+            return !String.IsNullOrWhiteSpace(Username) && Username.Length > 4
+                    && !String.IsNullOrWhiteSpace(Password) && Password.Length > 5;
         }
 
         private void LoginExecute()

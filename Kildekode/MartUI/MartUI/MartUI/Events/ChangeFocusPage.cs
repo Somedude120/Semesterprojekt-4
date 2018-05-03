@@ -7,14 +7,4 @@ namespace MartUI.Events
     {
 
     }
-
-    public static class GetEventAggregator
-    {
-        public static IEventAggregator eventaggregator = new EventAggregator();
-
-        public static IEventAggregator Get()
-        {
-            return eventaggregator;
-        }
-    }
 }
