@@ -28,9 +28,9 @@ namespace MartUI.CreateUser
         private ICommand _backButton;
 
 
-        public CreateUserViewModel(IEventAggregator eventAggregator)
+        public CreateUserViewModel()
         {
-            _eventAggregator = eventAggregator;
+            _eventAggregator = GetEventAggregator.Get();
             _database = new DatabaseDummy();
 
             _database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
@@ -44,7 +44,7 @@ namespace MartUI.CreateUser
             {
                 if (_backButton == null)
                     _backButton = new DelegateCommand(() =>
-                        _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel(_eventAggregator)));
+                        _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel()));
                 return _backButton;
             }
         }

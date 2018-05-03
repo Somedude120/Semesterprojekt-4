@@ -19,8 +19,8 @@ namespace MartUI.Main
 {
     class MainViewModel : BindableBase
     {
-        IEventAggregator eventAggregator = new EventAggregator();
-        IRegionManager regionManager = new RegionManager();
+        private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
+        //IRegionManager regionManager = new RegionManager();
 
         private IViewModel _fullView;
         //private ICommand _changeView;
@@ -34,12 +34,12 @@ namespace MartUI.Main
         public MainViewModel()
         {
             // Make one method that does these 
-            eventAggregator.GetEvent<ChangeFullPage>().Subscribe(ChangeFullView);
-            eventAggregator.GetEvent<ChangeFocusPage>().Subscribe(ChangeFocusView);
-            eventAggregator.GetEvent<ChangeFriendPage>().Subscribe(ChangeFriendView);
-            eventAggregator.GetEvent<ChangeSideBarPage>().Subscribe(ChangeSideBarView);
+            _eventAggregator.GetEvent<ChangeFullPage>().Subscribe(ChangeFullView);
+            _eventAggregator.GetEvent<ChangeFocusPage>().Subscribe(ChangeFocusView);
+            _eventAggregator.GetEvent<ChangeFriendPage>().Subscribe(ChangeFriendView);
+            _eventAggregator.GetEvent<ChangeSideBarPage>().Subscribe(ChangeSideBarView);
 
-            ViewList.Add(new LoginViewModel(eventAggregator));
+            ViewList.Add(new LoginViewModel());
             //ViewList.Add(new FriendViewModel(eventAggregator));
             //ViewList.Add(new FocusViewModel(eventAggregator));
 

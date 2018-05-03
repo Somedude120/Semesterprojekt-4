@@ -13,6 +13,7 @@ namespace MartUI.Focus
 {
     public class FocusViewModel : BindableBase, IViewModel
     {
+        private IEventAggregator _eventAggregator;
         private string _username;
         public string Username 
         {
@@ -21,10 +22,11 @@ namespace MartUI.Focus
         }
         public string ReferenceName => "FocusView";
 
-        public FocusViewModel(IEventAggregator eventAggregator)
+        public FocusViewModel()
         {
+            _eventAggregator = GetEventAggregator.Get();
             Username = "test";
-            eventAggregator.GetEvent<SelectedFriendEvent>().Subscribe(HandleFriend);
+            _eventAggregator.GetEvent<SelectedFriendEvent>().Subscribe(HandleFriend);
         }
 
         private void HandleFriend(FriendModel obj)

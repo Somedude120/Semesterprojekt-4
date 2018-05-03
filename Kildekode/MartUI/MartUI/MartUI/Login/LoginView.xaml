@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MartUI.Login"
+             
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
-
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Height="500" >
             <TextBlock Text="Welcome to" FontSize="50" FontStyle="Italic" FontWeight="Bold" Foreground="DarkGreen" HorizontalAlignment="Center"/>
@@ -34,16 +34,10 @@
                            FontSize="20"
                            Margin="0,0,10,0"/>
                 <PasswordBox Grid.Row="1" Grid.Column="1"
-                    Name="UserPassword"
-                    MaxLength="20" MaxWidth="200" Margin="0,15,0,0"  />
-
+                    MaxLength="20" MaxWidth="200" Margin="0,15,0,0"
+                             Name="PassBx"/>
                 </Grid>
                 </StackPanel>
-                <!--Insert placeholder-->
-                <!--<TextBlock >
-                    <Hyperlink>Forgot password?</Hyperlink>
-                </TextBlock>-->
-                <!--Insert placeholder-->
                 <DockPanel>
                     <Button HorizontalAlignment="Left" Content="Sign in" Margin="30,40,0,0" Command="{Binding LoginCommand}"/>
                     <StackPanel HorizontalAlignment="Right">

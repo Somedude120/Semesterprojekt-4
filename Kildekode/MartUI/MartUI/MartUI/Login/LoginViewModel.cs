@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using MartUI.CreateUser;
 using MartUI.Events;
@@ -10,8 +11,7 @@ using Prism.Mvvm;
 
 namespace MartUI.Login
 {
-    public class
-        LoginViewModel : BindableBase, IViewModel // Using BindableBase from PRISM instead of INotifyPropertyChanged
+    public class LoginViewModel : BindableBase, IViewModel // Using BindableBase from PRISM instead of INotifyPropertyChanged
     {
         private readonly IEventAggregator _eventAggregator;
         public string ReferenceName => "Login";
@@ -43,14 +43,14 @@ namespace MartUI.Login
         //    set { SetProperty(ref _password, value); } // if username != value, notify
         //}
 
-        public LoginViewModel(IEventAggregator eventAggregator)
+        public LoginViewModel()
         {
-            _eventAggregator = eventAggregator;
-
+            _eventAggregator = GetEventAggregator.Get();
             _dataModel = new PersonModel();
             _username = _dataModel.Username;
            // _password = _dataModel.Password;
 
+            //var data = this.
             //_database = new DatabaseDummy();
             //_database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
             //_database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
@@ -58,14 +58,16 @@ namespace MartUI.Login
             //Delegates instead of the execute/cant execute
             //Observes Username and Password to check CanExecute, call RaiseCanExecute
             LoginCommand = new DelegateCommand(LoginExecute, LoginCanExecute).ObservesProperty(() => Username);
+
             CreateUserCommand = new DelegateCommand(CreateUser);
             // CanExecute behøver ikke være en metode men også en boolean property
         }
 
+        
+
         private void CreateUser()
         {
-            _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel(_eventAggregator));
-
+            _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel());
             // NAVIGATE TO CREATE USER VIEW 
         }
 

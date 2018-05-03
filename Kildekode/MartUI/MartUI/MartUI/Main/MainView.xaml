@@ -7,7 +7,6 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:MartUI"
 
-        xmlns:prism="http://prismlibrary.com/"
         xmlns:friend="clr-namespace:MartUI.Friend"
         xmlns:focus="clr-namespace:MartUI.Focus"
         xmlns:login="clr-namespace:MartUI.Login"

@@ -22,9 +22,9 @@ namespace MartUI.Friend
         private FriendModel _selectedFriend;
         public ICommand ChooseFriend { get; set; }
 
-        public FriendViewModel(IEventAggregator eventaggregator)
+        public FriendViewModel()
         {
-            _eventAggregator = eventaggregator;
+            _eventAggregator = GetEventAggregator.Get();
 
             FriendList = new List<FriendModel>();
             ChooseFriend = new DelegateCommand<FriendModel>(SelectFriend);

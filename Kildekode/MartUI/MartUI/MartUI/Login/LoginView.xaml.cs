@@ -24,6 +24,7 @@ namespace MartUI.Login
         public LoginView()
         {
             InitializeComponent();
+            //DataContext = new LoginViewModel();
         }
     }
 }
