@@ -29,7 +29,7 @@ namespace MartUI.Login
 
         private void PassBx_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            GetEventAggregator.Get().GetEvent<PasswordChanged>().Publish(PassBx.Password);
+            GetEventAggregator.Get().GetEvent<PasswordChangedInLogin>().Publish(PassBx.Password);
         }
     }
 }

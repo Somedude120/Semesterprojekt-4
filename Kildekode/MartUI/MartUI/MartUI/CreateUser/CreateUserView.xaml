@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
 
-    <Grid Margin="50" MaxWidth="500">
+    <Grid MaxWidth="500" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
@@ -18,8 +18,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.ColumnSpan="2"
@@ -27,7 +27,7 @@
                    Text="Create new profile"
                    FontSize="50" FontStyle="Italic" FontWeight="Bold" Foreground="DarkGreen"
                    HorizontalAlignment="Center"
-                   Margin="10"/>
+                   Margin="0,0,0,50"/>
         <TextBlock Grid.Column="0"
                    Grid.Row="1"
                    FontWeight="Bold" 
@@ -44,7 +44,8 @@
                    FontSize="20"/>
         <TextBox Grid.Column="2"
                  Grid.Row="1"
-                 Margin="10" />
+                 Margin="10" 
+                 MaxLength="20" MaxWidth="200" MinWidth="200"/>
         <TextBlock Grid.Column="0"
                    Grid.Row="2"
                    FontWeight="Bold" 
@@ -60,7 +61,8 @@
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
         <PasswordBox Grid.Column="2"
                  Grid.Row="2"
-                 Margin="10"/>
+                 Margin="10"
+                 MaxLength="20" MaxWidth="200" MinWidth="200"/>
         <TextBlock Grid.Column="1"
                    Grid.Row="3"
                    Text="Tags"
@@ -68,7 +70,8 @@
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
         <TextBox Grid.Column="2"
                      Grid.Row="3"
-                     Margin="10"/>
+                     Margin="10"
+                     MaxLength="20" MaxWidth="200" MinWidth="200"/>
         <TextBlock Grid.Column="1"
                    Grid.Row="4"
                    Text="Picture"
@@ -81,7 +84,8 @@
         <Image Grid.Column="2"
                Grid.Row="4"
                Source="../Images/ProfilePicPlaceholder.PNG"
-               HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" />
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" 
+               MaxWidth="150" MaxHeight="150"/>
         <!--Change pic dynamically-->
         <Button Grid.Column="1"
                 Grid.Row="5"
@@ -94,6 +98,6 @@
                 HorizontalAlignment="Right" VerticalAlignment="Center"
                 Content="Register"
                 Command="{Binding RegisterButton}"
-                Margin="0,40,10,0"/>
+                Margin="0,40,50,0"/>
     </Grid>
 </UserControl>

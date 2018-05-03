@@ -20,7 +20,7 @@ namespace MartUI.CreateUser
     {
         public string ReferenceName => "CreateUser";
 
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
 
         private DatabaseDummy _database;
 
@@ -30,35 +30,11 @@ namespace MartUI.CreateUser
 
         public CreateUserViewModel()
         {
-            _eventAggregator = GetEventAggregator.Get();
             _database = new DatabaseDummy();
 
             _database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
             _database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
-
         }
-
-        public ICommand BackButton
-        {
-            get
-            {
-                if (_backButton == null)
-                    _backButton = new DelegateCommand(() =>
-                        _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel()));
-                return _backButton;
-            }
-        }
-
-        public ICommand RegisterButton
-        {
-            get 
-            {
-                if (_registerButton == null)
-                    _registerButton = new DelegateCommand(CreateNewUser);
-                return _registerButton;
-            }
-        }
-
 
 
 
@@ -98,6 +74,25 @@ namespace MartUI.CreateUser
 
             return false;
         }
-    }
+        public ICommand BackButton
+        {
+            get
+            {
+                if (_backButton == null)
+                    _backButton = new DelegateCommand(() =>
+                        _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel()));
+                return _backButton;
+            }
+        }
 
+        public ICommand RegisterButton
+        {
+            get 
+            {
+                if (_registerButton == null)
+                    _registerButton = new DelegateCommand(CreateNewUser);
+                return _registerButton;
+            }
+        }
+    }
 }

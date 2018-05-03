@@ -3,7 +3,7 @@ using Prism.Events;
 
 namespace MartUI.Events
 {
-    public class PasswordChanged : PubSubEvent<string>
+    public class PasswordChangedInLogin : PubSubEvent<string>
     {
 
     }

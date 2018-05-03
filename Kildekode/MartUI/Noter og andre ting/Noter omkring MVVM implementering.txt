@@ -3,11 +3,12 @@ Denne indeholder properties af forskellige ting (i dette tilfælde produktet).
 ObservableObject håndterer events til den rigtige property.
 
 2. ViewModel laves før View, da man skal kende til den for at kunne lave View.
-Indeholder lat som brugeren skal kunne interagere med på siden.
+Indeholder alt som brugeren skal kunne interagere med på siden.
 Indeholder i dette tilfælde Modellen (ProductModel), GetProduct, SaveProduct, ProductId.
 God idé med Commands for at sikre at man ikke kan gemme noget uden data er indskrevet.,
 
 RelayCommand er ESSENTIEL for at få MVVM til at virke. Kan bruge RelayCommand (MVVM Light Toolkits version).
+DelegateCommand fra PRISM.
 
 Link:
 https://rachel53461.wordpress.com/2011/05/08/simplemvvmexample/

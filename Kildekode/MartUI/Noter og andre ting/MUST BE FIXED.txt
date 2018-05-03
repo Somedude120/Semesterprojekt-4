@@ -10,6 +10,7 @@ LOGIN FIXES:
 - Placeholder i Username & Password ("Username"/"Password")
 - Password binding?? (kan dette overhovedet lade sig gøre?? - click events eller  command stuff ?)
 - Exceptions? (eller ikke, siden commands bruges)
+- Exception (eller fejlhåndtering af en art) på forkert brugernavn eller password
 
 CREATE:
 - Tip til højre for input som siger min. længde af username/password

@@ -43,10 +43,6 @@ namespace MartUI.Login
             set { SetProperty(ref _password, value); } // if username != value, notify
         }
 
-        private void SetPassword(string pass)
-        {
-            Password = pass;
-        }
 
         public LoginViewModel()
         {
@@ -55,7 +51,7 @@ namespace MartUI.Login
             _username = _dataModel.Username;
             _password = _dataModel.Password;
 
-            _eventAggregator.GetEvent<PasswordChanged>().Subscribe(SetPassword);
+            _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(SetPassword);
             //_database = new DatabaseDummy();
             //_database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
             //_database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
@@ -68,6 +64,10 @@ namespace MartUI.Login
             // CanExecute behøver ikke være en metode men også en boolean property
         }
 
+        private void SetPassword(string pass)
+        {
+            Password = pass;
+        }
         
 
         private void CreateUser()
@@ -88,6 +88,21 @@ namespace MartUI.Login
         {
             // Validate name and password with server
             // Navigate to main window (friend list shows, etc).
+
+
+            // TESTS THAT CASTS EXCEPTION ON INCORRECT INFO
+            //bool correct = false;
+
+            //try
+            //{
+            //    if (!correct)
+            //        throw new Exception();
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //}
+
         }
     }
 }
