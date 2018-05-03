@@ -53,10 +53,9 @@ namespace MartUI.Login
             _eventAggregator = GetEventAggregator.Get();
             _dataModel = new PersonModel();
             _username = _dataModel.Username;
-           // _password = _dataModel.Password;
+            _password = _dataModel.Password;
 
             _eventAggregator.GetEvent<PasswordChanged>().Subscribe(SetPassword);
-            //var data = this.
             //_database = new DatabaseDummy();
             //_database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
             //_database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
