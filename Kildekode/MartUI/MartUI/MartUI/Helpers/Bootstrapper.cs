@@ -29,8 +29,9 @@ namespace MartUI.Helpers
             base.ConfigureContainer();
 
             // Register types
-            //Container.RegisterType(typeof(object), typeof(LoginView), "LoginView");
-           // Container.RegisterType(typeof(object), typeof(DebitView), "DebitView");
+            Container.RegisterType(typeof(object), typeof(LoginView), "LoginView");
+            //Container.RegisterType(typeof(object), typeof(MainView), "MainView");
+            // Container.RegisterType(typeof(object), typeof(DebitView), "DebitView");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,45 +21,42 @@ namespace MartUI.CreateUser
     {
         public string ReferenceName => "CreateUser";
 
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
 
         private DatabaseDummy _database;
+        private DetailedPersonModel _detailedPerson;
 
         private ICommand _registerButton;
         private ICommand _backButton;
 
-
-        public CreateUserViewModel(IEventAggregator eventAggregator)
+        // Gå i gang med noget onpropertychanged perhaps
+        public DetailedPersonModel Person
         {
-            _eventAggregator = eventAggregator;
+            get
+            {
+                if(_detailedPerson == null)
+                    _detailedPerson = new DetailedPersonModel();
+                return _detailedPerson;
+            }
+            set
+            {
+            MessageBox.Show("seetting");
+                SetProperty(ref _detailedPerson, value);
+
+            }
+        }
+
+        // instead implement with Onpropertychanged or smth else
+
+
+        public CreateUserViewModel()
+        {
+            Person.Name = "hej";
             _database = new DatabaseDummy();
 
             _database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
             _database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
-
         }
-
-        public ICommand BackButton
-        {
-            get
-            {
-                if (_backButton == null)
-                    _backButton = new DelegateCommand(() =>
-                        _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel(_eventAggregator)));
-                return _backButton;
-            }
-        }
-
-        public ICommand RegisterButton
-        {
-            get 
-            {
-                if (_registerButton == null)
-                    _registerButton = new DelegateCommand(CreateNewUser);
-                return _registerButton;
-            }
-        }
-
 
 
 
@@ -98,6 +96,25 @@ namespace MartUI.CreateUser
 
             return false;
         }
-    }
+        public ICommand BackButton
+        {
+            get
+            {
+                if (_backButton == null)
+                    _backButton = new DelegateCommand(() =>
+                        _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel()));
+                return _backButton;
+            }
+        }
 
+        public ICommand RegisterButton
+        {
+            get 
+            {
+                if (_registerButton == null)
+                    _registerButton = new DelegateCommand(CreateNewUser);
+                return _registerButton;
+            }
+        }
+    }
 }

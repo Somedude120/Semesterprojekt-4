@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MartUI.Events;
 using Prism.Events;
 
 namespace MartUI.Login
@@ -24,6 +25,11 @@ namespace MartUI.Login
         public LoginView()
         {
             InitializeComponent();
+        }
+
+        private void PassBx_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            GetEventAggregator.Get().GetEvent<PasswordChangedInLogin>().Publish(PassBx.Password);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace MartUI
                         ExpandApplication(sender, e);
                         Point Position = Mouse.GetPosition(TitleBar);
                         Left = Position.X - 7 - Width / 2;
-                        Top = Position.Y - 10;
+                        Top = Position.Y - 9;
                 }
             }
                 DragMove();

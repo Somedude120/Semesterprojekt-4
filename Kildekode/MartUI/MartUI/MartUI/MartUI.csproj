@@ -105,6 +105,8 @@
     <Compile Include="Events\ChangeFriendPage.cs" />
     <Compile Include="Events\ChangeFullPage.cs" />
     <Compile Include="Events\ChangeSideBarPage.cs" />
+    <Compile Include="Events\GetEventAggregator.cs" />
+    <Compile Include="Events\PasswordChanged.cs" />
     <Compile Include="Helpers\Bootstrapper.cs" />
     <Compile Include="Helpers\DatabaseDummy.cs" />
     <Compile Include="Login\LoginView.xaml.cs">

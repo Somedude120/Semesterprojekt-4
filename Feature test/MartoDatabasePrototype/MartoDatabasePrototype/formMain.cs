@@ -20,23 +20,22 @@ namespace MartoDatabasePrototype
         {
             InitializeComponent();
 
-            connectionsString = ConfigurationManager.ConnectionStrings["MartoDatabasePrototype.Properties.Settings.FriendlistConnectionString"].ConnectionString;
+            connectionString = ConfigurationManager.ConnectionStrings["MartoDatabasePrototype.Properties.Settings.FriendlistConnectionString"].ConnectionString;
         }
 
 
         private void formMain_Load(object sender, EventArgs e)
         {
-
+            PopulateFriendList();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void ListBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            //MessageBox.Show(ListBoxFriends.SelectedValue.ToString());
+            ListBoxFriendInfo.DisplayMember = "Id";
+            ListBoxFriendInfo.DisplayMember = "Name";
+            ListBoxFriendInfo.DisplayMember = "Username";
+            ListBoxFriendInfo.DisplayMember = "Tag";
         }
 
         private void PopulateFriendList()
@@ -44,7 +43,14 @@ namespace MartoDatabasePrototype
             using (connection = new SqlConnection(connectionString))
             using (SqlDataAdapter adapter = new SqlDataAdapter("SELECT * FROM Friends", connection))
             {
-                connection.Open()
+                connection.Open();
+
+                DataTable friendsTable = new DataTable();
+                adapter.Fill(friendsTable);
+
+                ListBoxFriends.DisplayMember = "Name";
+                ListBoxFriends.ValueMember = "Id";
+                ListBoxFriends.DataSource = friendsTable;
             }
         }
     }

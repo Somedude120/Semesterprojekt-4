@@ -1,0 +1,7 @@
+SQL Sanitation/SQL Injection noter:
+
+Der findes forskellige måder at sikre sin database fra injections. Det overordnede princip er at man vil undgå at give brugeren mulighed for at 
+indsætte uønsket data ind i databasen.
+
+(eksempel) Angive nogle afgrænsninger for hvad en bruger kan skrive i f.eks. et tekstfelt. Dette kan enten være at brugeren opsætter et urealistisk scenarie
+(666 kugler i en isvaffel). Tekstfeltet kan give brugeren mulighed for at afvikle kommandoer gennem den tekst de skriver i feltet.

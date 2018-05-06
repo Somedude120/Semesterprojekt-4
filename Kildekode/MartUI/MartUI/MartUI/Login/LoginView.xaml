@@ -22,9 +22,9 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0"
-                    Text="Username" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                           FontSize="20"
-                           Margin="0,0,10,0"/>
+                            Text="Username" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                            FontSize="20"
+                            Margin="0,0,10,0"/>
                 <TextBox Grid.Row="0" Grid.Column="1"
                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" 
                             MaxLength="20" MaxWidth="200" Margin="0,15,0,0" MinWidth="200"
@@ -34,16 +34,10 @@
                            FontSize="20"
                            Margin="0,0,10,0"/>
                 <PasswordBox Grid.Row="1" Grid.Column="1"
-                    Name="UserPassword"
-                    MaxLength="20" MaxWidth="200" Margin="0,15,0,0"  />
-
+                           MaxLength="20" MaxWidth="200" Margin="0,15,0,0"
+                           Name="PassBx" PasswordChanged="PassBx_OnPasswordChanged"/>
                 </Grid>
                 </StackPanel>
-                <!--Insert placeholder-->
-                <!--<TextBlock >
-                    <Hyperlink>Forgot password?</Hyperlink>
-                </TextBlock>-->
-                <!--Insert placeholder-->
                 <DockPanel>
                     <Button HorizontalAlignment="Left" Content="Sign in" Margin="30,40,0,0" Command="{Binding LoginCommand}"/>
                     <StackPanel HorizontalAlignment="Right">
