@@ -55,19 +55,27 @@ namespace Examples.System.Net
                 DisplayCertificateInformation(sslStream);
                 DisplayStreamProperties(sslStream);
 
-                // Set timeouts for the read and write to 5 seconds.
-                sslStream.ReadTimeout = 5000;
-                sslStream.WriteTimeout = 5000;
-                // Read a message from the client.   
-                Console.WriteLine("Waiting for client message...");
-                string messageData = ReadMessage(sslStream);
-                Console.WriteLine("Received: {0}", messageData);
+                string IPId = ((IPEndPoint) client.Client.RemoteEndPoint).Address + "," + ((IPEndPoint) client.Client.RemoteEndPoint).Port;
 
-                // Write a message to the client.
-                byte[] message = Encoding.UTF8.GetBytes("Access granted<EOF>");
-                Console.WriteLine("Sending hello message.");
-                sslStream.Write(message);
-                Console.WriteLine();
+                // Set timeouts for the read and write to 5 seconds.
+                //sslStream.ReadTimeout = 5000;
+                sslStream.WriteTimeout = 5000;
+                while (true)
+                {
+                    // Read a message from the client.   
+                    Console.WriteLine("Waiting for client message...");
+                    string messageData = ReadMessage(sslStream);
+                    Console.WriteLine("Received: {0}", messageData);
+
+                    Console.WriteLine(IPId);
+                    //Console.WriteLine("From IP: " + ((IPEndPoint)client.Client.RemoteEndPoint).Address + ", " + ((IPEndPoint)client.Client.RemoteEndPoint).Port);
+
+                    // Write a message to the client.
+                    byte[] message = Encoding.UTF8.GetBytes("Access granted<EOF>");
+                    Console.WriteLine("Sending hello message.");
+                    sslStream.Write(message);
+                    Console.WriteLine();
+                }
 
                 Console.ReadLine();
             }
