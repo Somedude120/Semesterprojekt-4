@@ -27,7 +27,7 @@
                             Margin="0,0,10,0"/>
                 <TextBox Grid.Row="0" Grid.Column="1"
                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" 
-                            MaxLength="20" MaxWidth="200" Margin="0,15,0,0" MinWidth="200"
+                            MaxLength="15" MaxWidth="200" Margin="0,15,0,0" MinWidth="200"
                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Password" HorizontalAlignment="Center" VerticalAlignment="Bottom"

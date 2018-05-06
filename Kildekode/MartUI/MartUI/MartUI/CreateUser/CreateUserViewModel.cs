@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,7 +34,7 @@ namespace MartUI.CreateUser
 
         public CreateUserViewModel()
         {
-            Person.Name = "hej";
+            _eventAggregator.GetEvent<PasswordChangedInCreate>().Subscribe(SetPassword);
             _database = new DatabaseDummy();
 
             _database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
@@ -59,11 +60,14 @@ namespace MartUI.CreateUser
         // Will call CreateNewUser
         public ICommand RegisterButton => _registerButton ?? (_registerButton = new DelegateCommand(CreateNewUser));
 
+        public void SetPassword(string pass)
+        {
+            Person.Password = pass;
+        }
         private void CreateNewUser()
         {
-            
-            
-            
+            MessageBox.Show(Person.Password);
+
             // THIS IS SERVER STUFF, ONLY FOR TESTING!!
             //if (UsernameAlreadyExist(Username))
             //{
