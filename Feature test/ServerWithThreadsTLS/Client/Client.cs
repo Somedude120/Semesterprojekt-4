@@ -78,6 +78,11 @@ namespace Examples.System.Net
             // Signal the end of the message using the "<EOF>".
             //byte[] messsage = Encoding.UTF8.GetBytes("Hello from the client.<EOF>");
             byte[] messsage = Encoding.UTF8.GetBytes("l;UserName;PlaintextPassword<EOF>");
+
+            messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + "<EOF>");
+            // Send hello message to the server. 
+            sslStream.Write(messsage);
+
             while (true)
             {
                 messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + "<EOF>");

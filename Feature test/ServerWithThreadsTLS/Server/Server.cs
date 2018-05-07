@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.Security;
@@ -16,6 +17,7 @@ namespace Examples.System.Net
 {
     public sealed class SslTcpServer
     {
+        public static Dictionary<string, string> userID = new Dictionary<string, string>();
         public static TcpListener listener = new TcpListener(IPAddress.Any, 443);
         static X509Certificate serverCertificate = null;
         // The certificate parameter specifies the name of the file 
@@ -60,12 +62,17 @@ namespace Examples.System.Net
                 // Set timeouts for the read and write to 5 seconds.
                 //sslStream.ReadTimeout = 5000;
                 sslStream.WriteTimeout = 5000;
+
+                //Request UserID
+                string login = ReadMessage(sslStream);
+                userID.Add(IPId, login);
+
                 while (true)
                 {
                     // Read a message from the client.   
                     Console.WriteLine("Waiting for client message...");
                     string messageData = ReadMessage(sslStream);
-                    Console.WriteLine("Received: {0}", messageData);
+                    Console.WriteLine("Received {0}: {1}", userID[IPId], messageData);
 
                     Console.WriteLine(IPId);
                     //Console.WriteLine("From IP: " + ((IPEndPoint)client.Client.RemoteEndPoint).Address + ", " + ((IPEndPoint)client.Client.RemoteEndPoint).Port);
