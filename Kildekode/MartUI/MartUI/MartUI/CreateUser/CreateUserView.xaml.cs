@@ -12,17 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MartUI.Events;
 
 namespace MartUI.CreateUser
 {
     /// <summary>
     /// Interaction logic for CreateUserView.xaml
     /// </summary>
-    public partial class CreateUserView : UserControl
+    public partial class CreateUserView
     {
         public CreateUserView()
         {
             InitializeComponent();
+        }
+
+        private void CreateUserPasswordBx_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            GetEventAggregator.Get().GetEvent<PasswordChangedInCreate>().Publish(CreateUserPasswordBx.Password);
         }
     }
 }
