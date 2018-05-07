@@ -45,8 +45,8 @@ namespace Examples.System.Net
         {
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
-            TcpClient client = new TcpClient("192.168.173.1", 443);
-            //TcpClient client = new TcpClient(machineName, 8090);
+            //TcpClient client = new TcpClient("192.168.173.1", 443);
+            TcpClient client = new TcpClient(machineName, 443);
             Console.WriteLine("Client connected.");
             // Create an SSL stream that will close the client's stream.
 
@@ -78,15 +78,20 @@ namespace Examples.System.Net
             // Signal the end of the message using the "<EOF>".
             //byte[] messsage = Encoding.UTF8.GetBytes("Hello from the client.<EOF>");
             byte[] messsage = Encoding.UTF8.GetBytes("l;UserName;PlaintextPassword<EOF>");
-            // Send hello message to the server. 
-            sslStream.Write(messsage);
-            sslStream.Flush();
-            // Read message from the server.
-            string serverMessage = ReadMessage(sslStream);
-            Console.WriteLine("Server says: {0}", serverMessage);
-            // Close the client connection.
-            //client.Close();
-            Console.WriteLine("Client not closed.");
+            while (true)
+            {
+                messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + "<EOF>");
+                // Send hello message to the server. 
+                sslStream.Write(messsage);
+                sslStream.Flush();
+                // Read message from the server.
+                string serverMessage = ReadMessage(sslStream);
+                Console.WriteLine("Server says: {0}", serverMessage);
+                // Close the client connection.
+                //client.Close();
+                Console.WriteLine("Client not closed.");
+            }
+
             Console.ReadLine();
         }
         static string ReadMessage(SslStream sslStream)
@@ -126,7 +131,7 @@ namespace Examples.System.Net
         public static int Main(string[] args)
         {
             //string serverCertificateName = null;
-            string serverCertificateName = "Martin-MSIj";
+            string serverCertificateName = "Martin-MSI";
             //string machineName = null;
             string machineName = "Martin-MSI";
             //string machineName = "localhost";
