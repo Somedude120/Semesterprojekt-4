@@ -24,7 +24,7 @@ namespace MartUI
     /// </summary>
     public partial class MainView
     {
-        private bool Maximized;
+        private bool Maximized = false;
         private double PrevLeft, PrevTop, PrevWidth, PrevHeight;
 
         public MainView()
@@ -37,20 +37,15 @@ namespace MartUI
 
         private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed && e.ClickCount == 1)
             {
-                if(Maximized)
+                if (Maximized)
                 {
-                    Point Position = Mouse.GetPosition(TitleBar);
+                        Point Position = Mouse.GetPosition(TitleBar);
 
-                    if (Position.X == Mouse.GetPosition(TitleBar).X - 5 ||
-                        Position.Y == Mouse.GetPosition(TitleBar).Y - 5)
-                    {
-                        MinimizeApplication(sender, e);
-                        //ExpandApplication(sender, e);
+                        ExpandApplication(sender, e);
                         Left = Position.X - 7 - Width / 2;
                         Top = Position.Y - 9;
-                    }
                 }
             }
             if (e.ChangedButton == MouseButton.Left)

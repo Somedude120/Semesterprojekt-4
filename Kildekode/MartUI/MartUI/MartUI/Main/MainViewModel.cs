@@ -40,13 +40,13 @@ namespace MartUI.Main
             _eventAggregator.GetEvent<ChangeFriendPage>().Subscribe(ChangeFriendView);
             _eventAggregator.GetEvent<ChangeSideBarPage>().Subscribe(ChangeSideBarView);
 
-            ViewList.Add(new LoginViewModel());
-            //ViewList.Add(new FriendViewModel(eventAggregator));
+            //ViewList.Add(new LoginViewModel());
+            ViewList.Add(new FriendViewModel());
             //ViewList.Add(new FocusViewModel(eventAggregator));
 
-            //FriendListView = ViewList[1];
+            FriendListView = ViewList[0];
             //FocusView = new FocusViewModel(eventAggregator);
-            FullView = ViewList[0];
+            //FullView = ViewList[0];
             //regionManager.
             //regionManager.RequestNavigate("FullView", "LoginView");
         }

@@ -12,6 +12,7 @@
         xmlns:login="clr-namespace:MartUI.Login"
         xmlns:createuser="clr-namespace:MartUI.CreateUser"
         xmlns:mvvm="http://prismlibrary.com/"
+        xmlns:chat="clr-namespace:MartUI.Chat"
         mvvm:ViewModelLocator.AutoWireViewModel="True"
 
         mc:Ignorable="d"
@@ -32,6 +33,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type createuser:CreateUserViewModel}">
             <createuser:CreateUserView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type chat:ChatViewModel}">
+            <chat:ChatView DataContext="{Binding}"/>
         </DataTemplate>
     </Window.Resources>
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using MartUI.Chat;
 using MartUI.Events;
 using MartUI.Main;
 using Prism.Commands;
@@ -20,14 +21,19 @@ namespace MartUI.Friend
 
         private List<FriendModel> _friendList;
         private FriendModel _selectedFriend;
-        public ICommand ChooseFriend { get; set; }
+        public ICommand ChooseFriendCommand { get; set; }
+        public ICommand AddFriendCommand;
+        public ICommand RemoveFriendCommand;
+        //private ICommand _addFriendCommand;
+        //private ICommand _removeFriendCommand;
+
 
         public FriendViewModel()
         {
             _eventAggregator = GetEventAggregator.Get();
 
             FriendList = new List<FriendModel>();
-            ChooseFriend = new DelegateCommand<FriendModel>(SelectFriend);
+            ChooseFriendCommand = new DelegateCommand<FriendModel>(SelectFriend);
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
@@ -66,13 +72,8 @@ namespace MartUI.Friend
         private void SelectFriend(FriendModel friend)
         {
             _eventAggregator.GetEvent<SelectedFriendEvent>().Publish(friend);
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
         }
-        //private void ChangeSelectedFriend(FriendModel friend)
-        //{
-        //    if (!FriendList.Contains(friend))
-        //        FriendList.Add(friend);
-        //    SelectFriend = FriendList.FirstOrDefault(f => f == friend);
-        //}
 
         public void AddFriend(FriendModel friend)
         {
@@ -92,6 +93,9 @@ namespace MartUI.Friend
                 MessageBox.Show("This user is not on your friendlist!");
 
             //Skal kommunikere med database/server
+            //Lav dropdown når der højreklikkes på en ven hvorved muligheden for at fjerne mm. fremvises
         }
+
+        //public ICommand AddFriendCommand => _addFriendCommand ?? (_addFriendCommand = new DelegateCommand());
     }
 }

@@ -132,4 +132,16 @@
         </Setter>
     </Style>
 
+    <Style x:Key="GradientColorRectangle" TargetType="Rectangle">
+        <Setter Property="Fill">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                    <GradientStop Color="DarkBlue" Offset="0.0"/>
+                    <GradientStop Color="Indigo" Offset="0.33"/>
+                    <GradientStop Color="DarkGreen" Offset="0.66"/>
+                    <GradientStop Color="Green" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
