@@ -41,13 +41,22 @@ namespace MartUI
             {
                 if(Maximized)
                 {
-                        ExpandApplication(sender, e);
-                        Point Position = Mouse.GetPosition(TitleBar);
+                    Point Position = Mouse.GetPosition(TitleBar);
+
+                    if (Position.X == Mouse.GetPosition(TitleBar).X - 5 ||
+                        Position.Y == Mouse.GetPosition(TitleBar).Y - 5)
+                    {
+                        MinimizeApplication(sender, e);
+                        //ExpandApplication(sender, e);
                         Left = Position.X - 7 - Width / 2;
                         Top = Position.Y - 9;
+                    }
                 }
             }
+            if (e.ChangedButton == MouseButton.Left)
+            {
                 DragMove();
+            }
         }
 
         private void MainView_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -98,6 +107,26 @@ namespace MartUI
                 Top = SystemParameters.WorkArea.Top;
                 Left = SystemParameters.WorkArea.Left;
                 Maximized = true;
+            }
+        }
+
+        private void TitleBar_LeftMouseButtonDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            {
+                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                {
+                    if (Maximized)
+                    {
+                        ExpandApplication(sender, e);
+                        Point Position = Mouse.GetPosition(TitleBar);
+                        Left = Position.X - 7 - Width / 2;
+                        Top = Position.Y - 9;
+                    }
+                    else
+                    {
+                        ExpandApplication(sender, e);
+                    }
+                }
             }
         }
     }
