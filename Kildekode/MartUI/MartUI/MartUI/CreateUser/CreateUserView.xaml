@@ -7,6 +7,40 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
 
+    <UserControl.Resources>
+        <DataTemplate x:Key="NameTokenTemplate">
+            <DataTemplate.Resources>
+                <Storyboard x:Key="OnLoaded1">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border">
+                        <SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+                        <SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </DataTemplate.Resources>
+            <Border x:Name="border" BorderBrush="#FF7E7E7E" BorderThickness="2" CornerRadius="5" Height="Auto" d:DesignWidth="139" d:DesignHeight="40" Padding="5,3" Margin="3,0,3,3">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#32CD32" Offset="0"/>
+                        <GradientStop Color="#228B22" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid HorizontalAlignment="Left" Width="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.21*"/>
+                        <ColumnDefinition Width="0.79*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image HorizontalAlignment="Right" Source="../Images/14-tag.png" Stretch="None" Width="Auto" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBlock TextWrapping="NoWrap" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Margin="10,0,0,0" FontWeight="Bold"/>
+                </Grid>
+            </Border>
+            <DataTemplate.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard Storyboard="{StaticResource OnLoaded1}"/>
+                </EventTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Grid MaxWidth="500" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -70,10 +104,18 @@
                    Text="Tags"
                    FontSize="20"
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
-        <TextBox Grid.Column="2"
-                     Grid.Row="3"
-                     Margin="10"
-                     MaxLength="20" MaxWidth="200" MinWidth="200"/>
+        <local:TokenizingControl x:Name="Tokenizer" Grid.Column="2"
+                   Grid.Row="3"
+                   Margin="10"
+                   MaxWidth="200" MinWidth="200" MinHeight="26"
+                   TokenTemplate="{DynamicResource NameTokenTemplate}"
+                   VerticalScrollBarVisibility="Auto">
+            <FlowDocument>
+                <Paragraph>
+                    <Run />
+                </Paragraph>
+            </FlowDocument>
+        </local:TokenizingControl>
         <TextBlock Grid.Column="1"
                    Grid.Row="4"
                    Text="Picture"

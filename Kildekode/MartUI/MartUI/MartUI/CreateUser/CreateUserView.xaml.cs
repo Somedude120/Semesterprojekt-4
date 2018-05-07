@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -24,11 +25,28 @@ namespace MartUI.CreateUser
         public CreateUserView()
         {
             InitializeComponent();
+
+            Loaded += delegate
+            {
+                Tokenizer.Focus();
+            };
+
+            Tokenizer.TokenMatcher = text =>
+            {
+                if (text.EndsWith(" "))
+                {
+                    // Remove the ';'
+                    return text.Substring(0, text.Length - 1).Trim().ToUpper();
+                }
+
+                return null;
+            };
         }
 
         private void CreateUserPasswordBx_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             GetEventAggregator.Get().GetEvent<PasswordChangedInCreate>().Publish(CreateUserPasswordBx.Password);
         }
+        
     }
 }

@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
+    <Compile Include="CreateUser\TokenizingControl.cs" />
     <Compile Include="Events\ChangeFocusPage.cs" />
     <Compile Include="Events\ChangeFriendPage.cs" />
     <Compile Include="Events\ChangeFullPage.cs" />
@@ -219,6 +220,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Misc\Marto-full-icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\14-tag.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
