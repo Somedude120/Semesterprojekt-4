@@ -5,10 +5,10 @@ namespace ProfileConsole
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class BloggingContext : DbContext
+    public class ProfileContext : DbContext
     {
-        public BloggingContext()
-            : base("name=BloggingContext")
+        public ProfileContext()
+            : base("name=ProfileContext")
         {
         }
 
