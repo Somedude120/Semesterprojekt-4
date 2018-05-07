@@ -106,6 +106,7 @@
     <Compile Include="Events\ChangeFriendPage.cs" />
     <Compile Include="Events\ChangeFullPage.cs" />
     <Compile Include="Events\ChangeSideBarPage.cs" />
+    <Compile Include="Events\ChangingTagsInCreate.cs" />
     <Compile Include="Events\GetEventAggregator.cs" />
     <Compile Include="Events\PasswordChangedInCreate.cs" />
     <Compile Include="Events\PasswordChangedInLogin.cs" />

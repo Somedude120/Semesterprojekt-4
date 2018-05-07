@@ -35,10 +35,16 @@ namespace MartUI.CreateUser
         public CreateUserViewModel()
         {
             _eventAggregator.GetEvent<PasswordChangedInCreate>().Subscribe(SetPassword);
+            _eventAggregator.GetEvent<ChangingTagsInCreate>().Subscribe(Check);
             _database = new DatabaseDummy();
 
             _database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
             _database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
+        }
+
+        public void Check()
+        {
+            Person.Name = "deleted";
         }
 
         public DetailedPersonnModel Person
@@ -66,6 +72,7 @@ namespace MartUI.CreateUser
         }
         private void CreateNewUser()
         {
+            MessageBox.Show(Person.Name);
             MessageBox.Show(Person.Password);
 
             // THIS IS SERVER STUFF, ONLY FOR TESTING!!

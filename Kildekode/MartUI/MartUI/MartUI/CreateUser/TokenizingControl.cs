@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using MartUI.Events;
 
 namespace MartUI.CreateUser
 {
@@ -37,8 +38,16 @@ namespace MartUI.CreateUser
 
         private void OnTokenTextChanged(object sender, TextChangedEventArgs textChangedEventArgs)
         {
-
             var txt = CaretPosition.GetTextInRun(LogicalDirection.Backward);
+
+            if (txt == "")
+            {
+                GetEventAggregator.Get().GetEvent<ChangingTagsInCreate>().Publish("Remove");
+            }
+            else
+            {
+                if (txt)
+            }
 
             // If not null TokenMatcher will return token with input txt
             var token = TokenMatcher?.Invoke(txt);
