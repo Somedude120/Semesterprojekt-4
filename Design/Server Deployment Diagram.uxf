@@ -4,8 +4,8 @@
   <element>
     <id>UMLDeployment</id>
     <coordinates>
-      <x>540</x>
-      <y>60</y>
+      <x>550</x>
+      <y>70</y>
       <w>250</w>
       <h>180</h>
     </coordinates>
@@ -16,20 +16,21 @@
   <element>
     <id>UMLDeployment</id>
     <coordinates>
-      <x>120</x>
-      <y>210</y>
+      <x>130</x>
+      <y>220</y>
       <w>250</w>
       <h>180</h>
     </coordinates>
     <panel_attributes>&lt;&lt;device&gt;&gt;
-:DBServer</panel_attributes>
+:DBServer
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLDeployment</id>
     <coordinates>
-      <x>540</x>
-      <y>380</y>
+      <x>550</x>
+      <y>390</y>
       <w>250</w>
       <h>180</h>
     </coordinates>
@@ -40,12 +41,70 @@
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>70</x>
-      <y>30</y>
+      <x>80</x>
+      <y>40</y>
       <w>800</w>
       <h>560</h>
     </coordinates>
     <panel_attributes>*Marto - Deployment Diagram*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>590</x>
+      <y>150</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;artifact&gt;&gt;
+MySQL DB</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>150</y>
+      <w>200</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;160.0;180.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>300</y>
+      <w>200</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>180.0;190.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>590</x>
+      <y>470</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;artifact&gt;&gt;
+WPF MartUI</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>170</x>
+      <y>290</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;artifact&gt;&gt;
+Message Handler</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
