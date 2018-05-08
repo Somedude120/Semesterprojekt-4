@@ -1,4 +1,4 @@
-namespace ProfileConsole
+namespace ProfileConsole.Core.Domain
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace ProfileConsole
     {
         [Key]
         [StringLength(15)]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         public string Salt { get; set; }
 

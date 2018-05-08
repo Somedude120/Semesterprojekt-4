@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProfileConsole.Core;
+using ProfileConsole.Core.Domain;
 using ProfileConsole.Core.Repositories;
 using ProfileConsole.Persistence.Repositories;
 

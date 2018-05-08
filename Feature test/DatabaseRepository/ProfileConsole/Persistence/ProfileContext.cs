@@ -1,11 +1,11 @@
-namespace ProfileConsole
+namespace ProfileConsole.Core.Domain
 {
     using System;
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public class ProfileContext : DbContext
+    public partial class ProfileContext : DbContext
     {
         public ProfileContext()
             : base("name=ProfileContext")
@@ -61,7 +61,7 @@ namespace ProfileConsole
                 .IsUnicode(false);
 
             modelBuilder.Entity<Login>()
-                .Property(e => e.UserName)
+                .Property(e => e.Username)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Login>()
@@ -80,6 +80,10 @@ namespace ProfileConsole
             modelBuilder.Entity<UserInformation>()
                 .Property(e => e.UserName)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<UserInformation>()
+                .Property(e => e.Status)
+                .IsFixedLength();
 
             modelBuilder.Entity<UserInformation>()
                 .HasMany(e => e.FriendList)
