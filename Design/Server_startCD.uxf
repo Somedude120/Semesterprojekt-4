@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>9</zoom_level>
+  <zoom_level>6</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1134</x>
-      <y>522</y>
-      <w>495</w>
-      <h>135</h>
+      <x>798</x>
+      <y>390</y>
+      <w>330</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Class&gt;&gt;
 _sendFile_
@@ -22,10 +22,10 @@ public:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>639</y>
-      <w>414</w>
-      <h>135</h>
+      <x>42</x>
+      <y>468</y>
+      <w>276</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Class&gt;&gt;
 _sendMsg_
@@ -40,10 +40,10 @@ public
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>765</x>
-      <y>0</y>
-      <w>243</w>
-      <h>216</h>
+      <x>552</x>
+      <y>42</y>
+      <w>162</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Class&gt;&gt;
 _Server_
@@ -62,10 +62,10 @@ public:
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>468</y>
-      <w>27</w>
-      <h>189</h>
+      <x>234</x>
+      <y>354</y>
+      <w>18</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
@@ -73,10 +73,10 @@ public:
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1215</x>
-      <y>405</y>
-      <w>108</w>
-      <h>135</h>
+      <x>852</x>
+      <y>312</y>
+      <w>72</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;100.0;130.0</additional_attributes>
@@ -84,10 +84,10 @@ public:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>486</x>
-      <y>639</y>
-      <w>414</w>
-      <h>135</h>
+      <x>366</x>
+      <y>468</y>
+      <w>276</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Class&gt;&gt;
 _recMsg_
@@ -102,10 +102,10 @@ public
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>342</x>
-      <y>468</y>
-      <w>324</w>
-      <h>189</h>
+      <x>270</x>
+      <y>354</y>
+      <w>216</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;340.0;190.0</additional_attributes>
@@ -113,10 +113,10 @@ public
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>90</x>
-      <y>342</y>
-      <w>414</w>
-      <h>135</h>
+      <x>102</x>
+      <y>270</y>
+      <w>276</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Class&gt;&gt;
 _Imsg_
@@ -131,10 +131,10 @@ public
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>297</x>
-      <y>207</y>
-      <w>603</w>
-      <h>153</h>
+      <x>240</x>
+      <y>180</y>
+      <w>402</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>650.0;10.0;10.0;150.0</additional_attributes>
@@ -142,10 +142,10 @@ public
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>954</x>
-      <y>279</y>
-      <w>495</w>
-      <h>135</h>
+      <x>678</x>
+      <y>228</y>
+      <w>330</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Class&gt;&gt;
 _Ifile_
@@ -160,10 +160,10 @@ public:
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>873</x>
-      <y>207</y>
-      <w>342</w>
-      <h>90</h>
+      <x>624</x>
+      <y>180</y>
+      <w>228</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;360.0;80.0</additional_attributes>
