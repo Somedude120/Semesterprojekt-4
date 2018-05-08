@@ -18,6 +18,7 @@ namespace Examples.System.Net
     public sealed class SslTcpServer
     {
         public static Dictionary<string, string> userID = new Dictionary<string, string>();
+        public static Dictionary<string, SslStream> userStreams = new Dictionary<string, SslStream>();
         public static TcpListener listener = new TcpListener(IPAddress.Any, 443);
         static X509Certificate serverCertificate = null;
         // The certificate parameter specifies the name of the file 
@@ -35,8 +36,8 @@ namespace Examples.System.Net
                 // Application blocks while waiting for an incoming connection.
                 // Type CNTL-C to terminate the server.
                 TcpClient client = listener.AcceptTcpClient();
-                Console.WriteLine("Client IP:" + ((IPEndPoint)client.Client.RemoteEndPoint).Address);
-                Console.WriteLine("Client port:" + ((IPEndPoint)client.Client.RemoteEndPoint).Port);
+                //Console.WriteLine("Client IP:" + ((IPEndPoint)client.Client.RemoteEndPoint).Address);
+                //Console.WriteLine("Client port:" + ((IPEndPoint)client.Client.RemoteEndPoint).Port);
                 ProcessClient(client);
             }
         }
@@ -66,6 +67,7 @@ namespace Examples.System.Net
                 //Request UserID
                 string login = ReadMessage(sslStream);
                 userID.Add(IPId, login);
+                userStreams.Add(login, sslStream);
 
                 while (true)
                 {
@@ -81,6 +83,7 @@ namespace Examples.System.Net
                     byte[] message = Encoding.UTF8.GetBytes("Access granted<EOF>");
                     Console.WriteLine("Sending hello message.");
                     sslStream.Write(message);
+                    userStreams[messageData].Write(Encoding.UTF8.GetBytes("From other client"));
                     Console.WriteLine();
                 }
 
@@ -214,7 +217,18 @@ namespace Examples.System.Net
                     RunServer((string)o);
                 });
                 newThread.Start(certificate);
-            }            
+            }
+
+            //while (true)
+            //{
+            //    TcpClient client = ServerSocket.AcceptTcpClient();
+            //    //lock (_lock) list_clients.Add(count, client);
+            //    Console.WriteLine("Someone connected!!");
+
+            //    Thread t = new Thread(handle_clients);
+            //    t.Start(count);
+            //    count++;
+            //}
             return 0;
         }
     }
