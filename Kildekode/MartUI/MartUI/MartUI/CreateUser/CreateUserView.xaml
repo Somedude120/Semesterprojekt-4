@@ -9,7 +9,9 @@
 
     <!--Have tjek på længde af pass + username (som i login).
     Ændre billede til at udfylde på "fill" eller andet, se gui lektioner.
-    stjernerne skal have et hint som værende "skal udfyldes" i bunden eller som tooltip-->
+    stjernerne skal have et hint som værende "skal udfyldes" i bunden eller som tooltip
+    Ændre max/min størrelse af billede? eller kommer dette af "fill" etc. måske flytte
+    billedet til toppen i stedet-->
     <UserControl.Resources>
         <DataTemplate x:Key="NameTokenTemplate">
             <DataTemplate.Resources>
