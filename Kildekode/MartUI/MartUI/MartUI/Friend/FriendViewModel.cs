@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -19,26 +21,27 @@ namespace MartUI.Friend
         private readonly IEventAggregator _eventAggregator;
         public string ReferenceName => "FriendViewModel"; // Returns "FriendViewModel"
 
-        private List<FriendModel> _friendList;
+        private ObservableCollection<FriendModel> _friendList;
         private FriendModel _selectedFriend;
         public ICommand ChooseFriendCommand { get; set; }
-        public ICommand AddFriendCommand;
-        public ICommand RemoveFriendCommand;
-        //private ICommand _addFriendCommand;
-        //private ICommand _removeFriendCommand;
+        //public ICommand AddFriendCommand;
+        //public ICommand RemoveFriendCommand;
+        private ICommand _addFriendCommand;
+        private ICommand _removeFriendCommand;
+        private ICommand _doThreadedWorkCommand;
 
 
         public FriendViewModel()
         {
             _eventAggregator = GetEventAggregator.Get();
 
-            FriendList = new List<FriendModel>();
+            //FriendList = new List<FriendModel>();
             ChooseFriendCommand = new DelegateCommand<FriendModel>(SelectFriend);
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
 
-            for (int i = 0; i < 41; i++)
+            for (int i = 0; i < 3; i++)
             {
                 var friend = new FriendModel {Username = "Friend" + i};
                 FriendList.Add(friend);
@@ -49,15 +52,17 @@ namespace MartUI.Friend
             //Samt kun alle som er online 
         }
 
+        public ICommand DoThreadedWorkCommand => _doThreadedWorkCommand ?? (_doThreadedWorkCommand = new DelegateCommand(doSomething));
+
         // Mangler at tilføje en filtrering eller en anden liste som kun indeholder online venner
 
         // All friends in friend list
-        public List<FriendModel> FriendList
+        public ObservableCollection<FriendModel> FriendList
         {
             get
             {
                 if (_friendList == null)
-                    _friendList = new List<FriendModel>();
+                    _friendList = new ObservableCollection<FriendModel>();
                 return _friendList;
             }
             set => SetProperty(ref _friendList, value);
@@ -75,20 +80,29 @@ namespace MartUI.Friend
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
         }
 
-        public void AddFriend(FriendModel friend)
+        public void AddFriend()
         {
-            if (!FriendList.Contains(friend))
-                FriendList.Add(friend);
-            else
-                MessageBox.Show("This user is already on your friendlist!");
+            for(int i = 0; i < 20; i++)
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    FriendList.Add(new FriendModel {Username = "Yee" + i});
+                }));
+            }
+            //if (!FriendList.Contains(_selectedFriend))
+            //    FriendList.Add(_selectedFriend);
+            //else
+            //    MessageBox.Show("This user is already on your friendlist!");
 
             //Skal kommunikere med database/server
         }
 
-        public void RemoveFriend(FriendModel friend)
+        public void RemoveFriend()
         {
-            if (FriendList.Contains(friend))
-                FriendList.Remove(friend);
+            if (FriendList.Contains(SelectedFriend))
+            {
+                FriendList.Remove(SelectedFriend);
+            }
             else
                 MessageBox.Show("This user is not on your friendlist!");
 
@@ -96,6 +110,37 @@ namespace MartUI.Friend
             //Lav dropdown når der højreklikkes på en ven hvorved muligheden for at fjerne mm. fremvises
         }
 
-        //public ICommand AddFriendCommand => _addFriendCommand ?? (_addFriendCommand = new DelegateCommand());
+        public ICommand AddFriendCommand => _addFriendCommand ?? (_addFriendCommand = new DelegateCommand(AddFriend));
+        public ICommand RemoveFriendCommand => _removeFriendCommand ?? (_removeFriendCommand = new DelegateCommand(RemoveFriend));
+
+        public string ListSize
+        {
+            get { return FriendList.Count.ToString(); }
+            set { }
+        }
+
+        private void doSomething()
+        {
+            Thread myThread = new Thread(AddFriend);
+            myThread.Start();
+        }
+
+    }
+
+    public class BindingProxy : Freezable
+    {
+        protected override Freezable CreateInstanceCore()
+        {
+            return new BindingProxy();
+        }
+
+        public object Data
+        {
+            get { return (object)GetValue(DataProperty); }
+            set { SetValue(DataProperty, value); }
+        }
+
+        public static readonly DependencyProperty DataProperty =
+            DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
     }
 }

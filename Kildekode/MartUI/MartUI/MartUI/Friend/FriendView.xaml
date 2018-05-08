@@ -15,18 +15,27 @@
             <RowDefinition Height="1"/>
             <RowDefinition Height="26"/>
         </Grid.RowDefinitions>
+        
+        <Grid.Resources>
+            <local:BindingProxy x:Key="Proxy" Data="{Binding}"/>
+        </Grid.Resources>
 
         <Grid Row="0">
             <ScrollViewer HorizontalAlignment="Right" Width="200">
-                <ItemsControl ItemsSource="{Binding FriendList}" Width="185">
+                <ItemsControl ItemsSource="{Binding FriendList, UpdateSourceTrigger=PropertyChanged}" Width="185">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Button
-                            Content="{Binding Username}"
-                            Command="{Binding  DataContext.ChooseFriend, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                            Content="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                            Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                             CommandParameter="{Binding}"
                             Margin="0,3" Width="185" Height="20"
                             Style="{StaticResource RoundCorner}">
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Remove" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveFriendCommand}"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
                             </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -38,7 +47,7 @@
         </Grid>
         <Grid Row="2">
             <Button Width="16" HorizontalAlignment="Right" Margin="0,0,6,0" Background="White" BorderBrush="Transparent"  Height="16" 
-                    Name="ExpandBtn" Style="{StaticResource NoButtonHighlight}" Command="{Binding AddFriendCommand}">
+                    Name="ExpandBtn" Style="{StaticResource NoButtonHighlight}" Command="{Binding DoThreadedWorkCommand}">
                 <Button.OpacityMask>
                     <VisualBrush Visual="{iconPacks:Modern UserAdd}" />
                 </Button.OpacityMask>
