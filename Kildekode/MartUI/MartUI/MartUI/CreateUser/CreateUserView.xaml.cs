@@ -26,16 +26,11 @@ namespace MartUI.CreateUser
         {
             InitializeComponent();
 
-            Loaded += delegate
-            {
-                Tokenizer.Focus();
-            };
-
             Tokenizer.TokenMatcher = text =>
             {
                 if (text.EndsWith(" "))
                 {
-                    // Remove the ';'
+                    // Remove the ' '
                     return text.Substring(0, text.Length - 1).Trim().ToUpper();
                 }
 

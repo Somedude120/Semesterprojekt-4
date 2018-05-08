@@ -45,7 +45,7 @@ namespace MartUI.CreateUser
 
         public List<string> Tags
         {
-            get => _person.Tags;
+            get => _person.Tags ?? (_person.Tags = new List<string>());
             set
             {
                 _person.Tags = value;

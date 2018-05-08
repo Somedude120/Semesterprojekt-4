@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using MartUI.Events;
 using MartUI.Helpers;
 using MartUI.Login;
 using MartUI.Main;
+using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -21,30 +24,37 @@ namespace MartUI.CreateUser
     public class CreateUserViewModel : BindableBase, IViewModel
     {
         public string ReferenceName => "CreateUser";
-
         private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
 
         private DatabaseDummy _database;
-
         private DetailedPersonnModel _person;
 
         private ICommand _registerButton;
         private ICommand _backButton;
+        private ICommand _chooseProfilePicture;
+
+        private Image _image;
+        private string _imagePath;
+        private Uri _imageSource;
 
 
         public CreateUserViewModel()
         {
+
+            //Subscriptions
             _eventAggregator.GetEvent<PasswordChangedInCreate>().Subscribe(SetPassword);
-            _eventAggregator.GetEvent<ChangingTagsInCreate>().Subscribe(Check);
+            _eventAggregator.GetEvent<ChangingTagsInCreate>().Subscribe(ModifyTags);
+
             _database = new DatabaseDummy();
 
             _database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
             _database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
         }
 
-        public void Check()
+        public Uri ImageSource
         {
-            Person.Name = "deleted";
+            get => _imageSource ?? new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG");
+            set => SetProperty(ref _imageSource, value);
         }
 
         public DetailedPersonnModel Person
@@ -62,9 +72,19 @@ namespace MartUI.CreateUser
                            _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel())));
             }
         }
-
         // Will call CreateNewUser
         public ICommand RegisterButton => _registerButton ?? (_registerButton = new DelegateCommand(CreateNewUser));
+
+        public ICommand ChooseProfilePicture => _chooseProfilePicture ?? (_chooseProfilePicture = new DelegateCommand(ChoosePicture));
+
+        private void ChoosePicture()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Select a picture";
+
+            if (dialog.ShowDialog() == true)
+                ImageSource = new Uri(dialog.FileName);
+        }
 
         public void SetPassword(string pass)
         {
@@ -72,9 +92,6 @@ namespace MartUI.CreateUser
         }
         private void CreateNewUser()
         {
-            MessageBox.Show(Person.Name);
-            MessageBox.Show(Person.Password);
-
             // THIS IS SERVER STUFF, ONLY FOR TESTING!!
             //if (UsernameAlreadyExist(Username))
             //{
@@ -105,6 +122,19 @@ namespace MartUI.CreateUser
             }
 
             return false;
+        }
+
+        public void ModifyTags(TagControl tag)
+        {
+            if (!tag.Command)
+            {
+                if (Person.Tags.Any())
+                    Person.Tags.RemoveAt(Person.Tags.Count - 1);
+            }
+            else
+            {
+                Person.Tags.Add(tag.Tag);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,12 @@ namespace MartUI.CreateUser
             set => SetValue(TokenTemplateProperty, value);
         }
 
+        public ItemsControl Items
+        {
+            get => (ItemsControl)GetValue(TokenTemplateProperty);
+            set => SetValue(TokenTemplateProperty, value);
+        }
+
         // Method "TokenMatcher" has input string and returns an object
         public Func<string, object> TokenMatcher { get; set; }
 
@@ -41,25 +48,19 @@ namespace MartUI.CreateUser
             var txt = CaretPosition.GetTextInRun(LogicalDirection.Backward);
 
             if (txt == "")
-            {
-                GetEventAggregator.Get().GetEvent<ChangingTagsInCreate>().Publish("Remove");
-            }
-            else
-            {
-                if (txt)
-            }
+                GetEventAggregator.Get().GetEvent<ChangingTagsInCreate>().Publish(new TagControl(false));
 
             // If not null TokenMatcher will return token with input txt
             var token = TokenMatcher?.Invoke(txt);
 
             if (token != null)
                 ReplaceTextWithToken(txt, token);
+
         }
 
         private void ReplaceTextWithToken(string txt, object token)
         {
             // Remove handler temporary to not cause TextChanged events
-
             TextChanged -= OnTokenTextChanged;
 
             // Get the paragraph
@@ -82,6 +83,8 @@ namespace MartUI.CreateUser
                 if (matchedRun.Text == txt)
                 {
                     para.Inlines.Remove(matchedRun);
+                    GetEventAggregator.Get().GetEvent<ChangingTagsInCreate>().Publish(new TagControl(true, txt));
+
                 }
                 else // Split up
                 {
@@ -89,11 +92,10 @@ namespace MartUI.CreateUser
                     var tailEnd = new Run(matchedRun.Text.Substring(index));
                     para.Inlines.InsertAfter(matchedRun, tailEnd);
                     para.Inlines.Remove(matchedRun);
+
                 }
             }
-
             TextChanged += OnTokenTextChanged;
-
         }
 
         private InlineUIContainer CreateTokenContainer(string inputText, object token)

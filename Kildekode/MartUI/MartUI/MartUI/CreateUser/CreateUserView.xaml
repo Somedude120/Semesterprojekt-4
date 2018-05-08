@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
 
+    <!--Have tjek på længde af pass + username (som i login).
+    Ændre billede til at udfylde på "fill" eller andet, se gui lektioner.
+    stjernerne skal have et hint som værende "skal udfyldes" i bunden eller som tooltip-->
     <UserControl.Resources>
         <DataTemplate x:Key="NameTokenTemplate">
             <DataTemplate.Resources>
@@ -109,12 +112,13 @@
                    Margin="10"
                    MaxWidth="200" MinWidth="200" MinHeight="26"
                    TokenTemplate="{DynamicResource NameTokenTemplate}"
+                                 MaxHeight="190"
                    VerticalScrollBarVisibility="Auto">
-            <FlowDocument>
+            <!--<FlowDocument>
                 <Paragraph>
                     <Run />
                 </Paragraph>
-            </FlowDocument>
+            </FlowDocument>-->
         </local:TokenizingControl>
         <TextBlock Grid.Column="1"
                    Grid.Row="4"
@@ -124,13 +128,13 @@
         <Button Grid.Column="2"
                Grid.Row="4"
                Content="..."
-               HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="30,0,0,0"/>
+               HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="30,0,0,0"
+               Command="{Binding ChooseProfilePicture}"/>
         <Image Grid.Column="2"
                Grid.Row="4"
-               Source="../Images/ProfilePicPlaceholder.PNG"
+               Source="{Binding ImageSource}"
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" 
                MaxWidth="150" MaxHeight="150"/>
-        <!--Change pic dynamically-->
         <Button Grid.Column="1"
                 Grid.Row="5"
                 Content="Back"
