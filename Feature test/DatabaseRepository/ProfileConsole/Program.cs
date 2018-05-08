@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProfileConsole.Repository;
+using ProfileConsole.Persistence;
+using ProfileConsole.Persistence.Repositories;
 
 namespace ProfileConsole
 {
@@ -11,23 +12,55 @@ namespace ProfileConsole
     {
         static void Main(string[] args)
         {
-            using (var db = new BloggingContext())
+            using (var unitOfWork = new UnitOfWork(new ProfileContext()))
             {
-                ChatRepo chat = new ChatRepo();
-                ChatGroupRepo group = new ChatGroupRepo();
-                EmojiRepo emoji = new EmojiRepo();
-                FriendListRepo friendList = new FriendListRepo();
-                LoginRepo login = new LoginRepo();
-                TagsRepo tag = new TagsRepo();
-                UserChatGroupRepo userChatGroup = new UserChatGroupRepo();
-                UserInformationRepo user = new UserInformationRepo();
-                UserTagsRepo userTag= new UserTagsRepo();
+                var userTags = unitOfWork.UserInformation.GetTagsWithUserInformation("Farto");
+                var userGroups = unitOfWork.UserInformation.GetChatGroupsWithUserInformation("Farto");
+                //var user = unitOfWork.UserInformation.GetAll();
+                //var tag = unitOfWork.Tags.GetAll();
 
-                //Using repository
-                userTag.ReadUserTags();
+                Console.WriteLine("\nUserName: " + userTags.UserName);
+                foreach (var item in userTags.Tags)
+                {
+                    Console.WriteLine("\t Tag: " + item.TagName);
+                }
+
+                Console.WriteLine("\nUserName: " + userGroups.UserName);
+                foreach (var item in userGroups.ChatGroups)
+                {
+                    Console.WriteLine("\t ChatGroup: " + item.GroupName);
+                }
+               
+
+                //----------Add----------
+                //var tag = new Tags { TagName = "1v1" };
+                //unitOfWork.Tags.Add(tag);
+                //unitOfWork.Complete();
 
 
+                //----------PrintAll----------
+                //var getTags = unitOfWork.Tags.GetAll();
+                //foreach (var tag in getTags)
+                //{
+                //    Console.WriteLine(tag.TagName);
+                //}
+
+
+                //----------Remove----------
+                //var tag = unitOfWork.Tags.GetString("1v1");
+                //unitOfWork.Tags.Remove(tag);
+                //unitOfWork.Complete();
             }
         }
+
+        static void PrintUserInfo(IEnumerable<>);
+        //foreach (var u in userTags)
+        //{
+        //    Console.WriteLine("UserName: " + u.UserName);
+        //    foreach (var t in u.Tags)
+        //    {
+        //        Console.WriteLine("\t Tag: " + t.TagName);
+        //    }
+        //}
     }
 }
