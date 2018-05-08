@@ -5,8 +5,10 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using ProfileConsole;
+using ProfileConsole.Core.Domain;
 using ProfileConsole.Core.Repositories;
 using ProfileConsole.Persistence.Repository;
+using System.Data.Entity;
 
 namespace ProfileConsole.Persistence.Repositories
 {
@@ -17,7 +19,10 @@ namespace ProfileConsole.Persistence.Repositories
         {
         }
 
-
+        public ChatGroups GetChatWithChatGroups(string groupName)
+        {
+            return ProfileContext.ChatGroups.Include(a => a.Chat).SingleOrDefault(a => a.GroupName == groupName);
+        }
 
         public ProfileContext ProfileContext
         {

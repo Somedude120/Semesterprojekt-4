@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ProfileConsole.Core.Repositories;
 using ProfileConsole.Persistence.Repository;
 using System.Data.Entity;
+using ProfileConsole.Core.Domain;
 
 namespace ProfileConsole.Persistence.Repositories
 {
@@ -19,13 +20,11 @@ namespace ProfileConsole.Persistence.Repositories
 
         public UserInformation GetTagsWithUserInformation(string userName)
         {
-            //return ProfileContext.UserInformation.OrderByDescending(c => c.UserName).Take(userName).ToList();
            return ProfileContext.UserInformation.Include(a => a.Tags).SingleOrDefault(a => a.UserName == userName);
         }
 
         public UserInformation GetChatGroupsWithUserInformation(string userName)
         {
-            //return ProfileContext.UserInformation.OrderByDescending(c => c.UserName).Take(userName).ToList();
             return ProfileContext.UserInformation.Include(a => a.ChatGroups).SingleOrDefault(a => a.UserName == userName);
         }
 

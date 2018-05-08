@@ -1,4 +1,4 @@
-namespace ProfileConsole
+namespace ProfileConsole.Core.Domain
 {
     using System;
     using System.Collections.Generic;
@@ -16,6 +16,7 @@ namespace ProfileConsole
 
         [Key]
         [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int MessageNumber { get; set; }
 
         public string Message { get; set; }

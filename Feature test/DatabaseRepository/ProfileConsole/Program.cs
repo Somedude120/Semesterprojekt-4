@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProfileConsole.Core.Domain;
 using ProfileConsole.Persistence;
 using ProfileConsole.Persistence.Repositories;
 
@@ -16,20 +17,25 @@ namespace ProfileConsole
             {
                 var userTags = unitOfWork.UserInformation.GetTagsWithUserInformation("Farto");
                 var userGroups = unitOfWork.UserInformation.GetChatGroupsWithUserInformation("Farto");
-                //var user = unitOfWork.UserInformation.GetAll();
-                //var tag = unitOfWork.Tags.GetAll();
+                var chatGroups = unitOfWork.ChatGroup.GetChatWithChatGroups("Marto-entutiaster");
 
-                Console.WriteLine("\nUserName: " + userTags.UserName);
-                foreach (var item in userTags.Tags)
+                Console.WriteLine("\nGroupName: " + chatGroups.GroupName);
+                foreach (var item in chatGroups.Chat)
                 {
-                    Console.WriteLine("\t Tag: " + item.TagName);
+                    Console.WriteLine("\t" + item.Sender + ": " + item.Message);    
                 }
 
-                Console.WriteLine("\nUserName: " + userGroups.UserName);
-                foreach (var item in userGroups.ChatGroups)
-                {
-                    Console.WriteLine("\t ChatGroup: " + item.GroupName);
-                }
+                //Console.WriteLine("\nUserName: " + userTags.UserName);
+                //foreach (var item in userTags.Tags)
+                //{
+                //    Console.WriteLine("\t Tag: " + item.TagName);
+                //}
+
+                //Console.WriteLine("\nUserName: " + userGroups.UserName);
+                //foreach (var item in userGroups.ChatGroups)
+                //{
+                //    Console.WriteLine("\t ChatGroup: " + item.GroupName);
+                //}
                
 
                 //----------Add----------
@@ -53,7 +59,7 @@ namespace ProfileConsole
             }
         }
 
-        static void PrintUserInfo(IEnumerable<>);
+        //static void PrintUserInfo(IEnumerable<>);
         //foreach (var u in userTags)
         //{
         //    Console.WriteLine("UserName: " + u.UserName);

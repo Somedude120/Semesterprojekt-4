@@ -51,6 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Domain\Chat.cs" />
+    <Compile Include="Core\Domain\ChatGroups.cs" />
+    <Compile Include="Core\Domain\Emoji.cs" />
+    <Compile Include="Core\Domain\FriendList.cs" />
+    <Compile Include="Core\Domain\Login.cs" />
+    <Compile Include="Persistence\ProfileContext.cs" />
+    <Compile Include="Core\Domain\Tags.cs" />
+    <Compile Include="Core\Domain\UserInformation.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repositories\IChatGroupRepo.cs" />
     <Compile Include="Core\Repositories\IChatRepo.cs" />
@@ -60,12 +68,6 @@
     <Compile Include="Core\Repositories\IRepository.cs" />
     <Compile Include="Core\Repositories\ITagsRepo.cs" />
     <Compile Include="Core\Repositories\IUserInformationRepo.cs" />
-    <Compile Include="Persistence\ProfileContext.cs" />
-    <Compile Include="Core\Domain\Chat.cs" />
-    <Compile Include="Core\Domain\ChatGroups.cs" />
-    <Compile Include="Core\Domain\Emoji.cs" />
-    <Compile Include="Core\Domain\FriendList.cs" />
-    <Compile Include="Core\Domain\Login.cs" />
     <Compile Include="Persistence\Repositories\Repository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Program.cs" />
@@ -77,8 +79,6 @@
     <Compile Include="Persistence\Repositories\LoginRepo.cs" />
     <Compile Include="Persistence\Repositories\TagsRepo.cs" />
     <Compile Include="Persistence\Repositories\UserInformationRepo.cs" />
-    <Compile Include="Core\Domain\Tags.cs" />
-    <Compile Include="Core\Domain\UserInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

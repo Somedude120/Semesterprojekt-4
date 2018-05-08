@@ -1,4 +1,4 @@
-namespace ProfileConsole
+namespace ProfileConsole.Core.Domain
 {
     using System;
     using System.Collections.Generic;
