@@ -113,12 +113,6 @@ namespace MartUI.Friend
         public ICommand AddFriendCommand => _addFriendCommand ?? (_addFriendCommand = new DelegateCommand(AddFriend));
         public ICommand RemoveFriendCommand => _removeFriendCommand ?? (_removeFriendCommand = new DelegateCommand(RemoveFriend));
 
-        public string ListSize
-        {
-            get { return FriendList.Count.ToString(); }
-            set { }
-        }
-
         private void doSomething()
         {
             Thread myThread = new Thread(AddFriend);

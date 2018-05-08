@@ -15,6 +15,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Reflection;
+using MartUI.Settings;
 
 namespace MartUI.Main
 {
@@ -30,6 +31,8 @@ namespace MartUI.Main
         private IViewModel _friendListView;
 
         public List<IViewModel> _viewList;
+
+        private ICommand _settingsViewCommand;
 
 
         public MainViewModel()
@@ -125,6 +128,15 @@ namespace MartUI.Main
                 ViewList.Add(model);
 
             return model;
+        }
+
+        public ICommand SettingsViewCommand
+        {
+            get
+            {
+                return _settingsViewCommand ?? (_settingsViewCommand = new DelegateCommand(() =>
+                           _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new SettingsViewModel())));
+            }
         }
 
         //public ICommand ChangeView
