@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Domain\UserInformation.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repositories\IChatGroupRepo.cs" />
     <Compile Include="Core\Repositories\IChatRepo.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Persistence\Repositories\TagsRepo.cs" />
     <Compile Include="Persistence\Repositories\UserInformationRepo.cs" />
     <Compile Include="Core\Domain\Tags.cs" />
-    <Compile Include="Core\Domain\UserInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
