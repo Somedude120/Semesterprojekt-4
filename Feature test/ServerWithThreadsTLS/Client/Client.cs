@@ -7,6 +7,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using System.Threading;
 
 //Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
@@ -83,6 +84,9 @@ namespace Examples.System.Net
             // Send hello message to the server. 
             sslStream.Write(messsage);
 
+            Thread receiveThread = new Thread(o => ReadMessage((SslStream)o));
+            receiveThread.Start(sslStream);
+
             while (true)
             {
                 messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + "<EOF>");
@@ -90,11 +94,11 @@ namespace Examples.System.Net
                 sslStream.Write(messsage);
                 sslStream.Flush();
                 // Read message from the server.
-                string serverMessage = ReadMessage(sslStream);
-                Console.WriteLine("Server says: {0}", serverMessage);
+                //string serverMessage = ReadMessage(sslStream);
+                //Console.WriteLine("Server says: {0}", serverMessage);
                 // Close the client connection.
                 //client.Close();
-                Console.WriteLine("Client not closed.");
+                //Console.WriteLine("Client not closed.");
             }
 
             Console.ReadLine();
@@ -107,23 +111,34 @@ namespace Examples.System.Net
             byte[] buffer = new byte[2048];
             StringBuilder messageData = new StringBuilder();
             int bytes = -1;
-            do
+            while (true)
             {
-                bytes = sslStream.Read(buffer, 0, buffer.Length);
-
-                // Use Decoder class to convert from bytes to UTF8
-                // in case a character spans two buffers.
-                Decoder decoder = Encoding.UTF8.GetDecoder();
-                char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
-                decoder.GetChars(buffer, 0, bytes, chars, 0);
-                messageData.Append(chars);
-                // Check for EOF.
-                if (messageData.ToString().IndexOf("<EOF>") != -1)
+                messageData.Clear();
+                do
                 {
-                    messageData.Remove(messageData.ToString().IndexOf("<EOF>"), 5);
-                    break;
-                }
-            } while (bytes != 0);
+                    bytes = sslStream.Read(buffer, 0, buffer.Length);
+
+                    // Use Decoder class to convert from bytes to UTF8
+                    // in case a character spans two buffers.
+                    Decoder decoder = Encoding.UTF8.GetDecoder();
+                    char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
+                    decoder.GetChars(buffer, 0, bytes, chars, 0);
+                    messageData.Append(chars);
+                    // Check for EOF.
+                    if (messageData.ToString().IndexOf("<EOF>") != -1)
+                    {
+                        messageData.Remove(messageData.ToString().IndexOf("<EOF>"), 5);
+                        break;
+                    }
+                } while (bytes != 0);
+
+                //while ((bytes = sslStream.Read(buffer, 0, buffer.Length)) > 0)
+                //{
+                //    Console.Write(Encoding.ASCII.GetString(buffer, 0, bytes));
+                //}
+
+                Console.WriteLine(messageData.ToString());
+            }
 
             return messageData.ToString();
         }

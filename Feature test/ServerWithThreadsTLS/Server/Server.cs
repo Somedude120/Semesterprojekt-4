@@ -80,10 +80,10 @@ namespace Examples.System.Net
                     //Console.WriteLine("From IP: " + ((IPEndPoint)client.Client.RemoteEndPoint).Address + ", " + ((IPEndPoint)client.Client.RemoteEndPoint).Port);
 
                     // Write a message to the client.
-                    byte[] message = Encoding.UTF8.GetBytes("Access granted<EOF>");
-                    Console.WriteLine("Sending hello message.");
-                    sslStream.Write(message);
-                    userStreams[messageData].Write(Encoding.UTF8.GetBytes(userID[IPId]));
+                    //byte[] message = Encoding.UTF8.GetBytes("Access granted<EOF>");
+                    //Console.WriteLine("Sending hello message.");
+                    //sslStream.Write(message);
+                    userStreams[messageData].Write(Encoding.UTF8.GetBytes("From " + login + "<EOF>"));
                     Console.WriteLine();
                 }
 
