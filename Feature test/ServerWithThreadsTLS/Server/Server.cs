@@ -83,7 +83,7 @@ namespace Examples.System.Net
                     byte[] message = Encoding.UTF8.GetBytes("Access granted<EOF>");
                     Console.WriteLine("Sending hello message.");
                     sslStream.Write(message);
-                    userStreams[messageData].Write(Encoding.UTF8.GetBytes("From other client"));
+                    userStreams[messageData].Write(Encoding.UTF8.GetBytes(userID[IPId]));
                     Console.WriteLine();
                 }
 
