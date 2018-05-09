@@ -40,13 +40,14 @@ namespace Examples.System.Net
             Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
 
             // Do not allow this client to communicate with unauthenticated servers.
-            return false;
+            //return false;
+            return true;    //Ignore false certificate. Used because of selfsigned certificate
         }
         public static void RunClient(string machineName, string serverName)
         {
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
-            //TcpClient client = new TcpClient("192.168.173.1", 443);
+            //TcpClient client = new TcpClient("192.168.173.1", 443);   //When client is not on localhost
             TcpClient client = new TcpClient(machineName, 443);
             Console.WriteLine("Client connected.");
             // Create an SSL stream that will close the client's stream.
