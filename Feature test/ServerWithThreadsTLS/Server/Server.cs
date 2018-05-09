@@ -9,6 +9,7 @@ using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.IO.Ports;
+using System.Runtime.Remoting.Messaging;
 using System.Threading;
 
 //Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
@@ -83,7 +84,10 @@ namespace Examples.System.Net
                     //byte[] message = Encoding.UTF8.GetBytes("Access granted<EOF>");
                     //Console.WriteLine("Sending hello message.");
                     //sslStream.Write(message);
-                    userStreams[messageData].Write(Encoding.UTF8.GetBytes("From " + login + "<EOF>"));
+
+                    string[] parsedMessage = ParseMessage(messageData);
+
+                    userStreams[parsedMessage[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + parsedMessage[2] + "<EOF>"));
                     Console.WriteLine();
                 }
 
@@ -139,6 +143,12 @@ namespace Examples.System.Net
 
             return messageData.ToString();
         }
+
+        static string[] ParseMessage(string message)
+        {
+            return message.Split(';');
+        }
+
         static void DisplaySecurityLevel(SslStream stream)
         {
             Console.WriteLine("Cipher: {0} strength {1}", stream.CipherAlgorithm, stream.CipherStrength);
