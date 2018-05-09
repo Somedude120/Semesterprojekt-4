@@ -117,6 +117,10 @@
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="Login\PersonModel.cs" />
     <Compile Include="Login\ReplaceCharactersInPassword.cs" />
+    <Compile Include="Settings\BlankSetting\BlankSettingView.xaml.cs">
+      <DependentUpon>BlankSettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\BlankSetting\BlankSettingViewModel.cs" />
     <Compile Include="Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -175,6 +179,10 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Settings\BlankSetting\BlankSettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Settings\SettingsView.xaml">
       <SubType>Designer</SubType>

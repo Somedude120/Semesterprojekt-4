@@ -13,6 +13,8 @@
         xmlns:createuser="clr-namespace:MartUI.CreateUser"
         xmlns:mvvm="http://prismlibrary.com/"
         xmlns:chat="clr-namespace:MartUI.Chat"
+        xmlns:settings="clr-namespace:MartUI.Settings"
+        xmlns:blankSetting="clr-namespace:MartUI.Settings.BlankSetting"
         mvvm:ViewModelLocator.AutoWireViewModel="True"
 
         mc:Ignorable="d"
@@ -36,6 +38,12 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type chat:ChatViewModel}">
             <chat:ChatView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type settings:SettingsViewModel}">
+            <settings:SettingsView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type blankSetting:BlankSettingViewModel}">
+            <blankSetting:BlankSettingView DataContext="{Binding}"/>
         </DataTemplate>
     </Window.Resources>
 
@@ -78,8 +86,7 @@
             </Button>
             <Button Width="16" HorizontalAlignment="Right" Margin="0,0,72,0" Background="White" BorderBrush="Transparent" Height="16"
                     Name="SettingsBtn" Style="{StaticResource NoButtonHighlight}"
-                    Command="{Binding DataContext.SettingsViewClicked, RelativeSource={RelativeSource AncestorType={x:Type local:MainView}}}"
-                    CommandParameter="{Binding }">
+                    Command="{Binding DataContext.SettingsViewCommand, RelativeSource={RelativeSource AncestorType={x:Type local:MainView}}}">
                 <Button.OpacityMask>
                     <VisualBrush Visual="{iconPacks:Modern Settings}"/>
                 </Button.OpacityMask>
