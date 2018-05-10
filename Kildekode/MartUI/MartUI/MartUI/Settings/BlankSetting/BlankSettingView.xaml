@@ -17,10 +17,7 @@
             <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0" Grid.Column="1">
-            <Button Command="{Binding DataContext.Return, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Width="25" Height="25" Style="{StaticResource CircleButton}"/>
-        </Grid>
-        <Grid Row="1" Column="0">
-            <Button Style="{StaticResource RoundCornerButton}"/>
+            <Button Command="{Binding DataContext.Return, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Width="25" Height="25" Style="{StaticResource CircleButton}" Content="X"/>
         </Grid>
     </Grid>
 </UserControl>

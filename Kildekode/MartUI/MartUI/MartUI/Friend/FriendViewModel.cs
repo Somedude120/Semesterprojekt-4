@@ -97,21 +97,20 @@ namespace MartUI.Friend
             //Skal kommunikere med database/server
         }
 
-        public void RemoveFriend()
+        public void RemoveFriend(FriendModel friend)
         {
-            if (FriendList.Contains(SelectedFriend))
+            if (FriendList.Contains(friend))
             {
-                FriendList.Remove(SelectedFriend);
+                FriendList.Remove(friend);
             }
             else
                 MessageBox.Show("This user is not on your friendlist!");
 
             //Skal kommunikere med database/server
-            //Lav dropdown når der højreklikkes på en ven hvorved muligheden for at fjerne mm. fremvises
         }
 
         public ICommand AddFriendCommand => _addFriendCommand ?? (_addFriendCommand = new DelegateCommand(AddFriend));
-        public ICommand RemoveFriendCommand => _removeFriendCommand ?? (_removeFriendCommand = new DelegateCommand(RemoveFriend));
+        public ICommand RemoveFriendCommand => _removeFriendCommand ?? (_removeFriendCommand = new DelegateCommand<FriendModel>(RemoveFriend));
 
         private void doSomething()
         {
