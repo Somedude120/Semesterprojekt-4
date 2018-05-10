@@ -85,7 +85,7 @@
                  Grid.Row="1"
                  Margin="10" 
                  MaxLength="15" MaxWidth="200" MinWidth="200"
-                 Text="{Binding Person.Name}"/>
+                 Text="{Binding Person.Username, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Column="0"
                    Grid.Row="2"
                    FontWeight="Bold" 

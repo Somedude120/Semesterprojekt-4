@@ -12,23 +12,23 @@ namespace MartUI.CreateUser
 {
     public class DetailedPerson  
     {
-        public string Name { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
         public List<string> Tags { get; set; }
         public Image Picture { get; set; }
     }
 
-    public class DetailedPersonnModel : BindableBase
+    public class DetailedPersonModel : BindableBase
     {
         private DetailedPerson _person = new DetailedPerson();
         
 
-        public string Name
+        public string Username
         {
-            get => _person.Name;
+            get => _person.Username;
             set
             {
-                _person.Name = value;
+                _person.Username = value;
                 RaisePropertyChanged();
             }
         }

@@ -19,7 +19,11 @@ namespace MartUI.Login
         private string _username;
         private string _password;
 
-        public ICommand CreateUserCommand { get; set; }
+        public ICommand CreateUserCommand
+        {
+            get
+            ; set;
+        }
         public ICommand LoginCommand { get; set; }
 
         private PersonModel _dataModel;
@@ -78,10 +82,8 @@ namespace MartUI.Login
 
         private bool LoginCanExecute()
         {
-            //MessageBox.Show(Password);
-            // Username length  to be above 4 and pass above 5
-            return !String.IsNullOrWhiteSpace(Username) && Username.Length > 4
-                    && !String.IsNullOrWhiteSpace(Password) && Password.Length > 5;
+            return !string.IsNullOrWhiteSpace(Username) && Username.Length > 4
+                    && !string.IsNullOrWhiteSpace(Password) && Password.Length > 5;
         }
 
         private void LoginExecute()

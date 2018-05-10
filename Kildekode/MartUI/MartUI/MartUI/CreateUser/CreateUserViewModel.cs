@@ -27,7 +27,7 @@ namespace MartUI.CreateUser
         private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
 
         private DatabaseDummy _database;
-        private DetailedPersonnModel _person;
+        private DetailedPersonModel _person;
 
         private ICommand _registerButton;
         private ICommand _backButton;
@@ -36,6 +36,13 @@ namespace MartUI.CreateUser
         private Image _image;
         private string _imagePath;
         private Uri _imageSource;
+
+
+        private string ObserveUsername
+        {
+            get => Person.Username;
+            //set;
+        }
 
 
         public CreateUserViewModel()
@@ -57,10 +64,10 @@ namespace MartUI.CreateUser
             set => SetProperty(ref _imageSource, value);
         }
 
-        public DetailedPersonnModel Person
+        public DetailedPersonModel Person
         {
-            get => _person ?? (_person = new DetailedPersonnModel());
-            set => SetProperty(ref _person, value);
+            get => _person ?? (_person = new DetailedPersonModel());
+            //set => SetProperty(ref _person, value);
         }
 
         // Will publish event of ChangeFullPage to LoginViewModel
@@ -73,14 +80,20 @@ namespace MartUI.CreateUser
             }
         }
         // Will call CreateNewUser
-        public ICommand RegisterButton => _registerButton ?? (_registerButton = new DelegateCommand(CreateNewUser));
+        public ICommand RegisterButton =>
+            _registerButton ?? (_registerButton = new DelegateCommand(CreateNewUser).ObservesCanExecute(() => HasCh));
+
+        private bool CanRegister()
+        {
+            return !string.IsNullOrWhiteSpace(ObserveUsername);
+            //&& !string.IsNullOrWhiteSpace(Person.Username) && Person.Password.Length > 5;
+        }
 
         public ICommand ChooseProfilePicture => _chooseProfilePicture ?? (_chooseProfilePicture = new DelegateCommand(ChoosePicture));
 
         private void ChoosePicture()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Title = "Select a picture";
+            OpenFileDialog dialog = new OpenFileDialog {Title = "Select a picture"};
 
             if (dialog.ShowDialog() == true)
                 ImageSource = new Uri(dialog.FileName);
