@@ -25,15 +25,15 @@
                 <ItemsControl ItemsSource="{Binding FriendList, UpdateSourceTrigger=PropertyChanged}" Width="185">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button
-                            Content="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
-                            Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                            CommandParameter="{Binding}"
-                            Margin="0,3" Width="185" Height="20"
-                            Style="{StaticResource RoundCorner}">
+                            <Button Content="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    CommandParameter="{Binding}"
+                                    Margin="0,3" Width="185" Height="20"
+                                    Style="{StaticResource RoundCorner}"
+                                    x:Name="FriendButton">
                                 <Button.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Remove" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveFriendCommand}"/>
+                                        <MenuItem Header="Remove" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveFriendCommand}" CommandParameter="{Binding}"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
                             </Button>
