@@ -19,22 +19,10 @@ namespace MartUI.Login
         private string _username;
         private string _password;
 
-        public ICommand CreateUserCommand
-        {
-            get
-            ; set;
-        }
+        public ICommand CreateUserCommand { get; set; }
         public ICommand LoginCommand { get; set; }
 
-        private PersonModel _dataModel;
-        //private DatabaseDummy _database;
-
-        //public PersonModel Person
-        //{
-        //    get { MessageBox.Show("getter");return _dataModel; }
-        //    set { SetProperty(ref _dataModel, value); } // if username != value, notify
-        //}
-
+        // Made these in here since it will be created either way because observing these - no need for model
         public string Username
         {
             get { return _username; }
@@ -51,33 +39,13 @@ namespace MartUI.Login
         public LoginViewModel()
         {
             _eventAggregator = GetEventAggregator.Get();
-            _dataModel = new PersonModel();
-            _username = _dataModel.Username;
-            _password = _dataModel.Password;
+            _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
 
-            _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(SetPassword);
-            //_database = new DatabaseDummy();
-            //_database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
-            //_database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
-
-            //Delegates instead of the execute/cant execute
-            //Observes Username and Password to check CanExecute, call RaiseCanExecute
+            //Observes Username and Password to check LoginCanExecute, call LoginExecute
             LoginCommand = new DelegateCommand(LoginExecute, LoginCanExecute).ObservesProperty(() => Username).ObservesProperty(() => Password);
 
-            CreateUserCommand = new DelegateCommand(CreateUser);
-            // CanExecute behøver ikke være en metode men også en boolean property
-        }
-
-        private void SetPassword(string pass)
-        {
-            Password = pass;
-        }
-        
-
-        private void CreateUser()
-        {
-            _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel());
-            // NAVIGATE TO CREATE USER VIEW 
+            // Navigate to CreateUserView
+            CreateUserCommand = new DelegateCommand(() => _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel()));
         }
 
         private bool LoginCanExecute()
