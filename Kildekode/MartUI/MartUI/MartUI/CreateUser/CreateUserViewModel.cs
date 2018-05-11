@@ -48,6 +48,7 @@ namespace MartUI.CreateUser
             } // if username != value, notify
         }
 
+        // Need to do this to be able to observe password - cannot observe complex property
         public string Password
         {
             get => Person.Password;
