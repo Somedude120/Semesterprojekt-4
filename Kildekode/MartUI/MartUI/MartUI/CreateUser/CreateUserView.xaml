@@ -85,7 +85,7 @@
                  Grid.Row="1"
                  Margin="10" 
                  MaxLength="15" MaxWidth="200" MinWidth="200"
-                 Text="{Binding Person.Username, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Column="0"
                    Grid.Row="2"
                    FontWeight="Bold" 
@@ -134,7 +134,7 @@
                Command="{Binding ChooseProfilePicture}"/>
         <Image Grid.Column="2"
                Grid.Row="4"
-               Source="{Binding ImageSource}"
+               Source="{Binding Person.Image}"
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" 
                MaxWidth="150" MaxHeight="150"/>
         <Button Grid.Column="1"

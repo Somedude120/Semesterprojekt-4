@@ -37,19 +37,32 @@ namespace MartUI.CreateUser
         private string _imagePath;
         private Uri _imageSource;
 
-
-        private string ObserveUsername
+        public string Username
         {
             get => Person.Username;
-            //set;
+            set
+            {
+                if (Person.Username == value) return;
+                Person.Username = value;
+                RaisePropertyChanged();
+            } // if username != value, notify
         }
 
+        public string Password
+        {
+            get => Person.Password;
+            set
+            {
+                if (Person.Password == value) return;
+                Person.Password = value;
+                RaisePropertyChanged();
+            } 
+        }
 
         public CreateUserViewModel()
         {
-
             //Subscriptions
-            _eventAggregator.GetEvent<PasswordChangedInCreate>().Subscribe(SetPassword);
+            _eventAggregator.GetEvent<PasswordChangedInCreate>().Subscribe(para => Password = para);
             _eventAggregator.GetEvent<ChangingTagsInCreate>().Subscribe(ModifyTags);
 
             _database = new DatabaseDummy();
@@ -58,17 +71,13 @@ namespace MartUI.CreateUser
             _database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
         }
 
-        public Uri ImageSource
-        {
-            get => _imageSource ?? new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG");
-            set => SetProperty(ref _imageSource, value);
-        }
+        //public Uri ImageSource
+        //{
+        //    get => _imageSource ?? new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG");
+        //    set => SetProperty(ref _imageSource, value);
+        //}
 
-        public DetailedPersonModel Person
-        {
-            get => _person ?? (_person = new DetailedPersonModel());
-            //set => SetProperty(ref _person, value);
-        }
+        public DetailedPersonModel Person => _person ?? (_person = new DetailedPersonModel());
 
         // Will publish event of ChangeFullPage to LoginViewModel
         public ICommand BackButton
@@ -79,14 +88,16 @@ namespace MartUI.CreateUser
                            _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel())));
             }
         }
+
         // Will call CreateNewUser
-        public ICommand RegisterButton =>
-            _registerButton ?? (_registerButton = new DelegateCommand(CreateNewUser).ObservesCanExecute(() => HasCh));
+        public ICommand RegisterButton => _registerButton ?? (_registerButton = new DelegateCommand(CreateNewUser, CanRegister)
+                                          .ObservesProperty(() => Username)
+                                          .ObservesProperty(() => Password));
 
         private bool CanRegister()
         {
-            return !string.IsNullOrWhiteSpace(ObserveUsername);
-            //&& !string.IsNullOrWhiteSpace(Person.Username) && Person.Password.Length > 5;
+            return !string.IsNullOrWhiteSpace(Username) && Username.Length > 4
+                    && !string.IsNullOrWhiteSpace(Password) && Password.Length > 5;
         }
 
         public ICommand ChooseProfilePicture => _chooseProfilePicture ?? (_chooseProfilePicture = new DelegateCommand(ChoosePicture));
@@ -96,15 +107,24 @@ namespace MartUI.CreateUser
             OpenFileDialog dialog = new OpenFileDialog {Title = "Select a picture"};
 
             if (dialog.ShowDialog() == true)
-                ImageSource = new Uri(dialog.FileName);
+                Person.Image = new Uri(dialog.FileName);
         }
 
-        public void SetPassword(string pass)
-        {
-            Person.Password = pass;
-        }
         private void CreateNewUser()
         {
+            MessageBox.Show("username: " + Person.Username);
+            MessageBox.Show("password: " + Person.Password);
+
+            StringBuilder tags = new StringBuilder();
+
+            foreach (var personTag in Person.Tags)
+            {
+                tags.Append(personTag + ", ");
+            }
+
+            MessageBox.Show(tags.ToString());
+
+
             // THIS IS SERVER STUFF, ONLY FOR TESTING!!
             //if (UsernameAlreadyExist(Username))
             //{
