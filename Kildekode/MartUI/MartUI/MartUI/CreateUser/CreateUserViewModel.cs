@@ -71,12 +71,6 @@ namespace MartUI.CreateUser
             _database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
         }
 
-        //public Uri ImageSource
-        //{
-        //    get => _imageSource ?? new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG");
-        //    set => SetProperty(ref _imageSource, value);
-        //}
-
         public DetailedPersonModel Person => _person ?? (_person = new DetailedPersonModel());
 
         // Will publish event of ChangeFullPage to LoginViewModel

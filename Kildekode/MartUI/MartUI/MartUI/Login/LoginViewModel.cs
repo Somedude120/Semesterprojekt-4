@@ -16,11 +16,11 @@ namespace MartUI.Login
         private readonly IEventAggregator _eventAggregator;
         public string ReferenceName => "Login";
 
+        private ICommand _createUserCommand;
+        private ICommand _loginCommand;
+
         private string _username;
         private string _password;
-
-        public ICommand CreateUserCommand { get; set; }
-        public ICommand LoginCommand { get; set; }
 
         // Made these in here since it will be created either way because observing these - no need for model
         public string Username
@@ -35,17 +35,18 @@ namespace MartUI.Login
             set { SetProperty(ref _password, value); } // if username != value, notify
         }
 
+        // Navigate to CreateUserView
+        public ICommand CreateUserCommand => _createUserCommand ?? (_createUserCommand = new DelegateCommand(() =>
+                                                     _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel())));
+        //Observes Username and Password to check LoginCanExecute, call LoginExecute
+        public ICommand LoginCommand => _loginCommand = new DelegateCommand(LoginExecute, LoginCanExecute)
+            .ObservesProperty(() => Username)
+            .ObservesProperty(() => Password);
 
         public LoginViewModel()
         {
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
-
-            //Observes Username and Password to check LoginCanExecute, call LoginExecute
-            LoginCommand = new DelegateCommand(LoginExecute, LoginCanExecute).ObservesProperty(() => Username).ObservesProperty(() => Password);
-
-            // Navigate to CreateUserView
-            CreateUserCommand = new DelegateCommand(() => _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel()));
         }
 
         private bool LoginCanExecute()
