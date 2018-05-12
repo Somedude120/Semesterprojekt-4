@@ -86,8 +86,8 @@ namespace Examples.System.Net
                     //sslStream.Write(message);
 
                     string[] parsedMessage = ParseMessage(messageData);
-
-                    userStreams[parsedMessage[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + parsedMessage[2] + "<EOF>"));
+                    stringHandler(parsedMessage, login);
+                    //userStreams[parsedMessage[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + parsedMessage[2] + "<EOF>"));
                     Console.WriteLine();
                 }
 
@@ -147,6 +147,37 @@ namespace Examples.System.Net
         static string[] ParseMessage(string message)
         {
             return message.Split(';');
+        }
+
+        static void stringHandler(string[] input, string login)
+        {
+            switch (input[0])
+            {
+                //Check if client is logged in
+                //Client that is not logged in, should only be able to get to handleLogin
+
+                case "W":
+                    handleMessage(input, login);
+                    break;
+                case "L":
+                    handleLogin(input);
+                    break;
+                default:
+                    Console.WriteLine("String not recognized");
+                    break;
+            }
+        }
+
+        static void handleLogin(string[] input)
+        {
+            //Check if username is used
+
+            //Add to Dictionary
+        }
+
+        static void handleMessage(string[] input, string login)
+        {
+            userStreams[input[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + input[2] + "<EOF>"));
         }
 
         static void DisplaySecurityLevel(SslStream stream)
