@@ -26,7 +26,7 @@ namespace Examples.System.Net
         static X509Certificate serverCertificate = null;
         // The certificate parameter specifies the name of the file 
         // containing the machine certificate.
-        public static void RunServer(string certificate)
+        public static void RunServer(string certificate, TcpClient client)
         {
             serverCertificate = X509Certificate.CreateFromCertFile(certificate);
             // Create a TCP/IP (IPv4) socket and listen for incoming connections.
@@ -35,10 +35,10 @@ namespace Examples.System.Net
             //listener.Start();
             //while (true)
             {
-                Console.WriteLine("Waiting for a client to connect...");
+                //Console.WriteLine("Waiting for a client to connect...");
                 // Application blocks while waiting for an incoming connection.
                 // Type CNTL-C to terminate the server.
-                TcpClient client = listener.AcceptTcpClient();
+                //TcpClient client = listener.AcceptTcpClient();
                 //Console.WriteLine("Client IP:" + ((IPEndPoint)client.Client.RemoteEndPoint).Address);
                 //Console.WriteLine("Client port:" + ((IPEndPoint)client.Client.RemoteEndPoint).Port);
                 ProcessClient(client);
@@ -61,7 +61,7 @@ namespace Examples.System.Net
                 DisplayCertificateInformation(sslStream);
                 DisplayStreamProperties(sslStream);
 
-                string IPId = ((IPEndPoint) client.Client.RemoteEndPoint).Address + "," + ((IPEndPoint) client.Client.RemoteEndPoint).Port;
+                string IPId = ((IPEndPoint)client.Client.RemoteEndPoint).Address + "," + ((IPEndPoint)client.Client.RemoteEndPoint).Port;
 
                 // Set timeouts for the read and write to 5 seconds.
                 //sslStream.ReadTimeout = 5000;
@@ -222,7 +222,7 @@ namespace Examples.System.Net
 
         static void closeClientThread()
         {
-            
+
 
         }
 
@@ -291,31 +291,21 @@ namespace Examples.System.Net
             certificate = "D:/Users/Martin/Dropbox/IKT/4.Semester/PROJ4/Semesterprojekt-4/Feature test/SSL-Test/MartoTestCer.cer";
 
             Console.WriteLine("************This is Server program************");
-            Console.WriteLine("How many clients are going to connect to this server?:");
-            int numberOfClientsYouNeedToConnect = int.Parse(Console.ReadLine());
 
             listener.Start();
 
-            for (int i = 0; i < numberOfClientsYouNeedToConnect; i++)
+            //Keep listening and start new thread when client connects
+            while (true)
             {
-                //Thread newThread = new Thread(new ParameterizedThreadStart(RunServer));
-                Thread newThread = new Thread(o =>
-                {
-                    RunServer((string)o);
-                });
-                newThread.Start(certificate);
+                TcpClient client = listener.AcceptTcpClient();  //Someone has connected
+
+                Thread newThread =
+                    new Thread(
+                        unused => RunServer(certificate, client)    //The method where the thread is run
+                    );
+
+                newThread.Start();
             }
-
-            //while (true)
-            //{
-            //    TcpClient client = ServerSocket.AcceptTcpClient();
-            //    //lock (_lock) list_clients.Add(count, client);
-            //    Console.WriteLine("Someone connected!!");
-
-            //    Thread t = new Thread(handle_clients);
-            //    t.Start(count);
-            //    count++;
-            //}
             return 0;
         }
     }
