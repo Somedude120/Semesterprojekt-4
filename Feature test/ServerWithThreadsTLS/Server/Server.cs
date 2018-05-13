@@ -9,6 +9,8 @@ using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.IO.Ports;
+using System.Linq;
+using System.Net.Mime;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
 
@@ -31,7 +33,7 @@ namespace Examples.System.Net
             //TcpListener listener = new TcpListener(IPAddress.Any, 8090);
             //TcpListener listener = new TcpListener(IPAddress.Any, 443);
             //listener.Start();
-            while (true)
+            //while (true)
             {
                 Console.WriteLine("Waiting for a client to connect...");
                 // Application blocks while waiting for an incoming connection.
@@ -72,9 +74,18 @@ namespace Examples.System.Net
 
                 while (true)
                 {
+                    string messageData;
                     // Read a message from the client.   
                     Console.WriteLine("Waiting for client message...");
-                    string messageData = ReadMessage(sslStream);
+                    try
+                    {
+                        messageData = ReadMessage(sslStream);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        return;
+                    }
                     Console.WriteLine("Received {0}: {1}", userID[IPId], messageData);
 
                     Console.WriteLine(IPId);
@@ -86,7 +97,7 @@ namespace Examples.System.Net
                     //sslStream.Write(message);
 
                     string[] parsedMessage = ParseMessage(messageData);
-                    stringHandler(parsedMessage, login);
+                    stringHandler(parsedMessage, sslStream);
                     //userStreams[parsedMessage[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + parsedMessage[2] + "<EOF>"));
                     Console.WriteLine();
                 }
@@ -125,7 +136,18 @@ namespace Examples.System.Net
             do
             {
                 // Read the client's test message.
-                bytes = sslStream.Read(buffer, 0, buffer.Length);
+                try
+                {
+                    bytes = sslStream.Read(buffer, 0, buffer.Length);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Read Error");
+                    Console.WriteLine(e);
+                    bytes = 0;
+                    handleLogout(sslStream);
+                    throw;
+                }
 
                 // Use Decoder class to convert from bytes to UTF8
                 // in case a character spans two buffers.
@@ -149,7 +171,7 @@ namespace Examples.System.Net
             return message.Split(';');
         }
 
-        static void stringHandler(string[] input, string login)
+        static void stringHandler(string[] input, SslStream sslStream)
         {
             switch (input[0])
             {
@@ -157,10 +179,13 @@ namespace Examples.System.Net
                 //Client that is not logged in, should only be able to get to handleLogin
 
                 case "W":
-                    handleMessage(input, login);
+                    handleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key);
                     break;
                 case "L":
                     handleLogin(input);
+                    break;
+                case "Q":
+                    handleLogout(sslStream);
                     break;
                 default:
                     Console.WriteLine("String not recognized");
@@ -175,9 +200,30 @@ namespace Examples.System.Net
             //Add to Dictionary
         }
 
+        static void handleLogout(SslStream sslStream)
+        {
+            Console.WriteLine("Handle logout");
+            //remove from dictionary
+            userStreams.Remove(userStreams.FirstOrDefault(x => x.Value == sslStream).Key);
+
+            //close connection
+            closeClientThread();
+        }
+
         static void handleMessage(string[] input, string login)
         {
             userStreams[input[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + input[2] + "<EOF>"));
+        }
+
+        static void failedLogin()
+        {
+            //send message to client
+        }
+
+        static void closeClientThread()
+        {
+            
+
         }
 
         static void DisplaySecurityLevel(SslStream stream)
