@@ -79,18 +79,18 @@ namespace Examples.System.Net
             // Encode a test message into a byte array.
             // Signal the end of the message using the "<EOF>".
             //byte[] messsage = Encoding.UTF8.GetBytes("Hello from the client.<EOF>");
-            byte[] messsage = Encoding.UTF8.GetBytes("l;UserName;PlaintextPassword<EOF>");
+            byte[] messsage = Encoding.UTF8.GetBytes("l;UserName;PlaintextPassword" + (char)29);
 
-            messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + "<EOF>");
-            // Send hello message to the server. 
-            sslStream.Write(messsage);
+            //messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + "<EOF>");
+            //Send hello message to the server. 
+            //sslStream.Write(messsage);
 
             Thread receiveThread = new Thread(o => ReadMessage((SslStream)o));
             receiveThread.Start(sslStream);
 
             while (true)
             {
-                messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + "<EOF>");
+                messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + ((char)29).ToString());
                 // Send hello message to the server. 
                 sslStream.Write(messsage);
                 sslStream.Flush();
@@ -126,9 +126,9 @@ namespace Examples.System.Net
                     decoder.GetChars(buffer, 0, bytes, chars, 0);
                     messageData.Append(chars);
                     // Check for EOF.
-                    if (messageData.ToString().IndexOf("<EOF>") != -1)
+                    if (messageData.ToString().IndexOf(Constants.EndDelimiter) != -1)
                     {
-                        messageData.Remove(messageData.ToString().IndexOf("<EOF>"), 5);
+                        messageData.Remove(messageData.ToString().IndexOf(Constants.EndDelimiter), Constants.EndDelimiter.Length);
                         break;
                     }
                 } while (bytes != 0);

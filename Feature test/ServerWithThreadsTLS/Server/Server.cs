@@ -67,10 +67,18 @@ namespace Examples.System.Net
                 //sslStream.ReadTimeout = 5000;
                 sslStream.WriteTimeout = 5000;
 
-                //Request UserID
-                string login = ReadMessage(sslStream);
-                userID.Add(IPId, login);
-                userStreams.Add(login, sslStream);
+                ////Request UserID
+                //string login;
+                //try
+                //{
+                //    login = ReadMessage(sslStream);
+                //}
+                //catch (Exception e)
+                //{
+                //    return;
+                //}
+                //userID.Add(IPId, login);
+                //userStreams.Add(login, sslStream);
 
                 while (true)
                 {
@@ -80,15 +88,17 @@ namespace Examples.System.Net
                     try
                     {
                         messageData = ReadMessage(sslStream);
+                        //Console.WriteLine((char)7);   //Makes bell sound
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
+                        handleLogout(sslStream);
                         return;
                     }
-                    Console.WriteLine("Received {0}: {1}", userID[IPId], messageData);
+                    //Console.WriteLine("Received {0}: {1}", userID[IPId], messageData);
 
-                    Console.WriteLine(IPId);
+                    //Console.WriteLine(IPId);
                     //Console.WriteLine("From IP: " + ((IPEndPoint)client.Client.RemoteEndPoint).Address + ", " + ((IPEndPoint)client.Client.RemoteEndPoint).Port);
 
                     // Write a message to the client.
@@ -135,7 +145,6 @@ namespace Examples.System.Net
             int bytes = -1;
             do
             {
-                // Read the client's test message.
                 try
                 {
                     bytes = sslStream.Read(buffer, 0, buffer.Length);
@@ -144,10 +153,11 @@ namespace Examples.System.Net
                 {
                     Console.WriteLine("Read Error");
                     Console.WriteLine(e);
-                    bytes = 0;
-                    handleLogout(sslStream);
+                    //bytes = 0;
+                    //handleLogout(sslStream);
                     throw;
                 }
+                // Read the client's test message.
 
                 // Use Decoder class to convert from bytes to UTF8
                 // in case a character spans two buffers.
@@ -156,9 +166,9 @@ namespace Examples.System.Net
                 decoder.GetChars(buffer, 0, bytes, chars, 0);
                 messageData.Append(chars);
                 // Check for EOF or an empty message.
-                if (messageData.ToString().IndexOf("<EOF>") != -1)
+                if (messageData.ToString().IndexOf(Constants.EndDelimiter) != -1)
                 {
-                    messageData.Remove(messageData.ToString().IndexOf("<EOF>"), 5);
+                    messageData.Remove(messageData.ToString().IndexOf(Constants.EndDelimiter), Constants.EndDelimiter.Length);
                     break;
                 }
             } while (bytes != 0);
@@ -168,51 +178,105 @@ namespace Examples.System.Net
 
         static string[] ParseMessage(string message)
         {
-            return message.Split(';');
+            return message.Split(Constants.MiddleDelimiter);
         }
 
         static void stringHandler(string[] input, SslStream sslStream)
         {
-            switch (input[0])
+            //Check if client is logged in
+            //Client that is not logged in, should only be able to get to handleLogin
+            if (userStreams.FirstOrDefault(x => x.Value == sslStream).Key == null)
             {
-                //Check if client is logged in
-                //Client that is not logged in, should only be able to get to handleLogin
+                switch (input[0])
+                {
+                    case "L":
+                        handleLogin(input, sslStream);
+                        break;
+                    default:
+                        Console.WriteLine("Client is not logged in, and string is not recognized");
+                        break;
+                }
+            }
+            else  //if client is logged in
+            {
+                switch (input[0])
+                {
 
-                case "W":
-                    handleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key);
-                    break;
-                case "L":
-                    handleLogin(input);
-                    break;
-                case "Q":
-                    handleLogout(sslStream);
-                    break;
-                default:
-                    Console.WriteLine("String not recognized");
-                    break;
+                    case "W":
+                        handleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
+                        break;
+                    case "L":
+                        Console.WriteLine("User is already logged in");
+                        sendString(sslStream, "You are already logged in");
+                        break;
+                    case "Q":
+                        handleLogout(sslStream);
+                        break;
+                    default:
+                        Console.WriteLine("String is not recognized");
+                        break;
+                }
+
             }
         }
 
-        static void handleLogin(string[] input)
+        static void handleLogin(string[] input, SslStream sslStream)
         {
-            //Check if username is used
-
-            //Add to Dictionary
+            //check if user is logged in
+            //if (userStreams.FirstOrDefault(x => x.Value == sslStream).Key == null)
+            {
+                //Check if username is used
+                if (userStreams.ContainsKey(input[1]))
+                {
+                    //username is in use
+                    Console.WriteLine("Username: " + input[1] + " is in use");
+                }
+                else
+                {
+                    //Add to Dictionary
+                    userStreams.Add(input[1], sslStream);
+                }
+            }
         }
 
         static void handleLogout(SslStream sslStream)
         {
             Console.WriteLine("Handle logout");
             //remove from dictionary
-            userStreams.Remove(userStreams.FirstOrDefault(x => x.Value == sslStream).Key);
+            try
+            {
+                var keyFromValue = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
+                if (keyFromValue != null)
+                {
+                    userStreams.Remove(userStreams.FirstOrDefault(x => x.Value == sslStream).Key);  //If user isn't logged in, dictionary remove will crash              
+                }
+                else
+                {
+                    Console.WriteLine("Client wasn't logged in");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
             //close connection
             closeClientThread();
         }
 
-        static void handleMessage(string[] input, string login)
+        static void handleMessage(string[] input, string login, SslStream sslStream)
         {
-            userStreams[input[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + input[2] + "<EOF>"));
+            //userStreams[input[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + input[2] + "<EOF>"));
+            if (userStreams.ContainsKey(input[1]))
+            {
+                sendString(userStreams[input[1]], "From " + login + ": " + input[2]);
+            }
+            else
+            {
+                Console.WriteLine("User " + input[1] + " isn't logged in");
+                sendString(userStreams[login], "User: " + input[1] + " isn't logged in");
+            }
         }
 
         static void failedLogin()
@@ -224,6 +288,13 @@ namespace Examples.System.Net
         {
 
 
+        }
+
+        static void sendString(SslStream sslStream, string message)
+        {
+            Console.WriteLine(message);
+            string delimiter = ((char)29).ToString();
+            sslStream.Write(Encoding.ASCII.GetBytes(message + delimiter));
         }
 
         static void DisplaySecurityLevel(SslStream stream)
