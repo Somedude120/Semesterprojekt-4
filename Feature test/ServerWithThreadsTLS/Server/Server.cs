@@ -357,7 +357,10 @@ namespace Examples.System.Net
                 //DisplayUsage();
             }
             //certificate = args[0];
-            certificate = "D:/Users/Martin/Dropbox/IKT/4.Semester/PROJ4/Semesterprojekt-4/Feature test/SSL-Test/MartoTestCer.cer";
+            //certificate = "D:/Users/Martin/Dropbox/IKT/4.Semester/PROJ4/Semesterprojekt-4/Feature test/SSL-Test/MartoTestCer.cer";
+
+            Console.WriteLine("Write address to server certificate");
+            certificate = Console.ReadLine();
 
             Console.WriteLine("************This is Server program************");
 
