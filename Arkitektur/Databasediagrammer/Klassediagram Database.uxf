@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>296</x>
+      <y>56</y>
+      <w>192</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>Chat
+--
++ GroupId : int
++ MessageNumber : int
++ Message : string
++ Sender : string
++ ChatGroups : ChatGroups
++ UserInformation : UserInformation</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>296</x>
+      <y>200</y>
+      <w>256</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>ChatGroups
+--
++ GroupId : int
++ GroupName : string
++ Chat : ICollection&lt;Chat&gt;
++ UserInformation : ICollection&lt;UserInformation&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>296</x>
+      <y>312</y>
+      <w>128</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Emoji
+--
++ EmojiShortcut : string
++ Emoji1 : string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>584</x>
+      <y>56</y>
+      <w>200</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>FriendList
+--
++ User1 : string
++ User2 : string
++ Status : string
++ Action_User : string
++ UserInformation : UserInformation
++ UserInformation1 : UserInformation
++ UserInformation2 : UserInformation</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>584</x>
+      <y>200</y>
+      <w>192</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Login
+--
++ Username : string
++ Salt : string
++ Hash : string
++ UserInformation : UserInformation</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>584</x>
+      <y>304</y>
+      <w>256</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>Tags
+--
++ TagName : string
++ UserInformation : ICollection&lt;UserInformation&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>296</x>
+      <y>392</y>
+      <w>216</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>UserInformation
+--
++ UserName : string
++ Name : string
++ Status : string
++ FriendList : ICollection&lt;FriendList&gt;
++ FriendList1 : ICollection&lt;FriendList&gt;
++ FriendList2 : ICollection&lt;FriendList&gt;
++ Login : Login
++ Chat : IColletion&lt;Chat&gt;
++ ChatGroups : ICollection&lt;ChatGroups&gt;
++ Tags : ICollection&lt;Tags&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
