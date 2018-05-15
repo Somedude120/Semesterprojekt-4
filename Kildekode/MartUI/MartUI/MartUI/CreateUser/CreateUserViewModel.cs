@@ -26,16 +26,11 @@ namespace MartUI.CreateUser
         public string ReferenceName => "CreateUser";
         private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
 
-        private DatabaseDummy _database;
         private DetailedPersonModel _person;
 
         private ICommand _registerButton;
         private ICommand _backButton;
         private ICommand _chooseProfilePicture;
-
-        private Image _image;
-        private string _imagePath;
-        private Uri _imageSource;
 
         public string Username
         {
@@ -66,10 +61,20 @@ namespace MartUI.CreateUser
             _eventAggregator.GetEvent<PasswordChangedInCreate>().Subscribe(para => Password = para);
             _eventAggregator.GetEvent<ChangingTagsInCreate>().Subscribe(ModifyTags);
 
-            _database = new DatabaseDummy();
+            DatabaseDummy.People.Add(new DetailedPersonModel
+            {
+                Username = "HeyMan",
+                Password = "NeverGuessIt",
+                Tags = new List<string> {"YePls", "FriendsPls"}
+            });
 
-            _database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
-            _database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
+            DatabaseDummy.People.Add(new DetailedPersonModel
+            {
+                Username = "CoolGuy",
+                Password = "hahamanIAmCool",
+                Tags = new List<string> { "YePls", "NoPls" }
+            });
+
         }
 
         public DetailedPersonModel Person => _person ?? (_person = new DetailedPersonModel());
@@ -99,7 +104,11 @@ namespace MartUI.CreateUser
 
         private void ChoosePicture()
         {
-            OpenFileDialog dialog = new OpenFileDialog {Title = "Select a picture"};
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Title = "Select a picture",
+                Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*"
+            };
 
             if (dialog.ShowDialog() == true)
                 Person.Image = new Uri(dialog.FileName);
@@ -119,6 +128,7 @@ namespace MartUI.CreateUser
 
             MessageBox.Show(tags.ToString());
 
+            MessageBox.Show(Person.Image.AbsolutePath);
 
             // THIS IS SERVER STUFF, ONLY FOR TESTING!!
             //if (UsernameAlreadyExist(Username))
@@ -143,12 +153,11 @@ namespace MartUI.CreateUser
 
         private bool UsernameAlreadyExist(string newUsername)
         {
-            foreach (var user in _database.PersonList)
+            foreach (var user in DatabaseDummy.People)
             {
                 if (user.Username == newUsername)
                     return true;
             }
-
             return false;
         }
 

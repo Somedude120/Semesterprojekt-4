@@ -59,6 +59,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.ColumnSpan="2"
@@ -136,7 +137,7 @@
                Grid.Row="4"
                Source="{Binding Person.Image}"
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" 
-               MaxWidth="150" MaxHeight="150"/>
+               MaxWidth="200" MaxHeight="200" Stretch="Uniform"/>
         <Button Grid.Column="1"
                 Grid.Row="5"
                 Content="Back"
@@ -149,5 +150,11 @@
                 Content="Register"
                 Command="{Binding RegisterButton}"
                 Margin="0,40,50,0"/>
+        <TextBlock Grid.Column="0" 
+                Grid.Row="6" 
+                HorizontalAlignment="Left" VerticalAlignment="Center"
+                   FontWeight="Bold" 
+                   Foreground="Red"
+                   Text="* Required"/>
     </Grid>
 </UserControl>
