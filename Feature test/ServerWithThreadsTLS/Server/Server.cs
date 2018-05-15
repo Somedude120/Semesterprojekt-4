@@ -153,8 +153,6 @@ namespace Examples.System.Net
                 {
                     Console.WriteLine("Read Error");
                     Console.WriteLine(e);
-                    //bytes = 0;
-                    //handleLogout(sslStream);
                     throw;
                 }
                 // Read the client's test message.

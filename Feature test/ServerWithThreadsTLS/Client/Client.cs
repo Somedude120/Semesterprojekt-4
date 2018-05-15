@@ -154,7 +154,8 @@ namespace Examples.System.Net
             //string serverCertificateName = null;
             string serverCertificateName = "Martin-MSI";
             //string machineName = null;
-            string machineName = "Martin-MSI";
+            //string machineName = "Martin-MSI";
+            string machineName = "localhost";
             //string machineName = "localhost";
             if (args == null || args.Length < 1)
             {
