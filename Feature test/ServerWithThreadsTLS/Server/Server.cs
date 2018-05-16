@@ -67,7 +67,6 @@ namespace Examples.System.Net
                     try
                     {
                         messageData = receiver.ReceiveString(sslStream);
-                        //messageData = ReceiveString(sslStream);
                         //Console.WriteLine((char)7);   //Makes bell sound
                     }
                     catch (Exception e)
@@ -131,7 +130,6 @@ namespace Examples.System.Net
             {
                 switch (input[0])
                 {
-
                     case "W":
                         HandleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
@@ -206,6 +204,7 @@ namespace Examples.System.Net
             //userStreams[input[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + input[2] + "<EOF>"));
             if (userStreams.ContainsKey(input[1]))
             {
+                Console.WriteLine("From: " + login + " to " + input[1]);
                 sender.SendString(userStreams[input[1]], "From " + login + ": " + input[2]);
             }
             else

@@ -85,7 +85,7 @@ namespace Examples.System.Net
             // Signal the end of the message using the "<EOF>".
             byte[] messsage;
             
-            Thread receiveThread = new Thread(o => receiver.ReceiveString((SslStream)o));
+            Thread receiveThread = new Thread(o => ReceiveMessages((SslStream)o));
             receiveThread.Start(sslStream);
 
             while (true)
@@ -97,7 +97,17 @@ namespace Examples.System.Net
 
             Console.ReadLine();
         }
-        
+
+        static void ReceiveMessages(SslStream sslStream)
+        {
+            string message;
+            while (true)
+            {
+                message = receiver.ReceiveString(sslStream);
+                Console.WriteLine(message);
+            }
+        }
+
         private static void DisplayUsage()
         {
             Console.WriteLine("To start the client specify:");
@@ -111,8 +121,8 @@ namespace Examples.System.Net
             string serverCertificateName = "Martin-MSI";
             //string machineName = null;
             //string machineName = "Martin-MSI";
-            string machineName = "localhost";
             //string machineName = "localhost";
+            string machineName = "192.168.101.1";
             if (args == null || args.Length < 1)
             {
                 //DisplayUsage();
