@@ -20,24 +20,11 @@ namespace MartUI.Chat
     {
         private IEventAggregator _eventAggregator;
         private ICommand _sendMessageCommand;
-        private string _username;
-        //private string _addUsername;
         private string _textToSend;
-        private ObservableCollection<ChatModel> _messageList;
+        private ObservableCollection<FriendModel> _friendList;
+        private FriendModel _user;
 
         public string ReferenceName => "ChatView";
-
-        public string Username
-        {
-            get => _username;
-            set => SetProperty(ref _username, value);
-        }
-
-        //public string AddUsername
-        //{
-        //    get => _addUsername;
-        //    set => SetProperty(ref _addUsername, value);
-        //}
 
         public string TextToSend
         {
@@ -49,48 +36,55 @@ namespace MartUI.Chat
             }
         }
 
-        public ObservableCollection<ChatModel> MessageList
+        public ObservableCollection<FriendModel> FriendList
         {
             get
             {
-                if (_messageList == null)
-                    _messageList = new ObservableCollection<ChatModel>();
-                return _messageList;
+                if(_friendList == null)
+                    _friendList = new ObservableCollection<FriendModel>();
+                return _friendList;
             }
-            set => SetProperty(ref _messageList, value);
+            set { _friendList = value; }
+        }
+
+        public FriendModel User
+        {
+            get
+            {
+                if(_user == null)
+                    _user = new FriendModel();
+                return _user;
+            }
+            set
+            {
+                _user = value;
+                RaisePropertyChanged();
+            }
         }
 
         public ChatViewModel()
         {
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<SelectedFriendEvent>().Subscribe(HandleFriend);
+            _eventAggregator.GetEvent<GetFriendListEvent>().Subscribe(HandleFriendList);
 
-            MyData.Username = "Me";
-
-            for (int i = 0; i < 10; i++)
-            {
-                var message = new ChatModel();
-                if (i % 2 == 0)
-                {
-                    message.Sender = MyData.Username;
-                    message.Message = "Message" + i;
-                    message.MessagePosition = "Left";
-                }
-                else
-                {
-                    message.Sender = "SomePerson" + i;
-                    message.Message = "Message" + i;
-                    message.MessagePosition = "Right";
-                }
-                MessageList.Add(message);
-            }
+            User = new FriendModel();
 
             //Receive all previous messages
         }
 
+        private void HandleFriendList(ObservableCollection<FriendModel> list)
+        {
+            FriendList.Clear();
+            foreach (var friend in list)
+            {
+                FriendList.Add(friend);
+            }
+        }
+
         private void HandleFriend(FriendModel obj)
         {
-            Username = obj.Username;
+            User = obj;
         }
 
         private void SendMessage()
@@ -100,13 +94,37 @@ namespace MartUI.Chat
             message.Sender = MyData.Username;
             message.Message = TextToSend;
             message.MessagePosition = "Right";
-            message.Receiver = Username;
-            MessageList.Add(message);
+            message.Receiver = User.Username;
+            User.MessageList.Add(message);
+            TextToSend = "";
         }
 
-        private void ReceiveMessage()
+        private void ReceiveMessage(string TextToReceive, string Username)
         {
-            
+            var message = new ChatModel();
+            if (Username == MyData.Username)
+            {
+                message.Sender = MyData.Username;
+                message.Message = TextToReceive;
+                message.MessagePosition = "Right";
+                message.Receiver = User.Username;
+                User.MessageList.Add(message);
+            }
+            else
+            {
+                foreach (var friend in FriendList)
+                {
+                    if (friend.Username == Username)
+                    {
+                        message.Sender = Username;
+                        message.Message = TextToReceive;
+                        message.MessagePosition = "Left";
+                        message.Receiver = MyData.Username;
+                        friend.MessageList.Add(message);
+                        _eventAggregator.GetEvent<FriendNewMessageEvent>().Publish(friend);
+                    }
+                }
+            }
         }
 
         public ICommand SendMessageCommand => _sendMessageCommand ?? (_sendMessageCommand = new DelegateCommand(SendMessage));

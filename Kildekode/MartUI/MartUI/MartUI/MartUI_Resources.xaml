@@ -226,7 +226,7 @@
                     <Border CornerRadius="{TemplateBinding Border.CornerRadius}" Background="{TemplateBinding Background}" 
                             BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
                         <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
-                                          VerticalAlignment="{TemplateBinding VerticalAlignment}" Width="{TemplateBinding Width}" 
+                                          VerticalAlignment="{TemplateBinding VerticalAlignment}" Width="{TemplateBinding Width}" MaxWidth="{TemplateBinding MaxWidth}" MaxHeight="{TemplateBinding MaxHeight}"
                                           Height="{TemplateBinding Height}" TextBlock.FontSize="{TemplateBinding FontSize}" TextBlock.TextAlignment="{TemplateBinding TextBlock.TextAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -245,5 +245,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>

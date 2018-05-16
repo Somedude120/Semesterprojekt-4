@@ -103,6 +103,8 @@
     </Compile>
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
+    <Compile Include="Events\FriendNewMessageEvent.cs" />
+    <Compile Include="Events\GetFriendListEvent.cs" />
     <Compile Include="Me\MyData.cs" />
     <Compile Include="CreateUser\TokenizingControl.cs" />
     <Compile Include="Events\AddFriendEvent.cs" />
@@ -122,6 +124,10 @@
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="Login\PersonModel.cs" />
     <Compile Include="Login\ReplaceCharactersInPassword.cs" />
+    <Compile Include="Networking\Client\Client.cs" />
+    <Compile Include="Networking\TLSNetworking\Constants.cs" />
+    <Compile Include="Networking\TLSNetworking\Receiver.cs" />
+    <Compile Include="Networking\TLSNetworking\Sender.cs" />
     <Compile Include="Settings\BlankSetting\BlankSettingView.xaml.cs">
       <DependentUpon>BlankSettingView.xaml</DependentUpon>
     </Compile>
