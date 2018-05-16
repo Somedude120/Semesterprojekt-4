@@ -57,11 +57,13 @@
     <Compile Include="Core\Domain\FriendList.cs" />
     <Compile Include="Core\Domain\Login.cs" />
     <Compile Include="Core\ServerCommunication\AddFriend.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\ISearchByUsername.cs" />
     <Compile Include="Core\ServerCommunication\Login.cs" />
     <Compile Include="Core\ServerCommunication\Logout.cs" />
     <Compile Include="Core\ServerCommunication\GetAllMsgs.cs" />
     <Compile Include="Core\ServerCommunication\GetFriends.cs" />
     <Compile Include="Core\ServerCommunication\GetMyProfile.cs" />
+    <Compile Include="Core\ServerCommunication\OtherProfile.cs" />
     <Compile Include="Core\ServerCommunication\SearchByTags.cs" />
     <Compile Include="Core\ServerCommunication\SearchByUsername.cs" />
     <Compile Include="Core\ServerCommunication\SignUp.cs" />
