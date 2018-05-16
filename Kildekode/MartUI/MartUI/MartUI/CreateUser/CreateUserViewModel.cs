@@ -24,22 +24,24 @@ namespace MartUI.CreateUser
 {
     public class CreateUserViewModel : BindableBase, IViewModel
     {
-        public string ReferenceName => "CreateUser";
+        private MyData _userData;
         private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
-
-        //private DetailedPersonModel _person;
 
         private ICommand _registerButton;
         private ICommand _backButton;
         private ICommand _chooseProfilePicture;
 
+        public string ReferenceName => "CreateUser";
+
+        public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
+
         public string Username
         {
-            get => MyData.Username;
+            get => UserData.Username;
             set
             {
-                if (MyData.Username == value) return;
-                MyData.Username = value;
+                if (UserData.Username == value) return;
+                UserData.Username = value;
                 RaisePropertyChanged();
             } // if username != value, notify
         }
@@ -47,11 +49,11 @@ namespace MartUI.CreateUser
         // Need to do this to be able to observe password - cannot observe complex property
         public string Password
         {
-            get => MyData.Password;
+            get => UserData.Password;
             set
             {
-                if (MyData.Password == value) return;
-                MyData.Password = value;
+                if (UserData.Password == value) return;
+                UserData.Password = value;
                 RaisePropertyChanged();
             } 
         }
@@ -81,14 +83,8 @@ namespace MartUI.CreateUser
         //public DetailedPersonModel Person => _person ?? (_person = new DetailedPersonModel());
 
         // Will publish event of ChangeFullPage to LoginViewModel
-        public ICommand BackButton
-        {
-            get
-            {
-                return _backButton ?? (_backButton = new DelegateCommand(() =>
-                           _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel())));
-            }
-        }
+        public ICommand BackButton => _backButton ?? (_backButton = new DelegateCommand(() =>
+                                          _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel())));
 
         // Will call CreateNewUser
         public ICommand RegisterButton => _registerButton ?? (_registerButton = new DelegateCommand(CreateNewUser, CanRegister)
@@ -112,24 +108,13 @@ namespace MartUI.CreateUser
             };
 
             if (dialog.ShowDialog() == true)
-                MyData.Image = new Uri(dialog.FileName);
+                UserData.Image = new Uri(dialog.FileName);
         }
 
         private void CreateNewUser()
         {
-            MessageBox.Show("username: " + MyData.Username);
-            MessageBox.Show("password: " + MyData.Password);
+            //MessageBox.Show(UserData.Tags[0]);
 
-            StringBuilder tags = new StringBuilder();
-
-            foreach (var personTag in MyData.Tags)
-            {
-                tags.Append(personTag + ", ");
-            }
-
-            MessageBox.Show(tags.ToString());
-
-            MessageBox.Show(MyData.Image.AbsolutePath);
 
             // THIS IS SERVER STUFF, ONLY FOR TESTING!!
             //if (UsernameAlreadyExist(Username))
@@ -140,13 +125,19 @@ namespace MartUI.CreateUser
             //else
             //{
             //    Console.WriteLine("Added " + Username);
-            //    _database.PersonList.Add(new PersonModel(Username, Password));
+            //    DatabaseDummy.People.Add(new DetailedPersonModel
+            //    {
+            //        Username = Username,
+            //        Image = MyData.Image,
+            //        Password = Password,
+            //        Tags = MyData.Tags
+            //    });
             //    // Change view
             //}
 
             //Console.WriteLine("\nDatabase consists of:");
 
-            //foreach (var user in _database.PersonList)
+            //foreach (var user in DatabaseDummy.People)
             //{
             //    Console.WriteLine("Username: " + user.Username + " Password: " + user.Password);
             //}
@@ -166,12 +157,12 @@ namespace MartUI.CreateUser
         {
             if (!tag.Command)
             {
-                if (MyData.Tags.Any())
-                    MyData.Tags.RemoveAt(MyData.Tags.Count - 1);
+                if (UserData.Tags.Any())
+                    UserData.Tags.RemoveAt(UserData.Tags.Count - 1);
             }
             else
             {
-                MyData.Tags.Add(tag.Tag);
+                UserData.Tags.Add(tag.Tag);
             }
         }
     }

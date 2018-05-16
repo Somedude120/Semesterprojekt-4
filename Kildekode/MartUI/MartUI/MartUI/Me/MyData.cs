@@ -1,74 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Media.Imaging;
+using Prism.Mvvm;
 
 namespace MartUI.Me
 {
-    public static class MyData
+    // Inspiration from:
+    // https://stackoverflow.com/questions/23188507/mvvm-shared-properties
+    public class MyData : BindableBase
     {
-        private static List<string> _tags;
+        private static MyData _instance;
 
-        private static Uri _image;
+        protected MyData()
+        {
 
-        public static string Username { get; set; }
-        public static string Password { get; set; }
+        }
 
-        public static List<string> Tags
+        // Return an instance (singleton!)
+        public static MyData GetInstance()
+        {
+            return _instance ?? (_instance = new MyData());
+        }
+
+        private string _username;
+        public string Username
+        {
+            get => _username;
+            set => SetProperty(ref _username, value);
+        }
+
+        private string _password;
+        public string Password
+        {
+            get => _password;
+            set => SetProperty(ref _password, value);
+        }
+
+        private List<string> _tags;
+        public List<string> Tags
         {
             get => _tags ?? (_tags = new List<string>());
-            set => _tags = value;
+            set => SetProperty(ref _tags, value);
         }
 
-        public static Uri Image
+        private Uri _image;
+
+        public Uri Image
         {
-            get => _image ?? new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG");
-            set => _image = value;
+            get => _image ?? (_image = new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG"));
+            set => SetProperty(ref _image, value);
         }
+
     }
-    //public static class DetailedPersonModel
-    //{
-    //    //private DetailedPerson _person = new DetailedPerson();
-
-    //    public static string Username
-    //    {
-    //        get => Username;
-    //        set
-    //        {
-    //            if (Username == value) return;
-    //            _person.Username = value;
-    //        }
-    //    }
-
-    //    public string Password
-    //    {
-    //        get => _person.Password;
-    //        set
-    //        {
-    //            if (_person.Password == value) return;
-    //            _person.Password = value;
-    //            RaisePropertyChanged();
-    //        }
-    //    }
-
-    //    public List<string> Tags
-    //    {
-    //        get => _person.Tags ?? (_person.Tags = new List<string>());
-    //        set
-    //        {
-    //            if (_person.Tags == value) return;
-    //            _person.Tags = value;
-    //            RaisePropertyChanged();
-    //        }
-    //    }
-
-    //    public Uri Image
-    //    {
-    //        get => _person.Image ?? new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG");
-    //        set
-    //        {
-    //            if (_person.Image == value) return;
-    //            _person.Image = value;
-    //            RaisePropertyChanged();
-    //        }
-    //    }
-    //}
 }
