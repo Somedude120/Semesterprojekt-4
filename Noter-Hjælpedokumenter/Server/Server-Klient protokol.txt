@@ -12,3 +12,8 @@ Logout:		Q
 GetProfile:	P;Username
 
 UpdateProfile:	U;Description;Tag;Tag;Tag;....
+
+SearchUsers:	S;Username
+
+SearchTag:	T;Tag
+
