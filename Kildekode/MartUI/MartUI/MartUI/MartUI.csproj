@@ -102,11 +102,14 @@
     </Compile>
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
+    <Compile Include="Me\MyData.cs" />
+    <Compile Include="CreateUser\TokenizingControl.cs" />
     <Compile Include="Events\AddFriendEvent.cs" />
     <Compile Include="Events\ChangeFocusPage.cs" />
     <Compile Include="Events\ChangeFriendPage.cs" />
     <Compile Include="Events\ChangeFullPage.cs" />
     <Compile Include="Events\ChangeSideBarPage.cs" />
+    <Compile Include="Events\ChangingTagsInCreate.cs" />
     <Compile Include="Events\GetEventAggregator.cs" />
     <Compile Include="Events\PasswordChangedInCreate.cs" />
     <Compile Include="Events\PasswordChangedInLogin.cs" />
@@ -234,5 +237,9 @@
   <ItemGroup>
     <Resource Include="Misc\Marto-full-icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\14-tag.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

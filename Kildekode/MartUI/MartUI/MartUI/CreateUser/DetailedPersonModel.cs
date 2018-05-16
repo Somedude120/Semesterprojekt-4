@@ -1,34 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using MartUI.Events;
 using Prism.Mvvm;
 
 namespace MartUI.CreateUser
 {
-    public class DetailedPerson  
+    public class DetailedPerson
     {
-        public string Name { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
         public List<string> Tags { get; set; }
-        public Image Picture { get; set; }
+        public Uri Image { get; set; }
     }
-
-    public class DetailedPersonnModel : BindableBase
+    public class DetailedPersonModel : BindableBase
     {
         private DetailedPerson _person = new DetailedPerson();
-        
 
-        public string Name
+        public string Username
         {
-            get => _person.Name;
+            get => _person.Username;
             set
             {
-                _person.Name = value;
+                if (_person.Username == value) return;
+                _person.Username = value;
                 RaisePropertyChanged();
             }
         }
@@ -38,6 +31,7 @@ namespace MartUI.CreateUser
             get => _person.Password;
             set
             {
+                if (_person.Password == value) return;
                 _person.Password = value;
                 RaisePropertyChanged();
             }
@@ -45,20 +39,22 @@ namespace MartUI.CreateUser
 
         public List<string> Tags
         {
-            get => _person.Tags;
+            get => _person.Tags ?? (_person.Tags = new List<string>());
             set
             {
+                if (_person.Tags == value) return;
                 _person.Tags = value;
                 RaisePropertyChanged();
             }
         }
 
-        public Image Picture
+        public Uri Image
         {
-            get => _person.Picture;
+            get => _person.Image ?? new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG");
             set
             {
-                _person.Picture = value;
+                if (_person.Image == value) return;
+                _person.Image = value;
                 RaisePropertyChanged();
             }
         }
