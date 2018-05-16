@@ -5,6 +5,7 @@ using System.Windows.Input;
 using MartUI.CreateUser;
 using MartUI.Events;
 using MartUI.Main;
+using MartUI.Me;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -14,7 +15,6 @@ namespace MartUI.Login
     public class LoginViewModel : BindableBase, IViewModel // Using BindableBase from PRISM instead of INotifyPropertyChanged
     {
         private readonly IEventAggregator _eventAggregator;
-        public string ReferenceName => "Login";
 
         private ICommand _createUserCommand;
         private ICommand _loginCommand;
@@ -22,6 +22,7 @@ namespace MartUI.Login
         private string _username;
         private string _password;
 
+        public string ReferenceName => "Login";
         // Made these in here since it will be created either way because observing these - no need for model
         public string Username
         {

@@ -8,6 +8,7 @@ namespace MartUI.Me
 {
     // Inspiration from:
     // https://stackoverflow.com/questions/23188507/mvvm-shared-properties
+
     public class MyData : BindableBase
     {
         private static MyData _instance;
@@ -45,12 +46,10 @@ namespace MartUI.Me
         }
 
         private Uri _image;
-
         public Uri Image
         {
             get => _image ?? (_image = new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG"));
             set => SetProperty(ref _image, value);
         }
-
     }
 }

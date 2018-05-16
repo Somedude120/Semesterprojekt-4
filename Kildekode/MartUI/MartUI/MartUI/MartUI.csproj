@@ -122,7 +122,6 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Login\LoginViewModel.cs" />
-    <Compile Include="Login\PersonModel.cs" />
     <Compile Include="Login\ReplaceCharactersInPassword.cs" />
     <Compile Include="Networking\Client\Client.cs" />
     <Compile Include="Networking\TLSNetworking\Constants.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -25,6 +26,8 @@ namespace MartUI.CreateUser
     public class CreateUserViewModel : BindableBase, IViewModel
     {
         private MyData _userData;
+        private DatabaseDummy _databaseDummy;
+
         private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
 
         private ICommand _registerButton;
@@ -34,6 +37,7 @@ namespace MartUI.CreateUser
         public string ReferenceName => "CreateUser";
 
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
+        public DatabaseDummy DatabaseDummy => _databaseDummy ?? (_databaseDummy = DatabaseDummy.GetInstance());
 
         public string Username
         {
@@ -80,8 +84,6 @@ namespace MartUI.CreateUser
 
         }
 
-        //public DetailedPersonModel Person => _person ?? (_person = new DetailedPersonModel());
-
         // Will publish event of ChangeFullPage to LoginViewModel
         public ICommand BackButton => _backButton ?? (_backButton = new DelegateCommand(() =>
                                           _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel())));
@@ -113,44 +115,31 @@ namespace MartUI.CreateUser
 
         private void CreateNewUser()
         {
-            //MessageBox.Show(UserData.Tags[0]);
-
-
-            // THIS IS SERVER STUFF, ONLY FOR TESTING!!
-            //if (UsernameAlreadyExist(Username))
-            //{
-            //    MessageBox.Show("Username " + Username + " already exists! Choose something else");
-            //    // Change to something more pretty ..
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Added " + Username);
-            //    DatabaseDummy.People.Add(new DetailedPersonModel
-            //    {
-            //        Username = Username,
-            //        Image = MyData.Image,
-            //        Password = Password,
-            //        Tags = MyData.Tags
-            //    });
-            //    // Change view
-            //}
-
-            //Console.WriteLine("\nDatabase consists of:");
-
-            //foreach (var user in DatabaseDummy.People)
-            //{
-            //    Console.WriteLine("Username: " + user.Username + " Password: " + user.Password);
-            //}
-        }
-
-        private bool UsernameAlreadyExist(string newUsername)
-        {
-            foreach (var user in DatabaseDummy.People)
+            //THIS IS SERVER STUFF, ONLY FOR TESTING!!
+            if (DatabaseDummy.UsernameAlreadyExist(Username))
             {
-                if (user.Username == newUsername)
-                    return true;
+                MessageBox.Show("Username " + Username + " already exists! Choose something else");
+                // Change to something more pretty ..
             }
-            return false;
+            else
+            {
+                Debug.WriteLine("Added " + Username);
+                DatabaseDummy.People.Add(new DetailedPersonModel
+                {
+                    Username = Username,
+                    Image = UserData.Image,
+                    Password = Password,
+                    Tags = UserData.Tags
+                });
+
+
+                // Change view to login
+                _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel());
+
+                MessageBox.Show($"Welcome to the club, {UserData.Username}! You can now log in");
+            }
+
+            DatabaseDummy.Print();
         }
 
         public void ModifyTags(TagControl tag)
