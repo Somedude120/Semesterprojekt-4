@@ -58,6 +58,7 @@
                      PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton">
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding AddFriendCommand}" Key="Return"/>
+                    <KeyBinding Command="{Binding ClearUsernameCommand}" Key="Return"/>
                 </TextBox.InputBindings>
             </TextBox>
         </Grid>

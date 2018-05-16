@@ -1,7 +1,19 @@
-﻿namespace MartUI.Friend
+﻿using Prism.Mvvm;
+
+namespace MartUI.Friend
 {
-    public class FriendModel
+    public class FriendModel : BindableBase
     {
-        public string Username { get; set; }
+        private string _username;
+
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+            }
+
+        }
     }
 }

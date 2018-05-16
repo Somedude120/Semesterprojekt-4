@@ -15,6 +15,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Reflection;
+using MartUI.Chat;
 using MartUI.Settings;
 
 namespace MartUI.Main
@@ -45,6 +46,7 @@ namespace MartUI.Main
 
             //ViewList.Add(new LoginViewModel());
             ViewList.Add(new FriendViewModel());
+            ViewList.Add(new ChatViewModel());
             //ViewList.Add(new FocusViewModel(eventAggregator));
 
             FriendListView = ViewList[0];
