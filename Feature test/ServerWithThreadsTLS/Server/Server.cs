@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
+using TLSNetworking;
 
 //Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
@@ -20,6 +21,9 @@ namespace Examples.System.Net
 {
     public sealed class SslTcpServer
     {
+        public static Receiver receiver = new Receiver();
+        public static Sender sender = new Sender();
+
         public static Dictionary<string, string> userID = new Dictionary<string, string>();
         public static Dictionary<string, SslStream> userStreams = new Dictionary<string, SslStream>();
         public static TcpListener listener = new TcpListener(IPAddress.Any, 443);
@@ -29,20 +33,8 @@ namespace Examples.System.Net
         public static void RunServer(string certificate, TcpClient client)
         {
             serverCertificate = X509Certificate.CreateFromCertFile(certificate);
-            // Create a TCP/IP (IPv4) socket and listen for incoming connections.
-            //TcpListener listener = new TcpListener(IPAddress.Any, 8090);
-            //TcpListener listener = new TcpListener(IPAddress.Any, 443);
-            //listener.Start();
-            //while (true)
-            {
-                //Console.WriteLine("Waiting for a client to connect...");
-                // Application blocks while waiting for an incoming connection.
-                // Type CNTL-C to terminate the server.
-                //TcpClient client = listener.AcceptTcpClient();
-                //Console.WriteLine("Client IP:" + ((IPEndPoint)client.Client.RemoteEndPoint).Address);
-                //Console.WriteLine("Client port:" + ((IPEndPoint)client.Client.RemoteEndPoint).Port);
-                ProcessClient(client);
-            }
+
+            ProcessClient(client);
         }
         static void ProcessClient(TcpClient client)
         {
@@ -67,19 +59,6 @@ namespace Examples.System.Net
                 //sslStream.ReadTimeout = 5000;
                 sslStream.WriteTimeout = 5000;
 
-                ////Request UserID
-                //string login;
-                //try
-                //{
-                //    login = ReadMessage(sslStream);
-                //}
-                //catch (Exception e)
-                //{
-                //    return;
-                //}
-                //userID.Add(IPId, login);
-                //userStreams.Add(login, sslStream);
-
                 while (true)
                 {
                     string messageData;
@@ -87,28 +66,18 @@ namespace Examples.System.Net
                     Console.WriteLine("Waiting for client message...");
                     try
                     {
-                        messageData = ReadMessage(sslStream);
+                        messageData = receiver.ReceiveString(sslStream);
                         //Console.WriteLine((char)7);   //Makes bell sound
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
-                        handleLogout(sslStream);
+                        HandleLogout(sslStream);
                         return;
                     }
-                    //Console.WriteLine("Received {0}: {1}", userID[IPId], messageData);
-
-                    //Console.WriteLine(IPId);
-                    //Console.WriteLine("From IP: " + ((IPEndPoint)client.Client.RemoteEndPoint).Address + ", " + ((IPEndPoint)client.Client.RemoteEndPoint).Port);
-
-                    // Write a message to the client.
-                    //byte[] message = Encoding.UTF8.GetBytes("Access granted<EOF>");
-                    //Console.WriteLine("Sending hello message.");
-                    //sslStream.Write(message);
 
                     string[] parsedMessage = ParseMessage(messageData);
-                    stringHandler(parsedMessage, sslStream);
-                    //userStreams[parsedMessage[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + parsedMessage[2] + "<EOF>"));
+                    StringHandler(parsedMessage, sslStream);
                     Console.WriteLine();
                 }
 
@@ -135,60 +104,22 @@ namespace Examples.System.Net
                 client.Close();
             }
         }
-        static string ReadMessage(SslStream sslStream)
-        {
-            // Read the  message sent by the client.
-            // The client signals the end of the message using the
-            // "<EOF>" marker.
-            byte[] buffer = new byte[2048];
-            StringBuilder messageData = new StringBuilder();
-            int bytes = -1;
-            do
-            {
-                try
-                {
-                    bytes = sslStream.Read(buffer, 0, buffer.Length);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Read Error");
-                    Console.WriteLine(e);
-                    throw;
-                }
-                // Read the client's test message.
-
-                // Use Decoder class to convert from bytes to UTF8
-                // in case a character spans two buffers.
-                Decoder decoder = Encoding.UTF8.GetDecoder();
-                char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
-                decoder.GetChars(buffer, 0, bytes, chars, 0);
-                messageData.Append(chars);
-                // Check for EOF or an empty message.
-                if (messageData.ToString().IndexOf(Constants.EndDelimiter) != -1)
-                {
-                    messageData.Remove(messageData.ToString().IndexOf(Constants.EndDelimiter), Constants.EndDelimiter.Length);
-                    break;
-                }
-            } while (bytes != 0);
-
-            return messageData.ToString();
-        }
 
         static string[] ParseMessage(string message)
         {
             return message.Split(Constants.MiddleDelimiter);
         }
 
-        static void stringHandler(string[] input, SslStream sslStream)
+        static void StringHandler(string[] input, SslStream sslStream)
         {
             //Check if client is logged in
-            //Client that is not logged in, should only be able to get to handleLogin
+            //Client that is not logged in, should only be able to get to HandleLogin
             if (userStreams.FirstOrDefault(x => x.Value == sslStream).Key == null)
             {
                 switch (input[0])
                 {
                     case "L":
-                        handleLogin(input, sslStream);
+                        HandleLogin(input, sslStream);
                         break;
                     default:
                         Console.WriteLine("Client is not logged in, and string is not recognized");
@@ -199,16 +130,21 @@ namespace Examples.System.Net
             {
                 switch (input[0])
                 {
-
                     case "W":
-                        handleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
+                        HandleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
+                        break;
+                    case "P":
+                        GetProfile(input[1], sslStream);
+                        break;
+                    case "U":
+                        UpdateProfile(input[1], sslStream);
                         break;
                     case "L":
                         Console.WriteLine("User is already logged in");
-                        sendString(sslStream, "You are already logged in");
+                        sender.SendString(sslStream, "You are already logged in");
                         break;
                     case "Q":
-                        handleLogout(sslStream);
+                        HandleLogout(sslStream);
                         break;
                     default:
                         Console.WriteLine("String is not recognized");
@@ -218,7 +154,7 @@ namespace Examples.System.Net
             }
         }
 
-        static void handleLogin(string[] input, SslStream sslStream)
+        static void HandleLogin(string[] input, SslStream sslStream)
         {
             //check if user is logged in
             //if (userStreams.FirstOrDefault(x => x.Value == sslStream).Key == null)
@@ -237,7 +173,7 @@ namespace Examples.System.Net
             }
         }
 
-        static void handleLogout(SslStream sslStream)
+        static void HandleLogout(SslStream sslStream)
         {
             Console.WriteLine("Handle logout");
             //remove from dictionary
@@ -260,39 +196,50 @@ namespace Examples.System.Net
             }
 
             //close connection
-            closeClientThread();
+            CloseClientThread();
         }
 
-        static void handleMessage(string[] input, string login, SslStream sslStream)
+        static void HandleMessage(string[] input, string login, SslStream sslStream)
         {
             //userStreams[input[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + input[2] + "<EOF>"));
             if (userStreams.ContainsKey(input[1]))
             {
-                sendString(userStreams[input[1]], "From " + login + ": " + input[2]);
+                Console.WriteLine("From: " + login + " to " + input[1]);
+                sender.SendString(userStreams[input[1]], "From " + login + ": " + input[2]);
             }
             else
             {
                 Console.WriteLine("User " + input[1] + " isn't logged in");
-                sendString(userStreams[login], "User: " + input[1] + " isn't logged in");
+                sender.SendString(userStreams[login], "User: " + input[1] + " isn't logged in");
             }
         }
 
-        static void failedLogin()
+        static void GetProfile(string input, SslStream sslStream)
+        {
+            if (input == "")
+            {
+                Console.WriteLine("User's own profile");
+            }
+            else
+            {
+                Console.WriteLine(input);
+            }
+        }
+
+        static void UpdateProfile(string input, SslStream sslStream)
+        {
+
+        }
+
+        static void FailedLogin()
         {
             //send message to client
         }
 
-        static void closeClientThread()
+        static void CloseClientThread()
         {
 
 
-        }
-
-        static void sendString(SslStream sslStream, string message)
-        {
-            Console.WriteLine(message);
-            string delimiter = ((char)29).ToString();
-            sslStream.Write(Encoding.ASCII.GetBytes(message + delimiter));
         }
 
         static void DisplaySecurityLevel(SslStream stream)
@@ -357,7 +304,12 @@ namespace Examples.System.Net
                 //DisplayUsage();
             }
             //certificate = args[0];
-            certificate = "D:/Users/Martin/Dropbox/IKT/4.Semester/PROJ4/Semesterprojekt-4/Feature test/SSL-Test/MartoTestCer.cer";
+            //certificate = "D:/Users/Martin/Dropbox/IKT/4.Semester/PROJ4/Semesterprojekt-4/Feature test/SSL-Test/MartoTestCer.cer";
+
+            Console.WriteLine("Write address to server certificate");
+            certificate = Console.ReadLine();
+
+            Console.WriteLine();
 
             Console.WriteLine("************This is Server program************");
 

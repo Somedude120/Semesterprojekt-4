@@ -53,9 +53,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Globals1\Globals.csproj">
-      <Project>{55e08e8c-d4d5-4f8d-b759-5ee8404181a8}</Project>
-      <Name>Globals</Name>
+    <ProjectReference Include="..\TLSNetworking\TLSNetworking.csproj">
+      <Project>{48f4c855-b35d-4cec-803b-d8e9a0c8b33f}</Project>
+      <Name>TLSNetworking</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
