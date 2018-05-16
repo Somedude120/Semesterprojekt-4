@@ -7,6 +7,36 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid Row="0">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding MessageList, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button
+                                Content="{Binding Message, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"
+                                Margin="0,3" Width="185" Height="20"
+                                Style="{StaticResource RoundCornerButton}">
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+        <Grid Row="1">
+            <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="20,0,20,0"
+                     Text="{Binding TextToSend, UpdateSourceTrigger=PropertyChanged}" 
+                     x:Name="TextToSendTextBox" 
+                     MouseDoubleClick="SelectAddress"
+                     GotKeyboardFocus="SelectAddress"
+                     PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding SendMessageCommand}" Key="Return"/>
+                </TextBox.InputBindings>
+            </TextBox>
+        </Grid>
     </Grid>
 </UserControl>
