@@ -104,7 +104,8 @@
                  Grid.Row="2"
                  Margin="10"
                  MaxLength="20" MaxWidth="200" MinWidth="200"
-                 Name="CreateUserPasswordBx" PasswordChanged="CreateUserPasswordBx_OnPasswordChanged"/>
+                 Name="CreateUserPasswordBx" PasswordChanged="CreateUserPasswordBx_OnPasswordChanged"
+                     />
         <TextBlock Grid.Column="1"
                    Grid.Row="3"
                    Text="Tags"
@@ -135,7 +136,7 @@
                Command="{Binding ChooseProfilePicture}"/>
         <Image Grid.Column="2"
                Grid.Row="4"
-               Source="{Binding Person.Image}"
+               Source="{Binding MyData.Image}"
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" 
                MaxWidth="200" MaxHeight="200" Stretch="Uniform"/>
         <Button Grid.Column="1"

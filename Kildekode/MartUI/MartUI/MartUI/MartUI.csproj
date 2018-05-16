@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
+    <Compile Include="Me\MyData.cs" />
     <Compile Include="CreateUser\TokenizingControl.cs" />
     <Compile Include="Events\ChangeFocusPage.cs" />
     <Compile Include="Events\ChangeFriendPage.cs" />
@@ -225,5 +226,6 @@
   <ItemGroup>
     <Resource Include="Images\14-tag.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

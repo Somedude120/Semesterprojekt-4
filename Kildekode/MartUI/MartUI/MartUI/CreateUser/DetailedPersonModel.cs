@@ -1,25 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using MartUI.Events;
-using Prism.Commands;
 using Prism.Mvvm;
 
 namespace MartUI.CreateUser
 {
-    public class DetailedPerson  
+    public class DetailedPerson
     {
         public string Username { get; set; }
         public string Password { get; set; }
         public List<string> Tags { get; set; }
         public Uri Image { get; set; }
     }
-
     public class DetailedPersonModel : BindableBase
     {
         private DetailedPerson _person = new DetailedPerson();

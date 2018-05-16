@@ -14,6 +14,7 @@ using MartUI.Events;
 using MartUI.Helpers;
 using MartUI.Login;
 using MartUI.Main;
+using MartUI.Me;
 using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
@@ -26,7 +27,7 @@ namespace MartUI.CreateUser
         public string ReferenceName => "CreateUser";
         private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
 
-        private DetailedPersonModel _person;
+        //private DetailedPersonModel _person;
 
         private ICommand _registerButton;
         private ICommand _backButton;
@@ -34,11 +35,11 @@ namespace MartUI.CreateUser
 
         public string Username
         {
-            get => Person.Username;
+            get => MyData.Username;
             set
             {
-                if (Person.Username == value) return;
-                Person.Username = value;
+                if (MyData.Username == value) return;
+                MyData.Username = value;
                 RaisePropertyChanged();
             } // if username != value, notify
         }
@@ -46,11 +47,11 @@ namespace MartUI.CreateUser
         // Need to do this to be able to observe password - cannot observe complex property
         public string Password
         {
-            get => Person.Password;
+            get => MyData.Password;
             set
             {
-                if (Person.Password == value) return;
-                Person.Password = value;
+                if (MyData.Password == value) return;
+                MyData.Password = value;
                 RaisePropertyChanged();
             } 
         }
@@ -77,7 +78,7 @@ namespace MartUI.CreateUser
 
         }
 
-        public DetailedPersonModel Person => _person ?? (_person = new DetailedPersonModel());
+        //public DetailedPersonModel Person => _person ?? (_person = new DetailedPersonModel());
 
         // Will publish event of ChangeFullPage to LoginViewModel
         public ICommand BackButton
@@ -111,24 +112,24 @@ namespace MartUI.CreateUser
             };
 
             if (dialog.ShowDialog() == true)
-                Person.Image = new Uri(dialog.FileName);
+                MyData.Image = new Uri(dialog.FileName);
         }
 
         private void CreateNewUser()
         {
-            MessageBox.Show("username: " + Person.Username);
-            MessageBox.Show("password: " + Person.Password);
+            MessageBox.Show("username: " + MyData.Username);
+            MessageBox.Show("password: " + MyData.Password);
 
             StringBuilder tags = new StringBuilder();
 
-            foreach (var personTag in Person.Tags)
+            foreach (var personTag in MyData.Tags)
             {
                 tags.Append(personTag + ", ");
             }
 
             MessageBox.Show(tags.ToString());
 
-            MessageBox.Show(Person.Image.AbsolutePath);
+            MessageBox.Show(MyData.Image.AbsolutePath);
 
             // THIS IS SERVER STUFF, ONLY FOR TESTING!!
             //if (UsernameAlreadyExist(Username))
@@ -165,12 +166,12 @@ namespace MartUI.CreateUser
         {
             if (!tag.Command)
             {
-                if (Person.Tags.Any())
-                    Person.Tags.RemoveAt(Person.Tags.Count - 1);
+                if (MyData.Tags.Any())
+                    MyData.Tags.RemoveAt(MyData.Tags.Count - 1);
             }
             else
             {
-                Person.Tags.Add(tag.Tag);
+                MyData.Tags.Add(tag.Tag);
             }
         }
     }
