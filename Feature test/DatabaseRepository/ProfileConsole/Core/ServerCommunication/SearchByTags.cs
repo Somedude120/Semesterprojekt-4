@@ -15,7 +15,7 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public OtherProfile RequestTag(string tag)
+        public Tags RequestTag(string tag)
         {
             var person = unitOfWork.Tags.GetString(tag);
             if(person.TagName == tag)
@@ -30,7 +30,7 @@ namespace ProfileConsole.Core.ServerCommunication
                 {
                     foreach (var pers in profile)
                     {
-                        //return new OtherProfile(pers.UserName, pers.Description, pers.Tags);
+                        return new Tags{TagName = tag};
                     }
                 }
                 catch (Exception e)
