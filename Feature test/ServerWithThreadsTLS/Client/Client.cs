@@ -7,6 +7,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using System.Threading;
 
 //Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
@@ -39,14 +40,15 @@ namespace Examples.System.Net
             Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
 
             // Do not allow this client to communicate with unauthenticated servers.
-            return false;
+            //return false;
+            return true;    //Ignore false certificate. Used because of selfsigned certificate
         }
         public static void RunClient(string machineName, string serverName)
         {
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
-            TcpClient client = new TcpClient("192.168.173.1", 443);
-            //TcpClient client = new TcpClient(machineName, 8090);
+            //TcpClient client = new TcpClient("192.168.173.1", 443);   //When client is not on localhost
+            TcpClient client = new TcpClient(machineName, 443);
             Console.WriteLine("Client connected.");
             // Create an SSL stream that will close the client's stream.
 
@@ -76,44 +78,56 @@ namespace Examples.System.Net
             }
             // Encode a test message into a byte array.
             // Signal the end of the message using the "<EOF>".
-            //byte[] messsage = Encoding.UTF8.GetBytes("Hello from the client.<EOF>");
-            byte[] messsage = Encoding.UTF8.GetBytes("l;UserName;PlaintextPassword<EOF>");
-            // Send hello message to the server. 
-            sslStream.Write(messsage);
-            sslStream.Flush();
-            // Read message from the server.
-            string serverMessage = ReadMessage(sslStream);
-            Console.WriteLine("Server says: {0}", serverMessage);
-            // Close the client connection.
-            //client.Close();
-            Console.WriteLine("Client not closed.");
+            byte[] messsage;
+
+            Thread receiveThread = new Thread(o => ReadMessage((SslStream)o));
+            receiveThread.Start(sslStream);
+
+            while (true)
+            {
+                messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + Constants.EndDelimiter);
+                sslStream.Write(messsage);
+                sslStream.Flush();
+            }
+
             Console.ReadLine();
-        }
+        }   
         static string ReadMessage(SslStream sslStream)
         {
             // Read the  message sent by the server.
             // The end of the message is signaled using the
-            // "<EOF>" marker.
+            // EndDelimiter constant.
             byte[] buffer = new byte[2048];
             StringBuilder messageData = new StringBuilder();
             int bytes = -1;
-            do
+            while (true)
             {
-                bytes = sslStream.Read(buffer, 0, buffer.Length);
-
-                // Use Decoder class to convert from bytes to UTF8
-                // in case a character spans two buffers.
-                Decoder decoder = Encoding.UTF8.GetDecoder();
-                char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
-                decoder.GetChars(buffer, 0, bytes, chars, 0);
-                messageData.Append(chars);
-                // Check for EOF.
-                if (messageData.ToString().IndexOf("<EOF>") != -1)
+                messageData.Clear();
+                do
                 {
-                    messageData.Remove(messageData.ToString().IndexOf("<EOF>"), 5);
-                    break;
-                }
-            } while (bytes != 0);
+                    bytes = sslStream.Read(buffer, 0, buffer.Length);
+
+                    // Use Decoder class to convert from bytes to UTF8
+                    // in case a character spans two buffers.
+                    Decoder decoder = Encoding.UTF8.GetDecoder();
+                    char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
+                    decoder.GetChars(buffer, 0, bytes, chars, 0);
+                    messageData.Append(chars);
+                    // Check for EndDelimiter
+                    if (messageData.ToString().IndexOf(Constants.EndDelimiter) != -1)
+                    {
+                        messageData.Remove(messageData.ToString().IndexOf(Constants.EndDelimiter), Constants.EndDelimiter.Length);
+                        break;
+                    }
+                } while (bytes != 0);
+
+                //while ((bytes = sslStream.Read(buffer, 0, buffer.Length)) > 0)
+                //{
+                //    Console.Write(Encoding.ASCII.GetString(buffer, 0, bytes));
+                //}
+
+                Console.WriteLine(messageData.ToString());
+            }
 
             return messageData.ToString();
         }
@@ -126,10 +140,11 @@ namespace Examples.System.Net
         public static int Main(string[] args)
         {
             //string serverCertificateName = null;
-            string serverCertificateName = "Martin-MSIj";
+            string serverCertificateName = "Martin-MSI";
             //string machineName = null;
-            string machineName = "Martin-MSI";
+            //string machineName = "Martin-MSI";
             //string machineName = "localhost";
+            string machineName = "192.168.101.1";
             if (args == null || args.Length < 1)
             {
                 //DisplayUsage();

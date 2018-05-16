@@ -4,25 +4,62 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MartUI.Friend"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
 
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="200"
              Background="#2f3136">
-    <Grid>
-        <ScrollViewer HorizontalAlignment="Right" Width="200">
-            <ItemsControl ItemsSource="{Binding FriendList}" Width="185">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button
-                            Content="{Binding Username}"
-                            Command="{Binding  DataContext.ChooseFriend, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+    <Grid x:Name="FriendGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="26"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.Resources>
+            <local:BindingProxy x:Key="Proxy" Data="{Binding}"/>
+        </Grid.Resources>
+
+        <Grid Row="0">
+            <ScrollViewer HorizontalAlignment="Right" Width="200">
+                <ItemsControl ItemsSource="{Binding FriendList, UpdateSourceTrigger=PropertyChanged}" Width="185">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button
+                            Content="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                            Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                             CommandParameter="{Binding}"
                             Margin="0,3" Width="185" Height="20"
-                            Style="{StaticResource RoundCorner}">
-                        </Button>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer> 
+                            Style="{StaticResource RoundCornerButton}">
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Remove" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveFriendCommand}" CommandParameter="{Binding}"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+        <Grid Row="1" Width="180">
+            <Rectangle Style="{StaticResource GradientColorRectangle}"/>
+        </Grid>
+        <Grid Row="2">
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,6,0" Background="White" BorderBrush="Transparent"  Height="16" 
+                    Name="AddFriendButton" Style="{StaticResource NoButtonHighlight}" Click="AddFriendButton_OnClick">
+                <Button.OpacityMask>
+                    <VisualBrush Visual="{iconPacks:Modern UserAdd}" />
+                </Button.OpacityMask>
+            </Button>
+            <TextBox Width="170" HorizontalAlignment="Left" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" x:Name="AddFriendTextBox" Visibility="Hidden"
+                     MouseDoubleClick="SelectAddress"
+                     GotKeyboardFocus="SelectAddress"
+                     PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding AddFriendCommand}" Key="Return"/>
+                </TextBox.InputBindings>
+            </TextBox>
+        </Grid>
     </Grid>
 </UserControl>

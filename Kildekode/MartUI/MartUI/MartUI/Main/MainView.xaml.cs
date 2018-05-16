@@ -24,7 +24,7 @@ namespace MartUI
     /// </summary>
     public partial class MainView
     {
-        private bool Maximized;
+        private bool Maximized = false;
         private double PrevLeft, PrevTop, PrevWidth, PrevHeight;
 
         public MainView()
@@ -37,17 +37,21 @@ namespace MartUI
 
         private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed && e.ClickCount == 1)
             {
-                if(Maximized)
+                if (Maximized)
                 {
-                        ExpandApplication(sender, e);
                         Point Position = Mouse.GetPosition(TitleBar);
+
+                        ExpandApplication(sender, e);
                         Left = Position.X - 7 - Width / 2;
                         Top = Position.Y - 9;
                 }
             }
+            if (e.ChangedButton == MouseButton.Left)
+            {
                 DragMove();
+            }
         }
 
         private void MainView_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -98,6 +102,26 @@ namespace MartUI
                 Top = SystemParameters.WorkArea.Top;
                 Left = SystemParameters.WorkArea.Left;
                 Maximized = true;
+            }
+        }
+
+        private void TitleBar_LeftMouseButtonDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            {
+                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                {
+                    if (Maximized)
+                    {
+                        ExpandApplication(sender, e);
+                        Point Position = Mouse.GetPosition(TitleBar);
+                        Left = Position.X - 7 - Width / 2;
+                        Top = Position.Y - 9;
+                    }
+                    else
+                    {
+                        ExpandApplication(sender, e);
+                    }
+                }
             }
         }
     }

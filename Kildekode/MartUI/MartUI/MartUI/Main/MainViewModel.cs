@@ -15,6 +15,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Reflection;
+using MartUI.Settings;
 
 namespace MartUI.Main
 {
@@ -31,6 +32,8 @@ namespace MartUI.Main
 
         public List<IViewModel> _viewList;
 
+        private ICommand _settingsViewCommand;
+
 
         public MainViewModel()
         {
@@ -40,13 +43,13 @@ namespace MartUI.Main
             _eventAggregator.GetEvent<ChangeFriendPage>().Subscribe(ChangeFriendView);
             _eventAggregator.GetEvent<ChangeSideBarPage>().Subscribe(ChangeSideBarView);
 
-            ViewList.Add(new LoginViewModel());
-            //ViewList.Add(new FriendViewModel(eventAggregator));
+            //ViewList.Add(new LoginViewModel());
+            ViewList.Add(new FriendViewModel());
             //ViewList.Add(new FocusViewModel(eventAggregator));
 
-            //FriendListView = ViewList[1];
+            FriendListView = ViewList[0];
             //FocusView = new FocusViewModel(eventAggregator);
-            FullView = ViewList[0];
+            //FullView = ViewList[0];
             //regionManager.
             //regionManager.RequestNavigate("FullView", "LoginView");
         }
@@ -125,6 +128,15 @@ namespace MartUI.Main
                 ViewList.Add(model);
 
             return model;
+        }
+
+        public ICommand SettingsViewCommand
+        {
+            get
+            {
+                return _settingsViewCommand ?? (_settingsViewCommand = new DelegateCommand(() =>
+                           _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new SettingsViewModel())));
+            }
         }
 
         //public ICommand ChangeView

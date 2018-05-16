@@ -20,7 +20,11 @@ Certificate er nu eksporteret som .pfx . Vi vil have det som .cer . Dette kommer
 
 8: Find .pfx filen og sikrer at "Exportable" er valgt. Tryk OK.
 
-9: Eksporter nu igen, men vælg .cer som filtype.
+9: Højreklik det importerede certifikat, tryk 'View'. Under detaljer trykkes der 'Copy to file'.
+
+10: Følg Wizard og eksporter som .cer
+
+//9: Eksporter nu igen, men vælg .cer som filtype.
 
 Du har nu en .cer certificate fil. Denne kan indlæses i Visual Studio med filstien i en string hvor den skal bruges.
 

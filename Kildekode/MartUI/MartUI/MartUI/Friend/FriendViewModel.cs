@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using MartUI.Chat;
 using MartUI.Events;
 using MartUI.Main;
 using Prism.Commands;
@@ -17,22 +21,36 @@ namespace MartUI.Friend
     {
         private readonly IEventAggregator _eventAggregator;
         public string ReferenceName => "FriendViewModel"; // Returns "FriendViewModel"
-
-        private List<FriendModel> _friendList;
+        private ObservableCollection<FriendModel> _friendList;
         private FriendModel _selectedFriend;
-        public ICommand ChooseFriend { get; set; }
+        public ICommand ChooseFriendCommand { get; set; }
+        private ICommand _addFriendCommand;
+        private ICommand _removeFriendCommand;
+        private string _username;
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
 
         public FriendViewModel()
         {
             _eventAggregator = GetEventAggregator.Get();
 
-            FriendList = new List<FriendModel>();
-            ChooseFriend = new DelegateCommand<FriendModel>(SelectFriend);
+            ChooseFriendCommand = new DelegateCommand<FriendModel>(SelectFriend);
+
+            Username = "Enter Username!";
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
 
-            for (int i = 0; i < 41; i++)
+            for (int i = 0; i < 3; i++)
             {
                 var friend = new FriendModel {Username = "Friend" + i};
                 FriendList.Add(friend);
@@ -46,12 +64,12 @@ namespace MartUI.Friend
         // Mangler at tilføje en filtrering eller en anden liste som kun indeholder online venner
 
         // All friends in friend list
-        public List<FriendModel> FriendList
+        public ObservableCollection<FriendModel> FriendList
         {
             get
             {
                 if (_friendList == null)
-                    _friendList = new List<FriendModel>();
+                    _friendList = new ObservableCollection<FriendModel>();
                 return _friendList;
             }
             set => SetProperty(ref _friendList, value);
@@ -66,20 +84,22 @@ namespace MartUI.Friend
         private void SelectFriend(FriendModel friend)
         {
             _eventAggregator.GetEvent<SelectedFriendEvent>().Publish(friend);
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
         }
-        //private void ChangeSelectedFriend(FriendModel friend)
-        //{
-        //    if (!FriendList.Contains(friend))
-        //        FriendList.Add(friend);
-        //    SelectFriend = FriendList.FirstOrDefault(f => f == friend);
-        //}
 
-        public void AddFriend(FriendModel friend)
+        public void AddFriend()
         {
-            if (!FriendList.Contains(friend))
-                FriendList.Add(friend);
-            else
-                MessageBox.Show("This user is already on your friendlist!");
+            bool friendIntList = false;
+            foreach (var f in FriendList)
+            {
+                if (f.Username == Username)
+                {
+                    MessageBox.Show("This user is already on your friendlist");
+                    friendIntList = true;
+                }
+            }
+            if(!friendIntList)
+                Application.Current.Dispatcher.Invoke(new Action(() => { FriendList.Add(new FriendModel { Username = Username }); }));
 
             //Skal kommunikere med database/server
         }
@@ -87,11 +107,33 @@ namespace MartUI.Friend
         public void RemoveFriend(FriendModel friend)
         {
             if (FriendList.Contains(friend))
+            {
                 FriendList.Remove(friend);
+            }
             else
                 MessageBox.Show("This user is not on your friendlist!");
 
             //Skal kommunikere med database/server
         }
+
+        public ICommand AddFriendCommand => _addFriendCommand ?? (_addFriendCommand = new DelegateCommand(AddFriend));
+        public ICommand RemoveFriendCommand => _removeFriendCommand ?? (_removeFriendCommand = new DelegateCommand<FriendModel>(RemoveFriend));
+    }
+
+    public class BindingProxy : Freezable
+    {
+        protected override Freezable CreateInstanceCore()
+        {
+            return new BindingProxy();
+        }
+
+        public object Data
+        {
+            get { return (object)GetValue(DataProperty); }
+            set { SetValue(DataProperty, value); }
+        }
+
+        public static readonly DependencyProperty DataProperty =
+            DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
     }
 }
