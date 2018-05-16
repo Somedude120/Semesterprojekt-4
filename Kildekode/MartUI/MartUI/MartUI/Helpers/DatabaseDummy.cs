@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MartUI.CreateUser;
 using MartUI.Login;
 
 namespace MartUI.Helpers
 {
-    public class DatabaseDummy
+    public static class DatabaseDummy
     {
-        public List<PersonModel> PersonList { get; set; } = new List<PersonModel>();
+        public static List<DetailedPersonModel> People { get; set; } = new List<DetailedPersonModel>();
     }
 }
