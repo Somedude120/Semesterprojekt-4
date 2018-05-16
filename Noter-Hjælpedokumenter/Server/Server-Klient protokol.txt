@@ -1,0 +1,14 @@
+Constants.MiddleDelimiter = ';'
+
+Alle beskeder skal slutte med Constants.EndDelimiter
+
+
+Send message:	W;DestinationUsername;Message
+
+Login:		L;Username;password
+
+Logout:		Q
+
+GetProfile:	P;Username
+
+UpdateProfile:	U;Description;Tag;Tag;Tag;....
