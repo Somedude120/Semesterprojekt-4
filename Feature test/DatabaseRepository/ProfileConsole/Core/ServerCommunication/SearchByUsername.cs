@@ -28,25 +28,23 @@ namespace ProfileConsole.Core.ServerCommunication
 
                     try
                     {
-                        var otherprofile = new OtherProfile();
-                        
-
+                        foreach (var pers in profile)
+                        {
+                            return new OtherProfile(pers.UserName, pers.Description, pers.Tags);
+                        }
                     }
 
                     catch (Exception e)
                     {
                         return null;
-                        
                     }
+                    
                 }
                     
             }
 
-            else
-            {
+            return null;
 
-            }
-           
         }
     }
 }
