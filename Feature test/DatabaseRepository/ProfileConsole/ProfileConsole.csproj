@@ -56,6 +56,16 @@
     <Compile Include="Core\Domain\Emoji.cs" />
     <Compile Include="Core\Domain\FriendList.cs" />
     <Compile Include="Core\Domain\Login.cs" />
+    <Compile Include="Core\ServerCommunication\AddFriend.cs" />
+    <Compile Include="Core\ServerCommunication\Login.cs" />
+    <Compile Include="Core\ServerCommunication\Logout.cs" />
+    <Compile Include="Core\ServerCommunication\GetAllMsgs.cs" />
+    <Compile Include="Core\ServerCommunication\GetFriends.cs" />
+    <Compile Include="Core\ServerCommunication\GetMyProfile.cs" />
+    <Compile Include="Core\ServerCommunication\SearchByTags.cs" />
+    <Compile Include="Core\ServerCommunication\SearchByUsername.cs" />
+    <Compile Include="Core\ServerCommunication\SignUp.cs" />
+    <Compile Include="Core\ServerCommunication\UpdateProfile.cs" />
     <Compile Include="Persistence\ProfileContext.cs" />
     <Compile Include="Core\Domain\Tags.cs" />
     <Compile Include="Core\Domain\UserInformation.cs" />
@@ -84,8 +94,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Server\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
