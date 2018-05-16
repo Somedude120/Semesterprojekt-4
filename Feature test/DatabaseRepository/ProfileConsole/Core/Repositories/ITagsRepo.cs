@@ -9,5 +9,6 @@ namespace ProfileConsole.Core.Repositories
 {
     public interface ITagsRepo : IRepository<Tags>
     {
+        Tags GetUserNamesWithTag(string tagName);
     }
 }

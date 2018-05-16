@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ProfileConsole.Core.Domain;
 using ProfileConsole.Core.Repositories;
 using ProfileConsole.Persistence.Repository;
+using System.Data.Entity;
 
 namespace ProfileConsole.Persistence.Repositories
 {
@@ -14,6 +15,11 @@ namespace ProfileConsole.Persistence.Repositories
         public TagsRepo(ProfileContext context)
             : base(context)
         {
+        }
+
+        public Tags GetUserNamesWithTag(string tagName)
+        {
+            return ProfileContext.Tags.Include(a => a.UserInformation).SingleOrDefault(a => a.TagName == tagName);
         }
 
         public ProfileContext ProfileContext

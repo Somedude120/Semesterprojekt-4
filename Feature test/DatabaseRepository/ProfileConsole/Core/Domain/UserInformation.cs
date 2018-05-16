@@ -20,6 +20,8 @@ namespace ProfileConsole.Core.Domain
             Tags = new HashSet<Tags>();
         }
 
+        [StringLength(300)]
+        public string Description { get; set; }
         [Key]
         [StringLength(15)]
         public string UserName { get; set; }
