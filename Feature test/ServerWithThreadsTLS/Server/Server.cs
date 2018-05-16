@@ -21,8 +21,8 @@ namespace Examples.System.Net
 {
     public sealed class SslTcpServer
     {
-        public Receiver receiver = new Receiver();
-        public Sender sender = new Sender();
+        public static Receiver receiver = new Receiver();
+        public static Sender sender = new Sender();
 
         public static Dictionary<string, string> userID = new Dictionary<string, string>();
         public static Dictionary<string, SslStream> userStreams = new Dictionary<string, SslStream>();
@@ -66,7 +66,7 @@ namespace Examples.System.Net
                     Console.WriteLine("Waiting for client message...");
                     try
                     {
-                        messageData = Receiver.ReceiveString(sslStream);
+                        messageData = receiver.ReceiveString(sslStream);
                         //messageData = ReceiveString(sslStream);
                         //Console.WriteLine((char)7);   //Makes bell sound
                     }
@@ -137,7 +137,7 @@ namespace Examples.System.Net
                         break;
                     case "L":
                         Console.WriteLine("User is already logged in");
-                        Sender.SendString(sslStream, "You are already logged in");
+                        sender.SendString(sslStream, "You are already logged in");
                         break;
                     case "Q":
                         HandleLogout(sslStream);
@@ -200,12 +200,12 @@ namespace Examples.System.Net
             //userStreams[input[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + input[2] + "<EOF>"));
             if (userStreams.ContainsKey(input[1]))
             {
-                Sender.SendString(userStreams[input[1]], "From " + login + ": " + input[2]);
+                sender.SendString(userStreams[input[1]], "From " + login + ": " + input[2]);
             }
             else
             {
                 Console.WriteLine("User " + input[1] + " isn't logged in");
-                Sender.SendString(userStreams[login], "User: " + input[1] + " isn't logged in");
+                sender.SendString(userStreams[login], "User: " + input[1] + " isn't logged in");
             }
         }
 
