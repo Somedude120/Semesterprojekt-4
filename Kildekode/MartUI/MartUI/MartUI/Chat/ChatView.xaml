@@ -19,7 +19,8 @@
                             <Button
                                 Content="{Binding Message, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"
                                 Margin="0,3" Width="185" Height="20"
-                                Style="{StaticResource RoundCornerButton}">
+                                Style="{StaticResource RoundCornerButton}"
+                                HorizontalAlignment="{Binding MessagePosition}">
                             </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
