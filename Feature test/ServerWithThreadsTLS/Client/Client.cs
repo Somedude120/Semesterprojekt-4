@@ -78,28 +78,16 @@ namespace Examples.System.Net
             }
             // Encode a test message into a byte array.
             // Signal the end of the message using the "<EOF>".
-            //byte[] messsage = Encoding.UTF8.GetBytes("Hello from the client.<EOF>");
-            byte[] messsage = Encoding.UTF8.GetBytes("l;UserName;PlaintextPassword" + (char)29);
-
-            //messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + "<EOF>");
-            //Send hello message to the server. 
-            //sslStream.Write(messsage);
+            byte[] messsage;
 
             Thread receiveThread = new Thread(o => ReadMessage((SslStream)o));
             receiveThread.Start(sslStream);
 
             while (true)
             {
-                messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + ((char)29).ToString());
-                // Send hello message to the server. 
+                messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + Constants.EndDelimiter);
                 sslStream.Write(messsage);
                 sslStream.Flush();
-                // Read message from the server.
-                //string serverMessage = ReadMessage(sslStream);
-                //Console.WriteLine("Server says: {0}", serverMessage);
-                // Close the client connection.
-                //client.Close();
-                //Console.WriteLine("Client not closed.");
             }
 
             Console.ReadLine();
@@ -108,7 +96,7 @@ namespace Examples.System.Net
         {
             // Read the  message sent by the server.
             // The end of the message is signaled using the
-            // "<EOF>" marker.
+            // EndDelimiter constant.
             byte[] buffer = new byte[2048];
             StringBuilder messageData = new StringBuilder();
             int bytes = -1;
@@ -125,7 +113,7 @@ namespace Examples.System.Net
                     char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
                     decoder.GetChars(buffer, 0, bytes, chars, 0);
                     messageData.Append(chars);
-                    // Check for EOF.
+                    // Check for EndDelimiter
                     if (messageData.ToString().IndexOf(Constants.EndDelimiter) != -1)
                     {
                         messageData.Remove(messageData.ToString().IndexOf(Constants.EndDelimiter), Constants.EndDelimiter.Length);

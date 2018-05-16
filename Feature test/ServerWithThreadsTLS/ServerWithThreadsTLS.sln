@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Server\server.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Globals", "Globals1\Globals.csproj", "{55E08E8C-D4D5-4F8D-B759-5EE8404181A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLSNetworking", "TLSNetworking\TLSNetworking.csproj", "{48F4C855-B35D-4CEC-803B-D8E9A0C8B33F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,14 @@ Global
 		{55E08E8C-D4D5-4F8D-B759-5EE8404181A8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{55E08E8C-D4D5-4F8D-B759-5EE8404181A8}.Release|x86.ActiveCfg = Release|Any CPU
 		{55E08E8C-D4D5-4F8D-B759-5EE8404181A8}.Release|x86.Build.0 = Release|Any CPU
+		{48F4C855-B35D-4CEC-803B-D8E9A0C8B33F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48F4C855-B35D-4CEC-803B-D8E9A0C8B33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48F4C855-B35D-4CEC-803B-D8E9A0C8B33F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{48F4C855-B35D-4CEC-803B-D8E9A0C8B33F}.Debug|x86.Build.0 = Debug|Any CPU
+		{48F4C855-B35D-4CEC-803B-D8E9A0C8B33F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48F4C855-B35D-4CEC-803B-D8E9A0C8B33F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48F4C855-B35D-4CEC-803B-D8E9A0C8B33F}.Release|x86.ActiveCfg = Release|Any CPU
+		{48F4C855-B35D-4CEC-803B-D8E9A0C8B33F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
