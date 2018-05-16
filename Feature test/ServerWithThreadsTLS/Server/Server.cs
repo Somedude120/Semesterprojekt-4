@@ -135,6 +135,12 @@ namespace Examples.System.Net
                     case "W":
                         HandleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
+                    case "P":
+                        GetProfile(input[1], sslStream);
+                        break;
+                    case "U":
+                        UpdateProfile(input[1], sslStream);
+                        break;
                     case "L":
                         Console.WriteLine("User is already logged in");
                         sender.SendString(sslStream, "You are already logged in");
@@ -207,6 +213,23 @@ namespace Examples.System.Net
                 Console.WriteLine("User " + input[1] + " isn't logged in");
                 sender.SendString(userStreams[login], "User: " + input[1] + " isn't logged in");
             }
+        }
+
+        static void GetProfile(string input, SslStream sslStream)
+        {
+            if (input == "")
+            {
+                Console.WriteLine("User's own profile");
+            }
+            else
+            {
+                Console.WriteLine(input);
+            }
+        }
+
+        static void UpdateProfile(string input, SslStream sslStream)
+        {
+
         }
 
         static void FailedLogin()
