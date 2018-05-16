@@ -99,8 +99,9 @@ namespace MartUI.Friend
                 }
             }
             if(!friendIntList)
-                Application.Current.Dispatcher.Invoke(new Action(() => { FriendList.Add(new FriendModel { Username = Username }); }));
+                Application.Current.Dispatcher.Invoke(() => { FriendList.Add(new FriendModel { Username = Username }); });
 
+            Username = ""; //Clears the AddFriendTextbox after pressing enter
             //Skal kommunikere med database/server
         }
 
