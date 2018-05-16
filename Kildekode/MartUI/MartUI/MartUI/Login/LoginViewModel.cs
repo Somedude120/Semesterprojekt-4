@@ -16,21 +16,13 @@ namespace MartUI.Login
         private readonly IEventAggregator _eventAggregator;
         public string ReferenceName => "Login";
 
+        private ICommand _createUserCommand;
+        private ICommand _loginCommand;
+
         private string _username;
         private string _password;
 
-        public ICommand CreateUserCommand { get; set; }
-        public ICommand LoginCommand { get; set; }
-
-        private PersonModel _dataModel;
-        //private DatabaseDummy _database;
-
-        //public PersonModel Person
-        //{
-        //    get { MessageBox.Show("getter");return _dataModel; }
-        //    set { SetProperty(ref _dataModel, value); } // if username != value, notify
-        //}
-
+        // Made these in here since it will be created either way because observing these - no need for model
         public string Username
         {
             get { return _username; }
@@ -43,45 +35,24 @@ namespace MartUI.Login
             set { SetProperty(ref _password, value); } // if username != value, notify
         }
 
+        // Navigate to CreateUserView
+        public ICommand CreateUserCommand => _createUserCommand ?? (_createUserCommand = new DelegateCommand(() =>
+                                                     _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel())));
+        //Observes Username and Password to check LoginCanExecute, call LoginExecute
+        public ICommand LoginCommand => _loginCommand = new DelegateCommand(LoginExecute, LoginCanExecute)
+            .ObservesProperty(() => Username)
+            .ObservesProperty(() => Password);
 
         public LoginViewModel()
         {
             _eventAggregator = GetEventAggregator.Get();
-            _dataModel = new PersonModel();
-            _username = _dataModel.Username;
-            _password = _dataModel.Password;
-
-            _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(SetPassword);
-            //_database = new DatabaseDummy();
-            //_database.PersonList.Add(new PersonModel("hajsa12", "goodpass1"));
-            //_database.PersonList.Add(new PersonModel("coolguy", "coolpass"));
-
-            //Delegates instead of the execute/cant execute
-            //Observes Username and Password to check CanExecute, call RaiseCanExecute
-            LoginCommand = new DelegateCommand(LoginExecute, LoginCanExecute).ObservesProperty(() => Username).ObservesProperty(() => Password);
-
-            CreateUserCommand = new DelegateCommand(CreateUser);
-            // CanExecute behøver ikke være en metode men også en boolean property
-        }
-
-        private void SetPassword(string pass)
-        {
-            Password = pass;
-        }
-        
-
-        private void CreateUser()
-        {
-            _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel());
-            // NAVIGATE TO CREATE USER VIEW 
+            _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
         }
 
         private bool LoginCanExecute()
         {
-            //MessageBox.Show(Password);
-            // Username length  to be above 4 and pass above 5
-            return !String.IsNullOrWhiteSpace(Username) && Username.Length > 4
-                    && !String.IsNullOrWhiteSpace(Password) && Password.Length > 5;
+            return !string.IsNullOrWhiteSpace(Username) && Username.Length > 4
+                    && !string.IsNullOrWhiteSpace(Password) && Password.Length > 5;
         }
 
         private void LoginExecute()
