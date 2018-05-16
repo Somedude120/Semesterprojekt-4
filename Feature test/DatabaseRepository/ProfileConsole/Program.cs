@@ -19,11 +19,11 @@ namespace ProfileConsole
                 var userGroups = unitOfWork.UserInformation.GetChatGroupsWithUserInformation("Farto");
                 var chatGroups = unitOfWork.ChatGroup.GetChatWithChatGroups("Marto-entutiaster");
 
-                Console.WriteLine("\nGroupName: " + chatGroups.GroupName);
-                foreach (var item in chatGroups.Chat)
-                {
-                    Console.WriteLine("\t" + item.Sender + ": " + item.Message);    
-                }
+                //Console.WriteLine("\nGroupName: " + chatGroups.GroupName);
+                //foreach (var item in chatGroups.Chat)
+                //{
+                //    Console.WriteLine("\t" + item.Sender + ": " + item.Message);    
+                //}
 
                 //Console.WriteLine("\nUserName: " + userTags.UserName);
                 //foreach (var item in userTags.Tags)
