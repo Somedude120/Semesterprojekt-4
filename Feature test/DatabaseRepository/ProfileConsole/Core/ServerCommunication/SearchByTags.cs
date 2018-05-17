@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using ProfileConsole.Core.Domain;
+﻿using ProfileConsole.Core.Domain;
 using ProfileConsole.Persistence;
+using System;
+using System.Linq;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
