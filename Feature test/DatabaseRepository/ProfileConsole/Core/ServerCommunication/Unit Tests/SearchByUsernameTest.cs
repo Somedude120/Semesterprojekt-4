@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProfileConsole;
-using ProfileConsole.Persistence;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
 using NSubstitute;
+using NUnit.Framework;
 using ProfileConsole.Core.Domain;
-using ProfileConsole.Core.ServerCommunication;
 using ProfileConsole.Core.ServerCommunication.Interfaces;
 
-namespace ProfileConsole.Tests.Unit
+namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
 {
     [TestFixture]
     public class SearchByUsernameTest
