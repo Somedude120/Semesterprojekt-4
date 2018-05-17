@@ -72,6 +72,7 @@
     <Compile Include="Core\ServerCommunication\AddFriend.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IGetFriends.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IOtherProfile.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\ISearchByTags.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ISearchByUsername.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IUpdateProfile.cs" />
     <Compile Include="Core\ServerCommunication\Login.cs" />
@@ -84,9 +85,20 @@
     <Compile Include="Core\ServerCommunication\SearchByUsername.cs" />
     <Compile Include="Core\ServerCommunication\SignUp.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\GetFriendsTest.cs" />
+
+
     <Compile Include="Core\ServerCommunication\Unit Tests\SearchByUsernameTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\UpdateProfileTest.cs" />
     <Compile Include="Core\ServerCommunication\UpdateProfile.cs" />
+    <Compile Include="Migrations\201805161041366_InitialCreate.cs" />
+    <Compile Include="Migrations\201805161041366_InitialCreate.Designer.cs">
+      <DependentUpon>201805161041366_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805170810585_Dexcriptions.cs" />
+    <Compile Include="Migrations\201805170810585_Dexcriptions.Designer.cs">
+      <DependentUpon>201805170810585_Dexcriptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\ProfileContext.cs" />
     <Compile Include="Core\Domain\Tags.cs" />
     <Compile Include="Core\Domain\UserInformation.cs" />
@@ -115,6 +127,16 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201805161041366_InitialCreate.resx">
+      <DependentUpon>201805161041366_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805170810585_Dexcriptions.resx">
+      <DependentUpon>201805170810585_Dexcriptions.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
