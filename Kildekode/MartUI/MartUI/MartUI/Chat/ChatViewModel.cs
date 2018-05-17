@@ -95,36 +95,31 @@ namespace MartUI.Chat
             message.Message = TextToSend;
             message.MessagePosition = "Right";
             message.Receiver = User.Username;
-            User.MessageList.Add(message);
+            _eventAggregator.GetEvent<NewMessageEvent>().Publish(message);
+            ReceiveMessage(TextToSend, MyData.Username, User.Username);
+            ReceiveMessage(TextToSend, User.Username, MyData.Username);
             TextToSend = "";
         }
 
-        private void ReceiveMessage(string TextToReceive, string Username)
+        private void ReceiveMessage(string TextToReceive, string Sender, string Receiver)
         {
             var message = new ChatModel();
-            if (Username == MyData.Username)
+
+            if (Sender == MyData.Username)
             {
                 message.Sender = MyData.Username;
+                message.Receiver = Receiver;
                 message.Message = TextToReceive;
                 message.MessagePosition = "Right";
-                message.Receiver = User.Username;
-                User.MessageList.Add(message);
             }
             else
             {
-                foreach (var friend in FriendList)
-                {
-                    if (friend.Username == Username)
-                    {
-                        message.Sender = Username;
-                        message.Message = TextToReceive;
-                        message.MessagePosition = "Left";
-                        message.Receiver = MyData.Username;
-                        friend.MessageList.Add(message);
-                        _eventAggregator.GetEvent<FriendNewMessageEvent>().Publish(friend);
-                    }
-                }
+                message.Sender = Sender;
+                message.Receiver = MyData.Username;
+                message.Message = TextToReceive;
+                message.MessagePosition = "Left";
             }
+            _eventAggregator.GetEvent<NewMessageEvent>().Publish(message);
         }
 
         public ICommand SendMessageCommand => _sendMessageCommand ?? (_sendMessageCommand = new DelegateCommand(SendMessage));

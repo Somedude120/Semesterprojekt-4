@@ -11,6 +11,7 @@ using System.Windows.Navigation;
 using MartUI.Chat;
 using MartUI.Events;
 using MartUI.Main;
+using MartUI.Me;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -24,7 +25,6 @@ namespace MartUI.Friend
         private ObservableCollection<FriendModel> _friendList;
         private FriendModel _selectedFriend;
         private ICommand _chooseFriendCommand;
-        //public ICommand ChooseFriendCommand { get; set; }
         private ICommand _addFriendCommand;
         private ICommand _removeFriendCommand;
         private string _username;
@@ -46,9 +46,7 @@ namespace MartUI.Friend
 
             Username = "Enter Username!";
 
-            _eventAggregator.GetEvent<GetFriendListEvent>().Publish(FriendList);
-            _eventAggregator.GetEvent<FriendNewMessageEvent>().Subscribe(HandleNewMessage);
-
+            _eventAggregator.GetEvent<NewMessageEvent>().Subscribe(HandleNewMessage);
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
@@ -64,20 +62,19 @@ namespace MartUI.Friend
             //Samt kun alle som er online 
         }
 
-        private void HandleNewMessage(FriendModel friend)
+        private void HandleNewMessage(ChatModel message)
         {
-            int index = 0;
-            bool isInList = false;
-            foreach (var f in FriendList)
+            foreach (var friend in FriendList)
             {
-                if (f.Username == friend.Username)
+                if (message.Sender == MyData.Username && friend.Username == message.Receiver)
                 {
-                    index = FriendList.IndexOf(f);
-                    isInList = true;
+                    friend.MessageList.Add(message);
+                }
+                else if (message.Sender == friend.Username && MyData.Username == message.Receiver)
+                {
+                    friend.MessageList.Add(message);
                 }
             }
-            if (isInList)
-                FriendList[index] = friend;
         }
 
         // Mangler at tilføje en filtrering eller en anden liste som kun indeholder online venner
@@ -121,7 +118,6 @@ namespace MartUI.Friend
             if (!friendIntList)
             {
                 Application.Current.Dispatcher.Invoke(() => { FriendList.Add(new FriendModel {Username = Username}); });
-                _eventAggregator.GetEvent<GetFriendListEvent>().Publish(FriendList);
             }
 
             Username = ""; //Clears the AddFriendTextbox after pressing enter
