@@ -17,7 +17,7 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public MyProfile RequestOwnInformation(string Username, string Name, string Description, string Status,
+        public MyProfile RequestOwnInformation(string Username, string Description, string Status,
             ICollection<FriendList> FriendList, ICollection<Tags> Tags)
         {
             var person = unitOfWork.UserInformation.GetString(Username);

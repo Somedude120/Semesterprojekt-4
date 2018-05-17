@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Linq;
@@ -32,6 +33,10 @@ namespace MartUI
             //});
 
             //MyData.Username = "Me";
+
+            SslTcpClient client = new SslTcpClient();
+            Thread Daniel = new Thread(client.ReceiveMessages);
+            Daniel.Start();
 
             var bs = new Bootstrapper();
 
