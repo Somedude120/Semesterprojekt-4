@@ -6,7 +6,6 @@ namespace ProfileConsole.Core.ServerCommunication.Interfaces
     public interface IMyProfile
     {
         string username { get; set; }
-        string name { get; set; }
         string description { get; set; }
         string status { get; set; }
         ICollection<FriendList> friendlist { get; set; }

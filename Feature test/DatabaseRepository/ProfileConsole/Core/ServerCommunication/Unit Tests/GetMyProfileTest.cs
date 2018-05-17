@@ -11,7 +11,6 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
     public class GetMyProfileTest
     {
         private string Username = "AlexD";
-        private string Name = "Alex";
         private string Description = "Jeg er seg";
         private string Status = "Online";
         private string TagName = "Kødbolle";
@@ -27,7 +26,6 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
             myProfile = Substitute.For<IMyProfile>();
             _uut = new GetMyProfile();
             myProfile.username = Username;
-            myProfile.name = Name;
             myProfile.description = Description;
             myProfile.status = Status;
             friendlist = new Collection<FriendList>();
@@ -39,42 +37,36 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
         [Test]
         public void Profile_Username_IsInDB_Returns_Correctly()
         {
-            var returnProfile = _uut.RequestOwnInformation(Username, Name, Description, Status, friendlist, tags);
+            var returnProfile = _uut.RequestOwnInformation(Username, Description, Status, friendlist, tags);
             Assert.That(returnProfile.username, Is.EqualTo(myProfile.username));
         }
 
-        [Test]
-        public void Profile_Name_IsInDB_Returns_Correctly()
-        {
-            var returnProfile = _uut.RequestOwnInformation(Username, Name, Description, Status, friendlist, tags);
-            Assert.That(returnProfile.name, Is.EqualTo(myProfile.name));
-        }
 
         [Test]
         public void Profile_Description_IsInDB_Returns_Correctly()
         {
-            var returnProfile = _uut.RequestOwnInformation(Username, Name, Description, Status, friendlist, tags);
+            var returnProfile = _uut.RequestOwnInformation(Username, Description, Status, friendlist, tags);
             Assert.That(returnProfile.description, Is.EqualTo(myProfile.description));
         }
 
         [Test]
         public void Profile_Status_IsInDB_Returns_Correctly()
         {
-            var returnProfile = _uut.RequestOwnInformation(Username, Name, Description, Status, friendlist, tags);
+            var returnProfile = _uut.RequestOwnInformation(Username, Description, Status, friendlist, tags);
             Assert.That(returnProfile.status, Is.EqualTo(myProfile.status));
         }
 
         [Test]
         public void Profile_Friendlist_IsInDB_Returns_Correctly()
         {
-            var returnProfile = _uut.RequestOwnInformation(Username, Name, Description, Status, friendlist, tags);
+            var returnProfile = _uut.RequestOwnInformation(Username, Description, Status, friendlist, tags);
             Assert.That(returnProfile.friendlist, Is.EqualTo(myProfile.friendlist));
         }
 
         [Test]
         public void Profile_Tags_IsInDB_Returns_Correctly()
         {
-            var returnProfile = _uut.RequestOwnInformation(Username, Name, Description, Status, friendlist, tags);
+            var returnProfile = _uut.RequestOwnInformation(Username, Description, Status, friendlist, tags);
             Assert.That(returnProfile.tags, Is.EqualTo(myProfile.tags));
         }
     }

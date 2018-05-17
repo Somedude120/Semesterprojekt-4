@@ -14,13 +14,15 @@ namespace ProfileConsole.Core.ServerCommunication
         {
             username = Username;
             status = Status;
+            description = Description;
             friendlist = FriendList;
             tags = Tags;
         }
 
-        public string username;
-        public string status;
-        public ICollection<FriendList> friendlist;
-        public ICollection<Tags> tags;
+        public string username { get; set; }
+        public string status { get; set; }
+        public string description { get; set; }
+        public ICollection<FriendList> friendlist { get; set; }
+        public ICollection<Tags> tags { get; set; }
     }
 }
