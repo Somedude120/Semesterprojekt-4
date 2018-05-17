@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using ProfileConsole.Core.Domain;
+using ProfileConsole.Core.ServerCommunication.Interfaces;
 using ProfileConsole.Persistence;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
-    public class SearchByUsername
+    public class SearchByUsername : ISearchByUsername
     {
         private IUnitOfWork unitOfWork;
 
@@ -14,23 +15,25 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public OtherProfile RequestUsername(String name)
+        public OtherProfile RequestUsername(String Username)
         {
-            var person = unitOfWork.UserInformation.GetString(name);
-            if (person.Name == name)
+            var person = unitOfWork.UserInformation.GetString(Username);
+            
+            if (person.UserName == Username)
             {
                 using (var db = new ProfileContext())
                 {
                     var profile =
                     from p in db.UserInformation
-                    where p.UserName == name 
+                    where p.UserName == Username 
                     select p;
 
                     try
                     {
                         foreach (var pers in profile)
                         {
-                            return new OtherProfile(pers.UserName, pers.Description, pers.Tags);
+                            OtherProfile newProfile = new OtherProfile(pers.UserName, pers.Description, pers.Tags);
+                            return newProfile;
                         }
                     }
 

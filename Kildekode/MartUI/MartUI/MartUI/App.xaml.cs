@@ -29,7 +29,7 @@ namespace MartUI
             //    return Type.GetType(viewModelName);
             //});
 
-            MyData.Username = "Me";
+            //MyData.Username = "Me";
 
             var bs = new Bootstrapper();
 

@@ -18,6 +18,7 @@ namespace MartUI.Chat
 {
     public class ChatViewModel : BindableBase, IViewModel
     {
+        private MyData _myData;
         private IEventAggregator _eventAggregator;
         private ICommand _sendMessageCommand;
         private string _textToSend;
@@ -25,6 +26,8 @@ namespace MartUI.Chat
         private FriendModel _user;
 
         public string ReferenceName => "ChatView";
+
+        public MyData MyData => _myData ?? (_myData = MyData.GetInstance());
 
         public string TextToSend
         {

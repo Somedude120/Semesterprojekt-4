@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ProfileConsole.Core.Domain;
@@ -28,9 +29,9 @@ namespace ProfileConsole.Core.ServerCommunication
 
                 try
                 {
-                    foreach (var pers in profile)
+                    foreach (var tags in profile)
                     {
-                        return new Tags{TagName = tag};
+                        return new Tags{ TagName = tags.TagName, UserInformation = tags.UserInformation};
                     }
                 }
                 catch (Exception e)

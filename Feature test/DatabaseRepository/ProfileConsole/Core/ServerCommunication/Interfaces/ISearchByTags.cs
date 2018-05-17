@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProfileConsole.Tests.Unit
+namespace ProfileConsole.Core.ServerCommunication.Interfaces
 {
-    public class Class1
+    interface ISearchByTags
     {
+        OtherProfile RequestTag(string tag);
     }
 }
