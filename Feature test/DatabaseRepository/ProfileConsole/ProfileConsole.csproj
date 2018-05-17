@@ -72,9 +72,11 @@
     <Compile Include="Core\ServerCommunication\AddFriend.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IGetFriends.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IGetMyProfile.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\IMyProfile.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IOtherProfile.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ISearchByTags.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ISearchByUsername.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\ISignUp.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IUpdateProfile.cs" />
     <Compile Include="Core\ServerCommunication\Login.cs" />
     <Compile Include="Core\ServerCommunication\Logout.cs" />
