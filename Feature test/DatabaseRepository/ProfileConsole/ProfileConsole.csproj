@@ -72,6 +72,7 @@
     <Compile Include="Core\ServerCommunication\AddFriend.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IOtherProfile.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ISearchByUsername.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\IUpdateProfile.cs" />
     <Compile Include="Core\ServerCommunication\Login.cs" />
     <Compile Include="Core\ServerCommunication\Logout.cs" />
     <Compile Include="Core\ServerCommunication\GetAllMsgs.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Core\ServerCommunication\SearchByUsername.cs" />
     <Compile Include="Core\ServerCommunication\SignUp.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\SearchByUsernameTest.cs" />
+    <Compile Include="Core\ServerCommunication\Unit Tests\UpdateProfileTest.cs" />
     <Compile Include="Core\ServerCommunication\UpdateProfile.cs" />
     <Compile Include="Persistence\ProfileContext.cs" />
     <Compile Include="Core\Domain\Tags.cs" />
