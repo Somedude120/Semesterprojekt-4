@@ -48,7 +48,6 @@ namespace MartUI.Main
             ViewList.Add(new LoginViewModel());
             ViewList.Add(new FriendViewModel());
             ViewList.Add(new ChatViewModel());
-            SslTcpClient client = new SslTcpClient();
 
             //ViewList.Add(new FocusViewModel(eventAggregator));
 

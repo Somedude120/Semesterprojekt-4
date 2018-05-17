@@ -59,6 +59,7 @@ namespace MartUI.Chat
         {
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<SelectedFriendEvent>().Subscribe(HandleFriend);
+            _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Subscribe(ReceiveMessage);
 
             User = new FriendModel();
 
@@ -80,30 +81,21 @@ namespace MartUI.Chat
             message.Receiver = User.Username;
             _eventAggregator.GetEvent<NewMessageEvent>().Publish(message);
             Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message); });
-            ReceiveMessage(TextToSend, UserData.Username, User.Username);
-            ReceiveMessage(TextToSend, User.Username, UserData.Username);
             TextToSend = "";
         }
 
-        private void ReceiveMessage(string TextToReceive, string Sender, string Receiver)
+        private void ReceiveMessage(ChatModel message)
         {
-            var message = new ChatModel();
 
-            if (Sender == UserData.Username)
+            if (message.Sender == UserData.Username)
             {
-                message.Sender = UserData.Username;
-                message.Receiver = Receiver;
-                message.Message = TextToReceive;
                 message.MessagePosition = "Right";
             }
             else
             {
-                message.Sender = Sender;
-                message.Receiver = UserData.Username;
-                message.Message = TextToReceive;
                 message.MessagePosition = "Left";
             }
-            _eventAggregator.GetEvent<NewMessageEvent>().Publish(message);
+            Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<NewMessageEvent>().Publish(message); });
         }
 
         public ICommand SendMessageCommand => _sendMessageCommand ?? (_sendMessageCommand = new DelegateCommand(SendMessage));

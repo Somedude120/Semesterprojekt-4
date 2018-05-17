@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
@@ -8,8 +9,10 @@ using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.Threading;
+using System.Windows.Documents;
 using MartUI.Chat;
 using MartUI.Events;
+using MartUI.Me;
 using Prism.Events;
 using TLSNetworking;
 
@@ -23,6 +26,9 @@ namespace Examples.System.Net
         public static Sender sender = new Sender();
         private static SslStream sslStream;
         private readonly IEventAggregator _eventAggregator;
+        private MyData _userData;
+
+        public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
 
         private static Hashtable certificateErrors = new Hashtable();
 
@@ -34,6 +40,11 @@ namespace Examples.System.Net
             string machineName = "192.168.101.1";
             string serverCertificateName = "Martin-MSI";
             SslTcpClient.RunClient(machineName, serverCertificateName);
+
+            UserData.Username = "Daniel";
+            string loginString = "L;" + UserData.Username;
+            sender.SendString(sslStream, loginString);
+
         }
 
         // The following method is invoked by the RemoteCertificateValidationDelegate.
@@ -101,11 +112,11 @@ namespace Examples.System.Net
             // Signal the end of the message using the "<EOF>".
             byte[] messsage;
             
-            Thread receiveThread = new Thread(o => ReceiveMessages((SslStream)o));
-            receiveThread.Start(sslStream);
-            ChatModel message = new ChatModel();
-            message.Message = "";
-            message.Receiver = "";
+            //Thread receiveThread = new Thread(o => ReceiveMessages((SslStream)o));
+            //receiveThread.Start(sslStream);
+            //ChatModel message = new ChatModel();
+            //message.Message = "";
+            //message.Receiver = "";
             //while (true)
             //{
             //    //messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + Constants.EndDelimiter);
@@ -120,23 +131,24 @@ namespace Examples.System.Net
 
         public static void SendMessage(ChatModel message)
         {
-            string loginString = "L;REEEEEEEEEEEEE";
-            string myString = "W;" + message.Receiver + ";" + message.Message + Constants.EndDelimiter;
-            sender.SendString(sslStream, loginString);
+            string myString = "W;" + message.Receiver + ";" + message.Message;
             sender.SendString(sslStream, myString);
-            while (true)
-            {
-                
-            }
         }
 
-        static void ReceiveMessages(SslStream sslStream)
+        public void ReceiveMessages()
         {
-            string message;
+            ChatModel message = new ChatModel();
             while (true)
             {
-                message = receiver.ReceiveString(sslStream);
-                Console.WriteLine(message);
+                string tempString = receiver.ReceiveString(sslStream);
+                string[] tempStringList = tempString.Split(';');
+                if (tempStringList[0] == "R")
+                {
+                    message.Message = tempStringList[2];
+                    message.Sender = tempStringList[1];
+                    message.Receiver = UserData.Username;
+                    _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                }
             }
         }
 
