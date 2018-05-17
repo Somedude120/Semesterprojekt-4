@@ -21,7 +21,7 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
         private string Username = "Fred5954";
         private string ExpectedFriendUserName = "AlexD";
         IGetFriends _uut;
-        IUnitOfWork unitOfWork;
+        
         [SetUp]
         public void Setup()
         {

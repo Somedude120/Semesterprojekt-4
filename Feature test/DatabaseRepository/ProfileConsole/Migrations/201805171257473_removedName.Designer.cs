@@ -7,13 +7,13 @@ namespace ProfileConsole.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Dexcriptions : IMigrationMetadata
+    public sealed partial class removedName : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Dexcriptions));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(removedName));
         
         string IMigrationMetadata.Id
         {
-            get { return "201805170810585_Dexcriptions"; }
+            get { return "201805171257473_removedName"; }
         }
         
         string IMigrationMetadata.Source

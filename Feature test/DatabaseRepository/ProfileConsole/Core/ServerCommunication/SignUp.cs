@@ -18,32 +18,33 @@ namespace ProfileConsole.Core.ServerCommunication
 
         public string CreateProfile(string Username, string salt, string hash)
         {
-            try
-            {
-                var person = unitOfWork.UserInformation.GetString(Username);
-            }
+            
+            var person = unitOfWork.UserInformation.GetString(Username);
 
-            catch (Exception)
+            if (person != null)
             {
                 const string errormessage = "Username already exists";
                 return errormessage;
             }
 
+
             var newUser = new UserInformation
             {
                 UserName = Username,
-                Login =
+                Login = new Login
                 {
                     Hash = hash,
                     Salt = salt
                 }
+
             };
 
-
             unitOfWork.UserInformation.Add(newUser);
+            unitOfWork.Complete();
 
-            string userCreated = "OK";
+            var userCreated = "OK";
             return userCreated;
+
         }
 
         
