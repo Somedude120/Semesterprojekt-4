@@ -15,7 +15,7 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public OtherProfile RequestUsername(String Username)
+        public OtherProfile RequestUsername(string Username)
         {
             var person = unitOfWork.UserInformation.GetString(Username);
             

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProfileConsole.Core.Domain;
+﻿using ProfileConsole.Core.Domain;
 using ProfileConsole.Core.ServerCommunication.Interfaces;
+using System.Collections.Generic;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
