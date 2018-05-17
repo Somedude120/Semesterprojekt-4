@@ -72,9 +72,11 @@
     <Compile Include="Core\ServerCommunication\AddFriend.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IGetFriends.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IGetMyProfile.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\ILoginRequest.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IOtherProfile.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ISearchByTags.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ISearchByUsername.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\ISignUp.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IUpdateProfile.cs" />
     <Compile Include="Core\ServerCommunication\LoginRequest.cs" />
     <Compile Include="Core\ServerCommunication\Logout.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Core\ServerCommunication\SignUp.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\GetFriendsTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\GetMyProfileTest.cs" />
+    <Compile Include="Core\ServerCommunication\Unit Tests\LoginRequestTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\SearchByTagsTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\SearchByUsernameTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\SignUpTest.cs" />

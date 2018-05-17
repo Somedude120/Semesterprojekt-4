@@ -35,7 +35,7 @@ namespace ProfileConsole.Core.ServerCommunication
                     {
                         foreach (var pers in profile)
                         {
-                            MyProfile myProfile = new MyProfile(pers.UserName, pers.Name, pers.Description, pers.Status, pers.FriendList, pers.Tags);
+                            MyProfile myProfile = new MyProfile(pers.UserName, pers.Description, pers.Status, pers.FriendList, pers.Tags);
                             return myProfile;
                         }
                     }
