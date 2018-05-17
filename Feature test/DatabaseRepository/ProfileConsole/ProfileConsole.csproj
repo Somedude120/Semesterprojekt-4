@@ -73,6 +73,7 @@
     <Compile Include="Core\ServerCommunication\Interfaces\IOtherProfile.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ISearchByTags.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ISearchByUsername.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\IUpdateProfile.cs" />
     <Compile Include="Core\ServerCommunication\Login.cs" />
     <Compile Include="Core\ServerCommunication\Logout.cs" />
     <Compile Include="Core\ServerCommunication\GetAllMsgs.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Core\ServerCommunication\SignUp.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\SearchByTagsTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\SearchByUsernameTest.cs" />
+    <Compile Include="Core\ServerCommunication\Unit Tests\UpdateProfileTest.cs" />
     <Compile Include="Core\ServerCommunication\UpdateProfile.cs" />
     <Compile Include="Migrations\201805161041366_InitialCreate.cs" />
     <Compile Include="Migrations\201805161041366_InitialCreate.Designer.cs">
