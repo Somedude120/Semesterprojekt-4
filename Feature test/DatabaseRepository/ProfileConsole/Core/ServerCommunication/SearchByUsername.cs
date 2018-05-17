@@ -37,7 +37,7 @@ namespace ProfileConsole.Core.ServerCommunication
                         }
                     }
 
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         return null;
                     }

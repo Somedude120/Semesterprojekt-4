@@ -13,8 +13,6 @@ namespace ProfileConsole.Core.Domain
         public UserInformation()
         {
             FriendList = new HashSet<FriendList>();
-            FriendList1 = new HashSet<FriendList>();
-            FriendList2 = new HashSet<FriendList>();
             Chat = new HashSet<Chat>();
             ChatGroups = new HashSet<ChatGroups>();
             Tags = new HashSet<Tags>();

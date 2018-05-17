@@ -37,15 +37,13 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
         [Test]
         public void UpdateProfileInformation_Description_IsUpdated()
         {
-            
+            _uut.UpdateProfileInformation(Username, newDescription, tags);
             var person = unitOfWork.UserInformation.GetString(Username);
 
             if (person.UserName == Username)
             {
                 using (var db = new ProfileContext())
                 {
-                    _uut.UpdateProfileInformation(Username, newDescription, tags);
-
                     var profile =
                         from p in db.UserInformation
                         where p.UserName == Username
@@ -54,6 +52,32 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
                     foreach (var per in profile)
                     {
                         Assert.That(per.Description, Is.EqualTo("Mumme"));
+                    }
+
+                }
+
+            }
+        }
+
+        [Test]
+        public void UpdateProfileInformation_Taglist_IsUpdated()
+        {
+            _uut.UpdateProfileInformation(Username, newDescription, tags);
+
+            var person = unitOfWork.UserInformation.GetString(Username);
+
+            if (person.UserName == Username)
+            {
+                using (var db = new ProfileContext())
+                {
+                    var profile =
+                        from p in db.UserInformation
+                        where p.UserName == Username
+                        select p;
+
+                    foreach (var per in profile)
+                    {
+                        Assert.That(per.Tags, Is.EqualTo(tags));
                     }
 
                 }
