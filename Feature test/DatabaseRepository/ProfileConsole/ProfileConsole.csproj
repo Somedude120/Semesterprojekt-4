@@ -74,6 +74,7 @@
     <Compile Include="Core\ServerCommunication\Interfaces\IOtherProfile.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ISearchByTags.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ISearchByUsername.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\ISignUp.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IUpdateProfile.cs" />
     <Compile Include="Core\ServerCommunication\Login.cs" />
     <Compile Include="Core\ServerCommunication\Logout.cs" />
@@ -85,8 +86,7 @@
     <Compile Include="Core\ServerCommunication\SearchByUsername.cs" />
     <Compile Include="Core\ServerCommunication\SignUp.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\GetFriendsTest.cs" />
-
-
+    <Compile Include="Core\ServerCommunication\Unit Tests\SearchByTagsTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\SearchByUsernameTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\UpdateProfileTest.cs" />
     <Compile Include="Core\ServerCommunication\UpdateProfile.cs" />
