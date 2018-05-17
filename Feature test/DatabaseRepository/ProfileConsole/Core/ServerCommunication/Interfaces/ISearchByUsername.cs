@@ -8,6 +8,6 @@ namespace ProfileConsole.Core.ServerCommunication.Interfaces
 {
     public interface ISearchByUsername
     {
-        void RequestUsername(String name);
+        OtherProfile RequestUsername(String name);
     }
 }

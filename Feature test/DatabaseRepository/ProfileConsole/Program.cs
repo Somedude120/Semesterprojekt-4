@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProfileConsole.Core.Domain;
 using ProfileConsole.Persistence;
+using ProfileConsole.Core.ServerCommunication;
 using ProfileConsole.Persistence.Repositories;
 
 namespace ProfileConsole
@@ -13,12 +14,17 @@ namespace ProfileConsole
     {
         static void Main(string[] args)
         {
+
+            var SBU = new SearchByUsername();
+            var profile = SBU.RequestUsername("Fred5954");
+            Console.WriteLine(profile.username);
             using (var unitOfWork = new UnitOfWork(new ProfileContext()))
             {
                 var userTags = unitOfWork.UserInformation.GetTagsWithUserInformation("Farto");
                 var userGroups = unitOfWork.UserInformation.GetChatGroupsWithUserInformation("Farto");
                 var chatGroups = unitOfWork.ChatGroup.GetChatWithChatGroups("Marto-entutiaster");
 
+                
                 //Console.WriteLine("\nGroupName: " + chatGroups.GroupName);
                 //foreach (var item in chatGroups.Chat)
                 //{
