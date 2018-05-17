@@ -49,7 +49,8 @@ namespace MartUI.Main
             ViewList.Add(new ChatViewModel());
             //ViewList.Add(new FocusViewModel(eventAggregator));
 
-            FullView = ViewList[0];
+            FriendListView = ViewList[1];
+            //FullView = ViewList[0];
             //FocusView = new FocusViewModel(eventAggregator);
             //FullView = ViewList[0];
             //regionManager.

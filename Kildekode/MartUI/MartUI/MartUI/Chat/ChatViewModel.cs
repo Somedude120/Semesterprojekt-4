@@ -18,16 +18,17 @@ namespace MartUI.Chat
 {
     public class ChatViewModel : BindableBase, IViewModel
     {
-        private MyData _myData;
+        private MyData _userData;
         private IEventAggregator _eventAggregator;
         private ICommand _sendMessageCommand;
         private string _textToSend;
         private ObservableCollection<FriendModel> _friendList;
         private FriendModel _user;
+        
 
         public string ReferenceName => "ChatView";
 
-        public MyData MyData => _myData ?? (_myData = MyData.GetInstance());
+        public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
 
         public string TextToSend
         {
@@ -94,13 +95,13 @@ namespace MartUI.Chat
         {
             //Send TextToSend + Username/Recipient
             var message = new ChatModel();
-            message.Sender = MyData.Username;
+            message.Sender = UserData.Username;
             message.Message = TextToSend;
             message.MessagePosition = "Right";
             message.Receiver = User.Username;
             _eventAggregator.GetEvent<NewMessageEvent>().Publish(message);
-            ReceiveMessage(TextToSend, MyData.Username, User.Username);
-            ReceiveMessage(TextToSend, User.Username, MyData.Username);
+            ReceiveMessage(TextToSend, UserData.Username, User.Username);
+            ReceiveMessage(TextToSend, User.Username, UserData.Username);
             TextToSend = "";
         }
 
@@ -108,9 +109,9 @@ namespace MartUI.Chat
         {
             var message = new ChatModel();
 
-            if (Sender == MyData.Username)
+            if (Sender == UserData.Username)
             {
-                message.Sender = MyData.Username;
+                message.Sender = UserData.Username;
                 message.Receiver = Receiver;
                 message.Message = TextToReceive;
                 message.MessagePosition = "Right";
@@ -118,7 +119,7 @@ namespace MartUI.Chat
             else
             {
                 message.Sender = Sender;
-                message.Receiver = MyData.Username;
+                message.Receiver = UserData.Username;
                 message.Message = TextToReceive;
                 message.MessagePosition = "Left";
             }

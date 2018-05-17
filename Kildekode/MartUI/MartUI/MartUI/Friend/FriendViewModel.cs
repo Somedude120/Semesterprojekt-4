@@ -28,6 +28,10 @@ namespace MartUI.Friend
         private ICommand _addFriendCommand;
         private ICommand _removeFriendCommand;
         private string _username;
+        private MyData _userData;
+        public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
+
+
         public string Username
         {
             get { return _username; }
@@ -66,11 +70,11 @@ namespace MartUI.Friend
         {
             foreach (var friend in FriendList)
             {
-                if (message.Sender == MyData.Username && friend.Username == message.Receiver)
+                if (message.Sender == UserData.Username && friend.Username == message.Receiver)
                 {
                     friend.MessageList.Add(message);
                 }
-                else if (message.Sender == friend.Username && MyData.Username == message.Receiver)
+                else if (message.Sender == friend.Username && UserData.Username == message.Receiver)
                 {
                     friend.MessageList.Add(message);
                 }

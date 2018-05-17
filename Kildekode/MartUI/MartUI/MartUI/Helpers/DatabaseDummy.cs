@@ -41,7 +41,7 @@ namespace MartUI.Helpers
             {
                 Console.WriteLine("Validate password");
 
-                _databaseDummy.People
+                //_databaseDummy.People
 
             }
         }
