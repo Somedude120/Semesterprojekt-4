@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using MartUI.Helpers;
+using MartUI.Me;
 
 namespace MartUI
 {
@@ -27,6 +28,8 @@ namespace MartUI
             //        viewName, viewAssemblyName);
             //    return Type.GetType(viewModelName);
             //});
+
+            //MyData.Username = "Me";
 
             var bs = new Bootstrapper();
 

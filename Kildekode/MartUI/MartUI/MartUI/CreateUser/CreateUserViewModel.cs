@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -24,22 +25,27 @@ namespace MartUI.CreateUser
 {
     public class CreateUserViewModel : BindableBase, IViewModel
     {
-        public string ReferenceName => "CreateUser";
-        private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
+        private MyData _userData;
+        private DatabaseDummy _databaseDummy;
 
-        //private DetailedPersonModel _person;
+        private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
 
         private ICommand _registerButton;
         private ICommand _backButton;
         private ICommand _chooseProfilePicture;
 
+        public string ReferenceName => "CreateUser";
+
+        public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
+        public DatabaseDummy DatabaseDummy => _databaseDummy ?? (_databaseDummy = DatabaseDummy.GetInstance());
+
         public string Username
         {
-            get => MyData.Username;
+            get => UserData.Username;
             set
             {
-                if (MyData.Username == value) return;
-                MyData.Username = value;
+                if (UserData.Username == value) return;
+                UserData.Username = value;
                 RaisePropertyChanged();
             } // if username != value, notify
         }
@@ -47,11 +53,11 @@ namespace MartUI.CreateUser
         // Need to do this to be able to observe password - cannot observe complex property
         public string Password
         {
-            get => MyData.Password;
+            get => UserData.Password;
             set
             {
-                if (MyData.Password == value) return;
-                MyData.Password = value;
+                if (UserData.Password == value) return;
+                UserData.Password = value;
                 RaisePropertyChanged();
             } 
         }
@@ -78,17 +84,9 @@ namespace MartUI.CreateUser
 
         }
 
-        //public DetailedPersonModel Person => _person ?? (_person = new DetailedPersonModel());
-
         // Will publish event of ChangeFullPage to LoginViewModel
-        public ICommand BackButton
-        {
-            get
-            {
-                return _backButton ?? (_backButton = new DelegateCommand(() =>
-                           _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel())));
-            }
-        }
+        public ICommand BackButton => _backButton ?? (_backButton = new DelegateCommand(() =>
+                                          _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel())));
 
         // Will call CreateNewUser
         public ICommand RegisterButton => _registerButton ?? (_registerButton = new DelegateCommand(CreateNewUser, CanRegister)
@@ -112,66 +110,48 @@ namespace MartUI.CreateUser
             };
 
             if (dialog.ShowDialog() == true)
-                MyData.Image = new Uri(dialog.FileName);
+                UserData.Image = new Uri(dialog.FileName);
         }
 
         private void CreateNewUser()
         {
-            MessageBox.Show("username: " + MyData.Username);
-            MessageBox.Show("password: " + MyData.Password);
-
-            StringBuilder tags = new StringBuilder();
-
-            foreach (var personTag in MyData.Tags)
+            //THIS IS SERVER STUFF, ONLY FOR TESTING!!
+            if (DatabaseDummy.UsernameExist(Username))
             {
-                tags.Append(personTag + ", ");
+                MessageBox.Show("Username " + Username + " already exists! Choose something else");
+                // Change to something more pretty ..
+            }
+            else
+            {
+                Debug.WriteLine("Added " + Username);
+                DatabaseDummy.People.Add(new DetailedPersonModel
+                {
+                    Username = Username,
+                    Image = UserData.Image,
+                    Password = Password,
+                    Tags = UserData.Tags
+                });
+
+
+                // Change view to login
+                _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel());
+
+                MessageBox.Show($"Welcome to the club, {UserData.Username}! You can now log in");
             }
 
-            MessageBox.Show(tags.ToString());
-
-            MessageBox.Show(MyData.Image.AbsolutePath);
-
-            // THIS IS SERVER STUFF, ONLY FOR TESTING!!
-            //if (UsernameAlreadyExist(Username))
-            //{
-            //    MessageBox.Show("Username " + Username + " already exists! Choose something else");
-            //    // Change to something more pretty ..
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Added " + Username);
-            //    _database.PersonList.Add(new PersonModel(Username, Password));
-            //    // Change view
-            //}
-
-            //Console.WriteLine("\nDatabase consists of:");
-
-            //foreach (var user in _database.PersonList)
-            //{
-            //    Console.WriteLine("Username: " + user.Username + " Password: " + user.Password);
-            //}
-        }
-
-        private bool UsernameAlreadyExist(string newUsername)
-        {
-            foreach (var user in DatabaseDummy.People)
-            {
-                if (user.Username == newUsername)
-                    return true;
-            }
-            return false;
+            DatabaseDummy.Print();
         }
 
         public void ModifyTags(TagControl tag)
         {
             if (!tag.Command)
             {
-                if (MyData.Tags.Any())
-                    MyData.Tags.RemoveAt(MyData.Tags.Count - 1);
+                if (UserData.Tags.Any())
+                    UserData.Tags.RemoveAt(UserData.Tags.Count - 1);
             }
             else
             {
-                MyData.Tags.Add(tag.Tag);
+                UserData.Tags.Add(tag.Tag);
             }
         }
     }
