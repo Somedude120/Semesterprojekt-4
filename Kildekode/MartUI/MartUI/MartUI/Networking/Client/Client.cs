@@ -8,6 +8,9 @@ using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.Threading;
+using MartUI.Chat;
+using MartUI.Events;
+using Prism.Events;
 using TLSNetworking;
 
 //Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
@@ -18,8 +21,20 @@ namespace Examples.System.Net
     {
         public static Receiver receiver = new Receiver();
         public static Sender sender = new Sender();
+        private static SslStream sslStream;
+        private readonly IEventAggregator _eventAggregator;
 
         private static Hashtable certificateErrors = new Hashtable();
+
+        public SslTcpClient()
+        {
+            _eventAggregator = GetEventAggregator.Get();
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Subscribe(SendMessage);
+
+            string machineName = "192.168.101.1";
+            string serverCertificateName = "Martin-MSI";
+            SslTcpClient.RunClient(machineName, serverCertificateName);
+        }
 
         // The following method is invoked by the RemoteCertificateValidationDelegate.
         public static bool ValidateServerCertificate(
@@ -49,15 +64,16 @@ namespace Examples.System.Net
         }
         public static void RunClient(string machineName, string serverName)
         {
+
             
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
             //TcpClient client = new TcpClient("192.168.173.1", 443);   //When client is not on localhost
             TcpClient client = new TcpClient(machineName, 443);
-            Console.WriteLine("Client connected.");
+            //Console.WriteLine("Client connected.");
             // Create an SSL stream that will close the client's stream.
 
-            SslStream sslStream = new SslStream(
+            sslStream = new SslStream(
                 client.GetStream(),
                 false,
                 new RemoteCertificateValidationCallback(ValidateServerCertificate),
@@ -87,15 +103,31 @@ namespace Examples.System.Net
             
             Thread receiveThread = new Thread(o => ReceiveMessages((SslStream)o));
             receiveThread.Start(sslStream);
+            ChatModel message = new ChatModel();
+            message.Message = "";
+            message.Receiver = "";
+            //while (true)
+            //{
+            //    //messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + Constants.EndDelimiter);
+            //    //sslStream.Write(messsage);
+            //    //sslStream.Flush();
+            //    //sender.SendString(sslStream, SendMessage(message));
+            //}
 
+            //Console.ReadLine();
+        }
+
+
+        public static void SendMessage(ChatModel message)
+        {
+            string loginString = "L;REEEEEEEEEEEEE";
+            string myString = "W;" + message.Receiver + ";" + message.Message + Constants.EndDelimiter;
+            sender.SendString(sslStream, loginString);
+            sender.SendString(sslStream, myString);
             while (true)
             {
-                messsage = Encoding.UTF8.GetBytes(Console.ReadLine() + Constants.EndDelimiter);
-                sslStream.Write(messsage);
-                sslStream.Flush();
+                
             }
-
-            Console.ReadLine();
         }
 
         static void ReceiveMessages(SslStream sslStream)

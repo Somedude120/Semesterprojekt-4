@@ -15,6 +15,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Reflection;
+using Examples.System.Net;
 using MartUI.Chat;
 using MartUI.Settings;
 
@@ -47,6 +48,8 @@ namespace MartUI.Main
             ViewList.Add(new LoginViewModel());
             ViewList.Add(new FriendViewModel());
             ViewList.Add(new ChatViewModel());
+            SslTcpClient client = new SslTcpClient();
+
             //ViewList.Add(new FocusViewModel(eventAggregator));
 
             FriendListView = ViewList[1];

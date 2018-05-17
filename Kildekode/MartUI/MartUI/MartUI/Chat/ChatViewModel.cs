@@ -13,6 +13,7 @@ using MartUI.Me;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Application = System.Windows.Application;
 
 namespace MartUI.Chat
 {
@@ -22,7 +23,6 @@ namespace MartUI.Chat
         private IEventAggregator _eventAggregator;
         private ICommand _sendMessageCommand;
         private string _textToSend;
-        private ObservableCollection<FriendModel> _friendList;
         private FriendModel _user;
         
 
@@ -38,17 +38,6 @@ namespace MartUI.Chat
                 _textToSend = value;
                 RaisePropertyChanged();
             }
-        }
-
-        public ObservableCollection<FriendModel> FriendList
-        {
-            get
-            {
-                if(_friendList == null)
-                    _friendList = new ObservableCollection<FriendModel>();
-                return _friendList;
-            }
-            set { _friendList = value; }
         }
 
         public FriendModel User
@@ -70,20 +59,10 @@ namespace MartUI.Chat
         {
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<SelectedFriendEvent>().Subscribe(HandleFriend);
-            _eventAggregator.GetEvent<GetFriendListEvent>().Subscribe(HandleFriendList);
 
             User = new FriendModel();
 
             //Receive all previous messages
-        }
-
-        private void HandleFriendList(ObservableCollection<FriendModel> list)
-        {
-            FriendList.Clear();
-            foreach (var friend in list)
-            {
-                FriendList.Add(friend);
-            }
         }
 
         private void HandleFriend(FriendModel obj)
@@ -100,6 +79,7 @@ namespace MartUI.Chat
             message.MessagePosition = "Right";
             message.Receiver = User.Username;
             _eventAggregator.GetEvent<NewMessageEvent>().Publish(message);
+            Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message); });
             ReceiveMessage(TextToSend, UserData.Username, User.Username);
             ReceiveMessage(TextToSend, User.Username, UserData.Username);
             TextToSend = "";

@@ -2,10 +2,11 @@
 using ProfileConsole.Persistence;
 using System;
 using System.Linq;
+using ProfileConsole.Core.ServerCommunication.Interfaces;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
-    public class SearchByTags
+    public class SearchByTags : ISearchByTags
     {
         private IUnitOfWork unitOfWork;
 
