@@ -133,7 +133,6 @@ namespace MartUI.Friend
             if (FriendList.Contains(friend))
             {
                 FriendList.Remove(friend);
-                _eventAggregator.GetEvent<GetFriendListEvent>().Publish(FriendList);
             }
             else
                 MessageBox.Show("This user is not on your friendlist!");

@@ -103,9 +103,8 @@
     </Compile>
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
-    <Compile Include="Events\FriendNewMessageEvent.cs" />
-    <Compile Include="Events\GetFriendListEvent.cs" />
     <Compile Include="Events\NewMessageEvent.cs" />
+    <Compile Include="Events\SendMessageToServerEvent.cs" />
     <Compile Include="Me\MyData.cs" />
     <Compile Include="CreateUser\TokenizingControl.cs" />
     <Compile Include="Events\AddFriendEvent.cs" />
