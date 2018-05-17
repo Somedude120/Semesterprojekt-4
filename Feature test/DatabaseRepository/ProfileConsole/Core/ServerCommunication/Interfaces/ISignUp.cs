@@ -8,5 +8,6 @@ namespace ProfileConsole.Core.ServerCommunication.Interfaces
 {
     public interface ISignUp
     {
+        string CreateProfile(string Username, string salt, string hash);
     }
 }

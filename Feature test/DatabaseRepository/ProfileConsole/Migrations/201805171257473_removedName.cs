@@ -3,16 +3,16 @@ namespace ProfileConsole.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Dexcriptions : DbMigration
+    public partial class removedName : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.UserInformation", "Description", c => c.String(maxLength: 300));
+            //DropColumn("dbo.UserInformation", "Name");
         }
         
         public override void Down()
         {
-            DropColumn("dbo.UserInformation", "Description");
+            AddColumn("dbo.UserInformation", "Name", c => c.String(nullable: false, maxLength: 50));
         }
     }
 }
