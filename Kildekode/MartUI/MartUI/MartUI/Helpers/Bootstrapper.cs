@@ -23,15 +23,5 @@ namespace MartUI.Helpers
             if (Application.Current.MainWindow != null)
                 Application.Current.MainWindow.Show();
         }
-
-        protected override void ConfigureContainer()
-        {
-            base.ConfigureContainer();
-
-            // Register types
-            Container.RegisterType(typeof(object), typeof(LoginView), "LoginView");
-            //Container.RegisterType(typeof(object), typeof(MainView), "MainView");
-            // Container.RegisterType(typeof(object), typeof(DebitView), "DebitView");
-        }
     }
 }

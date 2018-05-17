@@ -2,8 +2,11 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MartUI.Chat;
 using MartUI.CreateUser;
 using MartUI.Events;
+using MartUI.Friend;
+using MartUI.Helpers;
 using MartUI.Main;
 using MartUI.Me;
 using Prism.Commands;
@@ -14,30 +17,37 @@ namespace MartUI.Login
 {
     public class LoginViewModel : BindableBase, IViewModel // Using BindableBase from PRISM instead of INotifyPropertyChanged
     {
+        private DatabaseDummy _databaseDummy;
+
         private readonly IEventAggregator _eventAggregator;
 
         private ICommand _createUserCommand;
         private ICommand _loginCommand;
 
-        private string _username;
         private string _password;
         private MyData _userData;
 
         public string ReferenceName => "Login";
-
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
+        public DatabaseDummy DatabaseDummy => _databaseDummy ?? (_databaseDummy = DatabaseDummy.GetInstance());
 
         // Made these in here since it will be created either way because observing these - no need for model
         public string Username
         {
-            get { return _username; }
-            set { SetProperty(ref _username, value); } // if username != value, notify
+            get => UserData.Username;
+            set
+            {
+                if (UserData.Username == value) return;
+                UserData.Username = value;
+                RaisePropertyChanged();
+            } // if username != value, notify
         }
 
         public string Password
         {
-            get { return _password; }
-            set { SetProperty(ref _password, value); } // if username != value, notify
+            get => _password;
+            set => SetProperty(ref _password, value);
+            // if username != value, notify
         }
 
         // Navigate to CreateUserView
@@ -65,9 +75,15 @@ namespace MartUI.Login
             // Validate name and password with server
             // Navigate to main window (friend list shows, etc).
 
-
-            
-
+            if (DatabaseDummy.ValidateUser(Username, Password))
+            {
+                // Fullpage is null, show friendlist and initialize chatview
+                _eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
+                _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
+                _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
+            }
+            else
+                MessageBox.Show("Wrong username or password!");
         }
     }
 }
