@@ -21,8 +21,12 @@ namespace MartUI.Login
 
         private string _username;
         private string _password;
+        private MyData _userData;
 
         public string ReferenceName => "Login";
+
+        public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
+
         // Made these in here since it will be created either way because observing these - no need for model
         public string Username
         {
@@ -62,18 +66,7 @@ namespace MartUI.Login
             // Navigate to main window (friend list shows, etc).
 
 
-            // TESTS THAT CASTS EXCEPTION ON INCORRECT INFO
-            //bool correct = false;
-
-            //try
-            //{
-            //    if (!correct)
-            //        throw new Exception();
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //}
+            
 
         }
     }

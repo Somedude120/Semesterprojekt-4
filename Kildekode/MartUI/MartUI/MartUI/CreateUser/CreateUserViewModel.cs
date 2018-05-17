@@ -116,7 +116,7 @@ namespace MartUI.CreateUser
         private void CreateNewUser()
         {
             //THIS IS SERVER STUFF, ONLY FOR TESTING!!
-            if (DatabaseDummy.UsernameAlreadyExist(Username))
+            if (DatabaseDummy.UsernameExist(Username))
             {
                 MessageBox.Show("Username " + Username + " already exists! Choose something else");
                 // Change to something more pretty ..

@@ -31,6 +31,7 @@ namespace MartUI.Me
             set => SetProperty(ref _username, value);
         }
 
+        // This is not good but needed to not constantly ask server for validation - should be done in actual product
         private string _password;
         public string Password
         {

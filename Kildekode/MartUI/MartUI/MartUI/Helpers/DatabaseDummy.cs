@@ -13,6 +13,9 @@ namespace MartUI.Helpers
 {
     public class DatabaseDummy
     {
+        private MyData _user;
+        private MyData UserData => _user ?? (_user = MyData.GetInstance());
+
         private static DatabaseDummy _databaseDummy;
         public static DatabaseDummy GetInstance()
         {
@@ -20,10 +23,9 @@ namespace MartUI.Helpers
         }
 
         private static List<DetailedPersonModel> _people;
-
         public List<DetailedPersonModel> People => _people ?? (_people = new List<DetailedPersonModel>());
 
-        public bool UsernameAlreadyExist(string newUsername)
+        public bool UsernameExist(string newUsername)
         {
             foreach (var user in People)
             {
@@ -31,6 +33,17 @@ namespace MartUI.Helpers
                     return true;
             }
             return false;
+        }
+
+        public void ValidateUser(string username)
+        {
+            if (UsernameExist(username))
+            {
+                Console.WriteLine("Validate password");
+
+                //_databaseDummy.People
+
+            }
         }
 
         public void Print()
