@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0560DF62-AC09-4D3D-B84E-EF14C12B9BF0}</ProjectGuid>
+    <ProjectGuid>{ECAE1001-6E73-4A86-8D2F-03228F5165F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AsyncSocketHashing.Test.Unit</RootNamespace>
-    <AssemblyName>AsyncSocketHashing.Test.Unit</AssemblyName>
+    <RootNamespace>Salt_And_Hash</RootNamespace>
+    <AssemblyName>Salt_And_Hash</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -56,25 +56,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SaltTest.cs" />
     <Compile Include="Class\SaltedHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit Test\SaltTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AsyncClient\AsyncClient.csproj">
-      <Project>{a72d7c55-a78b-4536-a004-f885d45d5428}</Project>
-      <Name>AsyncClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AsyncServer\AsyncServer.csproj">
-      <Project>{efaace6e-990f-43e1-86a6-71b767738509}</Project>
-      <Name>AsyncServer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
