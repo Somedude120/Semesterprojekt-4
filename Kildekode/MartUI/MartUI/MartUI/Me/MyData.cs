@@ -52,5 +52,12 @@ namespace MartUI.Me
             get => _image ?? (_image = new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG"));
             set => SetProperty(ref _image, value);
         }
+
+        private string _description;
+        public string Description
+        {
+            get => _description ?? (_description = "Describe yourself!");
+            set => SetProperty(ref _description, value);
+        }
     }
 }
