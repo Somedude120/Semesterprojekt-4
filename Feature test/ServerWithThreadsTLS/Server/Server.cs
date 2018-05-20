@@ -205,7 +205,8 @@ namespace Examples.System.Net
             if (userStreams.ContainsKey(input[1]))
             {
                 Console.WriteLine("From: " + login + " to " + input[1]);
-                sender.SendString(userStreams[input[1]], "From " + login + ": " + input[2]);
+                sender.SendString(userStreams[input[1]], "R" + Constants.MiddleDelimiter + login + Constants.MiddleDelimiter + input[2]);
+                //sender.SendString(userStreams[input[1]], "From " + login + ": " + input[2]);
             }
             else
             {
