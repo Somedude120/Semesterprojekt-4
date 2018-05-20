@@ -46,11 +46,11 @@ namespace MartUI.Main
             _eventAggregator.GetEvent<ChangeSideBarPage>().Subscribe(ChangeSideBarView);
 
             ViewList.Add(new LoginViewModel());
-            //ViewList.Add(new FriendViewModel());
-            //ViewList.Add(new ChatViewModel());
+            ViewList.Add(new FriendViewModel());
+            ViewList.Add(new ChatViewModel());
 
-            //FriendListView = ViewList[1];
-            FullView = ViewList[0];
+            FriendListView = ViewList[1];
+            //FullView = ViewList[0];
             //FullView = ViewList[0];
         }
 

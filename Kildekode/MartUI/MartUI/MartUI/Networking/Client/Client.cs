@@ -9,6 +9,7 @@ using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.Threading;
+using System.Windows;
 using System.Windows.Documents;
 using MartUI.Chat;
 using MartUI.Events;
@@ -41,9 +42,11 @@ namespace Examples.System.Net
             string serverCertificateName = "Martin-MSI";
             SslTcpClient.RunClient(machineName, serverCertificateName);
 
-            UserData.Username = "Daniel";
-            string loginString = "L;" + UserData.Username;
-            sender.SendString(sslStream, loginString);
+            //From MyData
+            Login(UserData);
+            //UserData.Username = "Hans";
+            //string loginString = "L;" + UserData.Username;
+            //sender.SendString(sslStream, loginString);
 
         }
 
@@ -128,6 +131,13 @@ namespace Examples.System.Net
             //Console.ReadLine();
         }
 
+        public static void Login(MyData UserData)
+        {
+            //UserData.Username = "Hans";
+            //UserData.Username = UserName;
+            string loginString = "L;" + UserData.Username;
+            sender.SendString(sslStream, loginString);
+        }
 
         public static void SendMessage(ChatModel message)
         {
@@ -147,7 +157,10 @@ namespace Examples.System.Net
                     message.Message = tempStringList[2];
                     message.Sender = tempStringList[1];
                     message.Receiver = UserData.Username;
-                    _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                    });
                 }
             }
         }

@@ -9,6 +9,13 @@ namespace MartUI.Friend
     {
         private string _username;
         private ObservableCollection<ChatModel> _messageList;
+        //public ChatViewModel chat;
+        private ChatViewModel _chat;
+
+        public FriendModel()
+        {
+            //chat = new ChatViewModel();
+        }
 
         public string Username
         {
@@ -31,6 +38,17 @@ namespace MartUI.Friend
             {
                 _messageList = value;
             }
+        }
+
+        public ChatViewModel Chat
+        {
+            get
+            {
+                if (_chat == null)
+                    _chat = new ChatViewModel();
+                return _chat;
+            }
+            set { _chat = value; }
         }
     }
 }

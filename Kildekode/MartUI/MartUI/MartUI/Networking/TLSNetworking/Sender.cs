@@ -11,7 +11,7 @@ namespace TLSNetworking
     {
         public void SendString(SslStream sslStream, string message)
         {
-            sslStream.Write(Encoding.ASCII.GetBytes(message + Constants.EndDelimiter));
+            sslStream.Write(Encoding.UTF8.GetBytes(message + Constants.EndDelimiter));
         }
     }
 }
