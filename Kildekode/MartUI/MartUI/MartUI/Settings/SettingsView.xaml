@@ -6,9 +6,19 @@
              xmlns:local="clr-namespace:MartUI.Settings"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="200">
-    <Grid>
-        <ScrollViewer HorizontalAlignment="Right" Width="200">
-            <Button Width="185" Height="20" Background="Transparent" VerticalAlignment="Bottom" Margin="0,20" Content="Logout Daniel"></Button>
-        </ScrollViewer>
-    </Grid>
+    <StackPanel VerticalAlignment="Bottom">
+        <Button Width="185" Height="20" Background="Transparent" Margin="0,20"
+                Content="Change password"
+                Command="{Binding ChangePassword}" 
+                VerticalAlignment="Bottom"/>
+        <Button Width="185" Height="20" Background="Transparent" 
+                Foreground="Red"
+                Content="Delete profile"
+                Command="{Binding DeleteProfile}" 
+                VerticalAlignment="Bottom"/>
+        <Button Width="185" Height="20" Background="Transparent" Margin="0,20"
+                Content="Logout"
+                Command="{Binding LogOut}" 
+                VerticalAlignment="Bottom"/>
+    </StackPanel>
 </UserControl>
