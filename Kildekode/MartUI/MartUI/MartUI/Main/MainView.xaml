@@ -15,6 +15,7 @@
         xmlns:chat="clr-namespace:MartUI.Chat"
         xmlns:settings="clr-namespace:MartUI.Settings"
         xmlns:blankSetting="clr-namespace:MartUI.Settings.BlankSetting"
+        xmlns:profile="clr-namespace:MartUI.Profile"
         mvvm:ViewModelLocator.AutoWireViewModel="True"
 
         mc:Ignorable="d"
@@ -44,6 +45,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type blankSetting:BlankSettingViewModel}">
             <blankSetting:BlankSettingView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type profile:ProfileViewModel}">
+            <profile:ProfileView DataContext="{Binding}"/>
         </DataTemplate>
     </Window.Resources>
 

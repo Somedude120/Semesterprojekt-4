@@ -17,6 +17,7 @@ using Prism.Regions;
 using System.Reflection;
 using Examples.System.Net;
 using MartUI.Chat;
+using MartUI.Profile;
 using MartUI.Settings;
 
 namespace MartUI.Main
@@ -132,25 +133,14 @@ namespace MartUI.Main
             return model;
         }
 
-        public ICommand SettingsViewCommand
-        {
-            get
-            {
-                return _settingsViewCommand ?? (_settingsViewCommand = new DelegateCommand(() =>
-                           _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new SettingsViewModel())));
-            }
-        }
+        public ICommand SettingsViewCommand => _settingsViewCommand ?? 
+                                               (_settingsViewCommand = new DelegateCommand(ShowSettings));
 
-        //public ICommand ChangeView
-        //{
-        //    get
-        //    {
-        //        if (_changeView == null)
-        //        {
-        //            _changeView = new DelegateCommand<IViewModel>(p => ChangeViewModel((IViewModel)p), p => p is IViewModel);
-        //        }
-        //        return _changeView;
-        //    }
-        //}
+        public void ShowSettings()
+        {
+            _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new SettingsViewModel());
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ProfileViewModel());
+        }
     }
 }
+
