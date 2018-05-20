@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
 using ProfileConsole.Core.Domain;
+using ProfileConsole.Core.ServerCommunication.Interfaces;
 using ProfileConsole.Persistence;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
     //Gets all messages saved in the database
-    public class GetAllMsgs
+    public class GetAllMsgs : IGetAllMsgs
     {
         private IUnitOfWork unitOfWork;
 
@@ -15,17 +16,17 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public Chat RequestAllMsgs(int GroupID, int MessageNumber, string Message, string Sender)
+        public Chat RequestAllMsgs(int groupId, int messageNumber, string message, string sender)
         {
-            var chat = unitOfWork.Chat.GetId(GroupID);
+            var chat = unitOfWork.Chat.GetId(groupId);
 
-            if (chat.GroupId == GroupID)
+            if (chat.GroupId == groupId)
             {
                 using (var db = new ProfileContext())
                 {
                     var chats =
                         from c in db.Chat
-                        where c.GroupId == GroupID
+                        where c.GroupId == groupId
                         select c;
 
                     try
