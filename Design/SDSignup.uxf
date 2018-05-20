@@ -190,7 +190,7 @@ IDAlreadyExists(ID)</panel_attributes>
       <w>550</w>
       <h>150</h>
     </coordinates>
-    <panel_attributes>Password Exists in DB</panel_attributes>
+    <panel_attributes>Username Exists in DB</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

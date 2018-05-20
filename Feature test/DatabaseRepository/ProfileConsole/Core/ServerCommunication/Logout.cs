@@ -18,16 +18,21 @@ namespace ProfileConsole.Core.ServerCommunication
         public void LogoutDB(string Username)
         {
             var person = unitOfWork.UserInformation.GetString(Username);
-            using (var db = new ProfileContext())
-            {
-                var profile =
-                    from p in db.UserInformation
-                    where p.UserName == Username
-                    select p;
-
-                foreach (var p in profile)
+            if(person.UserName == Username)
+            { 
+                using (var db = new ProfileContext())
                 {
-                    p.Status = "Offline";
+                    var profile =
+                        from p in db.UserInformation
+                        where p.UserName == Username
+                        select p;
+
+                    foreach (var p in profile)
+                    {
+                        p.Status = "Offline";
+                    }
+                    
+                    unitOfWork.Complete();
                 }
             }
         }

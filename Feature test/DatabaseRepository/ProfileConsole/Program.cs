@@ -20,11 +20,16 @@ namespace ProfileConsole
             Console.WriteLine(profile.username);
             using (var unitOfWork = new UnitOfWork(new ProfileContext()))
             {
+                /*
                 var userTags = unitOfWork.UserInformation.GetTagsWithUserInformation("Farto");
                 var userGroups = unitOfWork.UserInformation.GetChatGroupsWithUserInformation("Farto");
                 var chatGroups = unitOfWork.ChatGroup.GetChatWithChatGroups("Marto-entutiaster");
+                */
 
+                var AddFriend = new AddFriend();
+                AddFriend.AddFriendRequest("Fred5954", "Bobby69");
                 
+
                 //Console.WriteLine("\nGroupName: " + chatGroups.GroupName);
                 //foreach (var item in chatGroups.Chat)
                 //{
@@ -42,7 +47,7 @@ namespace ProfileConsole
                 //{
                 //    Console.WriteLine("\t ChatGroup: " + item.GroupName);
                 //}
-               
+
 
                 //----------Add----------
                 //var tag = new Tags { TagName = "1v1" };
