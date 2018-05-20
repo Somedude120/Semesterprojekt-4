@@ -67,21 +67,6 @@ namespace MartUI.CreateUser
             //Subscriptions
             _eventAggregator.GetEvent<PasswordChangedInCreate>().Subscribe(para => Password = para);
             _eventAggregator.GetEvent<ChangingTagsInCreate>().Subscribe(ModifyTags);
-
-            DatabaseDummy.People.Add(new DetailedPersonModel
-            {
-                Username = "HeyMan",
-                Password = "NeverGuessIt",
-                Tags = new List<string> {"YePls", "FriendsPls"}
-            });
-
-            DatabaseDummy.People.Add(new DetailedPersonModel
-            {
-                Username = "CoolGuy",
-                Password = "hahamanIAmCool",
-                Tags = new List<string> { "YePls", "NoPls" }
-            });
-
         }
 
         // Will publish event of ChangeFullPage to LoginViewModel
@@ -131,7 +116,6 @@ namespace MartUI.CreateUser
                     Password = Password,
                     Tags = UserData.Tags
                 });
-
 
                 // Change view to login
                 _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel());

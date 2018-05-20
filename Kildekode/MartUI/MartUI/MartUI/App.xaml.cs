@@ -23,20 +23,9 @@ namespace MartUI
         {
             base.OnStartup(e);
 
-            //ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver((viewType) =>
-            //{
-            //    var viewName = viewType.FullName;
-            //    var viewAssemblyName = viewType.GetTypeInfo().Assembly.FullName;
-            //    var viewModelName = String.Format(CultureInfo.InvariantCulture, "{0}ViewModel, {1}",
-            //        viewName, viewAssemblyName);
-            //    return Type.GetType(viewModelName);
-            //});
-
-            //MyData.Username = "Me";
-
-            SslTcpClient client = new SslTcpClient();
-            Thread Daniel = new Thread(client.ReceiveMessages);
-            Daniel.Start();
+            //SslTcpClient client = new SslTcpClient();
+            //Thread clientThread = new Thread(client.ReceiveMessages);
+            //clientThread.Start();
 
             var bs = new Bootstrapper();
 

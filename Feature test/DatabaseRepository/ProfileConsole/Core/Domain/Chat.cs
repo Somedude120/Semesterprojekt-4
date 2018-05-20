@@ -9,6 +9,14 @@ namespace ProfileConsole.Core.Domain
     [Table("Chat")]
     public partial class Chat
     {
+        public Chat(int groupId, int messageNumber, string message, string sender)
+        {
+            GroupId = groupId;
+            MessageNumber = messageNumber;
+            Message = message;
+            Sender = sender;
+        }
+
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]

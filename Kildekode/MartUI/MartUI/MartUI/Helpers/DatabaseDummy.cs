@@ -1,25 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Tasks;
 using MartUI.CreateUser;
-using MartUI.Login;
-using MartUI.Me;
 
 namespace MartUI.Helpers
 {
     public class DatabaseDummy
     {
-        private MyData _user;
-        private MyData UserData => _user ?? (_user = MyData.GetInstance());
-
         private static DatabaseDummy _databaseDummy;
         public static DatabaseDummy GetInstance()
         {
             return _databaseDummy ?? (_databaseDummy = new DatabaseDummy());
+        }
+
+        protected DatabaseDummy()
+        {
+            People.Add(new DetailedPersonModel
+            {
+                Username = "HeyMan",
+                Password = "NeverGuessIt",
+                Tags = new List<string> { "YePls", "FriendsPls" }
+            });
+
+            People.Add(new DetailedPersonModel
+            {
+                Username = "CoolGuy",
+                Password = "hahamanIAmCool",
+                Tags = new List<string> { "YePls", "NoPls" }
+            });
+
+            People.Add(new DetailedPersonModel
+            {
+                Username = "supman",
+                Password = "niceman",
+                Tags = new List<string> { "YePls", "NoPls" }
+            });
         }
 
         private static List<DetailedPersonModel> _people;
@@ -35,15 +50,24 @@ namespace MartUI.Helpers
             return false;
         }
 
-        public void ValidateUser(string username)
+        public bool ValidateUser(string username, string password)
         {
-            if (UsernameExist(username))
+            var user = GetUser(username);
+
+            if (user == null) return false;
+
+            return user.Username == username && user.Password == password;
+        }
+
+        public DetailedPersonModel GetUser(string user)
+        {
+            foreach (var person in People)
             {
-                Console.WriteLine("Validate password");
-
-                //_databaseDummy.People
-
+                if (person.Username == user)
+                    return person;
             }
+
+            return null;
         }
 
         public void Print()
