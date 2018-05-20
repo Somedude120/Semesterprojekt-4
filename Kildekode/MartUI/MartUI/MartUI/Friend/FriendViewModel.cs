@@ -27,6 +27,7 @@ namespace MartUI.Friend
         private ICommand _chooseFriendCommand;
         private ICommand _addFriendCommand;
         private ICommand _removeFriendCommand;
+        //private ChatViewModel chatViewModel = new ChatViewModel();
         private string _username;
         private MyData _userData;
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
@@ -50,16 +51,22 @@ namespace MartUI.Friend
 
             Username = "Enter Username!";
 
+            _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Subscribe(HandleNewMessage);
             _eventAggregator.GetEvent<NewMessageEvent>().Subscribe(HandleNewMessage);
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
 
-            for (int i = 0; i < 3; i++)
-            {
-                var friend = new FriendModel {Username = "Friend" + i};
-                FriendList.Add(friend);
-            }
+            var marto = new FriendModel() {Username = "Marto"};
+            var alexD = new FriendModel() { Username = "AlexD" };
+            FriendList.Add(marto);
+            FriendList.Add(alexD);
+
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    var friend = new FriendModel {Username = "Friend" + i};
+            //    FriendList.Add(friend);
+            //}
 
             //Tilføj eventuelt et eller andet som første plads i arrayet
             //Skal bruge metode fra server/database til at få en liste af alle ens venner
@@ -68,15 +75,25 @@ namespace MartUI.Friend
 
         private void HandleNewMessage(ChatModel message)
         {
+            int i = 0;
+            int j = 0;
             foreach (var friend in FriendList)
             {
                 if (message.Sender == UserData.Username && friend.Username == message.Receiver)
                 {
+                    //message.Message += "  " + friend.Username + "  Friend" + i;
+                    message.MessagePosition = "Right";
                     friend.MessageList.Add(message);
+                    i++;
+                    break;
                 }
                 else if (message.Sender == friend.Username && UserData.Username == message.Receiver)
                 {
+                    //message.Message += "  " + friend.Username + "  Friend" + j;
+                    message.MessagePosition = "Left";
                     friend.MessageList.Add(message);
+                    j++;
+                    break;
                 }
             }
         }
@@ -104,22 +121,22 @@ namespace MartUI.Friend
         private void SelectFriend(FriendModel friend)
         {
             _eventAggregator.GetEvent<SelectedFriendEvent>().Publish(friend);
-            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(friend.Chat);
         }
 
         public void AddFriend()
         {
-            bool friendIntList = false;
+            bool friendInList = false;
             foreach (var f in FriendList)
             {
                 if (f.Username == Username)
                 {
                     MessageBox.Show("This user is already on your friendlist");
-                    friendIntList = true;
+                    friendInList = true;
                 }
             }
 
-            if (!friendIntList)
+            if (!friendInList)
             {
                 Application.Current.Dispatcher.Invoke(() => { FriendList.Add(new FriendModel {Username = Username}); });
             }
