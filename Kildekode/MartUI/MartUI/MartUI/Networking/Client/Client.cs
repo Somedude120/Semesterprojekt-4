@@ -9,6 +9,7 @@ using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.Threading;
+using System.Windows;
 using System.Windows.Documents;
 using MartUI.Chat;
 using MartUI.Events;
@@ -147,7 +148,10 @@ namespace Examples.System.Net
                     message.Message = tempStringList[2];
                     message.Sender = tempStringList[1];
                     message.Receiver = UserData.Username;
-                    _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                    });
                 }
             }
         }
