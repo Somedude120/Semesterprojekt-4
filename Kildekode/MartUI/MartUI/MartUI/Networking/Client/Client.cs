@@ -42,9 +42,11 @@ namespace Examples.System.Net
             string serverCertificateName = "Martin-MSI";
             SslTcpClient.RunClient(machineName, serverCertificateName);
 
-            UserData.Username = "Daniel";
-            string loginString = "L;" + UserData.Username;
-            sender.SendString(sslStream, loginString);
+            //From MyData
+            Login(UserData);
+            //UserData.Username = "Hans";
+            //string loginString = "L;" + UserData.Username;
+            //sender.SendString(sslStream, loginString);
 
         }
 
@@ -129,6 +131,13 @@ namespace Examples.System.Net
             //Console.ReadLine();
         }
 
+        public static void Login(MyData UserData)
+        {
+            //UserData.Username = "Hans";
+            //UserData.Username = UserName;
+            string loginString = "L;" + UserData.Username;
+            sender.SendString(sslStream, loginString);
+        }
 
         public static void SendMessage(ChatModel message)
         {
