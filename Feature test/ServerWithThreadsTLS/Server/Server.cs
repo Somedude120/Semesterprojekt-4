@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
+using Microsoft.Win32;
 using TLSNetworking;
 
 //Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
@@ -21,6 +22,8 @@ namespace Examples.System.Net
 {
     public sealed class SslTcpServer
     {
+        private static Mutex _mutex = new Mutex();
+
         public static Receiver receiver = new Receiver();
         public static Sender sender = new Sender();
 
@@ -52,8 +55,9 @@ namespace Examples.System.Net
                 DisplaySecurityServices(sslStream);
                 DisplayCertificateInformation(sslStream);
                 DisplayStreamProperties(sslStream);
+                Console.WriteLine();
 
-                string IPId = ((IPEndPoint)client.Client.RemoteEndPoint).Address + "," + ((IPEndPoint)client.Client.RemoteEndPoint).Port;
+                //string IPId = ((IPEndPoint)client.Client.RemoteEndPoint).Address + "," + ((IPEndPoint)client.Client.RemoteEndPoint).Port;
 
                 // Set timeouts for the read and write to 5 seconds.
                 //sslStream.ReadTimeout = 5000;
@@ -81,7 +85,7 @@ namespace Examples.System.Net
                     Console.WriteLine();
                 }
 
-                Console.ReadLine();
+                //Console.ReadLine();
             }
             catch (AuthenticationException e)
             {
@@ -114,7 +118,7 @@ namespace Examples.System.Net
         {
             //Check if client is logged in
             //Client that is not logged in, should only be able to get to HandleLogin
-            if (userStreams.FirstOrDefault(x => x.Value == sslStream).Key == null)
+            if (userStreams.FirstOrDefault(x => x.Value == sslStream).Key == null)  //If client isn't logged in
             {
                 switch (input[0])
                 {
@@ -130,20 +134,20 @@ namespace Examples.System.Net
             {
                 switch (input[0])
                 {
-                    case "W":
+                    case "W":   //Write message
                         HandleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
-                    case "P":
+                    case "P":   //Profile get
                         GetProfile(input[1], sslStream);
                         break;
-                    case "U":
+                    case "U":   //Update profile
                         UpdateProfile(input[1], sslStream);
                         break;
-                    case "L":
+                    case "L":   //Login
                         Console.WriteLine("User is already logged in");
                         sender.SendString(sslStream, "You are already logged in");
                         break;
-                    case "Q":
+                    case "Q":   //Logout
                         HandleLogout(sslStream);
                         break;
                     default:
@@ -168,7 +172,10 @@ namespace Examples.System.Net
                 else
                 {
                     //Add to Dictionary
+                    _mutex.WaitOne();
                     userStreams.Add(input[1], sslStream);
+                    _mutex.ReleaseMutex();
+                    Console.WriteLine("User logged in with username: " + input[1]);
                 }
             }
         }
@@ -182,7 +189,10 @@ namespace Examples.System.Net
                 var keyFromValue = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
                 if (keyFromValue != null)
                 {
-                    userStreams.Remove(userStreams.FirstOrDefault(x => x.Value == sslStream).Key);  //If user isn't logged in, dictionary remove will crash              
+                    _mutex.WaitOne();
+                    Console.WriteLine(userStreams.FirstOrDefault(x => x.Value == sslStream).Key + " logged out");
+                    userStreams.Remove(userStreams.FirstOrDefault(x => x.Value == sslStream).Key);  //If user isn't logged in, dictionary remove will crash 
+                    _mutex.ReleaseMutex();
                 }
                 else
                 {
@@ -206,7 +216,6 @@ namespace Examples.System.Net
             {
                 Console.WriteLine("From: " + login + " to " + input[1]);
                 sender.SendString(userStreams[input[1]], "R" + Constants.MiddleDelimiter + login + Constants.MiddleDelimiter + input[2]);
-                //sender.SendString(userStreams[input[1]], "From " + login + ": " + input[2]);
             }
             else
             {
@@ -291,19 +300,19 @@ namespace Examples.System.Net
                 Console.WriteLine("Remote certificate is null.");
             }
         }
-        private static void DisplayUsage()
-        {
-            Console.WriteLine("To start the server specify:");
-            Console.WriteLine("serverSync certificateFile.cer");
-            Environment.Exit(1);
-        }
+        //private static void DisplayUsage()
+        //{
+        //    Console.WriteLine("To start the server specify:");
+        //    Console.WriteLine("serverSync certificateFile.cer");
+        //    Environment.Exit(1);
+        //}
         public static int Main(string[] args)
         {
             string certificate = null;
-            if (args == null || args.Length < 1)
-            {
+            //if (args == null || args.Length < 1)
+            //{
                 //DisplayUsage();
-            }
+            //}
             //certificate = args[0];
             //certificate = "D:/Users/Martin/Dropbox/IKT/4.Semester/PROJ4/Semesterprojekt-4/Feature test/SSL-Test/MartoTestCer.cer";
 
