@@ -31,8 +31,8 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
         [Test]
         public void Username_IsInDB_ReturnsCorrectly()
         {
-            var returnProfile = _uut.RequestUsername(Username);
-            Assert.That(returnProfile.username, Is.EqualTo(profile.username));
+            
+            Assert.That(_uut.RequestUsername(Username).Description, Is.EqualTo("Flot"));
         }
 
     }

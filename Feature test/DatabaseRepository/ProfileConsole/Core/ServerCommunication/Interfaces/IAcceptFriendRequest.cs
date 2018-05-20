@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProfileConsole.Core.Domain;
 
 namespace ProfileConsole.Core.ServerCommunication.Interfaces
 {
-    public interface ISearchByUsername
+    public interface IAcceptFriendRequest
     {
-        UserInformation RequestUsername(String name);
+        void AcceptRequest(string Username, string newFriend);
     }
 }

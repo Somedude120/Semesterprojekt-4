@@ -15,39 +15,9 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public OtherProfile RequestUsername(string Username)
+        public UserInformation RequestUsername(string Username)
         {
-            var person = unitOfWork.UserInformation.GetString(Username);
-            
-            if (person.UserName == Username)
-            {
-                using (var db = new ProfileContext())
-                {
-                    var profile =
-                    from p in db.UserInformation
-                    where p.UserName == Username 
-                    select p;
-
-                    try
-                    {
-                        foreach (var pers in profile)
-                        {
-                            OtherProfile newProfile = new OtherProfile(pers.UserName, pers.Description, pers.Tags);
-                            return newProfile;
-                        }
-                    }
-
-                    catch (Exception)
-                    {
-                        return null;
-                    }
-                    
-                }
-                    
-            }
-
-            return null;
-
+            return unitOfWork.UserInformation.GetString(Username);
         }
     }
 }

@@ -69,7 +69,9 @@
     <Compile Include="Core\Domain\Emoji.cs" />
     <Compile Include="Core\Domain\FriendList.cs" />
     <Compile Include="Core\Domain\Login.cs" />
+    <Compile Include="Core\ServerCommunication\AcceptFriendRequest.cs" />
     <Compile Include="Core\ServerCommunication\AddFriend.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\IAcceptFriendRequest.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IAddFriend.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IGetAllMsgs.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IGetFriends.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Core\ServerCommunication\SearchByTags.cs" />
     <Compile Include="Core\ServerCommunication\SearchByUsername.cs" />
     <Compile Include="Core\ServerCommunication\SignUp.cs" />
+    <Compile Include="Core\ServerCommunication\Unit Tests\AcceptFriendRequestTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\AddFriendTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\GetFriendsTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\GetMyProfileTest.cs" />

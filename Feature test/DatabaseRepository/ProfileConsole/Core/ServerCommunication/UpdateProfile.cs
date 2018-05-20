@@ -22,33 +22,19 @@ namespace ProfileConsole.Core.ServerCommunication
 
             if (person.UserName == Username)
             {
-                using (var db = new ProfileContext())
-                {
-                    var profile =
-                        from p in db.UserInformation
-                        where p.UserName == Username
-                        select p;
+                person.Description = Description;
+                person.Tags = Tagslist;
+                unitOfWork.Complete();
+            }
+                        
+                 
 
-                    try
-                    {
-                        foreach (var pers in profile)
-                        {
-                            pers.Description = Description;
-                            pers.Tags = Tagslist;
-                        }
-
-                        unitOfWork.Complete();
-                    }
-
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-
-                }
+                    
 
                 
-            }
+
+                
+            
         }
     }
 }

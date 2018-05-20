@@ -19,7 +19,7 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
     public class UpdateProfileTest
     {
         private string Username = "Fred5954";
-        private string newDescription = "Mumme";
+        private string newDescription = "Bølle";
         private Tags tag;
         private ICollection<Tags> tags;
         IUpdateProfile _uut;
@@ -28,7 +28,7 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
         [SetUp]
         public void Setup()
         {
-            tag = new Tags {TagName = "Pringles"};
+            tag = new Tags {TagName = "Shingus"};
             tags = new Collection<Tags>() {tag};
             _uut = new UpdateProfile();
             unitOfWork = new UnitOfWork(new ProfileContext());
@@ -40,23 +40,7 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
             _uut.UpdateProfileInformation(Username, newDescription, tags);
             var person = unitOfWork.UserInformation.GetString(Username);
 
-            if (person.UserName == Username)
-            {
-                using (var db = new ProfileContext())
-                {
-                    var profile =
-                        from p in db.UserInformation
-                        where p.UserName == Username
-                        select p;
-
-                    foreach (var per in profile)
-                    {
-                        Assert.That(per.Description, Is.EqualTo("Mumme"));
-                    }
-
-                }
-
-            }
+            Assert.That(person.Description, Is.EqualTo(newDescription));
         }
 
         [Test]

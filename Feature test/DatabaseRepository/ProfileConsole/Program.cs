@@ -17,7 +17,7 @@ namespace ProfileConsole
 
             var SBU = new SearchByUsername();
             var profile = SBU.RequestUsername("Fred5954");
-            Console.WriteLine(profile.username);
+            
             using (var unitOfWork = new UnitOfWork(new ProfileContext()))
             {
                 /*
