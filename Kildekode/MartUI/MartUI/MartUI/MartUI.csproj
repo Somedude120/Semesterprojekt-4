@@ -107,7 +107,7 @@
     <Compile Include="Events\ReceiveMessageFromServerEvent.cs" />
     <Compile Include="Events\SendMessageToServerEvent.cs" />
     <Compile Include="Me\MyData.cs" />
-    <Compile Include="CreateUser\TokenizingControl.cs" />
+    <Compile Include="Helpers\TokenizingControl.cs" />
     <Compile Include="Events\AddFriendEvent.cs" />
     <Compile Include="Events\ChangeFocusPage.cs" />
     <Compile Include="Events\ChangeFriendPage.cs" />
@@ -128,6 +128,10 @@
     <Compile Include="Networking\TLSNetworking\Constants.cs" />
     <Compile Include="Networking\TLSNetworking\Receiver.cs" />
     <Compile Include="Networking\TLSNetworking\Sender.cs" />
+    <Compile Include="Profile\ProfileView.xaml.cs">
+      <DependentUpon>ProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Profile\ProfileViewModel.cs" />
     <Compile Include="Settings\BlankSetting\BlankSettingView.xaml.cs">
       <DependentUpon>BlankSettingView.xaml</DependentUpon>
     </Compile>
@@ -180,6 +184,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MartUI_Resources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Profile\ProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
