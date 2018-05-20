@@ -71,6 +71,7 @@
     <Compile Include="Core\Domain\Login.cs" />
     <Compile Include="Core\ServerCommunication\AddFriend.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IAddFriend.cs" />
+    <Compile Include="Core\ServerCommunication\Interfaces\IGetAllMsgs.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IGetFriends.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IGetMyProfile.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\ILoginRequest.cs" />

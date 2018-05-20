@@ -22,16 +22,7 @@ namespace ProfileConsole.Core.ServerCommunication
             { 
                 using (var db = new ProfileContext())
                 {
-                    var profile =
-                        from p in db.UserInformation
-                        where p.UserName == Username
-                        select p;
-
-                    foreach (var p in profile)
-                    {
-                        p.Status = "Offline";
-                    }
-                    
+                    person.Status = "Offline";
                     unitOfWork.Complete();
                 }
             }
