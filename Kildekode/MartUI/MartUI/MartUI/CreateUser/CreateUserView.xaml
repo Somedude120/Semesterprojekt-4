@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MartUI.CreateUser"
-             xmlns:me="clr-namespace:MartUI.Me"
+             xmlns:helpers="clr-namespace:MartUI.Helpers"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
 
@@ -107,7 +106,7 @@
                    Text="Tags"
                    FontSize="20"
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
-        <local:TokenizingControl x:Name="Tokenizer" Grid.Column="2"
+        <helpers:TokenizingControl x:Name="Tokenizer" Grid.Column="2"
                    Grid.Row="3"
                    Margin="10"
                    MaxWidth="200" MinWidth="200" MinHeight="26"
@@ -119,7 +118,7 @@
                     <Run />
                 </Paragraph>
             </FlowDocument>-->
-        </local:TokenizingControl>
+        </helpers:TokenizingControl>
         <TextBlock Grid.Column="1"
                    Grid.Row="4"
                    Text="Picture"
@@ -133,7 +132,7 @@
         <Image Grid.Column="2"
                Grid.Row="4"
                Source="{Binding UserData.Image}"
-               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" 
                MaxWidth="200" MaxHeight="200" Stretch="Uniform"/>
         <Button Grid.Column="1"
                 Grid.Row="5"
@@ -155,3 +154,4 @@
                    Text="* Required"/>
     </Grid>
 </UserControl>
+
