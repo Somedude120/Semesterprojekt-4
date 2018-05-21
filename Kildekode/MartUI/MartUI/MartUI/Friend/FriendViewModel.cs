@@ -27,6 +27,7 @@ namespace MartUI.Friend
         private ICommand _chooseFriendCommand;
         private ICommand _addFriendCommand;
         private ICommand _removeFriendCommand;
+        private ICommand _showNotificationsCommand;
         private string _username;
         private MyData _userData;
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
@@ -149,6 +150,10 @@ namespace MartUI.Friend
             //Skal kommunikere med database/server
         }
 
+        public ICommand ShowNotificationsCommand => _showNotificationsCommand ??
+                                                    (_showNotificationsCommand = new DelegateCommand(
+                                                        _eventAggregator.GetEvent<ChangeFocusPage>()
+                                                            .Publish(new FriendNotificationViewModel())));
         public ICommand AddFriendCommand => _addFriendCommand ?? (_addFriendCommand = new DelegateCommand(AddFriend));
         public ICommand RemoveFriendCommand => _removeFriendCommand ?? (_removeFriendCommand = new DelegateCommand<FriendModel>(RemoveFriend));
     }

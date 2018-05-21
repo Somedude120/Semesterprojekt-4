@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using MartUI.Events;
 using MartUI.Friend;
-using MartUI.Helpers;
 using MartUI.Main;
 using MartUI.Me;
 using MartUI.Settings.BlankSetting;
@@ -29,6 +28,7 @@ namespace MartUI.Profile
             UserData.Username = "Bent";
         }
         public ICommand Return => _return ?? (_return = new DelegateCommand(ShowFriends));
+
 
     //    Tokenizer.TokenMatcher = text =>
     //{

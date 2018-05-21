@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MartUI.Friend"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="200"
              Background="#2f3136">
@@ -46,20 +45,29 @@
             <Rectangle Style="{StaticResource GradientColorRectangle}"/>
         </Grid>
         <Grid Row="2">
-            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,6,0" Background="White" BorderBrush="Transparent"  Height="16" 
-                    Name="AddFriendButton" Style="{StaticResource NoButtonHighlight}" Click="AddFriendButton_OnClick">
-                <Button.OpacityMask>
-                    <VisualBrush Visual="{iconPacks:Modern UserAdd}" />
-                </Button.OpacityMask>
-            </Button>
-            <TextBox Width="170" HorizontalAlignment="Left" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" x:Name="AddFriendTextBox" Visibility="Hidden"
+            <StackPanel Orientation="Horizontal">
+                <Button Width="16" HorizontalAlignment="Left" Margin="6,0,0,0" Background="White" BorderBrush="Transparent"  Height="16" 
+                    Name="NotificationButton" Style="{StaticResource NoButtonHighlight}" >
+                    <Button.OpacityMask>
+                        <VisualBrush Visual="{iconPacks:Modern Notification}" />
+                    </Button.OpacityMask>
+                </Button>
+                <TextBox Width="144" HorizontalAlignment="Left" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" x:Name="AddFriendTextBox" Visibility="Hidden"
                      MouseDoubleClick="SelectAddress"
                      GotKeyboardFocus="SelectAddress"
-                     PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton">
-                <TextBox.InputBindings>
-                    <KeyBinding Command="{Binding AddFriendCommand}" Key="Return"/>
-                </TextBox.InputBindings>
-            </TextBox>
+                     PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
+                     Margin="5,0,5,0">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding AddFriendCommand}" Key="Return"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Button Width="16" HorizontalAlignment="Right" Margin="0,0,6,0" Background="White" BorderBrush="Transparent"  Height="16" 
+                    Name="AddFriendButton" Style="{StaticResource NoButtonHighlight}" Click="AddFriendButton_OnClick">
+                    <Button.OpacityMask>
+                        <VisualBrush Visual="{iconPacks:Modern UserAdd}" />
+                    </Button.OpacityMask>
+                </Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>
