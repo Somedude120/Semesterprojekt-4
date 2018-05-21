@@ -152,7 +152,7 @@ namespace MartUI.Friend
         }
 
         public ICommand ShowNotificationsCommand => _showNotificationsCommand ??
-                                                    (_showNotificationsCommand = new DelegateCommand(
+                                                    (_showNotificationsCommand = new DelegateCommand( () =>
                                                         _eventAggregator.GetEvent<ChangeFocusPage>()
                                                             .Publish(new FriendNotificationViewModel())));
         public ICommand AddFriendCommand => _addFriendCommand ?? (_addFriendCommand = new DelegateCommand(AddFriend));
