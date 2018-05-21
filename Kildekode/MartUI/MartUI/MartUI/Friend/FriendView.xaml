@@ -47,7 +47,8 @@
         <Grid Row="2">
             <StackPanel Orientation="Horizontal">
                 <Button Width="16" HorizontalAlignment="Left" Margin="6,0,0,0" Background="White" BorderBrush="Transparent"  Height="16" 
-                    Name="NotificationButton" Style="{StaticResource NoButtonHighlight}" >
+                    Name="NotificationButton" Style="{StaticResource NoButtonHighlight}" 
+                    Command="{Binding ShowNotificationsCommand}">
                     <Button.OpacityMask>
                         <VisualBrush Visual="{iconPacks:Modern Notification}" />
                     </Button.OpacityMask>
