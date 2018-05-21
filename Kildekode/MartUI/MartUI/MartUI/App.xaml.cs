@@ -23,9 +23,9 @@ namespace MartUI
         {
             base.OnStartup(e);
 
-            SslTcpClient client = new SslTcpClient();
-            Thread clientThread = new Thread(client.ReceiveMessages);
-            clientThread.Start();
+            //SslTcpClient client = new SslTcpClient();
+            //Thread clientThread = new Thread(client.ReceiveMessages);
+            //clientThread.Start();
 
             var bs = new Bootstrapper();
 
