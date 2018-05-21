@@ -81,8 +81,9 @@ namespace MartUI.Chat
             message.Message = TextToSend;
             message.MessagePosition = "Right";
             message.Receiver = User.Username;
+            var msg = Constants.Write + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
             _eventAggregator.GetEvent<NewMessageEvent>().Publish(message);
-            Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message); });
+            Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
             TextToSend = "";
         }
 
