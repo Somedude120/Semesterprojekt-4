@@ -9,6 +9,10 @@ namespace ProfileConsole.Core.Domain
     [Table("Chat")]
     public partial class Chat
     {
+        public Chat()
+        {
+        }
+
         public Chat(int groupId, int messageNumber, string message, string sender)
         {
             GroupId = groupId;
