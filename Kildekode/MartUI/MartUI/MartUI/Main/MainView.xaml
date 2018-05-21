@@ -105,7 +105,7 @@
            <ContentControl Content ="{Binding SideBarView}" />
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="1" Width="Auto">
+        <Grid Grid.Column="1" Grid.Row="1" Width="Auto" >
             <ContentControl Content ="{Binding FriendListView}" />
         </Grid>
 

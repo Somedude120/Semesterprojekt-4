@@ -19,6 +19,7 @@ using Examples.System.Net;
 using MartUI.Chat;
 using MartUI.Profile;
 using MartUI.Settings;
+using MartUI.Settings.BlankSetting;
 
 namespace MartUI.Main
 {
