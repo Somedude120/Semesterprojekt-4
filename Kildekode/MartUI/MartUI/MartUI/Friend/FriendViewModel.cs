@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using MartUI.Chat;
@@ -216,5 +218,44 @@ namespace MartUI.Friend
 
         public static readonly DependencyProperty DataProperty =
             DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
+    }
+
+    public class Converter : IValueConverter
+    {
+        //public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        //{
+        //    var text1 = values[0].ToString();
+        //    var text2 = values[1].ToString();
+
+        //    if (text1 == text2)
+        //        return Visibility.Hidden;
+        //    else
+        //        return Visibility.Visible;
+        //}
+
+        //public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
