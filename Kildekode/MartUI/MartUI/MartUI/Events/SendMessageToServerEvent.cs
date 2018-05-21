@@ -8,7 +8,7 @@ using Prism.Events;
 
 namespace MartUI.Events
 {
-    public class SendMessageToServerEvent : PubSubEvent<ChatModel>
+    public class SendMessageToServerEvent : PubSubEvent<string>
     {
 
     }
