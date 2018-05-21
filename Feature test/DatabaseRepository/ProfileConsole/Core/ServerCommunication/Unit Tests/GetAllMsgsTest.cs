@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using ProfileConsole.Core.Domain;
 using ProfileConsole.Core.ServerCommunication.Interfaces;
 using ProfileConsole.Persistence;
@@ -13,10 +14,7 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
         private int MessageNumber2 = 2;
         private int MessageNumber3 = 3;
         private int MessageNumber4 = 4;
-        private string Message1 = "Hello World";
-        private string Message2 = "Hello Marten";
-        private string Message3 = "Hello Fred";
-        private string Message4 = "Hello Søren Bach";
+        private List<Chat> Messages;
         private string Sender = "AlexD";
 
         IGetAllMsgs _uut;
@@ -25,7 +23,7 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
         public void Setup()
         {
             _uut = new GetAllMsgs();
-            
+            Messages = new List<Chat>() { };
         }
 
         [Test]
@@ -35,7 +33,7 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
             {
                 var messages = unitOfWork.ChatGroup.GetChatWithChatGroups("Marto");
                 Assert.That(messages.GroupId, Is.EqualTo(1));
-                Assert.That(messages.Chat.Count, Is.EqualTo(10));
+                Assert.That(messages.Chat.Count, Is.EqualTo(4));
             }
         }
     }
