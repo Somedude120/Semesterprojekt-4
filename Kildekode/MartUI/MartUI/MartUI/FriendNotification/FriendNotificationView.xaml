@@ -21,21 +21,14 @@
         
         <Grid Row="0" Column="0">
             <Button
-<<<<<<< HEAD
                 Content="Accept All" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-=======
-                Content="Accept All"
-                Command="{Binding DataContext.AcceptAll, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
->>>>>>> 74c20970a9ab9fc7c625fe8f25543d1978460c53
-                CommandParameter="{Binding}"
+                Command="{Binding DataContext.AcceptAllFriendRequestsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                 Margin="5,0,0,0" Width="140" HorizontalAlignment="Left"
                 Style="{StaticResource RoundCornerButton}">
             </Button>
             <Button
                     Content="Decline All" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                    CommandParameter="{Binding}"
+                    Command="{Binding DataContext.DeclineAllFriendRequestsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                     Margin="0,0,5,0" Width="140" HorizontalAlignment="Right"
                     Style="{StaticResource RoundCornerButton}">
             </Button>
@@ -43,8 +36,7 @@
         <Grid Row="0" Column="2">
             <Button
                 Content="Remove Notications" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                CommandParameter="{Binding}"
+                Command="{Binding DataContext.CloseAllNotificationsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                 Margin="0,0,5,0" Width="190" HorizontalAlignment="Right" 
                 Style="{StaticResource RoundCornerButton}">
             </Button>
@@ -59,8 +51,10 @@
                                 <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
                                     <TextBlock Text="{Binding UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" 
                                                TextWrapping="Wrap" Margin="5,2,5,2" FontSize="16" DockPanel.Dock="Left" Foreground="White"/>
-                                    <Button Content="Block" Style="{StaticResource RoundCornerButton}" FontSize="10" Height="16" DockPanel.Dock="Right"/>
-                                    <Button Content="Decline" Style="{StaticResource RoundCornerButton}" FontSize="10" Height="16" DockPanel.Dock="Right"/>
+                                    <Button Content="Block" Style="{StaticResource RoundCornerButton}" FontSize="10" Height="16" DockPanel.Dock="Right"
+                                            Command="{Binding DataContext.BlockFriendRequestCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"/>
+                                    <Button Content="Decline" Style="{StaticResource RoundCornerButton}" FontSize="10" Height="16" DockPanel.Dock="Right"
+                                            Command="{Binding DataContext.DeclineFriendRequestCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"/>
                                     <Button Content="Accept" Style="{StaticResource RoundCornerButton}" FontSize="10" Height="16" DockPanel.Dock="Right" 
                                             Command="{Binding DataContext.AcceptFriendRequestCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"/>
                                 </DockPanel>
@@ -91,7 +85,8 @@
                                     <TextBlock Text="{Binding UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" 
                                                TextWrapping="Wrap" Margin="5,2,5,2" FontSize="16" DockPanel.Dock="Left" Foreground="White"/>
                                     <Button Style="{StaticResource NoButtonHighlight}" Background="White" DockPanel.Dock="Right" 
-                                            Width="12" Height="12" Margin="0,0,10,0">
+                                            Width="12" Height="12" Margin="0,0,10,0"
+                                            Command="{Binding DataContext.CloseNotificationCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}">
                                         <Button.OpacityMask>
                                             <VisualBrush Visual="{iconPacks:Material Close}"/>
                                         </Button.OpacityMask>

@@ -66,6 +66,7 @@ namespace MartUI.Friend
             _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Subscribe(HandleNewMessage);
             _eventAggregator.GetEvent<NewMessageEvent>().Subscribe(HandleNewMessage);
             _eventAggregator.GetEvent<NotificationReceivedChangeColor>().Subscribe(() => NotificationReceived = true);
+            _eventAggregator.GetEvent<AcceptedFriendRequestEvent>().Subscribe(AcceptedFriendRequest);
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
@@ -145,6 +146,7 @@ namespace MartUI.Friend
                 {
                     MessageBox.Show("This user is already on your friendlist");
                     friendInList = true;
+                    break;
                 }
             }
 
@@ -155,6 +157,24 @@ namespace MartUI.Friend
 
             Username = ""; //Clears the AddFriendTextbox after pressing enter
             //Skal kommunikere med database/server
+        }
+
+        public void AcceptedFriendRequest(string username)
+        {
+            bool friendInList = false;
+            foreach (var f in FriendList)
+            {
+                if (f.Username == username)
+                {
+                    MessageBox.Show("This user is already on your friendlist");
+                    friendInList = true;
+                    break;
+                }
+            }
+            if (!friendInList)
+            {
+                Application.Current.Dispatcher.Invoke(() => { FriendList.Add(new FriendModel { Username = username }); });
+            }
         }
 
         public void RemoveFriend(FriendModel friend)

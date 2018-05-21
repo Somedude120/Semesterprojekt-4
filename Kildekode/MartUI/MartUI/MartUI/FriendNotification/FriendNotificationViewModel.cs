@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-<<<<<<< HEAD
 using System.Windows;
 using System.Windows.Input;
 using MartUI.Events;
@@ -12,12 +11,7 @@ using MartUI.Main;
 using MartUI.Me;
 using Prism.Commands;
 using Prism.Events;
-=======
-using System.Windows.Input;
-using MartUI.Events;
-using MartUI.Main;
-using Prism.Commands;
->>>>>>> 74c20970a9ab9fc7c625fe8f25543d1978460c53
+
 using Prism.Mvvm;
 
 namespace MartUI.FriendNotification
@@ -28,7 +22,6 @@ namespace MartUI.FriendNotification
         private MyData _userData;
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
         public string ReferenceName => "FriendNotification";
-<<<<<<< HEAD
         private ObservableCollection<string> _friendRequests;
         private ObservableCollection<string> _friendNotifications;
         private ICommand _acceptFriendRequestCommand;
@@ -47,11 +40,7 @@ namespace MartUI.FriendNotification
                     _friendRequests = new ObservableCollection<string>();
                 return _friendRequests;
             }
-            set
-            {
-                _friendRequests = value; 
-                RaisePropertyChanged();
-            }
+            set { _friendRequests = value; }
         }
 
         public ObservableCollection<string> FriendNotifications
@@ -66,15 +55,16 @@ namespace MartUI.FriendNotification
         }
 
         public ICommand AcceptFriendRequestCommand => _acceptFriendRequestCommand ?? (_acceptFriendRequestCommand = new DelegateCommand<string>(AcceptFriendRequest));
-        //public ICommand DeclineFriendRequestCommand => _declineFriendRequestCommand ?? (_declineFriendRequestCommand = new DelegateCommand(DeclineFriendRequest));
-        //public ICommand BlockFriendRequestCommand => _blockFriendRequestCommand ?? (_blockFriendRequestCommand = new DelegateCommand(BlockFriendRequest));
-        //public ICommand AcceptAllFriendRequestsCommand => _acceptAllFriendRequestsCommand ?? (_acceptAllFriendRequestsCommand = new DelegateCommand(AcceptFriendAllFriendRequest));
-        //public ICommand DeclineAllFriendRequestsCommand => _declineAllFriendRequestsCommand ?? (_declineAllFriendRequestsCommand = new DelegateCommand(DeclineAllFriendRequests));
-        //public ICommand CloseNotificationsCommand => _closeNotificationCommand ?? (_closeNotificationCommand = new DelegateCommand(CloseNotification));
-        //public ICommand CloseAllNotificationsCommand => _closeAllNotificationsCommand ?? (_closeAllNotificationsCommand = new DelegateCommand(CloseAllNotifications));
+        public ICommand DeclineFriendRequestCommand => _declineFriendRequestCommand ?? (_declineFriendRequestCommand = new DelegateCommand<string>(DeclineFriendRequest));
+        public ICommand BlockFriendRequestCommand => _blockFriendRequestCommand ?? (_blockFriendRequestCommand = new DelegateCommand<string>(BlockFriendRequest));
+        public ICommand AcceptAllFriendRequestsCommand => _acceptAllFriendRequestsCommand ?? (_acceptAllFriendRequestsCommand = new DelegateCommand(AcceptAllFriendRequests));
+        public ICommand DeclineAllFriendRequestsCommand => _declineAllFriendRequestsCommand ?? (_declineAllFriendRequestsCommand = new DelegateCommand(DeclineAllFriendRequests));
+        public ICommand CloseNotificationCommand => _closeNotificationCommand ?? (_closeNotificationCommand = new DelegateCommand<string>(CloseNotification));
+        public ICommand CloseAllNotificationsCommand => _closeAllNotificationsCommand ?? (_closeAllNotificationsCommand = new DelegateCommand(CloseAllNotifications));
 
         public FriendNotificationViewModel()
         {
+            _eventAggregator = GetEventAggregator.Get();
             FriendNotifications.Add("Hejsa");
             FriendNotifications.Add("Hejsa");
             FriendRequests.Add("Hej");
@@ -85,16 +75,60 @@ namespace MartUI.FriendNotification
         {
             FriendRequests.Remove(username);
             var msg = Constants.AcceptFriendRequest + Constants.MiddleDelimiter + username;
-            //Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
-=======
+            Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
+            _eventAggregator.GetEvent<AcceptedFriendRequestEvent>().Publish(username);
+        }
 
-        public ICommand AcceptAll { get; set; }
-
-        public FriendNotificationViewModel()
+        private void DeclineFriendRequest(string username)
         {
-            AcceptAll = new DelegateCommand(() =>
-                GetEventAggregator.Get().GetEvent<NotificationReceivedEvent>().Publish());
->>>>>>> 74c20970a9ab9fc7c625fe8f25543d1978460c53
+            FriendRequests.Remove(username);
+            var msg = Constants.DeclineFriendRequest + Constants.MiddleDelimiter + username;
+            Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
+        }
+
+        private void BlockFriendRequest(string username)
+        {
+            FriendRequests.Remove(username);
+            var msg = Constants.BlockFriendRequest + Constants.MiddleDelimiter + username;
+            Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
+        }
+
+        private void AcceptAllFriendRequests()
+        {
+            foreach (var username in FriendRequests)
+            {
+                var msg = Constants.AcceptFriendRequest + Constants.MiddleDelimiter + username;
+                Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
+            }
+
+            FriendRequests.Clear();
+        }
+
+        private void DeclineAllFriendRequests()
+        {
+            foreach (var username in FriendRequests)
+            {
+                var msg = Constants.DeclineFriendRequest + Constants.MiddleDelimiter + username;
+                Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
+            }
+            FriendRequests.Clear();
+        }
+
+        private void CloseNotification(string notification)
+        {
+            FriendNotifications.Remove(notification);
+            var msg = Constants.RemoveNotification + Constants.MiddleDelimiter + notification;
+            Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
+        }
+
+        private void CloseAllNotifications()
+        {
+            foreach (var notification in FriendRequests)
+            {
+                var msg = Constants.RemoveNotification + Constants.MiddleDelimiter + notification;
+                Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
+            }
+            FriendNotifications.Clear();
         }
     }
 }
