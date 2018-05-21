@@ -34,7 +34,7 @@ namespace ProfileConsole.Core.ServerCommunication
                         foreach (var pers in profile)
                         {
                             foreach (var friend in pers.FriendList)
-                            {
+                            {   
                                 if (Username == friend.User1)
                                 tempFriendList.Add(friend.User2);
                                 
