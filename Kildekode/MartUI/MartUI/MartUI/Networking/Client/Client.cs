@@ -176,21 +176,16 @@ namespace Examples.System.Net
         //}
         public void Login(string userName)
         {
-<<<<<<< HEAD
             //string myString = "W" + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
 
-            sender.SendString(sslStream,userName);
-=======
+            //sender.SendString(sslStream,userName);
             sender.SendString(sslStream, userName);
->>>>>>> 101bab469ddce6733aa52199fad4313a683b5e4a
         }
         public void SendMessage(string tempHans)
         {
             sender.SendString(sslStream,tempHans);
         }
-<<<<<<< HEAD
 
-=======
         public void SendFriendRequest(string fRequest)
         {
             sender.SendString(sslStream, fRequest);
@@ -199,7 +194,6 @@ namespace Examples.System.Net
         {
             sender.SendString(sslStream, rFriend);
         }
->>>>>>> 101bab469ddce6733aa52199fad4313a683b5e4a
         //public void ReceiveMessage(string guiMessage)
         //{
         //    ChatModel message;
@@ -217,10 +211,6 @@ namespace Examples.System.Net
         //            _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
         //        });
         //    }
-<<<<<<< HEAD
-=======
-
->>>>>>> 101bab469ddce6733aa52199fad4313a683b5e4a
         //}
 
         //public static void Login(MyData UserData)
@@ -257,8 +247,7 @@ namespace Examples.System.Net
                         _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
                     });
                 }
-<<<<<<< HEAD
-=======
+
                 //Receive friendrequest
                 if (tempStringList[0] == "A")
                 {
@@ -283,7 +272,6 @@ namespace Examples.System.Net
                         _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
                     });
                 }
->>>>>>> 101bab469ddce6733aa52199fad4313a683b5e4a
             }
         }
 
