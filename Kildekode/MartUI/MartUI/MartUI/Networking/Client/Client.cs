@@ -139,10 +139,10 @@ namespace Examples.System.Net
             //ChatModel Message = new ChatModel();
             switch (message[0])
             {
-                case 'R':
-                    //Read message
-                    ReceiveMessage(message);
-                    break;
+                //case 'R':
+                //    //Read message
+                //    ReceiveMessage(message);
+                //    break;
                 case 'W':
                     //Write message
                     SendMessage(message);
@@ -153,44 +153,65 @@ namespace Examples.System.Net
                     break;
                 case 'A':
                     //To a friend request message (In receive)
+                    SendFriendRequest(message);
                     break;
+                case 'D':
+                    SendRemoveFriend(message);
+                    break;
+                        
                 default:
                     Console.WriteLine($"Debugging: {message[0]} : {message}");
                     break;
-
             }
 
         }
 
+        //public void Login(string userName)
+        //{
+
+        //    string myString = "W" + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
+        //    sender.SendString(sslStream, myString);
+
+        //    sender.SendString(sslStream,userName);
+        //}
         public void Login(string userName)
         {
-            sender.SendString(sslStream,userName);
-        }
+            //string myString = "W" + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
 
+            //sender.SendString(sslStream,userName);
+            sender.SendString(sslStream, userName);
+        }
         public void SendMessage(string tempHans)
         {
             sender.SendString(sslStream,tempHans);
         }
 
-        public void ReceiveMessage(string guiMessage)
+        public void SendFriendRequest(string fRequest)
         {
-            ChatModel message;
-            while (true)
-            {
-                guiMessage = receiver.ReceiveString(sslStream);
-                //It should split with middle delimiters
-                string[] tempStringList = guiMessage.Split(';');
-                message = new ChatModel();
-                message.Sender = tempStringList[2];
-                message.Sender = tempStringList[1];
-                message.Receiver = UserData.Username;
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
-                });
-            }
-
+            sender.SendString(sslStream, fRequest);
         }
+        public void SendRemoveFriend(string rFriend)
+        {
+            sender.SendString(sslStream, rFriend);
+        }
+        //public void ReceiveMessage(string guiMessage)
+        //{
+        //    ChatModel message;
+        //    while (true)
+        //    {
+        //        guiMessage = receiver.ReceiveString(sslStream);
+        //        //It should split with middle delimiters
+        //        string[] tempStringList = guiMessage.Split(';');
+        //        message = new ChatModel();
+        //        message.Sender = tempStringList[2];
+        //        message.Sender = tempStringList[1];
+        //        message.Receiver = UserData.Username;
+        //        Application.Current.Dispatcher.Invoke(() =>
+        //        {
+        //            _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+        //        });
+        //    }
+        //}
 
         //public static void Login(MyData UserData)
         //{
@@ -208,26 +229,51 @@ namespace Examples.System.Net
 
 
 
-        //public void ReceiveMessages()
-        //{
-        //    ChatModel message;
-        //    while (true)
-        //    {
-        //        string tempString = receiver.ReceiveString(sslStream);
-        //        string[] tempStringList = tempString.Split(';');
-        //        if (tempStringList[0] == "R")
-        //        {
-        //            message = new ChatModel();
-        //            message.Message = tempStringList[2];
-        //            message.Sender = tempStringList[1];
-        //            message.Receiver = UserData.Username;
-        //            Application.Current.Dispatcher.Invoke(() =>
-        //            {
-        //                _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
-        //            });
-        //        }
-        //    }
-        //}
+        public void ReceiveMessages()
+        {
+            ChatModel message;
+            while (true)
+            {
+                string tempString = receiver.ReceiveString(sslStream);
+                string[] tempStringList = tempString.Split(';');
+                if (tempStringList[0] == "R")
+                {
+                    message = new ChatModel();
+                    message.Message = tempStringList[2];
+                    message.Sender = tempStringList[1];
+                    message.Receiver = UserData.Username;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                    });
+                }
+
+                //Receive friendrequest
+                if (tempStringList[0] == "A")
+                {
+                    message = new ChatModel();
+                    message.Message = tempStringList[2];
+                    message.Sender = tempStringList[1];
+                    message.Receiver = UserData.Username;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                    });
+                }
+                //Delete/Remove friend
+                if (tempStringList[0] == "D")
+                {
+                    message = new ChatModel();
+                    message.Message = tempStringList[2];
+                    message.Sender = tempStringList[1];
+                    message.Receiver = UserData.Username;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                    });
+                }
+            }
+        }
 
         private static void DisplayUsage()
         {
