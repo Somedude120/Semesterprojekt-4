@@ -16,6 +16,7 @@
         xmlns:settings="clr-namespace:MartUI.Settings"
         xmlns:blankSetting="clr-namespace:MartUI.Settings.BlankSetting"
         xmlns:profile="clr-namespace:MartUI.Profile"
+        xmlns:friendnotification="clr-namespace:MartUI.FriendNotification"
         mvvm:ViewModelLocator.AutoWireViewModel="True"
 
         mc:Ignorable="d"
@@ -48,6 +49,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type profile:ProfileViewModel}">
             <profile:ProfileView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type friendnotification:FriendNotificationViewModel}">
+             <friendnotification:FriendNotificationView DataContext="{Binding}"/>
         </DataTemplate>
     </Window.Resources>
 

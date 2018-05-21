@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using MartUI.Chat;
 using MartUI.Events;
+using MartUI.FriendNotification;
 using MartUI.Main;
 using MartUI.Me;
 using Prism.Commands;
