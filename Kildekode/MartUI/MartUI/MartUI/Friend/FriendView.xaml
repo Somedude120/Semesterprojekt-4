@@ -52,21 +52,26 @@
                     <Button.OpacityMask>
                         <VisualBrush Visual="{iconPacks:Modern Notification}" />
                     </Button.OpacityMask>
+
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource NoButtonHighlight}">
                             <Setter Property="Background" Value="White" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding NotificationReceived}" Value="True">
-                                    <DataTrigger.EnterActions>
-                                        <BeginStoryboard>
-                                            <BeginStoryboard.Storyboard>
+                                    <DataTrigger.EnterActions >
+                                        <BeginStoryboard Name="NotificationBlink">
                                             <Storyboard AutoReverse="True" RepeatBehavior="Forever">
-                                                <ColorAnimation Duration="00:00:02"
-                                                                Storyboard.TargetProperty="Background"
-                                                                To="Red" />
+                                                <ColorAnimation Duration="00:00:00.5"
+                                                                Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                                                From="White"
+                                                                To="Green" />
                                             </Storyboard>
-                                            </BeginStoryboard.Storyboard>
                                         </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding NotificationReceived}" Value="False">
+                                    <DataTrigger.EnterActions>
+                                        <RemoveStoryboard BeginStoryboardName="NotificationBlink" />
                                     </DataTrigger.EnterActions>
                                 </DataTrigger>
                             </Style.Triggers>
