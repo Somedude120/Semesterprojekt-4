@@ -153,7 +153,12 @@ namespace Examples.System.Net
                     break;
                 case 'A':
                     //To a friend request message (In receive)
+                    SendFriendRequest(message);
                     break;
+                case 'D':
+                    SendRemoveFriend(message);
+                    break;
+                        
                 default:
                     Console.WriteLine($"Debugging: {message[0]} : {message}");
                     break;
@@ -161,18 +166,40 @@ namespace Examples.System.Net
 
         }
 
+        //public void Login(string userName)
+        //{
+
+        //    string myString = "W" + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
+        //    sender.SendString(sslStream, myString);
+
+        //    sender.SendString(sslStream,userName);
+        //}
         public void Login(string userName)
         {
+<<<<<<< HEAD
             //string myString = "W" + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
 
             sender.SendString(sslStream,userName);
+=======
+            sender.SendString(sslStream, userName);
+>>>>>>> 101bab469ddce6733aa52199fad4313a683b5e4a
         }
-
         public void SendMessage(string tempHans)
         {
             sender.SendString(sslStream,tempHans);
         }
+<<<<<<< HEAD
 
+=======
+        public void SendFriendRequest(string fRequest)
+        {
+            sender.SendString(sslStream, fRequest);
+        }
+        public void SendRemoveFriend(string rFriend)
+        {
+            sender.SendString(sslStream, rFriend);
+        }
+>>>>>>> 101bab469ddce6733aa52199fad4313a683b5e4a
         //public void ReceiveMessage(string guiMessage)
         //{
         //    ChatModel message;
@@ -190,6 +217,10 @@ namespace Examples.System.Net
         //            _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
         //        });
         //    }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 101bab469ddce6733aa52199fad4313a683b5e4a
         //}
 
         //public static void Login(MyData UserData)
@@ -226,6 +257,33 @@ namespace Examples.System.Net
                         _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
                     });
                 }
+<<<<<<< HEAD
+=======
+                //Receive friendrequest
+                if (tempStringList[0] == "A")
+                {
+                    message = new ChatModel();
+                    message.Message = tempStringList[2];
+                    message.Sender = tempStringList[1];
+                    message.Receiver = UserData.Username;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                    });
+                }
+                //Delete/Remove friend
+                if (tempStringList[0] == "D")
+                {
+                    message = new ChatModel();
+                    message.Message = tempStringList[2];
+                    message.Sender = tempStringList[1];
+                    message.Receiver = UserData.Username;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                    });
+                }
+>>>>>>> 101bab469ddce6733aa52199fad4313a683b5e4a
             }
         }
 
