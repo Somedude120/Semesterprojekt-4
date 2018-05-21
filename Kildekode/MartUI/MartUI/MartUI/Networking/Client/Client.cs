@@ -133,7 +133,7 @@ namespace Examples.System.Net
 
         public static void Login(MyData UserData)
         {
-            UserData.Username = "Daniel";
+            UserData.Username = "Fatima";
             //UserData.Username = UserName;
             string loginString = "L;" + UserData.Username;
             sender.SendString(sslStream, loginString);
