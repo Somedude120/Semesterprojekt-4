@@ -169,7 +169,12 @@ namespace Examples.System.Net
 
         public void Login(string userName)
         {
+<<<<<<< HEAD
+            string myString = "W" + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
+            sender.SendString(sslStream, myString);
+=======
             sender.SendString(sslStream,userName);
+>>>>>>> cb937b7e62b190125a45c94bb423eb299a3ff515
         }
 
         public void SendMessage(string tempHans)

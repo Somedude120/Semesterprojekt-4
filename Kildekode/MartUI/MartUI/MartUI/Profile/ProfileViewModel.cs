@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using MartUI.Events;
 using MartUI.Friend;
+using MartUI.Helpers;
 using MartUI.Main;
 using MartUI.Me;
 using MartUI.Settings.BlankSetting;
@@ -29,6 +30,16 @@ namespace MartUI.Profile
         }
         public ICommand Return => _return ?? (_return = new DelegateCommand(ShowFriends));
 
+    //    Tokenizer.TokenMatcher = text =>
+    //{
+    //    if (text.EndsWith(" "))
+    //    {
+    //        // Remove the ' '
+    //        return text.Substring(0, text.Length - 1).Trim().ToUpper();
+    //    }
+
+    //    return null;
+    //};
         public void ShowFriends()
         {
             _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
