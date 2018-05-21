@@ -141,7 +141,7 @@ namespace Examples.System.Net
 
         public static void SendMessage(ChatModel message)
         {
-            string myString = "W;" + message.Receiver + ";" + message.Message;
+            string myString = "W" + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
             sender.SendString(sslStream, myString);
         }
 
