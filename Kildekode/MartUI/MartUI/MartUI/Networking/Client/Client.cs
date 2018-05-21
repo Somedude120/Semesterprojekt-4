@@ -160,10 +160,9 @@ namespace Examples.System.Net
                 //Receive friendrequest
                 else if (tempStringList[0] == Constants.FriendRequestReceived)
                 {
-
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                        _eventAggregator.GetEvent<FriendRequestReceivedEvent>().Publish(tempStringList[1]);
                     });
                 }
                 //Delete/Remove friend
@@ -171,14 +170,14 @@ namespace Examples.System.Net
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                        _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Publish(tempStringList[1]);
                     });
                 }
                 else if (tempStringList[0] == Constants.NotificationReceived)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                        _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(tempStringList[1]);
                     });
                 }
             }

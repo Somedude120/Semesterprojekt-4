@@ -11,10 +11,6 @@ using MartUI.Main;
 using MartUI.Me;
 using Prism.Commands;
 using Prism.Events;
-<<<<<<< HEAD
-
-=======
->>>>>>> 60260d5a4f18d92e84759b3ee5e802244d746d5d
 using Prism.Mvvm;
 
 namespace MartUI.FriendNotification
@@ -43,11 +39,7 @@ namespace MartUI.FriendNotification
                     _friendRequests = new ObservableCollection<string>();
                 return _friendRequests;
             }
-<<<<<<< HEAD
             set { _friendRequests = value; }
-=======
-            set { SetProperty(ref _friendRequests, value); }
->>>>>>> 60260d5a4f18d92e84759b3ee5e802244d746d5d
         }
 
         public ObservableCollection<string> FriendNotifications
@@ -72,6 +64,8 @@ namespace MartUI.FriendNotification
         public FriendNotificationViewModel()
         {
             _eventAggregator = GetEventAggregator.Get();
+            _eventAggregator.GetEvent<NotificationReceivedEvent>().Subscribe(HandleNotificationReceived);
+            _eventAggregator.GetEvent<FriendRequestReceivedEvent>().Subscribe(HandleFriendRequestReceived);
             FriendNotifications.Add("Hejsa");
             FriendNotifications.Add("Hejsa");
             FriendRequests.Add("Hej");
@@ -82,7 +76,6 @@ namespace MartUI.FriendNotification
         {
             FriendRequests.Remove(username);
             var msg = Constants.AcceptFriendRequest + Constants.MiddleDelimiter + username;
-<<<<<<< HEAD
             Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
             _eventAggregator.GetEvent<AcceptedFriendRequestEvent>().Publish(username);
         }
@@ -138,16 +131,25 @@ namespace MartUI.FriendNotification
             }
             FriendNotifications.Clear();
         }
-=======
-            //Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
-        }
-        public ICommand AcceptAll { get; set; }
 
-        //public FriendNotificationViewModel()
-        //{
-        //    AcceptAll = new DelegateCommand(() =>
-        //        GetEventAggregator.Get().GetEvent<NotificationReceivedEvent>().Publish());
-        //}
->>>>>>> 60260d5a4f18d92e84759b3ee5e802244d746d5d
+        private void HandleNotificationReceived(string notification)
+        {
+            bool isNotInList = true;
+            foreach (var n in FriendNotifications)
+                if (n == notification)
+                    isNotInList = false;
+            if(isNotInList)
+                FriendNotifications.Add(notification);
+        }
+
+        private void HandleFriendRequestReceived(string username)
+        {
+            bool isNotInList = true;
+            foreach (var u in FriendRequests)
+                if (u == username)
+                    isNotInList = false;
+            if (isNotInList)
+                FriendRequests.Add(username);
+        }
     }
 }

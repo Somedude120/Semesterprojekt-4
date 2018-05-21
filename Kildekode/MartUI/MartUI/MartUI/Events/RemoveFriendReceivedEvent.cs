@@ -7,7 +7,8 @@ using Prism.Events;
 
 namespace MartUI.Events
 {
-    class NotificationReceivedEvent : PubSubEvent<string>
+    class RemoveFriendReceivedEvent : PubSubEvent<string>
     {
+
     }
 }

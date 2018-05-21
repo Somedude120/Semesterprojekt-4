@@ -69,6 +69,7 @@ namespace MartUI.Friend
             _eventAggregator.GetEvent<NewMessageEvent>().Subscribe(HandleNewMessage);
             _eventAggregator.GetEvent<NotificationReceivedChangeColor>().Subscribe(() => NotificationReceived = true);
             _eventAggregator.GetEvent<AcceptedFriendRequestEvent>().Subscribe(AcceptedFriendRequest);
+            _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Subscribe(HandleRemoveFriendReceived);
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
@@ -189,6 +190,27 @@ namespace MartUI.Friend
                 MessageBox.Show("This user is not on your friendlist!");
 
             //Skal kommunikere med database/server
+        }
+
+        public void HandleRemoveFriendReceived(string username)
+        {
+            var isInList = false;
+            var friend = new FriendModel();
+            foreach (var f in FriendList)
+            {
+                if (f.Username == username)
+                {
+                    isInList = true;
+                    friend = f;
+                }
+            }
+
+            if (isInList)
+            {
+                FriendList.Remove(friend);
+                var message = username + " has removed you from their friendlist!";
+                _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(message);
+            }
         }
 
         public ICommand ShowNotificationsCommand => _showNotificationsCommand ??

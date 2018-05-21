@@ -104,10 +104,12 @@
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
     <Compile Include="Events\AcceptedFriendRequestEvent.cs" />
+    <Compile Include="Events\FriendRequestReceivedEvent.cs" />
     <Compile Include="Events\NewMessageEvent.cs" />
     <Compile Include="Events\NotificationReceivedChangeColor.cs" />
     <Compile Include="Events\NotificationReceivedEvent.cs" />
     <Compile Include="Events\ReceiveMessageFromServerEvent.cs" />
+    <Compile Include="Events\RemoveFriendReceivedEvent.cs" />
     <Compile Include="Events\SendMessageToServerEvent.cs" />
     <Compile Include="FriendNotification\FriendNotificationView.xaml.cs">
       <DependentUpon>FriendNotificationView.xaml</DependentUpon>

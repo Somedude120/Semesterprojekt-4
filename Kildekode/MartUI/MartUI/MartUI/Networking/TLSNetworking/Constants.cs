@@ -12,7 +12,7 @@ public static class Constants
     public static string DeclineFriendRequest = "DFR"; // DFR + MiddleDelimiter + Username
     public static string BlockFriendRequest = "BFR"; // BFR + MiddleDelimiter + Username
     public static string RemoveNotification = "RN"; // RN + MiddleDelimiter + Notification
-    public static string RemoveFriendReceived = "RF";
-    public static string FriendRequestReceived = "FR";
-    public static string NotificationReceived = "NR";
+    public static string RemoveFriendReceived = "RF"; // RF + MiddleDelimiter + Username
+    public static string FriendRequestReceived = "FR"; // FR + MiddleDelimiter + Username
+    public static string NotificationReceived = "NR"; // NR + MiddleDelimiter + Notification
 }
