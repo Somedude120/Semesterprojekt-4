@@ -35,15 +35,18 @@ namespace Examples.System.Net
 
         public SslTcpClient()
         {
+            //Get certain event from GUI
             _eventAggregator = GetEventAggregator.Get();
-            _eventAggregator.GetEvent<SendMessageToServerEvent>().Subscribe(SendMessage);
+            //Server subscription
+            //Here the new event should be
+            //_eventAggregator.GetEvent<SendMessageToServerEvent>().Subscribe(SendMessage);
 
             string machineName = "192.168.137.1";
             string serverCertificateName = "Martin-MSI";
             SslTcpClient.RunClient(machineName, serverCertificateName);
 
             //From MyData
-            Login(UserData);
+            //Login(UserData);
             //UserData.Username = "Hans";
             //string loginString = "L;" + UserData.Username;
             //sender.SendString(sslStream, loginString);
@@ -131,40 +134,105 @@ namespace Examples.System.Net
             //Console.ReadLine();
         }
 
-        public static void Login(MyData UserData)
+        public void MessageHandler(string message)
         {
-            UserData.Username = "Daniel";
-            //UserData.Username = UserName;
-            string loginString = "L;" + UserData.Username;
-            sender.SendString(sslStream, loginString);
+            //ChatModel Message = new ChatModel();
+            switch (message[0])
+            {
+                case 'R':
+                    //Read message
+                    ReceiveMessage(message);
+                    break;
+                case 'W':
+                    //Write message
+                    SendMessage(message);
+                    break;
+                case 'L':
+                    //Login
+                    Login(message);
+                    break;
+                case 'A':
+                    //To a friend request message (In receive)
+                    break;
+                default:
+                    Console.WriteLine($"Debugging: {message[0]} : {message}");
+                    break;
+
+            }
+
         }
 
-        public static void SendMessage(ChatModel message)
+        public void Login(string userName)
         {
+<<<<<<< HEAD
             string myString = "W" + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
             sender.SendString(sslStream, myString);
+=======
+            sender.SendString(sslStream,userName);
+>>>>>>> cb937b7e62b190125a45c94bb423eb299a3ff515
         }
 
-        public void ReceiveMessages()
+        public void SendMessage(string tempHans)
+        {
+            sender.SendString(sslStream,tempHans);
+        }
+
+        public void ReceiveMessage(string guiMessage)
         {
             ChatModel message;
             while (true)
             {
-                string tempString = receiver.ReceiveString(sslStream);
-                string[] tempStringList = tempString.Split(';');
-                if (tempStringList[0] == "R")
+                guiMessage = receiver.ReceiveString(sslStream);
+                //It should split with middle delimiters
+                string[] tempStringList = guiMessage.Split(';');
+                message = new ChatModel();
+                message.Sender = tempStringList[2];
+                message.Sender = tempStringList[1];
+                message.Receiver = UserData.Username;
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    message = new ChatModel();
-                    message.Message = tempStringList[2];
-                    message.Sender = tempStringList[1];
-                    message.Receiver = UserData.Username;
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
-                    });
-                }
+                    _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                });
             }
+
         }
+
+        //public static void Login(MyData UserData)
+        //{
+        //    UserData.Username = "Daniel";
+        //    //UserData.Username = UserName;
+        //    string loginString = "L;" + UserData.Username;
+        //    sender.SendString(sslStream, loginString);
+        //}
+
+        //public static void SendMessage(ChatModel message)
+        //{
+        //    string myString = "W;" + message.Receiver + ";" + message.Message;
+        //    sender.SendString(sslStream, myString);
+        //}
+
+
+
+        //public void ReceiveMessages()
+        //{
+        //    ChatModel message;
+        //    while (true)
+        //    {
+        //        string tempString = receiver.ReceiveString(sslStream);
+        //        string[] tempStringList = tempString.Split(';');
+        //        if (tempStringList[0] == "R")
+        //        {
+        //            message = new ChatModel();
+        //            message.Message = tempStringList[2];
+        //            message.Sender = tempStringList[1];
+        //            message.Receiver = UserData.Username;
+        //            Application.Current.Dispatcher.Invoke(() =>
+        //            {
+        //                _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+        //            });
+        //        }
+        //    }
+        //}
 
         private static void DisplayUsage()
         {

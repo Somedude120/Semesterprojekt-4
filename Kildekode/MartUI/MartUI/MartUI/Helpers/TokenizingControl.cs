@@ -24,11 +24,11 @@ namespace MartUI.Helpers
             set => SetValue(TokenTemplateProperty, value);
         }
 
-        public ItemsControl Items
-        {
-            get => (ItemsControl)GetValue(TokenTemplateProperty);
-            set => SetValue(TokenTemplateProperty, value);
-        }
+        //public ItemsControl Items
+        //{
+        //    get => (ItemsControl)GetValue(TokenTemplateProperty);
+        //    set => SetValue(TokenTemplateProperty, value);
+        //}
 
         // Method "TokenMatcher" has input string and returns an object
         public Func<string, object> TokenMatcher { get; set; }
