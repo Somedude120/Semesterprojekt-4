@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+<<<<<<< HEAD
 using System.Windows;
 using System.Windows.Input;
 using MartUI.Events;
@@ -11,6 +12,12 @@ using MartUI.Main;
 using MartUI.Me;
 using Prism.Commands;
 using Prism.Events;
+=======
+using System.Windows.Input;
+using MartUI.Events;
+using MartUI.Main;
+using Prism.Commands;
+>>>>>>> 74c20970a9ab9fc7c625fe8f25543d1978460c53
 using Prism.Mvvm;
 
 namespace MartUI.FriendNotification
@@ -21,6 +28,7 @@ namespace MartUI.FriendNotification
         private MyData _userData;
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
         public string ReferenceName => "FriendNotification";
+<<<<<<< HEAD
         private ObservableCollection<string> _friendRequests;
         private ObservableCollection<string> _friendNotifications;
         private ICommand _acceptFriendRequestCommand;
@@ -78,6 +86,15 @@ namespace MartUI.FriendNotification
             FriendRequests.Remove(username);
             var msg = Constants.AcceptFriendRequest + Constants.MiddleDelimiter + username;
             //Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
+=======
+
+        public ICommand AcceptAll { get; set; }
+
+        public FriendNotificationViewModel()
+        {
+            AcceptAll = new DelegateCommand(() =>
+                GetEventAggregator.Get().GetEvent<NotificationReceivedEvent>().Publish());
+>>>>>>> 74c20970a9ab9fc7c625fe8f25543d1978460c53
         }
     }
 }

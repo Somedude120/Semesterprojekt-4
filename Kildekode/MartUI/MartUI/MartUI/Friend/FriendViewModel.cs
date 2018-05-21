@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -21,7 +22,7 @@ namespace MartUI.Friend
 {
     public class FriendViewModel : BindableBase, IViewModel
     {
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
         public string ReferenceName => "FriendViewModel"; // Returns "FriendViewModel"
         private ObservableCollection<FriendModel> _friendList;
         private FriendModel _selectedFriend;
@@ -33,7 +34,7 @@ namespace MartUI.Friend
         private MyData _userData;
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
 
-
+        private bool _notificionReceived;
         public string Username
         {
             get { return _username; }
@@ -44,16 +45,27 @@ namespace MartUI.Friend
             }
         }
 
+        public bool NotificationReceived
+        {
+            get => _notificionReceived;
+            set
+            {
+                SetProperty(ref _notificionReceived, value);
+
+            }
+        }
+
+        //public Brush Background => NotificationReceived ? Brushes.White : Brushes.Red;
         public ICommand ChooseFriendCommand => _chooseFriendCommand ?? (_chooseFriendCommand = new DelegateCommand<FriendModel>(SelectFriend));
 
         public FriendViewModel()
         {
-            _eventAggregator = GetEventAggregator.Get();
-
             Username = "Enter Username!";
 
+            NotificationReceived = true;
             _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Subscribe(HandleNewMessage);
             _eventAggregator.GetEvent<NewMessageEvent>().Subscribe(HandleNewMessage);
+            _eventAggregator.GetEvent<NotificationReceivedChangeColor>().Subscribe(() => NotificationReceived = true);
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
@@ -67,6 +79,12 @@ namespace MartUI.Friend
             //Skal bruge metode fra server/database til at få en liste af alle ens venner
             //Samt kun alle som er online 
         }
+
+        //private void ReceivedNotification()
+        //{
+
+        //}
+
 
         private void HandleNewMessage(ChatModel message)
         {
@@ -152,9 +170,13 @@ namespace MartUI.Friend
         }
 
         public ICommand ShowNotificationsCommand => _showNotificationsCommand ??
-                                                    (_showNotificationsCommand = new DelegateCommand( () =>
-                                                        _eventAggregator.GetEvent<ChangeFocusPage>()
-                                                            .Publish(new FriendNotificationViewModel())));
+                                                    (_showNotificationsCommand = new DelegateCommand(ChangeToNotifications));
+
+        public void ChangeToNotifications()
+        {
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new FriendNotificationViewModel());
+            NotificationReceived = false;
+        }
         public ICommand AddFriendCommand => _addFriendCommand ?? (_addFriendCommand = new DelegateCommand(AddFriend));
         public ICommand RemoveFriendCommand => _removeFriendCommand ?? (_removeFriendCommand = new DelegateCommand<FriendModel>(RemoveFriend));
     }

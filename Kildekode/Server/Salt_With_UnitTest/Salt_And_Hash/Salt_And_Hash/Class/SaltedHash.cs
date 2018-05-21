@@ -8,22 +8,43 @@ namespace AsyncServer.Class
         public string Hash { get; private set; }
         public string Salt { get; private set; }
 
-        public SaltedHash(string password)
+        //public SaltedHash(string password)
+        //{
+        //    var saltBytes = new byte[32];
+        //    //Denne her randomizer min saltbytes
+        //    using (var provider = new RNGCryptoServiceProvider())
+        //        provider.GetNonZeroBytes(saltBytes);
+        //    //Output Salt og Hash
+        //    Salt = Convert.ToBase64String(saltBytes);
+        //    Hash = ComputeHash(Salt, password);
+        //}
+
+        public SaltedHash()
         {
-            var saltBytes = new byte[32];
-            //Denne her randomizer min saltbytes
-            using (var provider = new RNGCryptoServiceProvider())
-                provider.GetNonZeroBytes(saltBytes);
-            //Output Salt og Hash
-            Salt = Convert.ToBase64String(saltBytes);
-            Hash = ComputeHash(Salt, password);
+
         }
 
-        static string ComputeHash(string salt, string password)
+        public string MakeSalt()
         {
-            var saltBytes = Convert.FromBase64String(salt);
-            using (var rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, saltBytes, 1000))
-                return Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(256));
+            var saltBytes = new byte[32];
+
+            using (var provider = new RNGCryptoServiceProvider())
+                provider.GetNonZeroBytes(saltBytes);
+            string salt = Convert.ToBase64String(saltBytes);
+
+                return salt;
+        }
+        
+
+        public string ComputeHash(string salt, string password)
+        {
+            //var saltBytes = Convert.FromBase64String(salt);
+            //using (var rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, saltBytes, 1000))
+            //    return Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(256));
+            string saltyHashPwd = salt + password;
+            saltyHashPwd = GetStringSha256Hash(saltyHashPwd);
+
+            return saltyHashPwd;
         }
 
         public bool Verify(string salt, string hash, string password)
@@ -48,17 +69,17 @@ namespace AsyncServer.Class
 
         //    return algorithm.ComputeHash(plainTextWithSaltBytes);
         //}
-        //internal static string GetStringSha256Hash(string text)
-        //{
-        //    if (String.IsNullOrEmpty(text))
-        //        return String.Empty;
+        public string GetStringSha256Hash(string text)
+        {
+            if (String.IsNullOrEmpty(text))
+                return String.Empty;
 
-        //    using (var sha = new System.Security.Cryptography.SHA256Managed())
-        //    {
-        //        byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
-        //        byte[] hash = sha.ComputeHash(textData);
-        //        return BitConverter.ToString(hash).Replace("-", String.Empty);
-        //    }
-        //}
+            using (var sha = new System.Security.Cryptography.SHA256Managed())
+            {
+                byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
+                byte[] hash = sha.ComputeHash(textData);
+                return BitConverter.ToString(hash).Replace("-", String.Empty);
+            }
+        }
     }
 }
