@@ -17,6 +17,7 @@ using Prism.Regions;
 using System.Reflection;
 using Examples.System.Net;
 using MartUI.Chat;
+using MartUI.FriendNotification;
 using MartUI.Profile;
 using MartUI.Settings;
 using MartUI.Settings.BlankSetting;
@@ -46,6 +47,7 @@ namespace MartUI.Main
             _eventAggregator.GetEvent<ChangeFocusPage>().Subscribe(ChangeFocusView);
             _eventAggregator.GetEvent<ChangeFriendPage>().Subscribe(ChangeFriendView);
             _eventAggregator.GetEvent<ChangeSideBarPage>().Subscribe(ChangeSideBarView);
+            _eventAggregator.GetEvent<NotificationReceivedEvent>().Subscribe(Notify);
 
             ViewList.Add(new LoginViewModel());
             ViewList.Add(new FriendViewModel());
@@ -54,6 +56,13 @@ namespace MartUI.Main
             FriendListView = ViewList[1];
             //FullView = ViewList[0];
             //FullView = ViewList[0];
+        }
+
+        private void Notify()
+        {
+            // Make sure not to notify if FocusView is FriendNotificationView
+            if (FocusView.GetType().Name != "FriendNotificationViewModel")
+                _eventAggregator.GetEvent<NotificationReceivedChangeColor>().Publish();
         }
 
 

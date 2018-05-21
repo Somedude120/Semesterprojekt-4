@@ -24,10 +24,11 @@ namespace MartUI.Chat
         private ICommand _sendMessageCommand;
         private string _textToSend;
         private FriendModel _user;
-        
 
         public string ReferenceName => "ChatView";
 
+         
+        public ICommand TestNotify { get; set; }
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
 
         public string TextToSend
@@ -59,6 +60,7 @@ namespace MartUI.Chat
         {
             User = new FriendModel();
 
+            TestNotify = new DelegateCommand(() => _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish());
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<SelectedFriendEvent>().Subscribe(HandleFriend);
             //_eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Subscribe(ReceiveMessage);

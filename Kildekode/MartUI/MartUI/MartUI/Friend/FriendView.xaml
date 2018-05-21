@@ -46,12 +46,32 @@
         </Grid>
         <Grid Row="2">
             <StackPanel Orientation="Horizontal">
-                <Button Width="16" HorizontalAlignment="Left" Margin="6,0,0,0" Background="White" BorderBrush="Transparent"  Height="16" 
-                    Name="NotificationButton" Style="{StaticResource NoButtonHighlight}" 
+                <Button Width="16" HorizontalAlignment="Left" Margin="6,0,0,0" BorderBrush="Transparent"  Height="16" 
+                    Name="NotificationButton" 
                     Command="{Binding ShowNotificationsCommand}">
                     <Button.OpacityMask>
                         <VisualBrush Visual="{iconPacks:Modern Notification}" />
                     </Button.OpacityMask>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource NoButtonHighlight}">
+                            <Setter Property="Background" Value="White" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding NotificationReceived}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <BeginStoryboard.Storyboard>
+                                            <Storyboard AutoReverse="True" RepeatBehavior="Forever">
+                                                <ColorAnimation Duration="00:00:02"
+                                                                Storyboard.TargetProperty="Background"
+                                                                To="Red" />
+                                            </Storyboard>
+                                            </BeginStoryboard.Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
                 <TextBox Width="144" HorizontalAlignment="Left" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" x:Name="AddFriendTextBox" Visibility="Hidden"
                      MouseDoubleClick="SelectAddress"

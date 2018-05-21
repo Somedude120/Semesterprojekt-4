@@ -20,7 +20,7 @@
         <Grid Row="0" Column="0">
             <Button
                 Content="Accept All"
-                Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                Command="{Binding DataContext.AcceptAll, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                 CommandParameter="{Binding}"
                 Margin="3,0,0,0" Width="140" Height="16" HorizontalAlignment="Left"
                 Style="{StaticResource RoundCornerButton}">
