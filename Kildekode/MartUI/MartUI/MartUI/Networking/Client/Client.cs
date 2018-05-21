@@ -38,7 +38,7 @@ namespace Examples.System.Net
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Subscribe(SendMessage);
 
-            string machineName = "192.168.101.1";
+            string machineName = "192.168.137.1";
             string serverCertificateName = "Martin-MSI";
             SslTcpClient.RunClient(machineName, serverCertificateName);
 
@@ -113,7 +113,7 @@ namespace Examples.System.Net
             }
             // Encode a test message into a byte array.
             // Signal the end of the message using the "<EOF>".
-            byte[] messsage;
+           // byte[] messsage;
             
             //Thread receiveThread = new Thread(o => ReceiveMessages((SslStream)o));
             //receiveThread.Start(sslStream);
@@ -133,7 +133,7 @@ namespace Examples.System.Net
 
         public static void Login(MyData UserData)
         {
-            //UserData.Username = "Hans";
+            UserData.Username = "Daniel";
             //UserData.Username = UserName;
             string loginString = "L;" + UserData.Username;
             sender.SendString(sslStream, loginString);
@@ -147,13 +147,14 @@ namespace Examples.System.Net
 
         public void ReceiveMessages()
         {
-            ChatModel message = new ChatModel();
+            ChatModel message;
             while (true)
             {
                 string tempString = receiver.ReceiveString(sslStream);
                 string[] tempStringList = tempString.Split(';');
                 if (tempStringList[0] == "R")
                 {
+                    message = new ChatModel();
                     message.Message = tempStringList[2];
                     message.Sender = tempStringList[1];
                     message.Receiver = UserData.Username;

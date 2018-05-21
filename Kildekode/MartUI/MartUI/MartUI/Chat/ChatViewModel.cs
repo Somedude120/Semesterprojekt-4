@@ -84,22 +84,6 @@ namespace MartUI.Chat
             TextToSend = "";
         }
 
-        //private void ReceiveMessage(ChatModel message)
-        //{
-        //    int i = 0, j = 0;
-        //    if (message.Sender == UserData.Username)
-        //    {
-        //        message.MessagePosition = "Right";
-        //        //message.Message += "  " + User.Username + "  Chat" + i;
-        //    }
-        //    else
-        //    {
-        //        message.MessagePosition = "Left";
-        //        //message.Message += "  " + User.Username + "  Chat" + j;
-        //    }
-        //    Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<NewMessageEvent>().Publish(message); });
-        //}
-
         public ICommand SendMessageCommand => _sendMessageCommand ?? (_sendMessageCommand = new DelegateCommand(SendMessage));
     }
 }

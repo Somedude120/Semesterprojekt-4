@@ -27,7 +27,6 @@ namespace MartUI.Friend
         private ICommand _chooseFriendCommand;
         private ICommand _addFriendCommand;
         private ICommand _removeFriendCommand;
-        //private ChatViewModel chatViewModel = new ChatViewModel();
         private string _username;
         private MyData _userData;
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
@@ -57,16 +56,10 @@ namespace MartUI.Friend
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
 
-            var marto = new FriendModel() {Username = "Marto"};
+            var marto = new FriendModel() { Username = "Marto" };
             var alexD = new FriendModel() { Username = "AlexD" };
             FriendList.Add(marto);
             FriendList.Add(alexD);
-
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    var friend = new FriendModel {Username = "Friend" + i};
-            //    FriendList.Add(friend);
-            //}
 
             //Tilføj eventuelt et eller andet som første plads i arrayet
             //Skal bruge metode fra server/database til at få en liste af alle ens venner
@@ -75,24 +68,18 @@ namespace MartUI.Friend
 
         private void HandleNewMessage(ChatModel message)
         {
-            int i = 0;
-            int j = 0;
             foreach (var friend in FriendList)
             {
                 if (message.Sender == UserData.Username && friend.Username == message.Receiver)
                 {
-                    //message.Message += "  " + friend.Username + "  Friend" + i;
                     message.MessagePosition = "Right";
                     friend.MessageList.Add(message);
-                    i++;
                     break;
                 }
                 else if (message.Sender == friend.Username && UserData.Username == message.Receiver)
                 {
-                    //message.Message += "  " + friend.Username + "  Friend" + j;
                     message.MessagePosition = "Left";
                     friend.MessageList.Add(message);
-                    j++;
                     break;
                 }
             }
@@ -109,7 +96,11 @@ namespace MartUI.Friend
                     _friendList = new ObservableCollection<FriendModel>();
                 return _friendList;
             }
-            set => SetProperty(ref _friendList, value);
+            set
+            {
+                _friendList = value;
+                RaisePropertyChanged();
+            }
         }
 
         public FriendModel SelectedFriend
@@ -120,6 +111,7 @@ namespace MartUI.Friend
 
         private void SelectFriend(FriendModel friend)
         {
+
             _eventAggregator.GetEvent<SelectedFriendEvent>().Publish(friend);
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(friend.Chat);
         }
