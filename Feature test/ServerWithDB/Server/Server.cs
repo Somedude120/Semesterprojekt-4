@@ -174,6 +174,9 @@ namespace Examples.System.Net
                 }
                 else
                 {
+                    //Get salt from DB, with Username
+                    //Calculate hashed password with pw and salt
+                    //Make LoginRequest
                     string response = LoginRequest.Login(input[1], "1234");
                     if (response == "OK")
                     {
