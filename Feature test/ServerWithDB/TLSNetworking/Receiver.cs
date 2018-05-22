@@ -40,7 +40,7 @@ namespace TLSNetworking
                 // Check for EOF or an empty message.
                 if (messageData.ToString().IndexOf(Constants.EndDelimiter) != -1)
                 {
-                    messageData.Remove(messageData.ToString().IndexOf(Constants.EndDelimiter), Constants.EndDelimiter.Length);
+                    messageData.Remove(messageData.ToString().IndexOf(Constants.EndDelimiter), 1);
                     break;
                 }
             } while (bytes != 0);
