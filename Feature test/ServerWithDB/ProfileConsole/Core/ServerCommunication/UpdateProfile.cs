@@ -23,6 +23,12 @@ namespace ProfileConsole.Core.ServerCommunication
 
             UserInformation person = null;
 
+            var tags = new List<Tags>();
+            foreach (var tag in Tagslist)
+            {
+                tags.Add(new Tags(){TagName = tag});
+            }
+
             try
             {
                 person = unitOfWork.UserInformation.GetString(Username);
@@ -35,7 +41,7 @@ namespace ProfileConsole.Core.ServerCommunication
             if (person.UserName == Username)
             {
                 person.Description = Description;
-                person.Tags = Tagslist;
+                person.Tags = tags;
                 unitOfWork.Complete();
             }
                         
