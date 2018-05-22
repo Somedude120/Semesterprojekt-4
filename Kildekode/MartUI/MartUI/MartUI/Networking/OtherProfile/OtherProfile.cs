@@ -1,23 +1,35 @@
 ﻿using System.Collections.Generic;
 using MartUI.Me;
 
-namespace ProfileConsole.Core.ServerCommunication
+namespace MartUI.Networking.OtherProfile
 {
     public class OtherProfile
     {
         //Objectification of OtherProfile, ready for serialization
-        public MyData _userData;
+        private MyData _userData = MyData.GetInstance();
+
         public OtherProfile()
         {
-
-            username = _userData.Username;
-            description = _userData.Description;
-            tags = _userData.Tags;
-            
+            Username = _userData.Username;
+            Description = _userData.Description;
+            Tags = _userData.Tags;
         }
-        public string username { get; set; }
-        public string description { get; set; }
-        public ICollection<string> tags { get; set; } 
+
+        public string Username { get; set; }
+        public string Description { get; set; }
+
+        private ICollection<string> _tags;
+        public ICollection<string> Tags
+        {
+            get => _tags ?? (_tags = new List<string>());
+            set
+            {
+                foreach (var tag in value)
+                {
+                    _tags.Add(tag);
+                }
+            }
+        } 
     }
     
 }
