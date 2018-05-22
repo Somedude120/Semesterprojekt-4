@@ -38,8 +38,14 @@
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource RoundCornerButton}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding MessageNotificationReceived}" Value="">
+                                            <DataTrigger Value="True">
+                                                <DataTrigger.Binding>
+                                                    <MultiBinding Converter=""></MultiBinding>
+                                                </DataTrigger.Binding>
+
+
                                                 <Setter Property="Background" Value="Pink"/>
+
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

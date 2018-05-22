@@ -58,7 +58,7 @@ namespace MartUI.Main
             //FullView = ViewList[0];
         }
 
-        private void Notify()
+        private void Notify(string str)
         {
             // Make sure not to notify if FocusView is FriendNotificationView
             if (FocusView.GetType().Name != "FriendNotificationViewModel")

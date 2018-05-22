@@ -135,11 +135,13 @@ namespace Examples.System.Net
             //Console.ReadLine();
         }
 
+        // Send messages to server
         public void SendMessage(string message)
         {
             sender.SendString(sslStream, message);
         }
 
+        // Receive messages from server - handle by publishing events to GUI
         public void ReceiveMessages()
         {
             while (true)
@@ -178,6 +180,20 @@ namespace Examples.System.Net
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(tempStringList[1]);
+                    });
+                }
+                else if (tempStringList[0] == Constants.LoginResponse)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<LoginResponseEvent>().Publish(tempStringList[1]);
+                    });
+                }
+                else if (tempStringList[0] == Constants.RequestCreateUser)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<CreateUserResponseEvent>().Publish(tempStringList[1]);
                     });
                 }
             }

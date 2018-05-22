@@ -54,14 +54,31 @@ namespace MartUI.Login
         public ICommand CreateUserCommand => _createUserCommand ?? (_createUserCommand = new DelegateCommand(() =>
                                                      _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel())));
         //Observes Username and Password to check LoginCanExecute, call LoginExecute
-        public ICommand LoginCommand => _loginCommand = new DelegateCommand(LoginExecute, LoginCanExecute)
-            .ObservesProperty(() => Username)
-            .ObservesProperty(() => Password);
-
+        public ICommand LoginCommand => _loginCommand ?? (_loginCommand
+                                            = new DelegateCommand(LoginExecute, LoginCanExecute)
+                                                .ObservesProperty(() => Username)
+                                                .ObservesProperty(() => Password));
         public LoginViewModel()
         {
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
+            _eventAggregator.GetEvent<LoginResponseEvent>().Subscribe(HandleLogin);
+        }
+
+        private void HandleLogin(string response)
+        {
+            switch (response)
+            {
+                case "OK":
+                    // Fullpage is null, show friendlist and initialize chatview
+                    _eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
+                    _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
+                    _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
+                    break;
+                case "NOK":
+                    MessageBox.Show("Wrong username or password!");
+                    break;
+            }
         }
 
         private bool LoginCanExecute()
@@ -72,18 +89,24 @@ namespace MartUI.Login
 
         private void LoginExecute()
         {
+            var msg = Constants.RequestLogin + Constants.MiddleDelimiter + UserData.Username + Constants.MiddleDelimiter + UserData.Password;
+
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
+
+
+
             // Validate name and password with server
             // Navigate to main window (friend list shows, etc).
 
-            if (DatabaseDummy.ValidateUser(Username, Password))
-            {
-                // Fullpage is null, show friendlist and initialize chatview
-                _eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
-                _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
-                _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
-            }
-            else
-                MessageBox.Show("Wrong username or password!");
+            //if (DatabaseDummy.ValidateUser(Username, Password))
+            //{
+            //    // Fullpage is null, show friendlist and initialize chatview
+            //    _eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
+            //    _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
+            //    _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
+            //}
+            //else
+            //    MessageBox.Show("Wrong username or password!");
         }
     }
 }
