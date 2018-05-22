@@ -126,6 +126,13 @@ namespace Examples.System.Net
             {
                 switch (input[0])
                 {
+                    case "S":
+                        if (input.Length == 3)
+                        {
+
+                            HandleSignup(input, sslStream);
+                        }
+                        break;
                     case "L":
                         if (input.Length == 3)
                         {
@@ -166,6 +173,27 @@ namespace Examples.System.Net
             }
         }
 
+        static void HandleSignup(string[] input, SslStream sslStream)
+        {
+            var saltHash = new SaltedHash();
+
+            string salt = saltHash.MakeSalt();
+            string hashedPW = saltHash.ComputeHash(salt, input[2]);
+
+            string result = SignUp.CreateProfile(input[1], salt, hashedPW);
+
+            if (result == "OK")
+            {
+                Console.WriteLine("User: " + input[1] + " created");
+                sender.SendString(sslStream, "OK");
+            }
+            else
+            {
+                Console.WriteLine("User not created");
+                sender.SendString(sslStream, "NOK");
+            }
+        }
+
         static void HandleLogin(string[] input, SslStream sslStream)
         {
             var saltHash = new SaltedHash();
@@ -175,6 +203,7 @@ namespace Examples.System.Net
             {
                 //username is in use
                 Console.WriteLine("Username: " + input[1] + " is already online");
+                sender.SendString(sslStream, "NOK");
             }
             else
             {
@@ -196,15 +225,18 @@ namespace Examples.System.Net
                         userStreams.Add(input[1], sslStream);
                         _mutex.ReleaseMutex();
                         Console.WriteLine("User logged in with username: " + input[1]);
+                        sender.SendString(sslStream, "OK");
                     }
                     else
                     {
                         Console.WriteLine("Username or password was wrong");
+                        sender.SendString(sslStream, "NOK");
                     }
                 }
                 else
                 {
                     Console.WriteLine("User: " + input[1] + " does not exist in database");
+                    sender.SendString(sslStream, "NOK");
                 }
             }
         }
