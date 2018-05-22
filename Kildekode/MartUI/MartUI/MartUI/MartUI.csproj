@@ -104,6 +104,7 @@
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
     <Compile Include="Events\AcceptedFriendRequestEvent.cs" />
+    <Compile Include="Events\FriendRequestDeclinedEvent.cs" />
     <Compile Include="Events\FriendRequestReceivedEvent.cs" />
     <Compile Include="Events\NewMessageEvent.cs" />
     <Compile Include="Events\NotificationReceivedChangeColor.cs" />

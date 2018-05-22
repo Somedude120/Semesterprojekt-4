@@ -66,6 +66,7 @@ namespace MartUI.FriendNotification
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<NotificationReceivedEvent>().Subscribe(HandleNotificationReceived);
             _eventAggregator.GetEvent<FriendRequestReceivedEvent>().Subscribe(HandleFriendRequestReceived);
+            _eventAggregator.GetEvent<FriendRequestDeclinedEvent>().Subscribe(HandeFriendRequestDeclined);
             FriendNotifications.Add("Hejsa");
             FriendNotifications.Add("Hejsa");
             FriendRequests.Add("Hej");
@@ -134,7 +135,7 @@ namespace MartUI.FriendNotification
 
         private void HandleNotificationReceived(string notification)
         {
-            bool isNotInList = true;
+            var isNotInList = true;
             foreach (var n in FriendNotifications)
                 if (n == notification)
                     isNotInList = false;
@@ -144,12 +145,18 @@ namespace MartUI.FriendNotification
 
         private void HandleFriendRequestReceived(string username)
         {
-            bool isNotInList = true;
+            var isNotInList = true;
             foreach (var u in FriendRequests)
                 if (u == username)
                     isNotInList = false;
             if (isNotInList)
                 FriendRequests.Add(username);
+        }
+
+        private void HandeFriendRequestDeclined(string username)
+        {
+            var message = username + " has declined your friendrequest";
+            FriendNotifications.Add(message);
         }
     }
 }

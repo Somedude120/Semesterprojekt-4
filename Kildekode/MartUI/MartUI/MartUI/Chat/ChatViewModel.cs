@@ -60,7 +60,7 @@ namespace MartUI.Chat
         {
             User = new FriendModel();
 
-            TestNotify = new DelegateCommand(() => _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish());
+            TestNotify = new DelegateCommand(() => _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(null));
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<SelectedFriendEvent>().Subscribe(HandleFriend);
             //_eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Subscribe(ReceiveMessage);

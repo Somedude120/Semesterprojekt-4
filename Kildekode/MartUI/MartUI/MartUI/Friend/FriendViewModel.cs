@@ -155,7 +155,8 @@ namespace MartUI.Friend
 
             if (!friendInList)
             {
-                Application.Current.Dispatcher.Invoke(() => { FriendList.Add(new FriendModel {Username = Username}); });
+                var message = Constants.SendFriendRequest + Constants.MiddleDelimiter + Username;
+                _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             }
 
             Username = ""; //Clears the AddFriendTextbox after pressing enter
@@ -164,7 +165,7 @@ namespace MartUI.Friend
 
         public void AcceptedFriendRequest(string username)
         {
-            bool friendInList = false;
+            var friendInList = false;
             foreach (var f in FriendList)
             {
                 if (f.Username == username)
@@ -185,6 +186,8 @@ namespace MartUI.Friend
             if (FriendList.Contains(friend))
             {
                 FriendList.Remove(friend);
+                var message = Constants.RemoveFriend + Constants.MiddleDelimiter + Username;
+                _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             }
             else
                 MessageBox.Show("This user is not on your friendlist!");
