@@ -3,7 +3,6 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
-using AsyncServer.Class;
 using NUnit.Framework;
 using NSubstitute;
 using NSubstitute.Core;
@@ -21,46 +20,56 @@ namespace Salt_And_Hash
         [SetUp]
         public void Setup()
         {
-            _uut1 = new SaltedHash("1234");
+
         }
 
         [Test]
-        public void Verify_Salt()
+        public void SaltedHash_Salts_Are_Not_Same()
         {
-            bool right = _uut1.Verify(_uut1.Salt, _uut1.Hash, "1234");
-            Assert.AreEqual(right, true);
+            _uut1 = new SaltedHash();
+            string salt1 = _uut1.MakeSalt();
+
+            string salt2 = _uut1.MakeSalt();
+
+            Assert.AreNotEqual(salt1, salt2);
+
         }
 
         [Test]
-        public void Passwords_Are_Unique_Salt()
+        public void SaltedHash_Hashes_Are_The_Same()
         {
-            _uut1 = new SaltedHash("1234");
-            _uut2 = new SaltedHash("1234");
+            _uut1 = new SaltedHash();
 
-            Assert.AreNotEqual(_uut2, _uut1);
+            string pwd = "derp";
+            string hash1 = _uut1.GetStringSha256Hash(pwd);
+            string hash2 = _uut1.GetStringSha256Hash(pwd);
+            Console.WriteLine($"Hashed Pass1: {hash1}\nHashed Pass2: {hash2}");
+            Assert.AreEqual(hash1, hash2);
+        }
+        [Test]
+        public void SaltedHash_Pass_Are_Not_Same()
+        {
+            _uut1 = new SaltedHash();
+
+            string pwd1 = "derp";
+            string pwd2 = "Godmode1";
+            string hash1 = _uut1.GetStringSha256Hash(pwd1);
+            string hash2 = _uut1.GetStringSha256Hash(pwd2);
+            Console.WriteLine($"Hashed Pass1: {hash1}\nHashed Pass2: {hash2}");
+            Assert.AreNotEqual(hash1, hash2);
         }
 
         [Test]
-        public void Passwords_Are_Unique_Salt_Verify()
+        public void SaltedHash_ComputeHashes_Are_Not_Same()
         {
-            _uut1 = new SaltedHash("1234");
-            _uut2 = new SaltedHash("1234");
+            _uut1 = new SaltedHash();
+            string salt1 = _uut1.MakeSalt();
+            string salt2 = _uut1.MakeSalt();
+            string pwd = "Godmode1";
 
-            Console.WriteLine("Test1: " + _uut1.Hash);
-            Console.WriteLine("Test2: " + _uut2.Hash);
 
-            //Den tjekker om Hash passer sammen
-            bool notSame = _uut2.Verify(_uut1.Salt, _uut2.Hash, "1234");
-            Assert.That(notSame, Is.EqualTo(false));
-        }
 
-        [Test]
-        public void Salt_And_Hash_Transforms_A_String()
-        {
-            string saltyPwd = "Godmode1";
-            _uut1 = new SaltedHash(saltyPwd);
-
-            Assert.AreNotEqual(saltyPwd, _uut1);
+            Assert.AreNotEqual(_uut1.ComputeHash(salt1, pwd), _uut1.ComputeHash(salt2, pwd));
         }
     }
 }

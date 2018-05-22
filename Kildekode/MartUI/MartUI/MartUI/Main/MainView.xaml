@@ -16,6 +16,7 @@
         xmlns:settings="clr-namespace:MartUI.Settings"
         xmlns:blankSetting="clr-namespace:MartUI.Settings.BlankSetting"
         xmlns:profile="clr-namespace:MartUI.Profile"
+        xmlns:friendnotification="clr-namespace:MartUI.FriendNotification"
         mvvm:ViewModelLocator.AutoWireViewModel="True"
 
         mc:Ignorable="d"
@@ -49,6 +50,9 @@
         <DataTemplate DataType="{x:Type profile:ProfileViewModel}">
             <profile:ProfileView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type friendnotification:FriendNotificationViewModel}">
+             <friendnotification:FriendNotificationView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
 
     <!--MARTUI REAL-->
@@ -76,19 +80,19 @@
                     <VisualBrush Visual="{iconPacks:Material Close}"/>
                 </Button.OpacityMask>
             </Button>
-            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,24,0" Background="White" BorderBrush="Transparent"  Height="16" 
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,26,0" Background="White" BorderBrush="Transparent"  Height="16" 
                     Click="ExpandApplication"  Name="ExpandBtn" Style="{StaticResource NoButtonHighlight}">
                 <Button.OpacityMask>
                     <VisualBrush Visual="{iconPacks:Material WindowMaximize}"/>
                 </Button.OpacityMask>
             </Button>
-            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,48,0" Background="White" BorderBrush="Transparent" Height="2"
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,50,0" Background="White" BorderBrush="Transparent" Height="2"
                     Click="MinimizeApplication" Name="MinimizeBtn" Style="{StaticResource NoButtonHighlight}">
                 <Button.OpacityMask >
                     <VisualBrush Visual="{iconPacks:Material WindowMinimize}"/>
                 </Button.OpacityMask>
             </Button>
-            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,72,0" Background="White" BorderBrush="Transparent" Height="16"
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,74,0" Background="White" BorderBrush="Transparent" Height="16"
                     Name="SettingsBtn" Style="{StaticResource NoButtonHighlight}"
                     Command="{Binding DataContext.SettingsViewCommand, RelativeSource={RelativeSource AncestorType={x:Type local:MainView}}}">
                 <Button.OpacityMask>
@@ -105,7 +109,7 @@
            <ContentControl Content ="{Binding SideBarView}" />
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="1" Width="Auto">
+        <Grid Grid.Column="1" Grid.Row="1" Width="Auto" >
             <ContentControl Content ="{Binding FriendListView}" />
         </Grid>
 

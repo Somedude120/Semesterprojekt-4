@@ -96,6 +96,7 @@
     <Compile Include="Core\ServerCommunication\SignUp.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\AcceptFriendRequestTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\AddFriendTest.cs" />
+    <Compile Include="Core\ServerCommunication\Unit Tests\GetAllMsgsTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\GetFriendsTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\GetMyProfileTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\LoginRequestTest.cs" />

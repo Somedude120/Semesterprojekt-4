@@ -1,50 +1,52 @@
-﻿//using System;
-//using System.Linq;
-//using ProfileConsole.Core.Domain;
-//using ProfileConsole.Core.ServerCommunication.Interfaces;
-//using ProfileConsole.Persistence;
+﻿using System;
+using System.Linq;
+using ProfileConsole.Core.Domain;
+using ProfileConsole.Core.ServerCommunication.Interfaces;
+using ProfileConsole.Persistence;
 
-//namespace ProfileConsole.Core.ServerCommunication
-//{
-//    //Gets all messages saved in the database
-//    public class GetAllMsgs : IGetAllMsgs
-//    {
-//        private IUnitOfWork unitOfWork;
+namespace ProfileConsole.Core.ServerCommunication
+{
+    //Gets all messages saved in the database
+    public class GetAllMsgs : IGetAllMsgs
+    {
+        private IUnitOfWork unitOfWork;
 
-//        public GetAllMsgs()
-//        {
-//            unitOfWork = new UnitOfWork(new ProfileContext());
-//        }
+        public GetAllMsgs()
+        {
+            unitOfWork = new UnitOfWork(new ProfileContext());
+        }
 
-//        public Chat RequestAllMsgs(int groupId, int messageNumber, string message, string sender)
-//        {
-//            var chat = unitOfWork.Chat.GetId(groupId);
+        public Chat RequestAllMsgs(int groupId, int messageNumber, string message, string sender)
+        {
+            var person = unitOfWork.Chat.GetId(groupId);
 
-//            if (chat.GroupId == groupId)
-//            {
-//                using (var db = new ProfileContext())
-//                {
-//                    var chats =
-//                        from c in db.Chat
-//                        where c.GroupId == groupId
-//                        select c;
+            if (person.GroupId == groupId)
+            {
+                using (var db = new ProfileContext())
+                {
+                    var profile =
+                        from p in db.Chat
+                        where p.GroupId == groupId
+                        select p;
 
-//                    try
-//                    {
-//                        foreach (var cha in chats)
-//                        {
-//                            Chat myChat = new Chat(cha.GroupId, cha.MessageNumber, cha.Message, cha.Sender);
-//                            return myChat;
-//                        }
-//                    }
-//                    catch (Exception e)
-//                    {
-//                        return null;
-//                    }
-//                }
-//            }
-
-//            return null;
-//        }
-//    }
-//}
+                    try
+                    {
+                        foreach (var pers in profile)
+                        {
+                            if (groupId == pers.GroupId)
+                            {
+                                var sentMessages = new Chat(pers.GroupId, pers.MessageNumber, pers.Message, pers.Sender);
+                                return sentMessages;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return null;
+                    }
+                }
+            }
+            return null;
+        }
+    }
+}
