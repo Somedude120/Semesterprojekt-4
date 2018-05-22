@@ -24,27 +24,24 @@ namespace ProfileConsole.Core.ServerCommunication
             UserInformation person = null;
             var tagsinDB = unitOfWork.Tags.GetAll();
             var tags = new List<Tags>();
-            foreach (var tag in tagsinDB)
+            foreach (var tag in Tagslist)
             {
-                for (int i = 0; i <= Tagslist.Count; i++)
+                bool isInDB = false;
+                foreach (var dbTag in tagsinDB)
                 {
-                    if (tag.TagName == Tagslist[i])
+                    if (dbTag.TagName == tag)
                     {
-                        Tagslist.RemoveAt(i);
-                        Tagslist.TrimExcess();
+                        isInDB = true;
+                        break;
                     }
+                }
 
-                    else
-                        tags.Add(new Tags{TagName = Tagslist[i]});
+                if (isInDB == false)
+                {
+                    tags.Add(new Tags(){TagName = tag});
                 }
                 
             }
-            
-            //foreach (var tag in Tagslist)
-            //{
-                
-            //    tags.Add(new Tags(){TagName = tag});
-            //}
 
             try
             {
