@@ -189,11 +189,11 @@ namespace Examples.System.Net
                         _eventAggregator.GetEvent<LoginResponseEvent>().Publish(tempStringList[1]);
                     });
                 }
-                else if (tempStringList[0] == Constants.RequestCreateUser)
+                else if (tempStringList[0] == Constants.Signup)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        _eventAggregator.GetEvent<CreateUserResponseEvent>().Publish(tempStringList[1]);
+                        _eventAggregator.GetEvent<SignupResponseEvent>().Publish(tempStringList[1]);
                     });
                 }
                 else if (tempStringList[0] == Constants.FriendRequestDeclined)

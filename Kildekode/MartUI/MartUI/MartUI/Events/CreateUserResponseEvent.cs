@@ -2,7 +2,7 @@
 
 namespace MartUI.Events
 {
-    public class CreateUserResponseEvent : PubSubEvent<string>
+    public class SignupResponseEvent : PubSubEvent<string>
     {
 
     }
