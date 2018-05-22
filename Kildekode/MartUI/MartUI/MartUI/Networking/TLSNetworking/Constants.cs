@@ -7,7 +7,7 @@ public static class Constants
     public static char MiddleDelimiter = (char)59;
     public static string Write = "W"; // W + MiddleDelimiter + Receiver + MiddleDelimiter + Message
     public static string MessageReceived = "R"; // R + MiddleDelimiter + Sender + MiddleDelimiter + Receiver + MiddleDelimiter + Message
-    public static string Login = "L"; // L + MiddleDelimiter + Sender
+    public static string Login = "L"; // L + MiddleDelimiter + Username + MiddleDelimiter + Password
     public static string Signup = "S"; // S + MiddleDelimiter + Username + MiddleDelimiter + Password
     public static string SendFriendRequest = "SFR"; // SFR + MiddelDelimiter + Username
     public static string RemoveFriend = "RF"; // RF + MiddeDelimiter + Username

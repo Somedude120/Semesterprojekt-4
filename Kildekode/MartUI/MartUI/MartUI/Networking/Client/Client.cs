@@ -145,7 +145,7 @@ namespace Examples.System.Net
             while (true)
             {
                 string tempString = receiver.ReceiveString(sslStream);
-                string[] tempStringList = tempString.Split(';');
+                string[] tempStringList = tempString.Split(Constants.MiddleDelimiter);
                 if (tempStringList[0] == Constants.MessageReceived)
                 {
                     var message = new ChatModel();
