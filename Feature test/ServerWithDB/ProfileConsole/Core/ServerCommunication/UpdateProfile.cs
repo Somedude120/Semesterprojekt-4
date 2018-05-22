@@ -7,23 +7,41 @@ using ProfileConsole.Persistence;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
-    public class UpdateProfile : IUpdateProfile
+    public class UpdateProfile //: IUpdateProfile
     {
-        private IUnitOfWork unitOfWork;
+        //private IUnitOfWork unitOfWork;
+        private static UnitOfWork unitOfWork;
 
         public UpdateProfile() 
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public void UpdateProfileInformation(string Username, string Description, ICollection<Tags> Tagslist)
+        public static void UpdateProfileInformation(string Username, string Description, List<string> Tagslist)
         {
-            var person = unitOfWork.UserInformation.GetString(Username);
+            unitOfWork = new UnitOfWork(new ProfileContext());
+
+            UserInformation person = null;
+
+            var tags = new List<Tags>();
+            foreach (var tag in Tagslist)
+            {
+                tags.Add(new Tags(){TagName = tag});
+            }
+
+            try
+            {
+                person = unitOfWork.UserInformation.GetString(Username);
+            }
+            catch (Exception e)
+            {
+
+            }
 
             if (person.UserName == Username)
             {
                 person.Description = Description;
-                person.Tags = Tagslist;
+                person.Tags = tags;
                 unitOfWork.Complete();
             }
                         

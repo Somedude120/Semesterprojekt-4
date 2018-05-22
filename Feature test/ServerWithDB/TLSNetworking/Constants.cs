@@ -2,7 +2,9 @@
 
 public static class Constants
 {
-    public static string EndDelimiter = ((char)29).ToString();
-    //public static string MiddleDelimiter = ((char)31).ToString();
-    public static char MiddleDelimiter = (char)59;
+    public const char EndDelimiter = (char)29;
+    //public static string MiddleDelimiter = ((char)30).ToString();
+    public const char GroupDelimiter = (char)59;
+    //public const char DataDelimiter = (char) 31;
+    public const char DataDelimiter = (char)58;
 }
