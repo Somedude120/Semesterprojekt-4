@@ -145,7 +145,7 @@ namespace Examples.System.Net
             while (true)
             {
                 string tempString = receiver.ReceiveString(sslStream);
-                string[] tempStringList = tempString.Split(';');
+                string[] tempStringList = tempString.Split(Constants.MiddleDelimiter);
                 if (tempStringList[0] == Constants.MessageReceived)
                 {
                     var message = new ChatModel();
@@ -178,6 +178,13 @@ namespace Examples.System.Net
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(tempStringList[1]);
+                    });
+                }
+                else if (tempStringList[0] == Constants.FriendRequestDeclined)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<FriendRequestDeclinedEvent>().Publish(tempStringList[1]);
                     });
                 }
             }
