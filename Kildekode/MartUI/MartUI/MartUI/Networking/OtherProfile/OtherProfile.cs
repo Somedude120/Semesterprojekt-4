@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using MartUI.Me;
-using ProfileConsole.Core.Domain;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
