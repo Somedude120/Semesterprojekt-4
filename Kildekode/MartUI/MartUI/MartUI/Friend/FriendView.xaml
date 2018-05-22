@@ -17,6 +17,7 @@
         
         <Grid.Resources>
             <local:BindingProxy x:Key="Proxy" Data="{Binding}"/>
+
         </Grid.Resources>
 
         <Grid Row="0">
@@ -28,13 +29,21 @@
                             Content="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                             Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                             CommandParameter="{Binding}"
-                            Margin="0,3" Width="185" Height="20"
-                            Style="{StaticResource RoundCornerButton}">
+                            Margin="0,3" Width="185">
                                 <Button.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Remove" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveFriendCommand}" CommandParameter="{Binding}"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource RoundCornerButton}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding MessageNotificationReceived}" Value="">
+                                                <Setter Property="Background" Value="Pink"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
                             </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -46,12 +55,35 @@
         </Grid>
         <Grid Row="2">
             <StackPanel Orientation="Horizontal">
-                <Button Width="16" HorizontalAlignment="Left" Margin="6,0,0,0" Background="White" BorderBrush="Transparent"  Height="16" 
-                    Name="NotificationButton" Style="{StaticResource NoButtonHighlight}" 
+                <Button Width="16" HorizontalAlignment="Left" Margin="6,0,0,0" BorderBrush="Transparent"  Height="16" 
                     Command="{Binding ShowNotificationsCommand}">
                     <Button.OpacityMask>
-                        <VisualBrush Visual="{iconPacks:Modern Notification}" />
+                        <VisualBrush Visual="{iconPacks:Entypo Notification}" />
                     </Button.OpacityMask>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource NoButtonHighlight}">
+                            <Setter Property="Background" Value="White" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding NotificationReceived}" Value="True">
+                                    <DataTrigger.EnterActions >
+                                        <BeginStoryboard Name="NotificationBlink">
+                                            <Storyboard AutoReverse="True" RepeatBehavior="Forever">
+                                                <ColorAnimation Duration="00:00:00.5"
+                                                                Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                                                From="White"
+                                                                To="Green" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding NotificationReceived}" Value="False">
+                                    <DataTrigger.EnterActions>
+                                        <RemoveStoryboard BeginStoryboardName="NotificationBlink" />
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
                 <TextBox Width="144" HorizontalAlignment="Left" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" x:Name="AddFriendTextBox" Visibility="Hidden"
                      MouseDoubleClick="SelectAddress"

@@ -37,6 +37,7 @@ namespace Examples.System.Net
         {
             //Get certain event from GUI
             _eventAggregator = GetEventAggregator.Get();
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Subscribe(SendMessage);
             //Server subscription
             //Here the new event should be
             //_eventAggregator.GetEvent<SendMessageToServerEvent>().Subscribe(SendMessage);
@@ -134,37 +135,93 @@ namespace Examples.System.Net
             //Console.ReadLine();
         }
 
-        public void MessageHandler(string message)
+        public void SendMessage(string message)
         {
-            //ChatModel Message = new ChatModel();
-            switch (message[0])
-            {
-                //case 'R':
-                //    //Read message
-                //    ReceiveMessage(message);
-                //    break;
-                case 'W':
-                    //Write message
-                    SendMessage(message);
-                    break;
-                case 'L':
-                    //Login
-                    Login(message);
-                    break;
-                case 'A':
-                    //To a friend request message (In receive)
-                    SendFriendRequest(message);
-                    break;
-                case 'D':
-                    SendRemoveFriend(message);
-                    break;
-                        
-                default:
-                    Console.WriteLine($"Debugging: {message[0]} : {message}");
-                    break;
-            }
-
+            sender.SendString(sslStream, message);
         }
+
+        public void ReceiveMessages()
+        {
+            while (true)
+            {
+                string tempString = receiver.ReceiveString(sslStream);
+                string[] tempStringList = tempString.Split(';');
+                if (tempStringList[0] == Constants.MessageReceived)
+                {
+                    var message = new ChatModel();
+                    message.Message = tempStringList[2];
+                    message.Sender = tempStringList[1];
+                    message.Receiver = UserData.Username;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                    });
+                }
+                //Receive friendrequest
+                else if (tempStringList[0] == Constants.FriendRequestReceived)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<FriendRequestReceivedEvent>().Publish(tempStringList[1]);
+                    });
+                }
+                //Delete/Remove friend
+                else if (tempStringList[0] == Constants.RemoveFriendReceived)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Publish(tempStringList[1]);
+                    });
+                }
+                else if (tempStringList[0] == Constants.NotificationReceived)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(tempStringList[1]);
+                    });
+                }
+            }
+        }
+
+
+        //public void MessageHandler(string message)
+        //{
+        //    string[] temp = message.Split(Constants.MiddleDelimiter);
+        //    switch (temp[0])
+        //    {
+        //        case "W":
+        //            //Write message
+        //            SendMessage(message);
+        //            break;
+        //        case "L":
+        //            //Login
+        //            Login(message);
+        //            break;
+        //        case "FR":
+        //            //To a friend request message (In receive)
+        //            SendFriendRequest(message);
+        //            break;
+        //        case "RF":
+        //            SendRemoveFriend(message);
+        //            break;
+        //        case "AFR":
+        //            AcceptFriendRequest(message);
+        //            break;
+        //        case "":
+        //            SendRemoveFriend(message);
+        //            break;
+        //        case "":
+        //            SendRemoveFriend(message);
+        //            break;
+        //        case "":
+        //            SendRemoveFriend(message);
+        //            break;
+
+        //        default:
+        //            Console.WriteLine($"Debugging: {message[0]} : {message}");
+        //            break;
+        //    }
+        //}
 
         //public void Login(string userName)
         //{
@@ -174,26 +231,23 @@ namespace Examples.System.Net
 
         //    sender.SendString(sslStream,userName);
         //}
-        public void Login(string userName)
-        {
-            //string myString = "W" + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
+        //public void Login(string userName)
+        //{
+        //    //string myString = "W" + Constants.MiddleDelimiter + message.Receiver + Constants.MiddleDelimiter + message.Message;
 
-            //sender.SendString(sslStream,userName);
-            sender.SendString(sslStream, userName);
-        }
-        public void SendMessage(string tempHans)
-        {
-            sender.SendString(sslStream,tempHans);
-        }
+        //    //sender.SendString(sslStream,userName);
+        //    sender.SendString(sslStream, userName);
+        //}
 
-        public void SendFriendRequest(string fRequest)
-        {
-            sender.SendString(sslStream, fRequest);
-        }
-        public void SendRemoveFriend(string rFriend)
-        {
-            sender.SendString(sslStream, rFriend);
-        }
+
+        //public void SendFriendRequest(string fRequest)
+        //{
+        //    sender.SendString(sslStream, fRequest);
+        //}
+        //public void SendRemoveFriend(string rFriend)
+        //{
+        //    sender.SendString(sslStream, rFriend);
+        //}
         //public void ReceiveMessage(string guiMessage)
         //{
         //    ChatModel message;
@@ -229,58 +283,14 @@ namespace Examples.System.Net
 
 
 
-        public void ReceiveMessages()
-        {
-            ChatModel message;
-            while (true)
-            {
-                string tempString = receiver.ReceiveString(sslStream);
-                string[] tempStringList = tempString.Split(';');
-                if (tempStringList[0] == "R")
-                {
-                    message = new ChatModel();
-                    message.Message = tempStringList[2];
-                    message.Sender = tempStringList[1];
-                    message.Receiver = UserData.Username;
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
-                    });
-                }
 
-                //Receive friendrequest
-                if (tempStringList[0] == "A")
-                {
-                    message = new ChatModel();
-                    message.Message = tempStringList[2];
-                    message.Sender = tempStringList[1];
-                    message.Receiver = UserData.Username;
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
-                    });
-                }
-                //Delete/Remove friend
-                if (tempStringList[0] == "D")
-                {
-                    message = new ChatModel();
-                    message.Message = tempStringList[2];
-                    message.Sender = tempStringList[1];
-                    message.Receiver = UserData.Username;
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
-                    });
-                }
-            }
-        }
 
-        private static void DisplayUsage()
-        {
-            Console.WriteLine("To start the client specify:");
-            Console.WriteLine("clientSync machineName [serverName]");
-            Environment.Exit(1);
-        }
+        //private static void DisplayUsage()
+        //{
+        //    Console.WriteLine("To start the client specify:");
+        //    Console.WriteLine("clientSync machineName [serverName]");
+        //    Environment.Exit(1);
+        //}
 
         //public static int Main(string[] args)
         //{

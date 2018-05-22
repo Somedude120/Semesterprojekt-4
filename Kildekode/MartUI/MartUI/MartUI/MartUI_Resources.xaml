@@ -5,6 +5,8 @@
     <!--<Style TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="20" />
     </Style>-->
+    
+    <SolidColorBrush x:Key="WhiteOpacityBackground" Color="White" Opacity="0.1"/>
 
     <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Template">
@@ -217,9 +219,9 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         <Setter Property="Border.CornerRadius" Value="2"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="18"/>
         <Setter Property="Width" Value="50"/>
-        <Setter Property="Height" Value="16"/>
+        <Setter Property="Height" Value="24"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

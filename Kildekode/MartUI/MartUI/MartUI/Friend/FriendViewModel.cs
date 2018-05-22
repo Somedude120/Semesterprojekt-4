@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using MartUI.Chat;
@@ -21,7 +24,7 @@ namespace MartUI.Friend
 {
     public class FriendViewModel : BindableBase, IViewModel
     {
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
         public string ReferenceName => "FriendViewModel"; // Returns "FriendViewModel"
         private ObservableCollection<FriendModel> _friendList;
         private FriendModel _selectedFriend;
@@ -33,7 +36,7 @@ namespace MartUI.Friend
         private MyData _userData;
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
 
-
+        private bool _notificionReceived;
         public string Username
         {
             get { return _username; }
@@ -44,16 +47,29 @@ namespace MartUI.Friend
             }
         }
 
+        public bool NotificationReceived
+        {
+            get => _notificionReceived;
+            set
+            {
+                SetProperty(ref _notificionReceived, value);
+
+            }
+        }
+
+        //public Brush Background => NotificationReceived ? Brushes.White : Brushes.Red;
         public ICommand ChooseFriendCommand => _chooseFriendCommand ?? (_chooseFriendCommand = new DelegateCommand<FriendModel>(SelectFriend));
 
         public FriendViewModel()
         {
-            _eventAggregator = GetEventAggregator.Get();
-
             Username = "Enter Username!";
 
+            NotificationReceived = true;
             _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Subscribe(HandleNewMessage);
             _eventAggregator.GetEvent<NewMessageEvent>().Subscribe(HandleNewMessage);
+            _eventAggregator.GetEvent<NotificationReceivedChangeColor>().Subscribe(() => NotificationReceived = true);
+            _eventAggregator.GetEvent<AcceptedFriendRequestEvent>().Subscribe(AcceptedFriendRequest);
+            _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Subscribe(HandleRemoveFriendReceived);
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
@@ -67,6 +83,12 @@ namespace MartUI.Friend
             //Skal bruge metode fra server/database til at få en liste af alle ens venner
             //Samt kun alle som er online 
         }
+
+        //private void ReceivedNotification()
+        //{
+
+        //}
+
 
         private void HandleNewMessage(ChatModel message)
         {
@@ -127,6 +149,7 @@ namespace MartUI.Friend
                 {
                     MessageBox.Show("This user is already on your friendlist");
                     friendInList = true;
+                    break;
                 }
             }
 
@@ -137,6 +160,24 @@ namespace MartUI.Friend
 
             Username = ""; //Clears the AddFriendTextbox after pressing enter
             //Skal kommunikere med database/server
+        }
+
+        public void AcceptedFriendRequest(string username)
+        {
+            bool friendInList = false;
+            foreach (var f in FriendList)
+            {
+                if (f.Username == username)
+                {
+                    MessageBox.Show("This user is already on your friendlist");
+                    friendInList = true;
+                    break;
+                }
+            }
+            if (!friendInList)
+            {
+                Application.Current.Dispatcher.Invoke(() => { FriendList.Add(new FriendModel { Username = username }); });
+            }
         }
 
         public void RemoveFriend(FriendModel friend)
@@ -151,10 +192,35 @@ namespace MartUI.Friend
             //Skal kommunikere med database/server
         }
 
+        public void HandleRemoveFriendReceived(string username)
+        {
+            var isInList = false;
+            var friend = new FriendModel();
+            foreach (var f in FriendList)
+            {
+                if (f.Username == username)
+                {
+                    isInList = true;
+                    friend = f;
+                }
+            }
+
+            if (isInList)
+            {
+                FriendList.Remove(friend);
+                var message = username + " has removed you from their friendlist!";
+                _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(message);
+            }
+        }
+
         public ICommand ShowNotificationsCommand => _showNotificationsCommand ??
-                                                    (_showNotificationsCommand = new DelegateCommand( () =>
-                                                        _eventAggregator.GetEvent<ChangeFocusPage>()
-                                                            .Publish(new FriendNotificationViewModel())));
+                                                    (_showNotificationsCommand = new DelegateCommand(ChangeToNotifications));
+
+        public void ChangeToNotifications()
+        {
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new FriendNotificationViewModel());
+            NotificationReceived = false;
+        }
         public ICommand AddFriendCommand => _addFriendCommand ?? (_addFriendCommand = new DelegateCommand(AddFriend));
         public ICommand RemoveFriendCommand => _removeFriendCommand ?? (_removeFriendCommand = new DelegateCommand<FriendModel>(RemoveFriend));
     }
@@ -174,5 +240,44 @@ namespace MartUI.Friend
 
         public static readonly DependencyProperty DataProperty =
             DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
+    }
+
+    public class Converter : IValueConverter
+    {
+        //public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        //{
+        //    var text1 = values[0].ToString();
+        //    var text2 = values[1].ToString();
+
+        //    if (text1 == text2)
+        //        return Visibility.Hidden;
+        //    else
+        //        return Visibility.Visible;
+        //}
+
+        //public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
