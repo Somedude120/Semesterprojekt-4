@@ -22,12 +22,29 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
 
             UserInformation person = null;
-
+            var tagsinDB = unitOfWork.Tags.GetAll();
             var tags = new List<Tags>();
-            foreach (var tag in Tagslist)
+            foreach (var tag in tagsinDB)
             {
-                tags.Add(new Tags(){TagName = tag});
+                for (int i = 0; i <= Tagslist.Count; i++)
+                {
+                    if (tag.TagName == Tagslist[i])
+                    {
+                        Tagslist.RemoveAt(i);
+                        Tagslist.TrimExcess();
+                    }
+
+                    else
+                        tags.Add(new Tags{TagName = Tagslist[i]});
+                }
+                
             }
+            
+            //foreach (var tag in Tagslist)
+            //{
+                
+            //    tags.Add(new Tags(){TagName = tag});
+            //}
 
             try
             {
