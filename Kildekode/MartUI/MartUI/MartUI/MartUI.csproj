@@ -104,8 +104,10 @@
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
     <Compile Include="Events\AcceptedFriendRequestEvent.cs" />
+    <Compile Include="Events\CreateUserResponseEvent.cs" />
     <Compile Include="Events\FriendRequestDeclinedEvent.cs" />
     <Compile Include="Events\FriendRequestReceivedEvent.cs" />
+    <Compile Include="Events\LoginResponseEvent.cs" />
     <Compile Include="Events\NewMessageEvent.cs" />
     <Compile Include="Events\NotificationReceivedChangeColor.cs" />
     <Compile Include="Events\NotificationReceivedEvent.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="Login\ReplaceCharactersInPassword.cs" />
     <Compile Include="Networking\Client\Client.cs" />
+    <Compile Include="Networking\OtherProfile\OtherProfile.cs" />
     <Compile Include="Networking\TLSNetworking\Constants.cs" />
     <Compile Include="Networking\TLSNetworking\Receiver.cs" />
     <Compile Include="Networking\TLSNetworking\Sender.cs" />
