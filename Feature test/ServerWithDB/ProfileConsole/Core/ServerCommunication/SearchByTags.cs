@@ -6,17 +6,18 @@ using ProfileConsole.Core.ServerCommunication.Interfaces;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
-    public class SearchByTags : ISearchByTags
+    public class SearchByTags //: ISearchByTags
     {
-        private IUnitOfWork unitOfWork;
+        private static UnitOfWork unitOfWork;
 
         public SearchByTags()
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public Tags RequestTag(string tag)
+        public static Tags RequestTag(string tag)
         {
+            unitOfWork = new UnitOfWork(new ProfileContext());
             var person = unitOfWork.Tags.GetString(tag);
             if(person.TagName == tag)
             using (var db = new ProfileContext())
