@@ -57,6 +57,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Kildekode\Server\Salt_With_UnitTest\Salt_And_Hash\Salt_And_Hash\Salt_And_Hash.csproj">
+      <Project>{ecae1001-6e73-4a86-8d2f-03228f5165f6}</Project>
+      <Name>Salt_And_Hash</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProfileConsole\ProfileConsole.csproj">
       <Project>{1d2872a2-42bc-41f3-b72b-aba8ea0dd56d}</Project>
       <Name>ProfileConsole</Name>

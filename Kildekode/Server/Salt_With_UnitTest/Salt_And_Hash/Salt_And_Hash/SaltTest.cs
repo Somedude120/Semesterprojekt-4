@@ -3,7 +3,6 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
-using AsyncServer.Class;
 using NUnit.Framework;
 using NSubstitute;
 using NSubstitute.Core;

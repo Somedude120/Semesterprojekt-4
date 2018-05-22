@@ -17,6 +17,7 @@ using Microsoft.Win32;
 using TLSNetworking;
 using ProfileConsole;
 using ProfileConsole.Core.ServerCommunication;
+using Salt_And_Hash;
 
 //Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
@@ -126,7 +127,11 @@ namespace Examples.System.Net
                 switch (input[0])
                 {
                     case "L":
-                        HandleLogin(input, sslStream);
+                        if (input.Length == 3)
+                        {
+                            Console.WriteLine(input.Length);
+                            HandleLogin(input, sslStream);
+                        }
                         break;
                     default:
                         Console.WriteLine("Client is not logged in, and string is not recognized");
@@ -163,21 +168,27 @@ namespace Examples.System.Net
 
         static void HandleLogin(string[] input, SslStream sslStream)
         {
-            //check if user is logged in
-            //if (userStreams.FirstOrDefault(x => x.Value == sslStream).Key == null)
+            var saltHash = new SaltedHash();
+
+            //Check if username is already in logged in
+            if (userStreams.ContainsKey(input[1]))
             {
-                //Check if username is used
-                if (userStreams.ContainsKey(input[1]))
+                //username is in use
+                Console.WriteLine("Username: " + input[1] + " is already online");
+            }
+            else
+            {
+                //check if user is in database
+                if (SearchByUsername.RequestUsername(input[1]) != null)
                 {
-                    //username is in use
-                    Console.WriteLine("Username: " + input[1] + " is in use");
-                }
-                else
-                {
-                    //Get salt from DB, with Username
+                    Console.WriteLine("User: " + input[1] + " exists in database");
+
                     //Calculate hashed password with pw and salt
+                    string salt = LoginRequest.GetSalt(input[1]);
+                    string hashedPW = saltHash.ComputeHash(salt, input[2]);
+
                     //Make LoginRequest
-                    string response = LoginRequest.Login(input[1], "1234");
+                    string response = LoginRequest.Login(input[1], hashedPW);
                     if (response == "OK")
                     {
                         //Add to Dictionary
@@ -190,6 +201,10 @@ namespace Examples.System.Net
                     {
                         Console.WriteLine("Username or password was wrong");
                     }
+                }
+                else
+                {
+                    Console.WriteLine("User: " + input[1] + " does not exist in database");
                 }
             }
         }
