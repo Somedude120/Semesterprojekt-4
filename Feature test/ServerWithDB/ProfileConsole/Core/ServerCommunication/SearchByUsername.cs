@@ -6,18 +6,31 @@ using ProfileConsole.Persistence;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
-    public class SearchByUsername : ISearchByUsername
+    public class SearchByUsername //: ISearchByUsername
     {
-        private IUnitOfWork unitOfWork;
+        //private IUnitOfWork unitOfWork;
+        private static UnitOfWork unitOfWork;
 
         public SearchByUsername()
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public UserInformation RequestUsername(string Username)
+        public static string RequestUsername(string Username)
         {
-            return unitOfWork.UserInformation.GetString(Username);
+            unitOfWork = new UnitOfWork(new ProfileContext());
+            string foundUsername = null;
+            try
+            {
+                foundUsername = unitOfWork.UserInformation.GetString(Username).UserName;
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return foundUsername;
         }
     }
 }

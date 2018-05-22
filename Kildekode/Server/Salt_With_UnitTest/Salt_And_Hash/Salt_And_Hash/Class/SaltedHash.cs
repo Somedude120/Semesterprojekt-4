@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace AsyncServer.Class
+namespace Salt_And_Hash
 {
     public class SaltedHash
     {
