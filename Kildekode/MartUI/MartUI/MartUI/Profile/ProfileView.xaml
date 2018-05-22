@@ -71,7 +71,7 @@
                    HorizontalAlignment="Left" VerticalAlignment="Center"
                    Margin="20,0,0,0"/>
         <TextBox  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
-                   Text="{Binding UserData.Description}"
+                   Text="{Binding Description}"
                    FontSize="25"
                    TextWrapping="Wrap"
                    VerticalScrollBarVisibility="Auto" 

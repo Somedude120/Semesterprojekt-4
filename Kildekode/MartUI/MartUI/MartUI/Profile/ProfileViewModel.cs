@@ -34,6 +34,13 @@ namespace MartUI.Profile
             set => _tags = value;
         }
 
+        private string _description;
+        public string Description
+        {
+            get => _description ?? (_description = UserData.Description);
+            set => _description = value;
+        }
+
         private string _userTagsInOneString;
         private string UserTagsInOneString
         {
@@ -83,11 +90,13 @@ namespace MartUI.Profile
         {
             UpdateTags();
             UserTagsInOneString = ConvertTagsToString();
+            UserData.Description = Description;
         }
 
+        // Will update based on user input (YES/NO/CANCEL)
         public void ShowFriends()
         {
-            if (Tags != UserTagsInOneString)
+            if (Tags != UserTagsInOneString || Description != UserData.Description)
             {
                 var result = MessageBox.Show("You have made changes that are not saved. Save?", "Confirmation",
                     MessageBoxButton.YesNoCancel,
@@ -100,10 +109,12 @@ namespace MartUI.Profile
                 {
                     UpdateTags();
                     UserTagsInOneString = ConvertTagsToString();
+                    UserData.Description = Description;
                 }
                 else if (result == MessageBoxResult.No)
                 {
                     Tags = UserTagsInOneString;
+                    Description = UserData.Description;
                 }
             }
 
