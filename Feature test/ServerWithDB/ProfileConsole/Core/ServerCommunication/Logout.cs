@@ -6,18 +6,31 @@ using ProfileConsole.Core.ServerCommunication.Interfaces;
 using ProfileConsole.Persistence;
 namespace ProfileConsole.Core.ServerCommunication
 {
-    public class Logout : ILogout
+    public class Logout //: ILogout
     {
-        private IUnitOfWork unitOfWork;
+        //private IUnitOfWork unitOfWork;
+        private static UnitOfWork unitOfWork;
 
         public Logout()
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public void LogoutDB(string Username)
+        public static void LogoutDB(string Username)
         {
-            var person = unitOfWork.UserInformation.GetString(Username);
+            unitOfWork = new UnitOfWork(new ProfileContext());
+
+            UserInformation person = null;
+            try
+            {
+                person = unitOfWork.UserInformation.GetString(Username);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
             if(person.UserName == Username)
             { 
                 using (var db = new ProfileContext())

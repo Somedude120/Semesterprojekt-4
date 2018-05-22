@@ -18,6 +18,19 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
+        public static string GetSalt(string Username)
+        {
+            unitOfWork = new UnitOfWork(new ProfileContext());
+            var person = unitOfWork.UserInformation.GetString(Username);
+
+            if (person != null)
+            {
+                return person.Login.Salt;
+            }
+
+            return null;
+        }
+
         public static string Login(string Username, string Hash)
         {
             unitOfWork = new UnitOfWork(new ProfileContext());

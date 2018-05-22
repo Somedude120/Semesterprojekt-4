@@ -56,8 +56,7 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
-        <Grid Row="1" Width="180">
-            <Rectangle Style="{StaticResource GradientColorRectangle}"/>
+        <Grid Row="1" Width="180" Background="#202225">
         </Grid>
         <Grid Row="2">
             <StackPanel Orientation="Horizontal">

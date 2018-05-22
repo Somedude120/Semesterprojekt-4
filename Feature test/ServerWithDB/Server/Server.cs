@@ -17,6 +17,7 @@ using Microsoft.Win32;
 using TLSNetworking;
 using ProfileConsole;
 using ProfileConsole.Core.ServerCommunication;
+using Salt_And_Hash;
 
 //Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
@@ -125,8 +126,19 @@ namespace Examples.System.Net
             {
                 switch (input[0])
                 {
+                    case "S":
+                        if (input.Length == 3)
+                        {
+
+                            HandleSignup(input, sslStream);
+                        }
+                        break;
                     case "L":
-                        HandleLogin(input, sslStream);
+                        if (input.Length == 3)
+                        {
+                            Console.WriteLine(input.Length);
+                            HandleLogin(input, sslStream);
+                        }
                         break;
                     default:
                         Console.WriteLine("Client is not logged in, and string is not recognized");
@@ -161,23 +173,51 @@ namespace Examples.System.Net
             }
         }
 
+        static void HandleSignup(string[] input, SslStream sslStream)
+        {
+            var saltHash = new SaltedHash();
+
+            string salt = saltHash.MakeSalt();
+            string hashedPW = saltHash.ComputeHash(salt, input[2]);
+
+            string result = SignUp.CreateProfile(input[1], salt, hashedPW);
+
+            if (result == "OK")
+            {
+                Console.WriteLine("User: " + input[1] + " created");
+                sender.SendString(sslStream, "OK");
+            }
+            else
+            {
+                Console.WriteLine("User not created");
+                sender.SendString(sslStream, "NOK");
+            }
+        }
+
         static void HandleLogin(string[] input, SslStream sslStream)
         {
-            //check if user is logged in
-            //if (userStreams.FirstOrDefault(x => x.Value == sslStream).Key == null)
+            var saltHash = new SaltedHash();
+
+            //Check if username is already in logged in
+            if (userStreams.ContainsKey(input[1]))
             {
-                //Check if username is used
-                if (userStreams.ContainsKey(input[1]))
+                //username is in use
+                Console.WriteLine("Username: " + input[1] + " is already online");
+                sender.SendString(sslStream, "NOK");
+            }
+            else
+            {
+                //check if user is in database
+                if (SearchByUsername.RequestUsername(input[1]) != null)
                 {
-                    //username is in use
-                    Console.WriteLine("Username: " + input[1] + " is in use");
-                }
-                else
-                {
-                    //Get salt from DB, with Username
+                    Console.WriteLine("User: " + input[1] + " exists in database");
+
                     //Calculate hashed password with pw and salt
+                    string salt = LoginRequest.GetSalt(input[1]);
+                    string hashedPW = saltHash.ComputeHash(salt, input[2]);
+
                     //Make LoginRequest
-                    string response = LoginRequest.Login(input[1], "1234");
+                    string response = LoginRequest.Login(input[1], hashedPW);
                     if (response == "OK")
                     {
                         //Add to Dictionary
@@ -185,11 +225,18 @@ namespace Examples.System.Net
                         userStreams.Add(input[1], sslStream);
                         _mutex.ReleaseMutex();
                         Console.WriteLine("User logged in with username: " + input[1]);
+                        sender.SendString(sslStream, "OK");
                     }
                     else
                     {
                         Console.WriteLine("Username or password was wrong");
+                        sender.SendString(sslStream, "NOK");
                     }
+                }
+                else
+                {
+                    Console.WriteLine("User: " + input[1] + " does not exist in database");
+                    sender.SendString(sslStream, "NOK");
                 }
             }
         }
@@ -203,6 +250,8 @@ namespace Examples.System.Net
                 var keyFromValue = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
                 if (keyFromValue != null)
                 {
+                    Logout.LogoutDB(keyFromValue);
+
                     _mutex.WaitOne();
                     Console.WriteLine(userStreams.FirstOrDefault(x => x.Value == sslStream).Key + " logged out");
                     userStreams.Remove(userStreams.FirstOrDefault(x => x.Value == sslStream).Key);  //If user isn't logged in, dictionary remove will crash 

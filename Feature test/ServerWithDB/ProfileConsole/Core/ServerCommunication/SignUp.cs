@@ -7,23 +7,32 @@ using ProfileConsole.Persistence;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
-    public class SignUp : ISignUp
+    public class SignUp //: ISignUp
     {
-        private IUnitOfWork unitOfWork;
+        //private IUnitOfWork unitOfWork;
+        private static UnitOfWork unitOfWork;
 
         public SignUp()
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public string CreateProfile(string Username, string salt, string hash)
+        public static string CreateProfile(string Username, string salt, string hash)
         {
-            
-            var person = unitOfWork.UserInformation.GetString(Username);
+            unitOfWork = new UnitOfWork(new ProfileContext());
+            const string errormessage = "Username already exists";
+            UserInformation person = null;
+            try
+            {
+                person = unitOfWork.UserInformation.GetString(Username);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
             if (person != null)
             {
-                const string errormessage = "Username already exists";
                 return errormessage;
             }
 
@@ -33,6 +42,7 @@ namespace ProfileConsole.Core.ServerCommunication
                 UserName = Username,
                 Login = new Login
                 {
+                    Username = Username,
                     Hash = hash,
                     Salt = salt
                 }
