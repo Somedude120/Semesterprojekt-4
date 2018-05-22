@@ -20,11 +20,9 @@ namespace ProfileConsole.Core.ServerCommunication
             var person = unitOfWork.UserInformation.GetString(Username);
             if(person.UserName == Username)
             { 
-                using (var db = new ProfileContext())
-                {
-                    person.Status = "Offline";
-                    unitOfWork.Complete();
-                }
+               person.Status = "Offline";
+               unitOfWork.Complete();
+                
             }
         }
 

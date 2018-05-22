@@ -7,17 +7,18 @@ using ProfileConsole.Persistence;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
-    public class GetFriends : IGetFriends
+    public class GetFriends //: IGetFriends
     {
-        private IUnitOfWork unitOfWork;
+        private static IUnitOfWork unitOfWork;
 
         public GetFriends()
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public List<String> GetFriendList(string Username)
+        public static List<String> GetFriendList(string Username)
         {
+            unitOfWork = new UnitOfWork(new ProfileContext());
             var person = unitOfWork.UserInformation.GetString(Username);
             List<String> tempFriendList = new List<string>();
             if (person.UserName == Username)

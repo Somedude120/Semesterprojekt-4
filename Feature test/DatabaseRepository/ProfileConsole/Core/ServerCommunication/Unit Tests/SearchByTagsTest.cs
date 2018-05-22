@@ -25,8 +25,7 @@ namespace ProfileConsole.Core.ServerCommunication.Unit_Tests
         [Test]
         public void Tag_Matches_UserName_Returns_Username()
         {
-            var tagMatchReturnUserName = _uut.RequestTag(TagName);
-            Assert.That(tagMatchReturnUserName.UserInformation, Is.EqualTo(FakeUserNameList));
+            Assert.That(_uut.RequestTag("Buddy")[1], Is.EqualTo("Fred5954"));
         }
     }
 }

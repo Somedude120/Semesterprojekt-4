@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>100</y>
+      <w>430</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+Client
+
+--
+ + static receiver : Receiver
+ + static sender : Sender
+ - static sslStream : SslStream
+ - _eventAggregator : IEventAggregator
+ - _userData : MyData
+ - static certificateErrors : Hashtable
+ + UserData(_userData = MyData.GetInstance) : MyData
+ 
+--
+ + SslTcpClient()
+ + ValidateServerCertificate(object sender, 
+ 	X509Certificate certificate, X509Chain chain, 
+ 	SslPolicyErrors sslPolicyErrors) : bool
+ + RunClient(string machineName, string serverName)
+ + SendMessage(string message)
+ + ReceiveMessages()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>110</y>
+      <w>430</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;class&gt;&gt;
+SaltedHash
+
+--
+
+
+
+--
+ + Hash {get;set;}
+ + Salt {get;set;}
+ + MakeSalt() : string
+ + ComputeHash(string salt, string password) : string
+ + GetStringSha256Hash(string text) : string</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

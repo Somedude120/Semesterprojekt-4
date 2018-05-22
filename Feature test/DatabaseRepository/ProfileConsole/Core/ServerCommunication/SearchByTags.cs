@@ -1,6 +1,7 @@
 ﻿using ProfileConsole.Core.Domain;
 using ProfileConsole.Persistence;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ProfileConsole.Core.ServerCommunication.Interfaces;
 
@@ -15,31 +16,19 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public Tags RequestTag(string tag)
+        public List<string> RequestTag(string tag)
         {
-            var person = unitOfWork.Tags.GetString(tag);
-            if(person.TagName == tag)
-            using (var db = new ProfileContext())
+
+            var tags = unitOfWork.Tags.GetUserNamesWithTag(tag);
+            var usernameList = new List<string>();
+
+            foreach (var name in tags.UserInformation)
             {
-                var profile =
-                    from p in db.Tags
-                    where p.TagName == tag 
-                    select p;
-
-                try
-                {
-                    foreach (var tags in profile)
-                    {
-                        return new Tags{ TagName = tags.TagName, UserInformation = tags.UserInformation};
-                    }
-                }
-                catch (Exception e)
-                {
-                    return null;
-                }
+                usernameList.Add(name.UserName);
             }
+            
+            return usernameList;
 
-            return null;
         }
     }
 }

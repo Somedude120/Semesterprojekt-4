@@ -16,6 +16,7 @@ using System.Threading;
 using Microsoft.Win32;
 using TLSNetworking;
 using ProfileConsole;
+using ProfileConsole.Core.Domain;
 using ProfileConsole.Core.ServerCommunication;
 using Salt_And_Hash;
 
@@ -115,7 +116,12 @@ namespace Examples.System.Net
 
         static string[] ParseMessage(string message)
         {
-            return message.Split(Constants.MiddleDelimiter);
+            return message.Split(Constants.GroupDelimiter);
+        }
+
+        static string[] ParseData(string dataCollection)
+        {
+            return dataCollection.Split(Constants.DataDelimiter);
         }
 
         static void StringHandler(string[] input, SslStream sslStream)
@@ -129,7 +135,6 @@ namespace Examples.System.Net
                     case "S":
                         if (input.Length == 3)
                         {
-
                             HandleSignup(input, sslStream);
                         }
                         break;
@@ -156,7 +161,7 @@ namespace Examples.System.Net
                         GetProfile(input[1], sslStream);
                         break;
                     case "U":   //Update profile
-                        UpdateProfile(input[1], sslStream);
+                        HandleUpdateProfile(input, sslStream);
                         break;
                     case "L":   //Login
                         Console.WriteLine("User is already logged in");
@@ -278,7 +283,7 @@ namespace Examples.System.Net
             if (userStreams.ContainsKey(input[1]))
             {
                 Console.WriteLine("From: " + login + " to " + input[1]);
-                sender.SendString(userStreams[input[1]], "R" + Constants.MiddleDelimiter + login + Constants.MiddleDelimiter + input[2]);
+                sender.SendString(userStreams[input[1]], "R" + Constants.GroupDelimiter + login + Constants.GroupDelimiter + input[2]);
             }
             else
             {
@@ -299,9 +304,16 @@ namespace Examples.System.Net
             }
         }
 
-        static void UpdateProfile(string input, SslStream sslStream)
+        static void HandleUpdateProfile(string[] input, SslStream sslStream)
         {
+            string[] tags = ParseData(input[3]);
 
+            string username = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
+
+            var tagList = new List<string>();
+            tagList.AddRange(tags);
+
+            UpdateProfile.UpdateProfileInformation(username, input[2], tagList);
         }
 
         static void FailedLogin()
