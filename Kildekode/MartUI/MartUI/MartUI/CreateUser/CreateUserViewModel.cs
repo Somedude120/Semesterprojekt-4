@@ -100,6 +100,12 @@ namespace MartUI.CreateUser
 
         private void CreateNewUser()
         {
+            string msg = Constants.RequestCreateUser + UserData.Username + Constants.MiddleDelimiter +
+                         UserData.Password;
+
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
+
+
             //THIS IS SERVER STUFF, ONLY FOR TESTING!!
             if (DatabaseDummy.UsernameExist(Username))
             {

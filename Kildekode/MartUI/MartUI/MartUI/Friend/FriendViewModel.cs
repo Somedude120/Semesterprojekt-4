@@ -247,32 +247,7 @@ namespace MartUI.Friend
 
     public class Converter : IValueConverter
     {
-        //public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        //{
-        //    var text1 = values[0].ToString();
-        //    var text2 = values[1].ToString();
-
-        //    if (text1 == text2)
-        //        return Visibility.Hidden;
-        //    else
-        //        return Visibility.Visible;
-        //}
-
-        //public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
+        
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
