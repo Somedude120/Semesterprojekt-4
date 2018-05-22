@@ -1,4 +1,8 @@
-﻿namespace MartUI.Profile
+﻿using System;
+using System.Windows;
+using MartUI.Events;
+
+namespace MartUI.Profile
 {
     /// <summary>
     /// Interaction logic for ProfileView.xaml
@@ -8,17 +12,6 @@
         public ProfileView()
         {
             InitializeComponent();
-
-            Tokenizer.TokenMatcher = text =>
-            {
-                if (text.EndsWith(" "))
-                {
-                    // Remove the ' '
-                    return text.Substring(0, text.Length - 1).Trim().ToUpper();
-                }
-
-                return null;
-            };
         }
     }
 }

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:MartUI.Helpers"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -50,7 +51,6 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Grid.Column="1"
@@ -77,18 +77,26 @@
                    VerticalScrollBarVisibility="Auto" 
                    MaxHeight="150"
                    Margin="20"/>
-        <helpers:TokenizingControl x:Name="Tokenizer" 
-                                   Grid.Column="1" Grid.Row="2"
-                                   Margin="10"
-                                   MaxWidth="200" MinWidth="200" MinHeight="26"
-                                   TokenTemplate="{DynamicResource NameTokenTemplate}"
-                                   MaxHeight="190"
-                                   VerticalScrollBarVisibility="Auto">
-            <!--<FlowDocument>
-                <Paragraph>
-                    <Run />
-                </Paragraph>
-            </FlowDocument>-->
-        </helpers:TokenizingControl>
+        <Button Grid.Row="2" Grid.Column="0"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Width="20">
+            <Button.OpacityMask>
+                <VisualBrush Visual="{iconPacks:Modern TagLabel}" />
+            </Button.OpacityMask>
+        </Button>
+        <TextBox 
+                Text="{Binding Tags}"
+                Grid.Column="1" Grid.Row="2"
+                Margin="10,10,20,10"
+                MinHeight="30"
+                MaxHeight="70"
+                VerticalScrollBarVisibility="Auto">
+        </TextBox>
+        <Button Content="Save"
+                Grid.Column="1" Grid.Row="3"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                Margin="15"
+                Command="{Binding SaveChanges}">
+        </Button>
     </Grid>
 </UserControl>
