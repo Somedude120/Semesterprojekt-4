@@ -6,14 +6,9 @@
     public static string Write = "W"; // W + MiddleDelimiter + Receiver + MiddleDelimiter + Message
     public static string MessageReceived = "R"; // R + MiddleDelimiter + Sender + MiddleDelimiter + Receiver + MiddleDelimiter + Message
     public static string LoginResponse = "LR"; // LR + MiddleDelimiter + Response
-<<<<<<< HEAD
-    public static string RequestLogin = "L"; // L + MiddleDelimiter + Sender
+    public static string RequestLogin = "L"; // L + MiddleDelimiter + Username + MiddleDelimiter + Password
     public static string Logout = "Q"; // Q
     public static string RequestCreateUser = "C"; // C + MiddleDelimiter + Username + MiddleDelimiter + Password
-    public static string Login = "L"; // L + MiddleDelimiter + Username + MiddleDelimiter + Password
-=======
-    public static string RequestLogin = "L"; // L + MiddleDelimiter + Username + MiddleDelimiter + Password
->>>>>>> d2f20d6e976ae233b3decd2ed9bd6ee4de78297c
     public static string Signup = "S"; // S + MiddleDelimiter + Username + MiddleDelimiter + Password
     public static string SignupResponse = "SR"; // SR + MiddleDelimiter + Username + MiddleDelimiter + Password
     public static string SendFriendRequest = "SFR"; // SFR + MiddelDelimiter + Username
