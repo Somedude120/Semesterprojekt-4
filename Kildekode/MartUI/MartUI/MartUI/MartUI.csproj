@@ -135,6 +135,8 @@
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="Login\ReplaceCharactersInPassword.cs" />
     <Compile Include="Networking\Client\Client.cs" />
+    <Compile Include="Networking\OtherProfile\OtherProfile.cs" />
+    <Compile Include="Networking\OtherProfile\Tags.cs" />
     <Compile Include="Networking\TLSNetworking\Constants.cs" />
     <Compile Include="Networking\TLSNetworking\Receiver.cs" />
     <Compile Include="Networking\TLSNetworking\Sender.cs" />
