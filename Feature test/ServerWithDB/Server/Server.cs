@@ -250,6 +250,8 @@ namespace Examples.System.Net
                 var keyFromValue = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
                 if (keyFromValue != null)
                 {
+                    Logout.LogoutDB(keyFromValue);
+
                     _mutex.WaitOne();
                     Console.WriteLine(userStreams.FirstOrDefault(x => x.Value == sslStream).Key + " logged out");
                     userStreams.Remove(userStreams.FirstOrDefault(x => x.Value == sslStream).Key);  //If user isn't logged in, dictionary remove will crash 
