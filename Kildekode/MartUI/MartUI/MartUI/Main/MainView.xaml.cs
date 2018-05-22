@@ -15,7 +15,9 @@ using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using MahApps.Metro.Controls;
+using MartUI.Events;
 using MartUI.Main;
+using Prism.Events;
 
 namespace MartUI
 {
@@ -26,9 +28,11 @@ namespace MartUI
     {
         private bool Maximized = false;
         private double PrevLeft, PrevTop, PrevWidth, PrevHeight;
+        private IEventAggregator _eventAggregator;
 
         public MainView()
         {
+            _eventAggregator = GetEventAggregator.Get();
             InitializeComponent();
             // ------ REMOVE THIS SHIT WHEN CHECKED OUT --------
             DataContext = new MainViewModel();
@@ -73,6 +77,7 @@ namespace MartUI
 
         private void ExitApplication(object sender, RoutedEventArgs e)
         {
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.Logout);
             Environment.Exit(0);
         }
 
