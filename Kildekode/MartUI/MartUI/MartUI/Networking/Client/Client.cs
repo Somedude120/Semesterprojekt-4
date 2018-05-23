@@ -146,63 +146,116 @@ namespace Examples.System.Net
         {
             while (true)
             {
+
                 string tempString = receiver.ReceiveString(sslStream);
                 string[] tempStringList = tempString.Split(Constants.MiddleDelimiter);
-                if (tempStringList[0] == Constants.MessageReceived)
+
+
+                switch (tempStringList[0])
                 {
-                    var message = new ChatModel();
-                    message.Message = tempStringList[2];
-                    message.Sender = tempStringList[1];
-                    message.Receiver = UserData.Username;
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
-                    });
+                    case Constants.MessageReceived:
+                        var message = new ChatModel();
+                        message.Message = tempStringList[2];
+                        message.Sender = tempStringList[1];
+                        message.Receiver = UserData.Username;
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                        });
+                        break;
+                    case Constants.FriendRequestReceived:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<FriendRequestReceivedEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    case Constants.RemoveFriendReceived:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    case Constants.NotificationReceived:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    case Constants.LoginResponse:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<LoginResponseEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    case Constants.Signup:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<SignupResponseEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    case Constants.FriendRequestDeclined:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<FriendRequestDeclinedEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+
                 }
+                //if (tempStringList[0] == Constants.MessageReceived)
+                //{
+                //    var message = new ChatModel();
+                //    message.Message = tempStringList[2];
+                //    message.Sender = tempStringList[1];
+                //    message.Receiver = UserData.Username;
+                //    Application.Current.Dispatcher.Invoke(() =>
+                //    {
+                //        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                //    });
+                //}
                 //Receive friendrequest
-                else if (tempStringList[0] == Constants.FriendRequestReceived)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<FriendRequestReceivedEvent>().Publish(tempStringList[1]);
-                    });
-                }
+                //else if (tempStringList[0] == Constants.FriendRequestReceived)
+                //{
+                //    Application.Current.Dispatcher.Invoke(() =>
+                //    {
+                //        _eventAggregator.GetEvent<FriendRequestReceivedEvent>().Publish(tempStringList[1]);
+                //    });
+                //}
                 //Delete/Remove friend
-                else if (tempStringList[0] == Constants.RemoveFriendReceived)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Publish(tempStringList[1]);
-                    });
-                }
-                else if (tempStringList[0] == Constants.NotificationReceived)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(tempStringList[1]);
-                    });
-                }
-                else if (tempStringList[0] == Constants.LoginResponse)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<LoginResponseEvent>().Publish(tempStringList[1]);
-                    });
-                }
-                else if (tempStringList[0] == Constants.Signup)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<SignupResponseEvent>().Publish(tempStringList[1]);
-                    });
-                }
-                else if (tempStringList[0] == Constants.FriendRequestDeclined)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<FriendRequestDeclinedEvent>().Publish(tempStringList[1]);
-                    });
-                }
+                //else if (tempStringList[0] == Constants.RemoveFriendReceived)
+                //{
+                //    Application.Current.Dispatcher.Invoke(() =>
+                //    {
+                //        _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Publish(tempStringList[1]);
+                //    });
+                //}
+                //else if (tempStringList[0] == Constants.NotificationReceived)
+                //{
+                //    Application.Current.Dispatcher.Invoke(() =>
+                //    {
+                //        _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(tempStringList[1]);
+                //    });
+                //}
+                //else if (tempStringList[0] == Constants.LoginResponse)
+                //{
+                //    Application.Current.Dispatcher.Invoke(() =>
+                //    {
+                //        _eventAggregator.GetEvent<LoginResponseEvent>().Publish(tempStringList[1]);
+                //    });
+                //}
+                //else if (tempStringList[0] == Constants.Signup)
+                //{
+                //    Application.Current.Dispatcher.Invoke(() =>
+                //    {
+                //        _eventAggregator.GetEvent<SignupResponseEvent>().Publish(tempStringList[1]);
+                //    });
+                //}
+                //else if (tempStringList[0] == Constants.FriendRequestDeclined)
+                //{
+                //    Application.Current.Dispatcher.Invoke(() =>
+                //    {
+                //        _eventAggregator.GetEvent<FriendRequestDeclinedEvent>().Publish(tempStringList[1]);
+                //    });
+                //}
             }
         }
 

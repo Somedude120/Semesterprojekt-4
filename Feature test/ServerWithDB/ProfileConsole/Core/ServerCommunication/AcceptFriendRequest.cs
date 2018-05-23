@@ -8,17 +8,18 @@ using ProfileConsole.Core.ServerCommunication.Interfaces;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
-    public class AcceptFriendRequest : IAcceptFriendRequest
+    public class AcceptFriendRequest //: IAcceptFriendRequest
     {
-        private IUnitOfWork unitOfWork;
+        private static IUnitOfWork unitOfWork;
 
         public AcceptFriendRequest()
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public void AcceptRequest(string Username, string newFriend)
+        public static void AcceptRequest(string Username, string newFriend)
         {
+            unitOfWork = new UnitOfWork(new ProfileContext());
             var friendList = unitOfWork.FriendList.GetAll();
 
             foreach (var friend in friendList)

@@ -1,9 +1,10 @@
-﻿using ProfileConsole.Core.Domain;
+﻿using System.Collections.Generic;
+using ProfileConsole.Core.Domain;
 
 namespace ProfileConsole.Core.ServerCommunication.Interfaces
 {
-    interface ISearchByTags
+    public interface ISearchByTags
     {
-        Tags RequestTag(string tag);
+        List<string> RequestTag(string tag);
     }
 }

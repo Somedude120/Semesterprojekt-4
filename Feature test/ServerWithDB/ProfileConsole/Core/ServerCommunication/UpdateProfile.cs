@@ -22,11 +22,25 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
 
             UserInformation person = null;
-
+            var tagsinDB = unitOfWork.Tags.GetAll();
             var tags = new List<Tags>();
             foreach (var tag in Tagslist)
             {
-                tags.Add(new Tags(){TagName = tag});
+                bool isInDB = false;
+                foreach (var dbTag in tagsinDB)
+                {
+                    if (dbTag.TagName == tag)
+                    {
+                        isInDB = true;
+                        break;
+                    }
+                }
+
+                if (isInDB == false)
+                {
+                    tags.Add(new Tags(){TagName = tag});
+                }
+                
             }
 
             try
