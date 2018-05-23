@@ -175,6 +175,9 @@ namespace MartUI.Friend
                     friendInList = true;
                     break;
                 }
+
+                if (Username == "")
+                    friendInList = true;
             }
 
             if (!friendInList)
@@ -197,6 +200,9 @@ namespace MartUI.Friend
                     friendInList = true;
                     break;
                 }
+
+                if (username == "")
+                    friendInList = true;
             }
 
             if (!friendInList)
@@ -224,6 +230,9 @@ namespace MartUI.Friend
                     friendInList = true;
                     break;
                 }
+
+                if (username == "")
+                    friendInList = true;
             }
             if (!friendInList)
             {
