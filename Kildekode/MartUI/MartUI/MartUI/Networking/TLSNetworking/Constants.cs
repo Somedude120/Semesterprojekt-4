@@ -1,8 +1,12 @@
 ﻿public static class Constants
 {
-    public static string EndDelimiter = ((char)29).ToString();
-    //public static string GroupDelimiter = ((char)31).ToString();
-    public static char GroupDelimiter = (char)59;
+    //Delimiters
+    public const char EndDelimiter = (char)29;
+    //public const char MiddleDelimiter = (char)30;
+    public const char GroupDelimiter = (char)59;
+    //public const char DataDelimiter = (char) 31;
+    public const char DataDelimiter = (char)58;
+
     public static string Write = "W"; // W + GroupDelimiter + Receiver + GroupDelimiter + Message
     public static string MessageReceived = "R"; // R + GroupDelimiter + Sender + GroupDelimiter + Receiver + GroupDelimiter + Message
     public static string LoginResponse = "LR"; // LR + GroupDelimiter + Response
