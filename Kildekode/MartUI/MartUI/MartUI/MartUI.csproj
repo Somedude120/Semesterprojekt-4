@@ -104,9 +104,15 @@
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
     <Compile Include="Events\AcceptedFriendRequestEvent.cs" />
+    <Compile Include="Events\AddFriendFromTagEvent.cs" />
     <Compile Include="Events\CreateUserResponseEvent.cs" />
     <Compile Include="Events\FriendRequestDeclinedEvent.cs" />
     <Compile Include="Events\FriendRequestReceivedEvent.cs" />
+<<<<<<< HEAD
+    <Compile Include="Events\GetTagEvent.cs" />
+=======
+    <Compile Include="Events\GetUserInfo.cs" />
+>>>>>>> 077ea246732fb0cfee1c1ac635d7dfd25eb3b062
     <Compile Include="Events\InsertTagsInProfile.cs" />
     <Compile Include="Events\LoginResponseEvent.cs" />
     <Compile Include="Events\NewMessageEvent.cs" />
@@ -159,6 +165,10 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings\SettingsViewModel.cs" />
+    <Compile Include="Tag\TagView.xaml.cs">
+      <DependentUpon>TagView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tag\TagViewModel.cs" />
     <Page Include="Chat\ChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -231,6 +241,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Settings\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tag\TagView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

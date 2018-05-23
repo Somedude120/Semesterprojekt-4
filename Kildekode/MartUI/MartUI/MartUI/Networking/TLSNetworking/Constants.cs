@@ -31,4 +31,11 @@
     public const string RemoveGroup = "RG"; // RG + GroupDelimiter + GroupName
     public const string SendGroupRequest = "SGR"; // SGR + GroupDelimiter + GroupName
     public const string GetProfile = "P"; // P + GroupDelimiter + Username
+<<<<<<< HEAD
+    public const string SendTag = "ST"; // ST + GroupDelimiter + Tag
+    public const string GetUsernamesByTag = "GUBT"; // GUBT + GroupDelimiter + Username + DataDelimiter + Username + DataDelimiter + Username + ...
+    public const string GetOldMessages = "GOM"; // GOM;
+=======
+    public const string GetFriendList = "FL"; // FL + GroupDelimiter + User + GroupDelimiter + Friends
+>>>>>>> 077ea246732fb0cfee1c1ac635d7dfd25eb3b062
 }
