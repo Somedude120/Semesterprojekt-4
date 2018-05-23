@@ -73,14 +73,14 @@ namespace MartUI.Login
             {
                 case "OK":
                     // Fullpage is null, show friendlist and initialize chatview
-                    _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish("RU");
+                    _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestProfile 
+                                                                                  + Constants.GroupDelimiter
+                                                                                  + UserData.Username);
+                    _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
+                                                                                  + Constants.GroupDelimiter
+                                                                                  + UserData.Username);
                     _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
                     _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
-
-
-                    //_eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
-                    //_eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
-                    //_eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
                     break;
                 case "NOK":
                     MessageBox.Show("Wrong username or password!");
@@ -91,14 +91,25 @@ namespace MartUI.Login
         private void FriendListInfo(string s)
         {
             _eventAggregator.GetEvent<GetFriendListEvent>().Publish(s);
+
+            // Change view to "Main View"
+            _eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
+            _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
+
+            // Unsubscribe events to be able to handle new login request
+            _eventAggregator.GetEvent<GetProfile>().Unsubscribe(ProfileInfo);
+            _eventAggregator.GetEvent<GetFriendList>().Unsubscribe(FriendListInfo);
         }
 
         private void ProfileInfo(string profile)
         {
+            // Get full profile info (description + tags)
             var fullProfile = profile.Split(Constants.GroupDelimiter);
 
             UserData.Description = fullProfile[0];
 
+            // Split tags into list
             var tagsOnly = fullProfile[1].Split(Constants.DataDelimiter).ToList();
 
             UserData.Tags = tagsOnly;
@@ -115,8 +126,6 @@ namespace MartUI.Login
             var msg = Constants.LoginResponse + Constants.GroupDelimiter + UserData.Username + Constants.GroupDelimiter + UserData.Password;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
-
-
 
             // Validate name and password with server
             // Navigate to main window (friend list shows, etc).
