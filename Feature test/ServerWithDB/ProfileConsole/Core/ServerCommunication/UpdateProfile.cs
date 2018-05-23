@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using Castle.Core.Internal;
+using NSubstitute;
 using ProfileConsole.Core.Domain;
 using ProfileConsole.Core.ServerCommunication.Interfaces;
 using ProfileConsole.Persistence;
@@ -24,24 +27,6 @@ namespace ProfileConsole.Core.ServerCommunication
             UserInformation person = null;
             var tagsinDB = unitOfWork.Tags.GetAll();
             var tags = new List<Tags>();
-            foreach (var tag in Tagslist)
-            {
-                bool isInDB = false;
-                foreach (var dbTag in tagsinDB)
-                {
-                    if (dbTag.TagName == tag)
-                    {
-                        isInDB = true;
-                        break;
-                    }
-                }
-
-                if (isInDB == false)
-                {
-                    tags.Add(new Tags(){TagName = tag});
-                }
-                
-            }
 
             try
             {
@@ -52,21 +37,101 @@ namespace ProfileConsole.Core.ServerCommunication
 
             }
 
-            if (person.UserName == Username)
-            {
-                person.Description = Description;
-                person.Tags = tags;
-                unitOfWork.Complete();
+            var isInList = false;
+            //if (tagsinDB.IsNullOrEmpty())
+            //{
+            //    foreach (var tag in Tagslist )
+            //    {
+            //        person.Tags.Add(new Tags() { TagName = tag });
+            //        //unitOfWork.Tags.Add(new Tags(){TagName = tag});
+            //    }
+                
+            //}
+            //else
+            //{
+                foreach (var newTag in Tagslist)
+                {
+
+                    foreach (var tag in tagsinDB)
+                    {
+                        if (tag.TagName == newTag)
+                        {
+                            isInList = true;
+                            person.Tags.Add(tag);
+                            break;
+                        }
+
+
+                        //else 
+                        //{
+                        //    person.Tags.Add(new Tags() { TagName = newTag });
+                        //}
+                    }
+
+                    if (!isInList)
+                    {
+                        person.Tags.Add(new Tags() { TagName = newTag });
+                    }
+
             }
-                        
-                 
 
-                    
+                    //if (isInList)
+                    //{
+                    //    person.Tags.Add();
+                    //    //person.Tags.Add(new Tags() { TagName = newTag });
+                    //    isInList = false;
 
-                
+                    //}
+                    //else
+                    //{
+                    //    person.Tags.Add(new Tags() { TagName = newTag });
+                    //    //unitOfWork.Tags.Add(new Tags() {TagName = newTag});
+                    //    //tags.Add(new Tags() {TagName = newTag});
+                    //}
+            //}
 
-                
+            //if (person.Tags.IsNullOrEmpty())
+            //{
+            //    foreach (var tag in tags)
+            //    {
+            //        person.Tags.Add(tag);                    
+            //    }
+            //}
+            //else
+            //{ 
+            //    foreach (var newTag in tags)
+            //    {
+
+            //        foreach (var tag in person.Tags)
+            //        {
+            //            if (tag.TagName == newTag.TagName)
+            //            {
+            //                isInList = true;
+            //                break;
+            //            }
+            //        }
+            //        if (!isInList)
+            //        {
+            //            //person.Tags.Add(new Tags(){TagName = newTag.TagName});
+            //        }
+            //        isInList = false;
+
+            //    }
+            //}
+
+            person.Description = Description;
             
+            unitOfWork.Complete();
+
+
+
+
+
+
+
+
+
+
         }
     }
 }
