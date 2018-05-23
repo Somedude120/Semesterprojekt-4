@@ -128,7 +128,7 @@ namespace MartUI.Login
 
         private bool LoginCanExecute()
         {
-            return !string.IsNullOrWhiteSpace(Username) && Username.Length > 4
+            return !string.IsNullOrWhiteSpace(Username) && Username.Length > 1
                                                         && !string.IsNullOrWhiteSpace(Password) && Password.Length > 1;
         }
 
