@@ -33,6 +33,7 @@ namespace MartUI.Friend
         private ICommand _addFriendCommand;
         private ICommand _removeFriendCommand;
         private ICommand _showNotificationsCommand;
+        private ICommand _viewProfileCommand;
         private string _username;
         private MyData _userData;
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
@@ -60,6 +61,7 @@ namespace MartUI.Friend
 
         //public Brush Background => NotificationReceived ? Brushes.White : Brushes.Red;
         public ICommand ChooseFriendCommand => _chooseFriendCommand ?? (_chooseFriendCommand = new DelegateCommand<FriendModel>(SelectFriend));
+        public ICommand ViewProfileCommand => _viewProfileCommand ?? (_viewProfileCommand = new DelegateCommand<FriendModel>(HandleViewProfile));
 
         public FriendViewModel()
         {
@@ -94,6 +96,7 @@ namespace MartUI.Friend
 
         private void HandleGetFriendList(string friendlist)
         {
+            FriendList.Clear();
             string[] temp = friendlist.Split(Constants.DataDelimiter);
             foreach (var f in temp)
             {
@@ -196,6 +199,11 @@ namespace MartUI.Friend
             }
 
             Username = ""; //Clears the AddFriendTextbox after pressing enter
+        }
+
+        private void HandleViewProfile(FriendModel friend)
+        {
+           // _eventAggregator.GetEvent<>().Publish(friend.Username);
         }
 
         public void AcceptedFriendRequest(string username)

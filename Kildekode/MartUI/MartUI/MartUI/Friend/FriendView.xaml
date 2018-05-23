@@ -50,6 +50,7 @@
                             Margin="0,3" Width="185" Style="{StaticResource RoundCornerButton}">
                                 <Button.ContextMenu>
                                     <ContextMenu>
+                                        <MenuItem Header="View Profile" Command="{Binding Source={StaticResource Proxy}, Path=Data.ViewProfileCommand}" CommandParameter="{Binding}"/>
                                         <MenuItem Header="Remove" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveFriendCommand}" CommandParameter="{Binding}"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>

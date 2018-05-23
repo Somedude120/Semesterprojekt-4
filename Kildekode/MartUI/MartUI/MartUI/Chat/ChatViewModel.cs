@@ -76,15 +76,18 @@ namespace MartUI.Chat
         private void SendMessage()
         {
             //Send TextToSend + Username/Recipient
-            var message = new ChatModel();
-            message.Sender = UserData.Username;
-            message.Message = TextToSend;
-            message.MessagePosition = "Right";
-            message.Receiver = User.Username;
-            var msg = Constants.Write + Constants.GroupDelimiter + message.Receiver + Constants.GroupDelimiter + message.Message;
-            _eventAggregator.GetEvent<NewMessageEvent>().Publish(message);
-            Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
-            TextToSend = "";
+            if (TextToSend != "")
+            {
+                var message = new ChatModel();
+                message.Sender = UserData.Username;
+                message.Message = TextToSend;
+                message.MessagePosition = "Right";
+                message.Receiver = User.Username;
+                var msg = Constants.Write + Constants.GroupDelimiter + message.Receiver + Constants.GroupDelimiter + message.Message;
+                _eventAggregator.GetEvent<NewMessageEvent>().Publish(message);
+                Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
+                TextToSend = "";
+            }
         }
 
         public ICommand SendMessageCommand => _sendMessageCommand ?? (_sendMessageCommand = new DelegateCommand(SendMessage));
