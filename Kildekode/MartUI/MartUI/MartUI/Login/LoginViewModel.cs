@@ -119,7 +119,7 @@ namespace MartUI.Login
         private void ProfileInfo(string profile)
         {
             // Get full profile info (description + tags)
-            MessageBox.Show(profile);
+           // MessageBox.Show(profile);
             var fullProfile = profile.Split(Constants.GroupDelimiter).ToList();
 
             UserData.Description = fullProfile[1];
