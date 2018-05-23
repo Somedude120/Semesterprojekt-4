@@ -51,9 +51,12 @@ namespace MartUI.Main
             _eventAggregator.GetEvent<ChangeSideBarPage>().Subscribe(ChangeSideBarView);
             _eventAggregator.GetEvent<NotificationReceivedEvent>().Subscribe(Notify);
 
+            //_eventAggregator.GetEvent<ReturnToProfile>().Subscribe(RevertToMainUser);
+
             ViewList.Add(new LoginViewModel());
             ViewList.Add(new FriendViewModel());
             ViewList.Add(new ChatViewModel());
+            ViewList.Add(new ProfileViewModel());
             //ViewList.Add(new GroupViewModel());
 
             FullView = ViewList[0];
@@ -70,6 +73,22 @@ namespace MartUI.Main
             //FullView = ViewList[0];
             //FullView = ViewList[0];
         }
+
+        //private void RevertToMainUser(string s)
+        //{
+        //    var fullInfo = s.Split(Constants.GroupDelimiter);
+
+        //    MyData.GetInstance().Username = fullInfo[0];
+        //    MyData.GetInstance().Description = fullInfo[1];
+
+        //    var tags = fullInfo[2].Split(',').ToList();
+
+        //    foreach (var tag in tags)
+        //    {
+        //        MyData.GetInstance().Tags.Add(tag);
+        //    }
+
+        //}
 
         private void Notify(string unused)
         {

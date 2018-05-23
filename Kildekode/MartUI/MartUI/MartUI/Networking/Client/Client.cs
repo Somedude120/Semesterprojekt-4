@@ -260,7 +260,9 @@ namespace Examples.System.Net
                         //If it receives ok from server, get profile
                         Application.Current.Dispatcher.Invoke(() =>
                         {
-                            _eventAggregator.GetEvent<GetProfile>().Publish(tempStringList[1] + Constants.GroupDelimiter +  tempStringList[2]);
+                            _eventAggregator.GetEvent<GetProfile>().Publish(tempStringList[1] + Constants.GroupDelimiter +  
+                                                                            tempStringList[2] + Constants.GroupDelimiter + 
+                                                                            tempStringList[3]);
 
                         });
                         break;

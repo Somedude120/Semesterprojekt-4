@@ -101,7 +101,13 @@ namespace MartUI.Profile
 
         public ProfileViewModel()
         {
+            //OtherUser = false;
             _eventAggregator.GetEvent<ShowOtherUserProfile>().Subscribe(ShowFriendProfile);
+
+            if (!OtherUser)
+            {
+                Username = UserData.Username;
+            }
         }
 
         private void ShowFriendProfile(string username)
@@ -109,9 +115,9 @@ namespace MartUI.Profile
             OtherUser = true;
             _eventAggregator.GetEvent<GetProfile>().Subscribe(Profile);
 
-            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestProfile +
-                                                                          + Constants.GroupDelimiter
-                                                                          + username);
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestProfile + 
+                                                                          Constants.GroupDelimiter + 
+                                                                          username);
         }
 
         private void Profile(string profile)
@@ -154,10 +160,13 @@ namespace MartUI.Profile
 
             var tagsToSend = ConvertTagsToString(Constants.DataDelimiter);
 
-            var msg = Constants.UpdateProfile + UserData.Username + Constants.GroupDelimiter + UserData.Description
+            var msg = Constants.UpdateProfile + Constants.GroupDelimiter + 
+                      UserData.Username + Constants.GroupDelimiter + UserData.Description
                       + Constants.GroupDelimiter + tagsToSend;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
+
+            //OtherUser = false;
             // Send profile to server
         }
 
@@ -192,7 +201,16 @@ namespace MartUI.Profile
             _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new BlankSettingViewModel());
 
+
+            Username = UserData.Username;
+            Description = UserData.Description;
+            Tags = ConvertTagsToString(',');
+
             OtherUser = false;
+
+            //_eventAggregator.GetEvent<ReturnToProfile>().Publish(Username + Constants.GroupDelimiter +
+            //                                                     Description + Constants.GroupDelimiter +
+            //                                                     Tags);
         }
     }
 }

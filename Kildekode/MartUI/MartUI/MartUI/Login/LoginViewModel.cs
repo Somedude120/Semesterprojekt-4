@@ -112,14 +112,18 @@ namespace MartUI.Login
         private void ProfileInfo(string profile)
         {
             // Get full profile info (description + tags)
-            var fullProfile = profile.Split(Constants.GroupDelimiter);
+            MessageBox.Show(profile);
+            var fullProfile = profile.Split(Constants.GroupDelimiter).ToList();
 
-            UserData.Description = fullProfile[0];
+            UserData.Description = fullProfile[1];
 
             // Split tags into list
-            var tagsOnly = fullProfile[1].Split(Constants.DataDelimiter).ToList();
+            if (fullProfile.Count == 3)
+            {
+                var tagsOnly = fullProfile[2].Split(Constants.DataDelimiter).ToList();
+                UserData.Tags = tagsOnly;
+            }
 
-            UserData.Tags = tagsOnly;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
                                                                           + Constants.GroupDelimiter
