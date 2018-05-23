@@ -1,11 +1,14 @@
 ﻿public static class Constants
 {
     //Delimiters
-    public const char EndDelimiter = (char)29;
+    public const char EndDelimiter = (char)29;  //Ends all messages
     //public const char MiddleDelimiter = (char)30;
-    public const char GroupDelimiter = (char)59;
+    public const char GroupDelimiter = (char)59;    //Splits a message into its different groups of data
     //public const char DataDelimiter = (char) 31;
-    public const char DataDelimiter = (char)58;
+    public const char DataDelimiter = (char)58; //Splits a data group into its different data parts
+
+    public const string MessageAcknowledged = "OK"; //Will be sent by server when some specific message types are acknowledged
+    public const string MessageNotAcknowledged = "NOK"; //Will be sent by server when some specific message types are not acknowledged
 
     public const string Write = "W"; // W + GroupDelimiter + Receiver + GroupDelimiter + Message
     public const string MessageReceived = "R"; // R + GroupDelimiter + Sender + GroupDelimiter + Receiver + GroupDelimiter + Message
