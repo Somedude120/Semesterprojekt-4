@@ -170,6 +170,12 @@ namespace Examples.System.Net
                     case Constants.Logout:   //Logout
                         HandleLogout(sslStream);
                         break;
+                    case Constants.SendFriendRequest:
+                        HandleSendFriendRequest(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
+                        break;
+                    case Constants.AcceptFriendRequest:
+                        HandleFriendRequestAccept(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
+                        break;
                     default:
                         Console.WriteLine("String is not recognized");
                         break;
@@ -280,23 +286,25 @@ namespace Examples.System.Net
         static void HandleMessage(string[] input, string login, SslStream sslStream)
         {
             //Check if users are friends
-
-
-            //Check if user is online
+            if (GetAllMsgs.AreUsersFriends(login, input[1]))
+            {
+                //Check if user is online
                 //Send to user
-            if (userStreams.ContainsKey(input[1]))  //If user is online
-            {
-                Console.WriteLine("From: " + login + " to " + input[1]);
-                sender.SendString(userStreams[input[1]], "R" + Constants.GroupDelimiter + login + Constants.GroupDelimiter + input[2]);
-            }
-            else    //User is not online
-            {
-                Console.WriteLine("User " + input[1] + " isn't logged in");
-                sender.SendString(userStreams[login], "User: " + input[1] + " isn't logged in");
-            }
+                if (userStreams.ContainsKey(input[1])) //If user is online
+                {
+                    Console.WriteLine("From: " + login + " to " + input[1]);
+                    sender.SendString(userStreams[input[1]],
+                        "R" + Constants.GroupDelimiter + login + Constants.GroupDelimiter + input[2]);
+                }
+                else //User is not online
+                {
+                    Console.WriteLine("User " + input[1] + " isn't logged in");
+                    sender.SendString(userStreams[login], "User: " + input[1] + " isn't logged in");
+                }
 
-            //Save to database
-
+                //Save to database
+                SaveMessages.SaveIncomingMessage(login, input[1], input[2]);
+            }
         }
 
         static void GetProfile(string input, SslStream sslStream)
@@ -321,6 +329,16 @@ namespace Examples.System.Net
             tagList.AddRange(tags);
 
             UpdateProfile.UpdateProfileInformation(username, input[2], tagList);
+        }
+
+        static void HandleSendFriendRequest(string[] input, string login, SslStream sslStream)
+        {
+            AddFriend.AddFriendRequest(login, input[1]);
+        }
+
+        static void HandleFriendRequestAccept(string[] input, string login, SslStream sslStream)
+        {
+            AcceptFriendRequest.AcceptRequest(login, input[1]);
         }
 
         static void FailedLogin()
