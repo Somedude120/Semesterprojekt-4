@@ -248,6 +248,21 @@ namespace Examples.System.Net
                         _eventAggregator.GetEvent<LoginResponseEvent>().Publish(tempStringList[1]);
                     });
                     break;
+                case Constants.GetProfile:
+                    //If it receives ok from server, get profile
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        //If Ok, receive profile
+
+                    });
+                    break;
+                case Constants.GetFriendList:
+                    //If received Profile
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        //If Ok, receive profile
+                    });
+                    break;
                 case Constants.Signup:
                     Application.Current.Dispatcher.Invoke(() =>
                     {
