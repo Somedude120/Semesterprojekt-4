@@ -18,11 +18,8 @@ using System.Reflection;
 using Examples.System.Net;
 using MartUI.Chat;
 using MartUI.FriendNotification;
-<<<<<<< HEAD
 using MartUI.Group;
-=======
 using MartUI.Me;
->>>>>>> 6755574c64b5ddbad44cbd2e49635802642b3d7d
 using MartUI.Profile;
 using MartUI.Settings;
 using MartUI.Settings.BlankSetting;
