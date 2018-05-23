@@ -19,10 +19,14 @@ namespace ProfileConsole
                 
                 var userTags = unitOfWork.UserInformation.GetTagsWithUserInformation("Farto");
                 var userGroups = unitOfWork.UserInformation.GetChatGroupsWithUserInformation("Farto");
-               
 
 
+                var temp = GetAllMsgs.RequestAllMsgs("Fred5954");
 
+                foreach (var message in temp)
+                {
+                    Console.WriteLine(message.Receiver + message.Sender + message.Message);
+                }
                 //Console.WriteLine("\nGroupName: " + chatGroups.GroupName);
                 //foreach (var item in chatGroups.Chat)
                 //{

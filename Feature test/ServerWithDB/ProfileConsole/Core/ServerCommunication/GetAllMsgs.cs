@@ -1,50 +1,37 @@
-﻿//using System;
-//using System.Linq;
-//using ProfileConsole.Core.Domain;
-//using ProfileConsole.Core.ServerCommunication.Interfaces;
-//using ProfileConsole.Persistence;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ProfileConsole.Core.Domain;
+using ProfileConsole.Core.ServerCommunication.Interfaces;
+using ProfileConsole.Persistence;
 
-//namespace ProfileConsole.Core.ServerCommunication
-//{
-//    //Gets all messages saved in the database
-//    public class GetAllMsgs : IGetAllMsgs
-//    {
-//        private IUnitOfWork unitOfWork;
+namespace ProfileConsole.Core.ServerCommunication
+{
+    //Gets all messages saved in the database
+    public class GetAllMsgs //: IGetAllMsgs
+    {
+        private static IUnitOfWork unitOfWork;
 
-//        public GetAllMsgs()
-//        {
-//            unitOfWork = new UnitOfWork(new ProfileContext());
-//        }
+        public GetAllMsgs()
+        {
+            unitOfWork = new UnitOfWork(new ProfileContext());
+        }
 
-//        public Chat RequestAllMsgs(int groupId, int messageNumber, string message, string sender)
-//        {
-//            var chat = unitOfWork.Chat.GetId(groupId);
+        public static List<Chat> RequestAllMsgs(string username)
+        {
+            unitOfWork = new UnitOfWork(new ProfileContext());
 
-//            if (chat.GroupId == groupId)
-//            {
-//                using (var db = new ProfileContext())
-//                {
-//                    var chats =
-//                        from c in db.Chat
-//                        where c.GroupId == groupId
-//                        select c;
+            var messages = unitOfWork.Chat.GetAll();
+            var chatList = new List<Chat>();
+            foreach (var message in messages)
+            {
+                if (message.Receiver == username || message.Sender == username)
+                    chatList.Add(message);
+            }
 
-//                    try
-//                    {
-//                        foreach (var cha in chats)
-//                        {
-//                            Chat myChat = new Chat(cha.GroupId, cha.MessageNumber, cha.Message, cha.Sender);
-//                            return myChat;
-//                        }
-//                    }
-//                    catch (Exception e)
-//                    {
-//                        return null;
-//                    }
-//                }
-//            }
+            return chatList;
 
-//            return null;
-//        }
-//    }
-//}
+
+        }
+    }
+}
