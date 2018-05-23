@@ -57,22 +57,19 @@ namespace MartUI.Main
             ViewList.Add(new LoginViewModel());
             ViewList.Add(new FriendViewModel());
             ViewList.Add(new ChatViewModel());
-<<<<<<< HEAD
             //ViewList.Add(new GroupViewModel());
 
             FriendListView = ViewList[1];
             //_eventAggregator.GetEvent<ChangeSideBarPage>().Publish(new GroupViewModel());
 
             //SideBarView = ViewList[3];
-=======
             //ViewList.Add(new ProfileViewModel());
             ViewList.Add(new SettingsViewModel());
 
             FriendListView = ViewList[1];
 
-            MyData.GetInstance().Tags.Add("sup");
-            MyData.GetInstance().Tags.Add("heheheh");
->>>>>>> 6755574c64b5ddbad44cbd2e49635802642b3d7d
+            //MyData.GetInstance().Tags.Add("sup");
+            //MyData.GetInstance().Tags.Add("heheheh");
             //FullView = ViewList[0];
             //FullView = ViewList[0];
         }

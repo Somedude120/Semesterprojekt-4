@@ -156,7 +156,7 @@ namespace MartUI.Friend
 
             if (!friendInList)
             {
-                var message = Constants.SendFriendRequest + Constants.MiddleDelimiter + Username;
+                var message = Constants.SendFriendRequest + Constants.GroupDelimiter + Username;
                 _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             }
 
@@ -187,7 +187,7 @@ namespace MartUI.Friend
             if (FriendList.Contains(friend))
             {
                 FriendList.Remove(friend);
-                var message = Constants.RemoveFriend + Constants.MiddleDelimiter + Username;
+                var message = Constants.RemoveFriend + Constants.GroupDelimiter + Username;
                 _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             }
             else
@@ -246,15 +246,15 @@ namespace MartUI.Friend
             DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
     }
 
-    public class BlinkConverter : IMultiValueConverter
+    public class Converter : IValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            MessageBox.Show(values.ToString());
-            return false;
+            throw new NotImplementedException();
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

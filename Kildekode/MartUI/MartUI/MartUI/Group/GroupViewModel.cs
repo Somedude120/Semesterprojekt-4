@@ -135,7 +135,7 @@
 
 //            if (!groupInList)
 //            {
-//                var message = Constants.SendGroupRequest + Constants.MiddleDelimiter + GroupName;
+//                var message = Constants.SendGroupRequest + Constants.GroupDelimiter + GroupName;
 //                _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
 //            }
 
@@ -166,7 +166,7 @@
 //            if (GroupList.Contains(group))
 //            {
 //                GroupList.Remove(group);
-//                var message = Constants.RemoveGroup + Constants.MiddleDelimiter + GroupName;
+//                var message = Constants.RemoveGroup + Constants.GroupDelimiter + GroupName;
 //                _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
 //            }
 //            else
