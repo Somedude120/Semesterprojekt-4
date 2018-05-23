@@ -47,12 +47,18 @@ namespace MartUI.Tag
 
         private void SearchTag()
         {
-            string message = Constants.GetUsernamesByTag
+            string message = Constants.GetUsernamesByTag + Tag;
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
+            Tag = "";
         }
 
         private void HandleGetTag(string username)
         {
-            _userList.Add(username);
+            string[] temp = username.Split(Constants.DataDelimiter);
+            foreach (var u in temp)
+            {
+                _userList.Add(username);
+            }
         }
 
         private void AddFriendFromTag(string username)

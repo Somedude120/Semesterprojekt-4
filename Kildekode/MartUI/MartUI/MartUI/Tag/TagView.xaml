@@ -13,18 +13,48 @@
         </Grid.RowDefinitions>
         
         <Grid Row="0">
-            <TextBox Width="144" HorizontalAlignment="Left" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" x:Name="AddFriendTextBox" Visibility="Hidden"
+            <TextBox Width="180" HorizontalAlignment="Left" Text="{Binding Tag, UpdateSourceTrigger=PropertyChanged}"
                      MouseDoubleClick="SelectAddress"
                      GotKeyboardFocus="SelectAddress"
                      PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
                      Margin="5,0,5,0">
                 <TextBox.InputBindings>
-                    <KeyBinding Command="{Binding }" Key="Return"/>
+                    <KeyBinding Command="{Binding SearchTagCommand}" Key="Return"/>
                 </TextBox.InputBindings>
             </TextBox>
+            <TextBlock Text="Search for users by tag!" Foreground="Green" FontSize="28" VerticalAlignment="Center" Margin="250,0,0,0"/>
         </Grid>
-        <Grid Row="1">
 
+        <Grid Row="1">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding UserList, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="3" Height="36"
+                                    Margin="2" HorizontalAlignment="Stretch">
+                                <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
+                                    <TextBlock Text="{Binding UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" 
+                                               TextWrapping="Wrap" Margin="5,2,5,2" FontSize="16" DockPanel.Dock="Left" Foreground="White"/>
+                                    <Button Content="Add" Style="{StaticResource RoundCornerButton}" FontSize="10" Height="16" DockPanel.Dock="Right"
+                                            Command="{Binding DataContext.AddFriendFromTagCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"/>
+                                    <Button Content="View Profile" Style="{StaticResource RoundCornerButton}" FontSize="10" Height="16" DockPanel.Dock="Right" 
+                                            Command="{Binding DataContext.ShowProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"/>
+                                </DockPanel>
+                                <Border.Style>
+                                    <Style>
+                                        <Setter Property="Border.Background" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="Border.IsMouseOver" Value="True">
+                                                <Setter Property="Border.Background" Value="{StaticResource WhiteOpacityBackground}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>
