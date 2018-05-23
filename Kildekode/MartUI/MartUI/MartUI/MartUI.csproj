@@ -108,11 +108,8 @@
     <Compile Include="Events\CreateUserResponseEvent.cs" />
     <Compile Include="Events\FriendRequestDeclinedEvent.cs" />
     <Compile Include="Events\FriendRequestReceivedEvent.cs" />
-<<<<<<< HEAD
     <Compile Include="Events\GetTagEvent.cs" />
-=======
     <Compile Include="Events\GetUserInfo.cs" />
->>>>>>> 077ea246732fb0cfee1c1ac635d7dfd25eb3b062
     <Compile Include="Events\InsertTagsInProfile.cs" />
     <Compile Include="Events\LoginResponseEvent.cs" />
     <Compile Include="Events\NewMessageEvent.cs" />
