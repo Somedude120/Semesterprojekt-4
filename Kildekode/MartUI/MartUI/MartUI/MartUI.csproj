@@ -121,6 +121,7 @@
     <Compile Include="Events\ReceiveMessageFromServerEvent.cs" />
     <Compile Include="Events\RemoveFriendReceivedEvent.cs" />
     <Compile Include="Events\SendMessageToServerEvent.cs" />
+    <Compile Include="Events\ShowOtherUserProfile.cs" />
     <Compile Include="FriendNotification\FriendNotificationView.xaml.cs">
       <DependentUpon>FriendNotificationView.xaml</DependentUpon>
     </Compile>

@@ -162,7 +162,7 @@ namespace MartUI.Friend
             var friendInList = false;
             foreach (var f in FriendList)
             {
-                if (f.Username == Username)
+                if (f.Username == Username && UserData.Username != Username)
                 {
                     MessageBox.Show("This user is already on your friendlist");
                     friendInList = true;
@@ -203,7 +203,7 @@ namespace MartUI.Friend
 
         private void HandleViewProfile(FriendModel friend)
         {
-           // _eventAggregator.GetEvent<>().Publish(friend.Username);
+            _eventAggregator.GetEvent<ShowOtherUserProfile>().Publish(friend.Username);
         }
 
         public void AcceptedFriendRequest(string username)
