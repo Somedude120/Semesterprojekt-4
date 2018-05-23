@@ -158,7 +158,7 @@ namespace Examples.System.Net
                         HandleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
                     case Constants.GetProfile:   //Profile get
-                        GetProfile(input[1], sslStream);
+                        HandleGetProfile(input, sslStream);
                         break;
                     case "U":   //Update profile
                         HandleUpdateProfile(input, sslStream);
@@ -200,8 +200,6 @@ namespace Examples.System.Net
                 stringBuilder.Append(friend);
                 stringBuilder.Append(Constants.DataDelimiter);
             }
-
-            stringBuilder.Length--; //Remove last dataDelimiter
 
             string messageToSend = Constants.GetFriendList + Constants.GroupDelimiter + stringBuilder.ToString();
 
@@ -343,16 +341,31 @@ namespace Examples.System.Net
             }
         }
 
-        static void GetProfile(string input, SslStream sslStream)
+        static void HandleGetProfile(string[] input, SslStream sslStream)
         {
-            if (input == "")
+            string username;
+
+            if (input.Length == 1 || string.IsNullOrEmpty(input[1]))
             {
-                Console.WriteLine("User's own profile");
+                username = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
             }
             else
             {
-                Console.WriteLine(input);
+                username = input[1];
             }
+            var profile = GetMyProfile.RequestOwnInformation(username);
+
+            string messageToSend = Constants.GetProfile + Constants.GroupDelimiter + username + Constants.GroupDelimiter + profile.description + Constants.GroupDelimiter;
+
+            var stringBuilder = new StringBuilder();
+            foreach (var tag in profile.tags)
+            {
+                stringBuilder.Append(tag.TagName);
+                stringBuilder.Append(Constants.DataDelimiter);
+            }
+
+            messageToSend = messageToSend + stringBuilder.ToString();
+            sender.SendString(sslStream, messageToSend);
         }
 
         static void HandleUpdateProfile(string[] input, SslStream sslStream)
