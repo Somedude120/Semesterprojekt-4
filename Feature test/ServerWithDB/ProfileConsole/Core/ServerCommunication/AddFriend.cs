@@ -8,17 +8,18 @@ using ProfileConsole.Core.ServerCommunication.Interfaces;
 
 namespace ProfileConsole.Core.ServerCommunication
 {
-    public class AddFriend : IAddFriend
+    public class AddFriend //: IAddFriend
     {
-        private IUnitOfWork unitOfWork;
+        private static IUnitOfWork unitOfWork;
 
         public AddFriend()
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public void AddFriendRequest(string Username, string newFriend)
+        public static void AddFriendRequest(string Username, string newFriend)
         {
+            unitOfWork = new UnitOfWork(new ProfileContext());
             var person = unitOfWork.UserInformation.GetString(Username);
 
             if (person.UserName == Username)

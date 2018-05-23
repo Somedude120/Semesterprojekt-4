@@ -8,18 +8,19 @@ using ProfileConsole.Core.ServerCommunication.Interfaces;
 namespace ProfileConsole.Core.ServerCommunication
 {
     // Gathers information from database to display the user's own profile
-    public class GetMyProfile : IGetMyProfile
+    public class GetMyProfile// : IGetMyProfile
     {
-        private IUnitOfWork unitOfWork;
+        private static IUnitOfWork unitOfWork;
 
         public GetMyProfile()
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public MyProfile RequestOwnInformation(string Username, string Description, string Status,
+        public static MyProfile RequestOwnInformation(string Username, string Description, string Status,
             ICollection<FriendList> FriendList, ICollection<Tags> Tags)
         {
+            unitOfWork = new UnitOfWork(new ProfileContext());
             var person = unitOfWork.UserInformation.GetString(Username);
 
             if (person.UserName == Username)

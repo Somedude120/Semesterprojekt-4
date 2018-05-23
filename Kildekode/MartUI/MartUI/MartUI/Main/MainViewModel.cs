@@ -18,6 +18,7 @@ using System.Reflection;
 using Examples.System.Net;
 using MartUI.Chat;
 using MartUI.FriendNotification;
+using MartUI.Me;
 using MartUI.Profile;
 using MartUI.Settings;
 using MartUI.Settings.BlankSetting;
@@ -52,8 +53,13 @@ namespace MartUI.Main
             ViewList.Add(new LoginViewModel());
             ViewList.Add(new FriendViewModel());
             ViewList.Add(new ChatViewModel());
+            //ViewList.Add(new ProfileViewModel());
+            ViewList.Add(new SettingsViewModel());
 
             FriendListView = ViewList[1];
+
+            MyData.GetInstance().Tags.Add("sup");
+            MyData.GetInstance().Tags.Add("heheheh");
             //FullView = ViewList[0];
             //FullView = ViewList[0];
         }
@@ -150,6 +156,7 @@ namespace MartUI.Main
         {
             _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new SettingsViewModel());
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ProfileViewModel());
+            _eventAggregator.GetEvent<InsertTagsInProfile>().Publish();
         }
     }
 }
