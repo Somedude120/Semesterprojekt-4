@@ -252,7 +252,7 @@ namespace Examples.System.Net
                     //If it receives ok from server, get profile
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        //If Ok, receive profile
+                        _eventAggregator.GetEvent<GetProfile>().Publish(tempStringList[1] + Constants.GroupDelimiter +  tempStringList[2]);
 
                     });
                     break;
@@ -260,7 +260,9 @@ namespace Examples.System.Net
                     //If received Profile
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        //If Ok, receive profile
+                        //If Ok, receive friendlist
+                        _eventAggregator.GetEvent<GetFriendList>().Publish(tempStringList[1]);
+
                     });
                     break;
                 case Constants.Signup:

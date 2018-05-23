@@ -43,7 +43,18 @@ namespace MartUI.Me
         public List<string> Tags
         {
             get => _tags ?? (_tags = new List<string>());
-            set => SetProperty(ref _tags, value);
+            set
+            {
+                if (_tags != value)
+                {
+                    _tags.Clear();
+                    foreach (var tag in value)
+                    {
+                        _tags.Add(tag);
+                    }
+                    RaisePropertyChanged();
+                }
+            } 
         }
 
         private Uri _image;

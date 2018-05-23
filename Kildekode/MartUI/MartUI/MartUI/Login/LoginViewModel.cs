@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -71,7 +73,10 @@ namespace MartUI.Login
             {
                 case "OK":
                     // Fullpage is null, show friendlist and initialize chatview
-                    _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish();
+                    _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish("RU");
+                    _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
+                    _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
+
 
                     //_eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
                     //_eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
@@ -81,6 +86,22 @@ namespace MartUI.Login
                     MessageBox.Show("Wrong username or password!");
                     break;
             }
+        }
+
+        private void FriendListInfo(string s)
+        {
+            _eventAggregator.GetEvent<GetFriendListEvent>().Publish(s);
+        }
+
+        private void ProfileInfo(string profile)
+        {
+            var fullProfile = profile.Split(Constants.GroupDelimiter);
+
+            UserData.Description = fullProfile[0];
+
+            var tagsOnly = fullProfile[1].Split(Constants.DataDelimiter).ToList();
+
+            UserData.Tags = tagsOnly;
         }
 
         private bool LoginCanExecute()
