@@ -72,6 +72,7 @@ namespace MartUI.Friend
             _eventAggregator.GetEvent<AcceptedFriendRequestEvent>().Subscribe(AcceptedFriendRequest);
             _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Subscribe(HandleRemoveFriendReceived);
             _eventAggregator.GetEvent<AddFriendFromTagEvent>().Subscribe(HandleAddFriendFromTag);
+            _eventAggregator.GetEvent<GetFriendListEvent>().Subscribe(HandleGetFriendList);
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
@@ -91,6 +92,17 @@ namespace MartUI.Friend
 
         //}
 
+        private void HandleGetFriendList(string friendlist)
+        {
+            string[] temp = friendlist.Split(Constants.DataDelimiter);
+            foreach (var f in temp)
+            {
+                FriendList.Add(new FriendModel(){Username = f});
+            }
+
+            var message = Constants.GetOldMessages + Constants.GroupDelimiter;
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
+        }
 
         private void HandleNewMessage(ChatModel message)
         {
