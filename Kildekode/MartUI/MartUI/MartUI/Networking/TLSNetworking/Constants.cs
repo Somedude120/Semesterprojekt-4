@@ -63,7 +63,7 @@
     * REQUEST USER DATA
     */
     public const string RequestProfile = "RP"; // RU + GroupDelimiter + Username
-    public const string RequestFriendList = "RF"; // RF + GroupDelimiter + Username
+    public const string RequestFriendList = "RFL"; // RF + GroupDelimiter + Username
     public const string GetProfile = "P"; // P + GroupDelimiter + Username + GroupDelimiter + Descrip. + Group + Tag + DataDel. + Tag ..
     public const string GetFriendList = "FL"; // FL + GroupDelimiter + FriendUsername + DataDelimiter + Friend ...
 

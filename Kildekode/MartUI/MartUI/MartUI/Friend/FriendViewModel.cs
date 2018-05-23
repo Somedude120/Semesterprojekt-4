@@ -87,11 +87,6 @@ namespace MartUI.Friend
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
 
-            var marto = new FriendModel() { Username = "Marto" };
-            var alexD = new FriendModel() { Username = "AlexD" };
-            FriendList.Add(marto);
-            FriendList.Add(alexD);
-
             //Tilføj eventuelt et eller andet som første plads i arrayet
             //Skal bruge metode fra server/database til at få en liste af alle ens venner
             //Samt kun alle som er online 
