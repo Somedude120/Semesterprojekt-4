@@ -74,11 +74,11 @@ namespace MartUI.CreateUser
         {
             switch (response)
             {
-                case "OK":
+                case "SOK":
                     _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel());
                     MessageBox.Show($"Welcome to the club, {UserData.Username}! You can now log in");
                     break;
-                case "NOK":
+                case "SNOK":
                     MessageBox.Show("Username " + Username + " already exists! Choose something else");
                     break;
             }
@@ -115,9 +115,9 @@ namespace MartUI.CreateUser
 
         private void CreateNewUser()
         {
-            string msg = Constants.Signup + + Constants.GroupDelimiter + 
-                         UserData.Username + Constants.GroupDelimiter +
-                         UserData.Password;
+            string msg = Constants.Signup + Constants.GroupDelimiter + 
+                         Username + Constants.GroupDelimiter +
+                         Password;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
 

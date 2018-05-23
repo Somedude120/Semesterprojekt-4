@@ -273,10 +273,16 @@ namespace Examples.System.Net
 
                         });
                         break;
-                    case Constants.Signup:
+                    case "SOK":
                         Application.Current.Dispatcher.Invoke(() =>
                         {
-                            _eventAggregator.GetEvent<SignupResponseEvent>().Publish(tempStringList[1]);
+                            _eventAggregator.GetEvent<SignupResponseEvent>().Publish("SOK");
+                        });
+                        break;
+                    case "SNOK":
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<SignupResponseEvent>().Publish("SNOK");
                         });
                         break;
                     case Constants.FriendRequestDeclined:

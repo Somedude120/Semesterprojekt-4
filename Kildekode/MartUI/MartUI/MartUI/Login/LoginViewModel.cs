@@ -11,6 +11,7 @@ using MartUI.Friend;
 using MartUI.Helpers;
 using MartUI.Main;
 using MartUI.Me;
+using MartUI.Settings.BlankSetting;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -96,13 +97,12 @@ namespace MartUI.Login
 
         private void FriendListInfo(string s)
         {
-            MessageBox.Show(s);
             _eventAggregator.GetEvent<GetFriendListEvent>().Publish(s);
 
             // Change view to "Main View"
             _eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
             _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
-            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new BlankSettingViewModel());
 
             // Unsubscribe events to be able to handle new login request
             _eventAggregator.GetEvent<GetProfile>().Unsubscribe(ProfileInfo);
