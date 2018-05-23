@@ -65,6 +65,10 @@ namespace MartUI.Login
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
             _eventAggregator.GetEvent<LoginResponseEvent>().Subscribe(HandleLogin);
+
+            _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
+
+            _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
         }
 
         private void HandleLogin(string response)
@@ -76,20 +80,23 @@ namespace MartUI.Login
                     _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestProfile 
                                                                                   + Constants.GroupDelimiter
                                                                                   + UserData.Username);
-                    _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
-                                                                                  + Constants.GroupDelimiter
-                                                                                  + UserData.Username);
-                    _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
-                    _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
+                    //_eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
+                    //                                                              + Constants.GroupDelimiter
+                    //                                                              + UserData.Username);
+
+                    //_eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
+
+                    //_eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
                     break;
                 case "NOK":
-                    MessageBox.Show("Wrong username or password!");
+                    MessageBox.Show("Cannot login! Wrong username or password!");
                     break;
             }
         }
 
         private void FriendListInfo(string s)
         {
+            //MessageBox.Show(s);
             _eventAggregator.GetEvent<GetFriendListEvent>().Publish(s);
 
             // Change view to "Main View"
@@ -98,12 +105,13 @@ namespace MartUI.Login
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
 
             // Unsubscribe events to be able to handle new login request
-            _eventAggregator.GetEvent<GetProfile>().Unsubscribe(ProfileInfo);
-            _eventAggregator.GetEvent<GetFriendList>().Unsubscribe(FriendListInfo);
+            //_eventAggregator.GetEvent<GetProfile>().Unsubscribe(ProfileInfo);
+            //_eventAggregator.GetEvent<GetFriendList>().Unsubscribe(FriendListInfo);
         }
 
         private void ProfileInfo(string profile)
         {
+            MessageBox.Show("in profile" + profile);
             // Get full profile info (description + tags)
             var fullProfile = profile.Split(Constants.GroupDelimiter);
 

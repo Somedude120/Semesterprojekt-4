@@ -211,6 +211,7 @@ namespace Examples.System.Net
             string tempString = receiver.ReceiveString(sslStream);
             string[] tempStringList = tempString.Split(Constants.GroupDelimiter);
 
+            //MessageBox.Show(tempStringList[0]);
             switch (tempStringList[0])
             {
                 case Constants.MessageReceived:
@@ -242,10 +243,16 @@ namespace Examples.System.Net
                         _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(tempStringList[1]);
                     });
                     break;
-                case Constants.LoginResponse:
+                case "OK":
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        _eventAggregator.GetEvent<LoginResponseEvent>().Publish(tempStringList[1]);
+                        _eventAggregator.GetEvent<LoginResponseEvent>().Publish("OK");
+                    });
+                    break;
+                case "NOK":
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _eventAggregator.GetEvent<LoginResponseEvent>().Publish("NOK");
                     });
                     break;
                 case Constants.GetProfile:
