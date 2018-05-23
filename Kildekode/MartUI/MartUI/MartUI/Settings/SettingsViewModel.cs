@@ -34,6 +34,7 @@ namespace MartUI.Settings
             _eventAggregator.GetEvent<LoginResponseEvent>().Publish("");
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.Logout);
             _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel());
+            _eventAggregator.GetEvent<LogoutPublishLoginEvent>().Publish();
         }
     }
 }

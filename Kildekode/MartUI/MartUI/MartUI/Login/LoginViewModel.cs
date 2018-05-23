@@ -65,6 +65,7 @@ namespace MartUI.Login
         {
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
+            _eventAggregator.GetEvent<LogoutPublishLoginEvent>().Subscribe(HandleLogoutPublishLogin);
 
             _eventAggregator.GetEvent<LoginResponseEvent>().Subscribe(HandleLogin);
 
@@ -107,6 +108,12 @@ namespace MartUI.Login
             // Unsubscribe events to be able to handle new login request
             _eventAggregator.GetEvent<GetProfile>().Unsubscribe(ProfileInfo);
             _eventAggregator.GetEvent<GetFriendList>().Unsubscribe(FriendListInfo);
+        }
+
+        private void HandleLogoutPublishLogin()
+        {
+            _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
+            _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
         }
 
         private void ProfileInfo(string profile)

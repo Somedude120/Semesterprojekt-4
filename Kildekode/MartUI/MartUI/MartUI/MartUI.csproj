@@ -115,6 +115,7 @@
     <Compile Include="Events\GetUserInfo.cs" />
     <Compile Include="Events\InsertTagsInProfile.cs" />
     <Compile Include="Events\LoginResponseEvent.cs" />
+    <Compile Include="Events\LogoutPublishLoginEvent.cs" />
     <Compile Include="Events\NewMessageEvent.cs" />
     <Compile Include="Events\NotificationReceivedChangeColor.cs" />
     <Compile Include="Events\NotificationReceivedEvent.cs" />
