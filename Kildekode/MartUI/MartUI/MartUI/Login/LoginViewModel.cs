@@ -64,10 +64,10 @@ namespace MartUI.Login
         {
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
+
             _eventAggregator.GetEvent<LoginResponseEvent>().Subscribe(HandleLogin);
 
             _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
-
             _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
         }
 
@@ -79,7 +79,7 @@ namespace MartUI.Login
                     // Fullpage is null, show friendlist and initialize chatview
                     _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestProfile 
                                                                                   + Constants.GroupDelimiter
-                                                                                  + UserData.Username);
+                                                                                  + Username);
                     //_eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
                     //                                                              + Constants.GroupDelimiter
                     //                                                              + UserData.Username);
@@ -111,7 +111,6 @@ namespace MartUI.Login
 
         private void ProfileInfo(string profile)
         {
-            MessageBox.Show("in profile" + profile);
             // Get full profile info (description + tags)
             var fullProfile = profile.Split(Constants.GroupDelimiter);
 
@@ -121,6 +120,10 @@ namespace MartUI.Login
             var tagsOnly = fullProfile[1].Split(Constants.DataDelimiter).ToList();
 
             UserData.Tags = tagsOnly;
+
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
+                                                                          + Constants.GroupDelimiter
+                                                                          + UserData.Username);
         }
 
         private bool LoginCanExecute()

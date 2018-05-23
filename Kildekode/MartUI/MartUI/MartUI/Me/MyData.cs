@@ -39,10 +39,10 @@ namespace MartUI.Me
             set => SetProperty(ref _password, value);
         }
 
-        private List<string> _tags;
+        private List<string> _tags = new List<string>();
         public List<string> Tags
         {
-            get => _tags ?? (_tags = new List<string>());
+            get => _tags;
             set
             {
                 if (_tags != value)

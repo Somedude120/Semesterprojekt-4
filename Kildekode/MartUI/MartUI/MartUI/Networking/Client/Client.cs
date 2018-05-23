@@ -208,91 +208,93 @@ namespace Examples.System.Net
 
         public void ReceiveMessages()
         {
-            string tempString = receiver.ReceiveString(sslStream);
-            string[] tempStringList = tempString.Split(Constants.GroupDelimiter);
-
-            //MessageBox.Show(tempStringList[0]);
-            switch (tempStringList[0])
+            while (true)
             {
-                case Constants.MessageReceived:
-                    var message = new ChatModel();
-                    message.Message = tempStringList[2];
-                    message.Sender = tempStringList[1];
-                    message.Receiver = UserData.Username;
+                string tempString = receiver.ReceiveString(sslStream);
+                string[] tempStringList = tempString.Split(Constants.GroupDelimiter);
 
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
-                    });
-                    break;
-                case Constants.FriendRequestReceived:
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<FriendRequestReceivedEvent>().Publish(tempStringList[1]);
-                    });
-                    break;
-                case Constants.RemoveFriendReceived:
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Publish(tempStringList[1]);
-                    });
-                    break;
-                case Constants.NotificationReceived:
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(tempStringList[1]);
-                    });
-                    break;
-                case "OK":
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<LoginResponseEvent>().Publish("OK");
-                    });
-                    break;
-                case "NOK":
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<LoginResponseEvent>().Publish("NOK");
-                    });
-                    break;
-                case Constants.GetProfile:
-                    //If it receives ok from server, get profile
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<GetProfile>().Publish(tempStringList[1] + Constants.GroupDelimiter +  tempStringList[2]);
+                switch (tempStringList[0])
+                {
+                    case Constants.MessageReceived:
+                        var message = new ChatModel();
+                        message.Message = tempStringList[2];
+                        message.Sender = tempStringList[1];
+                        message.Receiver = UserData.Username;
 
-                    });
-                    break;
-                case Constants.GetFriendList:
-                    //If received Profile
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        //If Ok, receive friendlist
-                        _eventAggregator.GetEvent<GetFriendList>().Publish(tempStringList[1]);
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Publish(message);
+                        });
+                        break;
+                    case Constants.FriendRequestReceived:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<FriendRequestReceivedEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    case Constants.RemoveFriendReceived:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    case Constants.NotificationReceived:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    case "OK":
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<LoginResponseEvent>().Publish("OK");
+                        });
+                        break;
+                    case "NOK":
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<LoginResponseEvent>().Publish("NOK");
+                        });
+                        break;
+                    case Constants.GetProfile:
+                        //If it receives ok from server, get profile
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<GetProfile>().Publish(tempStringList[1] + Constants.GroupDelimiter +  tempStringList[2]);
 
-                    });
-                    break;
-                case Constants.Signup:
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<SignupResponseEvent>().Publish(tempStringList[1]);
-                    });
-                    break;
-                case Constants.FriendRequestDeclined:
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<FriendRequestDeclinedEvent>().Publish(tempStringList[1]);
-                    });
-                    break;
-                case Constants.GetUsernamesByTag:
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _eventAggregator.GetEvent<GetTagEvent>().Publish(tempStringList[1]);
-                    });
-                    break;
-                default:
-                    Console.WriteLine($"Error Messagehandler: {tempStringList[0]}");
-                    break;
+                        });
+                        break;
+                    case Constants.GetFriendList:
+                        //If received Profile
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            //If Ok, receive friendlist
+                            _eventAggregator.GetEvent<GetFriendList>().Publish(tempStringList[1]);
+
+                        });
+                        break;
+                    case Constants.Signup:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<SignupResponseEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    case Constants.FriendRequestDeclined:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<FriendRequestDeclinedEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    case Constants.GetUsernamesByTag:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<GetTagEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
+                    default:
+                        Console.WriteLine($"Error Messagehandler: {tempStringList[0]}");
+                        break;
+                }
             }
         }
 
