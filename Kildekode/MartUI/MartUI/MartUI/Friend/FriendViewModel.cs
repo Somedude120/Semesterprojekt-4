@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using MartUI.Chat;
 using MartUI.Events;
 using MartUI.FriendNotification;
+using MartUI.Group;
 using MartUI.Main;
 using MartUI.Me;
 using Prism.Commands;

@@ -118,6 +118,11 @@
       <DependentUpon>FriendNotificationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FriendNotification\FriendNotificationViewModel.cs" />
+    <Compile Include="Group\GroupModel.cs" />
+    <Compile Include="Group\GroupView.xaml.cs">
+      <DependentUpon>GroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Group\GroupViewModel.cs" />
     <Compile Include="Me\MyData.cs" />
     <Compile Include="Helpers\TokenizingControl.cs" />
     <Compile Include="Events\AddFriendEvent.cs" />
@@ -170,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Friend\FriendView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Group\GroupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -272,6 +281,8 @@
   <ItemGroup>
     <Resource Include="Images\14-tag.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GroupChat\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -21,4 +21,6 @@
     public static string FriendRequestReceived = "FRR"; // FR + MiddleDelimiter + Username
     public static string FriendRequestDeclined = "FRD"; // FRD + MiddleDelimiter + Username
     public static string NotificationReceived = "NR"; // NR + MiddleDelimiter + Notification
+    public static string RemoveGroup = "RG"; // RG + MiddleDelimiter + GroupName
+    public static string SendGroupRequest = "SGR"; // SGR + MiddleDelimiter + GroupName
 }

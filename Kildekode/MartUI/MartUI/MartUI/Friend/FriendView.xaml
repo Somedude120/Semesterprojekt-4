@@ -29,27 +29,12 @@
                             Content="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                             Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                             CommandParameter="{Binding}"
-                            Margin="0,3" Width="185">
+                            Margin="0,3" Width="185" Style="{StaticResource RoundCornerButton}">
                                 <Button.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Remove" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveFriendCommand}" CommandParameter="{Binding}"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
-                                <Button.Style>
-                                    <Style TargetType="Button" BasedOn="{StaticResource RoundCornerButton}">
-                                        <Style.Triggers>
-                                            <DataTrigger Value="True">
-                                                <DataTrigger.Binding>
-                                                    <MultiBinding Converter=""></MultiBinding>
-                                                </DataTrigger.Binding>
-
-
-                                                <Setter Property="Background" Value="Pink"/>
-
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
                             </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

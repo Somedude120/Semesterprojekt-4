@@ -17,6 +17,7 @@
         xmlns:blankSetting="clr-namespace:MartUI.Settings.BlankSetting"
         xmlns:profile="clr-namespace:MartUI.Profile"
         xmlns:friendnotification="clr-namespace:MartUI.FriendNotification"
+        xmlns:group="clr-namespace:MartUI.Group"
         mvvm:ViewModelLocator.AutoWireViewModel="True"
 
         mc:Ignorable="d"
@@ -53,6 +54,9 @@
         <DataTemplate DataType="{x:Type friendnotification:FriendNotificationViewModel}">
              <friendnotification:FriendNotificationView DataContext="{Binding}"/>
         </DataTemplate>
+        <!--<DataTemplate DataType="{x:Type group:GroupViewModel}">
+            <group:GroupView DataContext="{Binding}"/>
+        </DataTemplate>-->
     </Window.Resources>
 
     <!--MARTUI REAL-->
@@ -105,11 +109,11 @@
             <ContentControl Content ="{Binding FullView}" />
         </Grid>
 
-        <Grid Grid.Column="0" Grid.Row="1" Width="Auto">
+        <Grid Grid.Column="0" Grid.Row="1">
            <ContentControl Content ="{Binding SideBarView}" />
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="1" Width="Auto" >
+        <Grid Grid.Column="1" Grid.Row="1" >
             <ContentControl Content ="{Binding FriendListView}" />
         </Grid>
 

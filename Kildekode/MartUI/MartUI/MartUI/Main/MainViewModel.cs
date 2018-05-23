@@ -18,6 +18,7 @@ using System.Reflection;
 using Examples.System.Net;
 using MartUI.Chat;
 using MartUI.FriendNotification;
+using MartUI.Group;
 using MartUI.Profile;
 using MartUI.Settings;
 using MartUI.Settings.BlankSetting;
@@ -52,8 +53,12 @@ namespace MartUI.Main
             ViewList.Add(new LoginViewModel());
             ViewList.Add(new FriendViewModel());
             ViewList.Add(new ChatViewModel());
+            //ViewList.Add(new GroupViewModel());
 
             FriendListView = ViewList[1];
+            //_eventAggregator.GetEvent<ChangeSideBarPage>().Publish(new GroupViewModel());
+
+            //SideBarView = ViewList[3];
             //FullView = ViewList[0];
             //FullView = ViewList[0];
         }

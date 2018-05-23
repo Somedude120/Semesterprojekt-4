@@ -89,7 +89,7 @@ namespace MartUI.Login
 
         private void LoginExecute()
         {
-            var msg = Constants.LoginResponse + Constants.MiddleDelimiter + UserData.Username + Constants.MiddleDelimiter + UserData.Password;
+            var msg = Constants.LoginResponse + Constants.GroupDelimiter + UserData.Username + Constants.GroupDelimiter + UserData.Password;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
 

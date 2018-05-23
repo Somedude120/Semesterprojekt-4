@@ -9,11 +9,21 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
-        <Grid Row="0">
+        
+        <Grid>
+            <DockPanel Background="#2f3136" Height="30">
+                <Rectangle Width="2" DockPanel.Dock="Left" Fill="#202225"/>
+                <Rectangle Height="2" DockPanel.Dock="Bottom"  Fill="#202225"/>
+                <TextBlock Width="Auto" Text="{Binding User.Username}" DockPanel.Dock="Left" 
+                           VerticalAlignment="Center" Margin="15,0,0,0" FontSize="28" Foreground="Green"/>
+            </DockPanel>
+        </Grid>
+        <Grid Row="1">
             <ScrollViewer chat:AutoScrollBehavior.AutoScroll="True" >
                 <ItemsControl ItemsSource="{Binding User.MessageList, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemTemplate>
@@ -29,13 +39,14 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
-        <Grid Row="1">
+        <Grid Row="2">
             <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="20,0,20,0"
                      Text="{Binding TextToSend, UpdateSourceTrigger=PropertyChanged}" 
                      x:Name="TextToSendTextBox" 
                      MouseDoubleClick="SelectAddress"
                      GotKeyboardFocus="SelectAddress"
-                     PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton">
+                     PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
+                     MaxLength="2000">
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding SendMessageCommand}" Key="Return"/>
                 </TextBox.InputBindings>

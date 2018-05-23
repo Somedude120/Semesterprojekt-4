@@ -76,7 +76,7 @@ namespace MartUI.FriendNotification
         private void AcceptFriendRequest(string username)
         {
             FriendRequests.Remove(username);
-            var msg = Constants.AcceptFriendRequest + Constants.MiddleDelimiter + username;
+            var msg = Constants.AcceptFriendRequest + Constants.GroupDelimiter + username;
             Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
             _eventAggregator.GetEvent<AcceptedFriendRequestEvent>().Publish(username);
         }
@@ -84,14 +84,14 @@ namespace MartUI.FriendNotification
         private void DeclineFriendRequest(string username)
         {
             FriendRequests.Remove(username);
-            var msg = Constants.DeclineFriendRequest + Constants.MiddleDelimiter + username;
+            var msg = Constants.DeclineFriendRequest + Constants.GroupDelimiter + username;
             Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
         }
 
         private void BlockFriendRequest(string username)
         {
             FriendRequests.Remove(username);
-            var msg = Constants.BlockFriendRequest + Constants.MiddleDelimiter + username;
+            var msg = Constants.BlockFriendRequest + Constants.GroupDelimiter + username;
             Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
         }
 
@@ -99,7 +99,7 @@ namespace MartUI.FriendNotification
         {
             foreach (var username in FriendRequests)
             {
-                var msg = Constants.AcceptFriendRequest + Constants.MiddleDelimiter + username;
+                var msg = Constants.AcceptFriendRequest + Constants.GroupDelimiter + username;
                 Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
             }
 
@@ -110,7 +110,7 @@ namespace MartUI.FriendNotification
         {
             foreach (var username in FriendRequests)
             {
-                var msg = Constants.DeclineFriendRequest + Constants.MiddleDelimiter + username;
+                var msg = Constants.DeclineFriendRequest + Constants.GroupDelimiter + username;
                 Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
             }
             FriendRequests.Clear();
@@ -119,7 +119,7 @@ namespace MartUI.FriendNotification
         private void CloseNotification(string notification)
         {
             FriendNotifications.Remove(notification);
-            var msg = Constants.RemoveNotification + Constants.MiddleDelimiter + notification;
+            var msg = Constants.RemoveNotification + Constants.GroupDelimiter + notification;
             Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
         }
 
@@ -127,7 +127,7 @@ namespace MartUI.FriendNotification
         {
             foreach (var notification in FriendRequests)
             {
-                var msg = Constants.RemoveNotification + Constants.MiddleDelimiter + notification;
+                var msg = Constants.RemoveNotification + Constants.GroupDelimiter + notification;
                 Application.Current.Dispatcher.Invoke(() => { _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg); });
             }
             FriendNotifications.Clear();
