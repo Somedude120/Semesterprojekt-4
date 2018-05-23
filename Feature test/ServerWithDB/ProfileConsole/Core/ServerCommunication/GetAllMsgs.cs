@@ -33,5 +33,25 @@ namespace ProfileConsole.Core.ServerCommunication
 
 
         }
+
+        public static bool AreUsersFriends(string sender, string receiver)
+        {
+            unitOfWork = new UnitOfWork(new ProfileContext());
+            
+
+            var temp = unitOfWork.FriendList.GetAll();
+
+            foreach (var friend in temp)
+            {
+                if (friend.User1 == sender && friend.User2 == receiver && friend.Status == "Added     " ||
+                    friend.User1 == receiver && friend.User2 == sender && friend.Status == "Added     ")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
     }
 }

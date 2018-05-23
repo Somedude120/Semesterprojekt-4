@@ -16,48 +16,23 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public static List<String> GetFriendList(string Username)
+        public static List<string> GetFriendList(string Username)
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
-            var person = unitOfWork.UserInformation.GetString(Username);
-            List<String> tempFriendList = new List<string>();
-            if (person.UserName == Username)
+            var friendlist = unitOfWork.FriendList.GetAll();
+
+            var returnList = new List<string>();
+            foreach (var friend in friendlist)
             {
-                using (var db = new ProfileContext())
-                {
-                    var profile =
-                        from p in db.UserInformation
-                        where p.UserName == Username
-                        select p;
+                if(friend.User1 == Username)
+                    returnList.Add(friend.User2);
 
-                    try
-                    {
-                        foreach (var pers in profile)
-                        {
-                            foreach (var friend in pers.FriendList)
-                            {
-                                if (Username == friend.User1)
-                                tempFriendList.Add(friend.User2);
-                                
-
-                                else if (Username == friend.User2)
-                                    tempFriendList.Add(friend.User1);
-
-                            }
-
-                            return tempFriendList;
-                        }
-                    }
-
-                    catch (Exception)
-                    {
-                        return null;
-                    }
-
-                }
-
+                else if (friend.User2 == Username)
+                    returnList.Add(friend.User1);
             }
-            return null;
+
+            return returnList;
+            
         }
 
     }

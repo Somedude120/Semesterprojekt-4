@@ -162,7 +162,7 @@ namespace MartUI.Friend
             var friendInList = false;
             foreach (var f in FriendList)
             {
-                if (f.Username == Username)
+                if (f.Username == Username && UserData.Username != Username)
                 {
                     MessageBox.Show("This user is already on your friendlist");
                     friendInList = true;

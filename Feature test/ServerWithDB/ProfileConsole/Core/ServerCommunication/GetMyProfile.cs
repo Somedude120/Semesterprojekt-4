@@ -2,6 +2,7 @@
 using ProfileConsole.Persistence;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using ProfileConsole.Core.ServerCommunication.Interfaces;
 
@@ -17,12 +18,11 @@ namespace ProfileConsole.Core.ServerCommunication
             unitOfWork = new UnitOfWork(new ProfileContext());
         }
 
-        public static MyProfile RequestOwnInformation(string Username, string Description, string Status,
-            ICollection<FriendList> FriendList, ICollection<Tags> Tags)
+        public static MyProfile RequestOwnInformation(string Username)
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
             var person = unitOfWork.UserInformation.GetString(Username);
-
+            
             if (person.UserName == Username)
             {
                 using (var db = new ProfileContext())
@@ -32,13 +32,20 @@ namespace ProfileConsole.Core.ServerCommunication
                         where p.UserName == Username
                         select p;
 
-
+                    
                     try
                     {
+                        var tagList = new List<Tags>();
                         foreach (var pers in profile)
                         {
-                            MyProfile myProfile = new MyProfile(pers.UserName, pers.Description, pers.Status, pers.FriendList, pers.Tags);
+                            var temp = unitOfWork.UserInformation.GetTagsWithUserInformation(pers.UserName);
+                            foreach (var tag in temp.Tags)
+                            {
+                                tagList.Add(tag);
+                            }
+                            MyProfile myProfile = new MyProfile(pers.Description, tagList);
                             return myProfile;
+                            
                         }
                     }
                     catch (Exception e)
