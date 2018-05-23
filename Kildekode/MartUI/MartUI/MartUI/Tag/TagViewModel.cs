@@ -68,7 +68,7 @@ namespace MartUI.Tag
 
         private void ShowProfile(string username)
         {
-            //_eventAggregator.GetEvent<ShowProfileEvent>().Publish(username);
+            _eventAggregator.GetEvent<ShowOtherUserProfile>().Publish(username);
         }
     }
 }

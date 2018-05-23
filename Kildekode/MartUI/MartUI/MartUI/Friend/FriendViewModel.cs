@@ -203,7 +203,7 @@ namespace MartUI.Friend
 
         private void HandleViewProfile(FriendModel friend)
         {
-           // _eventAggregator.GetEvent<>().Publish(friend.Username);
+            _eventAggregator.GetEvent<ShowOtherUserProfile>().Publish(friend.Username);
         }
 
         public void AcceptedFriendRequest(string username)
