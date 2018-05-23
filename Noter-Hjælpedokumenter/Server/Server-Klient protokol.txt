@@ -1,9 +1,12 @@
-Constants.MiddleDelimiter = ';'
+Constants.GroupDelimiter = ';'
+Constants.DataDelimiter = ':'
 
 Alle beskeder skal slutte med Constants.EndDelimiter
 
 
 Send message:	W;DestinationUsername;Message
+
+Signup:		S;Username;password
 
 Login:		L;Username;password
 
@@ -11,9 +14,17 @@ Logout:		Q
 
 GetProfile:	P;Username
 
-UpdateProfile:	U;Description;Tag;Tag;Tag;....
+UpdateProfile:	U;Description;Tag1:Tag2:Tag3:(...)
 
-SearchUsers:	S;Username
+SearchUsers:	;Username
 
 SearchTag:	T;Tag
+
+
+Acknowledges:
+
+Efter nogle beskeder vil der komme en acknowledge tilbage. Disse er
+
+Constants.Acknowledged:		"OK"
+Constants.NotAcknowledged:	"NOK"
 
