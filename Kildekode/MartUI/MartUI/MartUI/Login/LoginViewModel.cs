@@ -118,12 +118,12 @@ namespace MartUI.Login
         private bool LoginCanExecute()
         {
             return !string.IsNullOrWhiteSpace(Username) && Username.Length > 4
-                    && !string.IsNullOrWhiteSpace(Password) && Password.Length > 5;
+                                                        && !string.IsNullOrWhiteSpace(Password) && Password.Length > 1;
         }
 
         private void LoginExecute()
         {
-            var msg = Constants.LoginResponse + Constants.GroupDelimiter + UserData.Username + Constants.GroupDelimiter + UserData.Password;
+            var msg = Constants.RequestLogin + Constants.GroupDelimiter + UserData.Username + Constants.GroupDelimiter + Password;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
 

@@ -56,14 +56,14 @@ namespace MartUI.Main
             ViewList.Add(new ChatViewModel());
             //ViewList.Add(new GroupViewModel());
 
-            FriendListView = ViewList[1];
+            FullView = ViewList[0];
             //_eventAggregator.GetEvent<ChangeSideBarPage>().Publish(new GroupViewModel());
 
             //SideBarView = ViewList[3];
             //ViewList.Add(new ProfileViewModel());
             ViewList.Add(new SettingsViewModel());
 
-            FriendListView = ViewList[1];
+            //FriendListView = ViewList[1];
 
             //MyData.GetInstance().Tags.Add("sup");
             //MyData.GetInstance().Tags.Add("heheheh");
