@@ -217,9 +217,9 @@ namespace Examples.System.Net
                 {
                     case Constants.MessageReceived:
                         var message = new ChatModel();
-                        message.Message = tempStringList[2];
+                        message.Message = tempStringList[3];
                         message.Sender = tempStringList[1];
-                        message.Receiver = UserData.Username;
+                        message.Receiver = tempStringList[2];
 
                         Application.Current.Dispatcher.Invoke(() =>
                         {

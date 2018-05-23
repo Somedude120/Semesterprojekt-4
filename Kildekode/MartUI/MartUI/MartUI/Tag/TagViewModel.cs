@@ -57,7 +57,7 @@ namespace MartUI.Tag
 
         private void SearchTag()
         {
-            string message = Constants.GetUsernamesByTag + Constants.GetUsernamesByTag + Tag;
+            string message = Constants.GetUsernamesByTag + Constants.GroupDelimiter + Tag;
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             Tag = "";
         }
