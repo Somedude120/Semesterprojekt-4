@@ -19,10 +19,10 @@ namespace ProfileConsole.Persistence.Repositories
         {
         }
 
-        public ChatGroups GetChatWithChatGroups(string groupName)
-        {
-            return ProfileContext.ChatGroups.Include(a => a.Chat).SingleOrDefault(a => a.GroupName == groupName);
-        }
+        //public ChatGroups GetChatWithChatGroups(string groupName)
+        //{
+        //    return ProfileContext.ChatGroups.Include(a => a.Chat).SingleOrDefault(a => a.GroupName == groupName);
+        //}
 
         public ProfileContext ProfileContext
         {

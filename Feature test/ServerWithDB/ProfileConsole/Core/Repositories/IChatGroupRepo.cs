@@ -9,6 +9,6 @@ namespace ProfileConsole.Core.Repositories
 {
     public interface IChatGroupRepo : IRepository<ChatGroups>
     {
-        ChatGroups GetChatWithChatGroups(string groupName);
+        //ChatGroups GetChatWithChatGroups(string groupName);
     }
 }

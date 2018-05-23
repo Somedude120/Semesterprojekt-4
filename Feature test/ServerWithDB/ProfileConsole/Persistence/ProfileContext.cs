@@ -12,24 +12,32 @@ namespace ProfileConsole.Core.Domain
         {
         }
 
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<Chat> Chat { get; set; }
         public virtual DbSet<ChatGroups> ChatGroups { get; set; }
         public virtual DbSet<Emoji> Emoji { get; set; }
         public virtual DbSet<FriendList> FriendList { get; set; }
         public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<Tags> Tags { get; set; }
         public virtual DbSet<UserInformation> UserInformation { get; set; }
-        public virtual DbSet<Chat> Chat { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ChatGroups>()
-                .Property(e => e.GroupName)
+            modelBuilder.Entity<Chat>()
+                .Property(e => e.Sender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Chat>()
+                .Property(e => e.Receiver)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Chat>()
+                .Property(e => e.Message)
                 .IsUnicode(false);
 
             modelBuilder.Entity<ChatGroups>()
-                .HasMany(e => e.Chat)
-                .WithRequired(e => e.ChatGroups)
-                .WillCascadeOnDelete(false);
+                .Property(e => e.GroupName)
+                .IsUnicode(false);
 
             modelBuilder.Entity<ChatGroups>()
                 .HasMany(e => e.UserInformation)
@@ -83,7 +91,19 @@ namespace ProfileConsole.Core.Domain
 
             modelBuilder.Entity<UserInformation>()
                 .Property(e => e.Status)
-                .IsFixedLength();
+                .IsUnicode(false);
+
+            modelBuilder.Entity<UserInformation>()
+                .HasMany(e => e.Chat)
+                .WithRequired(e => e.UserInformation)
+                .HasForeignKey(e => e.Receiver)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserInformation>()
+                .HasMany(e => e.Chat1)
+                .WithRequired(e => e.UserInformation1)
+                .HasForeignKey(e => e.Sender)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserInformation>()
                 .HasMany(e => e.FriendList)
@@ -106,16 +126,6 @@ namespace ProfileConsole.Core.Domain
             modelBuilder.Entity<UserInformation>()
                 .HasOptional(e => e.Login)
                 .WithRequired(e => e.UserInformation);
-
-            modelBuilder.Entity<UserInformation>()
-                .HasMany(e => e.Chat)
-                .WithRequired(e => e.UserInformation)
-                .HasForeignKey(e => e.Sender)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Chat>()
-                .Property(e => e.Sender)
-                .IsUnicode(false);
         }
     }
 }

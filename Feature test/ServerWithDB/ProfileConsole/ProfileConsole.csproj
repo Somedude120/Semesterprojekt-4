@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1D2872A2-42BC-41F3-B72B-ABA8EA0DD56D}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>ProfileConsole</RootNamespace>
     <AssemblyName>ProfileConsole</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -72,9 +72,26 @@
   <ItemGroup>
     <Compile Include="Core\Domain\Chat.cs" />
     <Compile Include="Core\Domain\ChatGroups.cs" />
+    <Compile Include="Core\Domain\C__MigrationHistory.cs" />
     <Compile Include="Core\Domain\Emoji.cs" />
     <Compile Include="Core\Domain\FriendList.cs" />
     <Compile Include="Core\Domain\Login.cs" />
+    <Compile Include="Core\Domain\Tags.cs" />
+    <Compile Include="Core\Domain\UserInformation.cs" />
+    <Compile Include="Migrations\201805230953538_Initial.cs" />
+    <Compile Include="Migrations\201805230953538_Initial.Designer.cs">
+      <DependentUpon>201805230953538_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805231034293_newIdForChat.cs" />
+    <Compile Include="Migrations\201805231034293_newIdForChat.Designer.cs">
+      <DependentUpon>201805231034293_newIdForChat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805231048317_Yeahbuddy.cs" />
+    <Compile Include="Migrations\201805231048317_Yeahbuddy.Designer.cs">
+      <DependentUpon>201805231048317_Yeahbuddy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Persistence\ProfileContext.cs" />
     <Compile Include="Core\ServerCommunication\AcceptFriendRequest.cs" />
     <Compile Include="Core\ServerCommunication\AddFriend.cs" />
     <Compile Include="Core\ServerCommunication\Interfaces\IAcceptFriendRequest.cs" />
@@ -97,6 +114,7 @@
     <Compile Include="Core\ServerCommunication\GetMyProfile.cs" />
     <Compile Include="Core\ServerCommunication\MyProfile.cs" />
     <Compile Include="Core\ServerCommunication\OtherProfile.cs" />
+    <Compile Include="Core\ServerCommunication\SaveMessages.cs" />
     <Compile Include="Core\ServerCommunication\SearchByTags.cs" />
     <Compile Include="Core\ServerCommunication\SearchByUsername.cs" />
     <Compile Include="Core\ServerCommunication\SignUp.cs" />
@@ -106,23 +124,12 @@
     <Compile Include="Core\ServerCommunication\Unit Tests\GetMyProfileTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\LoginRequestTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\LogoutTest.cs" />
+    <Compile Include="Core\ServerCommunication\Unit Tests\SaveMessagesTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\SearchByTagsTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\SearchByUsernameTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\SignUpTest.cs" />
     <Compile Include="Core\ServerCommunication\Unit Tests\UpdateProfileTest.cs" />
     <Compile Include="Core\ServerCommunication\UpdateProfile.cs" />
-    <Compile Include="Migrations\201805161041366_InitialCreate.cs" />
-    <Compile Include="Migrations\201805161041366_InitialCreate.Designer.cs">
-      <DependentUpon>201805161041366_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805171257473_removedName.cs" />
-    <Compile Include="Migrations\201805171257473_removedName.Designer.cs">
-      <DependentUpon>201805171257473_removedName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Persistence\ProfileContext.cs" />
-    <Compile Include="Core\Domain\Tags.cs" />
-    <Compile Include="Core\Domain\UserInformation.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repositories\IChatGroupRepo.cs" />
     <Compile Include="Core\Repositories\IChatRepo.cs" />
@@ -152,11 +159,14 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805161041366_InitialCreate.resx">
-      <DependentUpon>201805161041366_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805230953538_Initial.resx">
+      <DependentUpon>201805230953538_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805171257473_removedName.resx">
-      <DependentUpon>201805171257473_removedName.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805231034293_newIdForChat.resx">
+      <DependentUpon>201805231034293_newIdForChat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805231048317_Yeahbuddy.resx">
+      <DependentUpon>201805231048317_Yeahbuddy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

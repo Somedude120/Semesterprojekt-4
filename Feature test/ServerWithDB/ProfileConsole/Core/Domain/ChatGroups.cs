@@ -11,7 +11,6 @@ namespace ProfileConsole.Core.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ChatGroups()
         {
-            Chat = new HashSet<Chat>();
             UserInformation = new HashSet<UserInformation>();
         }
 
@@ -19,9 +18,6 @@ namespace ProfileConsole.Core.Domain
         public int GroupId { get; set; }
 
         public string GroupName { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Chat> Chat { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserInformation> UserInformation { get; set; }

@@ -9,33 +9,22 @@ namespace ProfileConsole.Core.Domain
     [Table("Chat")]
     public partial class Chat
     {
-        public Chat(int groupId, int messageNumber, string message, string sender)
-        {
-            GroupId = groupId;
-            MessageNumber = messageNumber;
-            Message = message;
-            Sender = sender;
-        }
-
         [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int GroupId { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int MessageNumber { get; set; }
-
-        public string Message { get; set; }
-
-        [Key]
-        [Column(Order = 2)]
+        [Required]
         [StringLength(15)]
         public string Sender { get; set; }
 
-        public virtual ChatGroups ChatGroups { get; set; }
+        [Required]
+        [StringLength(15)]
+        public string Receiver { get; set; }
+
+        public string Message { get; set; }
 
         public virtual UserInformation UserInformation { get; set; }
+
+        public virtual UserInformation UserInformation1 { get; set; }
     }
 }

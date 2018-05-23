@@ -30,7 +30,6 @@ namespace ProfileConsole.Core.Domain
 
         public virtual UserInformation UserInformation1 { get; set; }
 
-
         public virtual UserInformation UserInformation2 { get; set; }
     }
 }
