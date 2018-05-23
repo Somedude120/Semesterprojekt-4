@@ -288,15 +288,22 @@ namespace MartUI.Friend
             DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
     }
 
-    public class Converter : IValueConverter
+    public class Converter : IMultiValueConverter
     {
-        
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            var text1 = values[0].ToString();
+            var text2 = values[1].ToString();
+
+            MessageBox.Show(text1 + " " + text2);
+            //if (text1 == text2)
+            //    return Visibility.Hidden;
+            //else
+            return true;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
         }

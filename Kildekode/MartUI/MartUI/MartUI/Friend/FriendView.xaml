@@ -9,6 +9,7 @@
              d:DesignHeight="600" d:DesignWidth="200"
              Background="#2f3136">
     <!--<UserControl.Resources>
+        <local:Converter x:Key="CheckBlink"/>
         <Style x:Key="FieldToValidate" TargetType="{x:Type Button}">
             <Style.Triggers>
                 <DataTrigger Value="True">
@@ -18,9 +19,7 @@
                             <Binding RelativeSource="{RelativeSource AncestorType={x:Type DockPanel}}" Path="DataContext.ErrorFieldName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" />
                         </MultiBinding>
                     </DataTrigger.Binding>
-                    <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource self}}" />
                     <Setter Property="Background" Value="Red" />
-                    <Setter Property="Foreground" Value="White" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>

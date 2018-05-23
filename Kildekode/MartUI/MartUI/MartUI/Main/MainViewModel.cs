@@ -163,7 +163,6 @@ namespace MartUI.Main
         {
             _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new SettingsViewModel());
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ProfileViewModel());
-            _eventAggregator.GetEvent<InsertTagsInProfile>().Publish();
         }
     }
 }

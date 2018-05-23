@@ -42,7 +42,7 @@ namespace Examples.System.Net
             //Here the new event should be
             //_eventAggregator.GetEvent<SendMessageToServerEvent>().Subscribe(SendMessage);
 
-            string machineName = "192.168.137.1";
+            string machineName = "192.168.101.1";
             string serverCertificateName = "Martin-MSI";
             SslTcpClient.RunClient(machineName, serverCertificateName);
 

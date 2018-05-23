@@ -7,6 +7,7 @@ using System.Web.Profile;
 using System.Windows;
 using System.Windows.Input;
 using MartUI.Events;
+using MartUI.Focus;
 using MartUI.Friend;
 using MartUI.Helpers;
 using MartUI.Main;
@@ -41,7 +42,7 @@ namespace MartUI.Profile
         public string Username
         {
             get => _username ?? (_username = UserData.Username);
-            set => _username = value;
+            set => SetProperty(ref _username, value);
         }
         // Only change this variable to not override UserData yet
         private string _description;
@@ -55,7 +56,7 @@ namespace MartUI.Profile
         public string Tags
         {
             get => _tags ?? (_tags = UserTagsInOneString);
-            set => _tags = value;
+            set => SetProperty(ref _tags, value);
         }
 
         private string _userTagsInOneString;
@@ -100,26 +101,29 @@ namespace MartUI.Profile
 
         public ProfileViewModel()
         {
-            UserData.Username = "Hans";
             _eventAggregator.GetEvent<ShowOtherUserProfile>().Subscribe(ShowFriendProfile);
         }
 
         private void ShowFriendProfile(string username)
         {
             OtherUser = true;
+            _eventAggregator.GetEvent<GetProfile>().Subscribe(Profile);
+
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestProfile +
                                                                           + Constants.GroupDelimiter
                                                                           + username);
-            _eventAggregator.GetEvent<GetProfile>().Subscribe(Profile);
         }
-
 
         private void Profile(string profile)
         {
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ProfileViewModel());
+
             var fullProfile = profile.Split(';').ToList();
 
             Username = fullProfile[0];
             Description = fullProfile[1];
+
+            Tags = "";
 
             if (!string.IsNullOrEmpty(fullProfile[2]))
             {
