@@ -132,13 +132,13 @@ namespace Examples.System.Net
             {
                 switch (input[0])
                 {
-                    case "S":
+                    case Constants.Signup:
                         if (input.Length == 3)
                         {
                             HandleSignup(input, sslStream);
                         }
                         break;
-                    case "L":
+                    case Constants.RequestLogin:
                         if (input.Length == 3)
                         {
                             Console.WriteLine(input.Length);
@@ -154,20 +154,20 @@ namespace Examples.System.Net
             {
                 switch (input[0])
                 {
-                    case "W":   //Write message
+                    case Constants.Write:   //Write message
                         HandleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
-                    case "P":   //Profile get
+                    case Constants.GetProfile:   //Profile get
                         GetProfile(input[1], sslStream);
                         break;
                     case "U":   //Update profile
                         HandleUpdateProfile(input, sslStream);
                         break;
-                    case "L":   //Login
+                    case Constants.RequestLogin:   //Login
                         Console.WriteLine("User is already logged in");
                         sender.SendString(sslStream, "You are already logged in");
                         break;
-                    case "Q":   //Logout
+                    case Constants.Logout:   //Logout
                         HandleLogout(sslStream);
                         break;
                     default:
@@ -279,17 +279,24 @@ namespace Examples.System.Net
 
         static void HandleMessage(string[] input, string login, SslStream sslStream)
         {
-            //userStreams[input[1]].Write(Encoding.UTF8.GetBytes("From " + login + ": " + input[2] + "<EOF>"));
-            if (userStreams.ContainsKey(input[1]))
+            //Check if users are friends
+
+
+            //Check if user is online
+                //Send to user
+            if (userStreams.ContainsKey(input[1]))  //If user is online
             {
                 Console.WriteLine("From: " + login + " to " + input[1]);
                 sender.SendString(userStreams[input[1]], "R" + Constants.GroupDelimiter + login + Constants.GroupDelimiter + input[2]);
             }
-            else
+            else    //User is not online
             {
                 Console.WriteLine("User " + input[1] + " isn't logged in");
                 sender.SendString(userStreams[login], "User: " + input[1] + " isn't logged in");
             }
+
+            //Save to database
+
         }
 
         static void GetProfile(string input, SslStream sslStream)

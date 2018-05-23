@@ -8,6 +8,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="200"
              Background="#2f3136">
+    <!--<UserControl.Resources>
+        <Style x:Key="FieldToValidate" TargetType="{x:Type Button}">
+            <Style.Triggers>
+                <DataTrigger Value="True">
+                    <DataTrigger.Binding>
+                        <MultiBinding Converter="{StaticResource VisualQueueOnErrorConverter}">
+                            <Binding RelativeSource="{RelativeSource self}" Path="Name" />
+                            <Binding RelativeSource="{RelativeSource AncestorType={x:Type DockPanel}}" Path="DataContext.ErrorFieldName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" />
+                        </MultiBinding>
+                    </DataTrigger.Binding>
+                    <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource self}}" />
+                    <Setter Property="Background" Value="Red" />
+                    <Setter Property="Foreground" Value="White" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>-->
+    
+
     <Grid x:Name="FriendGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -17,7 +36,6 @@
         
         <Grid.Resources>
             <local:BindingProxy x:Key="Proxy" Data="{Binding}"/>
-
         </Grid.Resources>
 
         <Grid Row="0">
@@ -29,27 +47,12 @@
                             Content="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                             Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                             CommandParameter="{Binding}"
-                            Margin="0,3" Width="185">
+                            Margin="0,3" Width="185" Style="{StaticResource RoundCornerButton}">
                                 <Button.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Remove" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveFriendCommand}" CommandParameter="{Binding}"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
-                                <Button.Style>
-                                    <Style TargetType="Button" BasedOn="{StaticResource RoundCornerButton}">
-                                        <Style.Triggers>
-                                            <DataTrigger Value="True">
-                                                <DataTrigger.Binding>
-                                                    <MultiBinding Converter=""></MultiBinding>
-                                                </DataTrigger.Binding>
-
-
-                                                <Setter Property="Background" Value="Pink"/>
-
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
                             </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

@@ -104,9 +104,16 @@
     <Compile Include="CreateUser\CreateUserViewModel.cs" />
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
     <Compile Include="Events\AcceptedFriendRequestEvent.cs" />
+    <Compile Include="Events\AddFriendFromTagEvent.cs" />
     <Compile Include="Events\CreateUserResponseEvent.cs" />
+    <Compile Include="Events\FriendListInfo.cs" />
     <Compile Include="Events\FriendRequestDeclinedEvent.cs" />
     <Compile Include="Events\FriendRequestReceivedEvent.cs" />
+    <Compile Include="Events\GetTagEvent.cs" />
+    <Compile Include="Events\GetFriendListEvent.cs" />
+    <Compile Include="Events\GetProfile.cs" />
+    <Compile Include="Events\GetUserInfo.cs" />
+    <Compile Include="Events\InsertTagsInProfile.cs" />
     <Compile Include="Events\LoginResponseEvent.cs" />
     <Compile Include="Events\NewMessageEvent.cs" />
     <Compile Include="Events\NotificationReceivedChangeColor.cs" />
@@ -118,6 +125,11 @@
       <DependentUpon>FriendNotificationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FriendNotification\FriendNotificationViewModel.cs" />
+    <Compile Include="Group\GroupModel.cs" />
+    <Compile Include="Group\GroupView.xaml.cs">
+      <DependentUpon>GroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Group\GroupViewModel.cs" />
     <Compile Include="Me\MyData.cs" />
     <Compile Include="Helpers\TokenizingControl.cs" />
     <Compile Include="Events\AddFriendEvent.cs" />
@@ -153,6 +165,10 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings\SettingsViewModel.cs" />
+    <Compile Include="Tag\TagView.xaml.cs">
+      <DependentUpon>TagView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tag\TagViewModel.cs" />
     <Page Include="Chat\ChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -170,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Friend\FriendView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Group\GroupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,6 +244,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Tag\TagView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main\MainViewModel.cs" />
@@ -272,6 +296,8 @@
   <ItemGroup>
     <Resource Include="Images\14-tag.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GroupChat\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

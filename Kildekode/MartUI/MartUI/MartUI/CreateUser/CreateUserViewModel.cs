@@ -115,7 +115,7 @@ namespace MartUI.CreateUser
 
         private void CreateNewUser()
         {
-            string msg = Constants.Signup + UserData.Username + Constants.MiddleDelimiter +
+            string msg = Constants.Signup + UserData.Username + Constants.GroupDelimiter +
                          UserData.Password;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);

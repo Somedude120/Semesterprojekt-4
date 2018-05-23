@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using MartUI.Chat;
 using MartUI.Events;
 using MartUI.FriendNotification;
+using MartUI.Group;
 using MartUI.Main;
 using MartUI.Me;
 using Prism.Commands;
@@ -70,6 +71,8 @@ namespace MartUI.Friend
             _eventAggregator.GetEvent<NotificationReceivedChangeColor>().Subscribe(() => NotificationReceived = true);
             _eventAggregator.GetEvent<AcceptedFriendRequestEvent>().Subscribe(AcceptedFriendRequest);
             _eventAggregator.GetEvent<RemoveFriendReceivedEvent>().Subscribe(HandleRemoveFriendReceived);
+            _eventAggregator.GetEvent<AddFriendFromTagEvent>().Subscribe(HandleAddFriendFromTag);
+            _eventAggregator.GetEvent<GetFriendListEvent>().Subscribe(HandleGetFriendList);
 
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
@@ -89,6 +92,17 @@ namespace MartUI.Friend
 
         //}
 
+        private void HandleGetFriendList(string friendlist)
+        {
+            string[] temp = friendlist.Split(Constants.DataDelimiter);
+            foreach (var f in temp)
+            {
+                FriendList.Add(new FriendModel(){Username = f});
+            }
+
+            var message = Constants.GetOldMessages + Constants.GroupDelimiter;
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
+        }
 
         private void HandleNewMessage(ChatModel message)
         {
@@ -142,7 +156,7 @@ namespace MartUI.Friend
 
         public void AddFriend()
         {
-            bool friendInList = false;
+            var friendInList = false;
             foreach (var f in FriendList)
             {
                 if (f.Username == Username)
@@ -155,12 +169,33 @@ namespace MartUI.Friend
 
             if (!friendInList)
             {
-                var message = Constants.SendFriendRequest + Constants.MiddleDelimiter + Username;
+                var message = Constants.SendFriendRequest + Constants.GroupDelimiter + Username;
                 _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             }
 
             Username = ""; //Clears the AddFriendTextbox after pressing enter
-            //Skal kommunikere med database/server
+        }
+
+        public void HandleAddFriendFromTag(string username)
+        {
+            var friendInList = false;
+            foreach (var f in FriendList)
+            {
+                if (f.Username == username)
+                {
+                    MessageBox.Show("This user is already on your friendlist");
+                    friendInList = true;
+                    break;
+                }
+            }
+
+            if (!friendInList)
+            {
+                var message = Constants.SendFriendRequest + Constants.GroupDelimiter + Username;
+                _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
+            }
+
+            Username = ""; //Clears the AddFriendTextbox after pressing enter
         }
 
         public void AcceptedFriendRequest(string username)
@@ -186,7 +221,7 @@ namespace MartUI.Friend
             if (FriendList.Contains(friend))
             {
                 FriendList.Remove(friend);
-                var message = Constants.RemoveFriend + Constants.MiddleDelimiter + Username;
+                var message = Constants.RemoveFriend + Constants.GroupDelimiter + Username;
                 _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             }
             else
