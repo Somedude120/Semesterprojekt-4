@@ -22,7 +22,17 @@ namespace MartUI.Tag
         private ICommand _addFriendFromTagCommand;
         private ICommand _showProfileCommand;
         private ICommand _searchTagCommand;
-        public string Tag = "Enter tag!";
+        private string _tag = "Enter tag!";
+
+        public string Tag
+        {
+            get { return _tag; }
+            set
+            {
+                _tag = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public ICommand AddFriendFromTagCommand => _addFriendFromTagCommand ?? (_addFriendFromTagCommand= new DelegateCommand<string>(AddFriendFromTag));
         public ICommand ShowProfileCommand => _showProfileCommand ?? (_showProfileCommand = new DelegateCommand<string>(ShowProfile));
@@ -47,7 +57,7 @@ namespace MartUI.Tag
 
         private void SearchTag()
         {
-            string message = Constants.GetUsernamesByTag + Tag;
+            string message = Constants.GetUsernamesByTag + Constants.GetUsernamesByTag + Tag;
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             Tag = "";
         }

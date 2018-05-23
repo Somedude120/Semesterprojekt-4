@@ -96,7 +96,7 @@ namespace MartUI.Login
 
         private void FriendListInfo(string s)
         {
-            //MessageBox.Show(s);
+            MessageBox.Show(s);
             _eventAggregator.GetEvent<GetFriendListEvent>().Publish(s);
 
             // Change view to "Main View"

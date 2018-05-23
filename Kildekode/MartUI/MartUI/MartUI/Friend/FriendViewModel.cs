@@ -108,6 +108,7 @@ namespace MartUI.Friend
             string[] temp = friendlist.Split(Constants.DataDelimiter);
             foreach (var f in temp)
             {
+                if(f != "")
                 FriendList.Add(new FriendModel(){Username = f});
             }
 
@@ -245,7 +246,7 @@ namespace MartUI.Friend
             if (FriendList.Contains(friend))
             {
                 FriendList.Remove(friend);
-                var message = Constants.RemoveFriend + Constants.GroupDelimiter + Username;
+                var message = Constants.RemoveFriend + Constants.GroupDelimiter + friend.Username;
                 _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             }
             else
