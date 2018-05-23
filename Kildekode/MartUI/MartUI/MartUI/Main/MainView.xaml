@@ -18,6 +18,7 @@
         xmlns:profile="clr-namespace:MartUI.Profile"
         xmlns:friendnotification="clr-namespace:MartUI.FriendNotification"
         xmlns:group="clr-namespace:MartUI.Group"
+        xmlns:tag="clr-namespace:MartUI.Tag"
         mvvm:ViewModelLocator.AutoWireViewModel="True"
 
         mc:Ignorable="d"
@@ -53,6 +54,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type friendnotification:FriendNotificationViewModel}">
              <friendnotification:FriendNotificationView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type tag:TagViewModel}">
+            <tag:TagView DataContext="{Binding}"/>
         </DataTemplate>
         <!--<DataTemplate DataType="{x:Type group:GroupViewModel}">
             <group:GroupView DataContext="{Binding}"/>

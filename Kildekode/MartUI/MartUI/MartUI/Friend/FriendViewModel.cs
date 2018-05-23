@@ -17,6 +17,7 @@ using MartUI.FriendNotification;
 using MartUI.Group;
 using MartUI.Main;
 using MartUI.Me;
+using MartUI.Tag;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -34,6 +35,7 @@ namespace MartUI.Friend
         private ICommand _removeFriendCommand;
         private ICommand _showNotificationsCommand;
         private ICommand _viewProfileCommand;
+        private ICommand _showTagCommand;
         private string _username;
         private MyData _userData;
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
@@ -62,6 +64,12 @@ namespace MartUI.Friend
         //public Brush Background => NotificationReceived ? Brushes.White : Brushes.Red;
         public ICommand ChooseFriendCommand => _chooseFriendCommand ?? (_chooseFriendCommand = new DelegateCommand<FriendModel>(SelectFriend));
         public ICommand ViewProfileCommand => _viewProfileCommand ?? (_viewProfileCommand = new DelegateCommand<FriendModel>(HandleViewProfile));
+        public ICommand ShowTagCommand => _showTagCommand ?? (_showTagCommand = new DelegateCommand(HandleShowTag));
+
+        private void HandleShowTag()
+        {
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new TagViewModel());
+        }
 
         public FriendViewModel()
         {
@@ -152,7 +160,6 @@ namespace MartUI.Friend
 
         private void SelectFriend(FriendModel friend)
         {
-
             _eventAggregator.GetEvent<SelectedFriendEvent>().Publish(friend);
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(friend.Chat);
         }
