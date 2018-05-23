@@ -176,11 +176,47 @@ namespace Examples.System.Net
                     case Constants.AcceptFriendRequest:
                         HandleFriendRequestAccept(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
+                    case Constants.GetOldMessages:
+                        HandleGetOldMessages(userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
+                        break;
+                    case Constants.GetFriendList:
+                        HandleGetFriendlist(userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
+                        break;
                     default:
                         Console.WriteLine("String is not recognized");
                         break;
                 }
 
+            }
+        }
+
+        private static void HandleGetFriendlist(string login, SslStream sslStream)
+        {
+            var friends = GetFriends.GetFriendList(login);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var friend in friends)
+            {
+                stringBuilder.Append(friend);
+                stringBuilder.Append(Constants.DataDelimiter);
+            }
+
+            stringBuilder.Length--; //Remove last dataDelimiter
+
+            string messageToSend = Constants.GetFriendList + Constants.GroupDelimiter + stringBuilder.ToString();
+
+            sender.SendString(sslStream, messageToSend);
+        }
+
+        private static void HandleGetOldMessages(string login, SslStream sslStream)
+        {
+            var messages = GetAllMsgs.RequestAllMsgs(login);
+            foreach (var message in messages)
+            {
+                string messageToSend;
+                messageToSend = Constants.MessageReceived + Constants.GroupDelimiter + message.Sender + Constants.GroupDelimiter + 
+                                message.Receiver + Constants.GroupDelimiter + message.Message;
+                sender.SendString(sslStream, messageToSend);
             }
         }
 
