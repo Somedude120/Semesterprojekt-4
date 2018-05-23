@@ -105,8 +105,8 @@ namespace MartUI.Login
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
 
             // Unsubscribe events to be able to handle new login request
-            //_eventAggregator.GetEvent<GetProfile>().Unsubscribe(ProfileInfo);
-            //_eventAggregator.GetEvent<GetFriendList>().Unsubscribe(FriendListInfo);
+            _eventAggregator.GetEvent<GetProfile>().Unsubscribe(ProfileInfo);
+            _eventAggregator.GetEvent<GetFriendList>().Unsubscribe(FriendListInfo);
         }
 
         private void ProfileInfo(string profile)
