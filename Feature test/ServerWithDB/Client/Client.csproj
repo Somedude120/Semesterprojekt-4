@@ -52,6 +52,12 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TLSNetworking\TLSNetworking.csproj">
+      <Project>{48f4c855-b35d-4cec-803b-d8e9a0c8b33f}</Project>
+      <Name>TLSNetworking</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

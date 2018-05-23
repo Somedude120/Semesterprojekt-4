@@ -57,10 +57,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Kildekode\MartUI\MartUI\MartUI\Networking\TLSNetworking\TLSNetworking.csproj">
-      <Project>{48f4c855-b35d-4cec-803b-d8e9a0c8b33f}</Project>
-      <Name>TLSNetworking</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Kildekode\Server\Salt_With_UnitTest\Salt_And_Hash\Salt_And_Hash\Salt_And_Hash.csproj">
       <Project>{ecae1001-6e73-4a86-8d2f-03228f5165f6}</Project>
       <Name>Salt_And_Hash</Name>
@@ -68,6 +64,10 @@
     <ProjectReference Include="..\ProfileConsole\ProfileConsole.csproj">
       <Project>{1d2872a2-42bc-41f3-b72b-aba8ea0dd56d}</Project>
       <Name>ProfileConsole</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TLSNetworking\TLSNetworking.csproj">
+      <Project>{48f4c855-b35d-4cec-803b-d8e9a0c8b33f}</Project>
+      <Name>TLSNetworking</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
