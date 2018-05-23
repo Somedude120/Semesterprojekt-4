@@ -71,9 +71,11 @@ namespace MartUI.Login
             {
                 case "OK":
                     // Fullpage is null, show friendlist and initialize chatview
-                    _eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
-                    _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
-                    _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
+                    _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish();
+
+                    //_eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
+                    //_eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
+                    //_eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
                     break;
                 case "NOK":
                     MessageBox.Show("Wrong username or password!");

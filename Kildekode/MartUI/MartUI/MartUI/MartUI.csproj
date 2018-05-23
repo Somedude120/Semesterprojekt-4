@@ -107,6 +107,7 @@
     <Compile Include="Events\CreateUserResponseEvent.cs" />
     <Compile Include="Events\FriendRequestDeclinedEvent.cs" />
     <Compile Include="Events\FriendRequestReceivedEvent.cs" />
+    <Compile Include="Events\GetUserInfo.cs" />
     <Compile Include="Events\InsertTagsInProfile.cs" />
     <Compile Include="Events\LoginResponseEvent.cs" />
     <Compile Include="Events\NewMessageEvent.cs" />
