@@ -297,6 +297,12 @@ namespace Examples.System.Net
                             _eventAggregator.GetEvent<GetTagEvent>().Publish(tempStringList[1]);
                         });
                         break;
+                    case Constants.FriendRequestAccepted:
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            _eventAggregator.GetEvent<AcceptedFriendRequestEvent>().Publish(tempStringList[1]);
+                        });
+                        break;
                     default:
                         Console.WriteLine($"Error Messagehandler: {tempStringList[0]}");
                         break;
