@@ -116,6 +116,7 @@ namespace Examples.System.Net
 
         static string[] ParseMessage(string message)
         {
+            Console.WriteLine(message);
             return message.Split(Constants.GroupDelimiter);
         }
 
@@ -157,7 +158,8 @@ namespace Examples.System.Net
                     case Constants.Write:   //Write message
                         HandleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
-                    case Constants.GetProfile:   //Profile get
+                    case "RP":   //Profile get
+                        Console.WriteLine("GetProfile");
                         HandleGetProfile(input, sslStream);
                         break;
                     case "U":   //Update profile
@@ -179,7 +181,7 @@ namespace Examples.System.Net
                     case Constants.GetOldMessages:
                         HandleGetOldMessages(userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
-                    case Constants.GetFriendList:
+                    case "RFL":
                         HandleGetFriendlist(userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
                     default:
@@ -230,12 +232,12 @@ namespace Examples.System.Net
             if (result == "OK")
             {
                 Console.WriteLine("User: " + input[1] + " created");
-                sender.SendString(sslStream, "OK");
+                sender.SendString(sslStream, "SOK");
             }
             else
             {
                 Console.WriteLine("User not created");
-                sender.SendString(sslStream, "NOK");
+                sender.SendString(sslStream, "SNOK");
             }
         }
 
@@ -328,7 +330,7 @@ namespace Examples.System.Net
                 {
                     Console.WriteLine("From: " + login + " to " + input[1]);
                     sender.SendString(userStreams[input[1]],
-                        "R" + Constants.GroupDelimiter + login + Constants.GroupDelimiter + input[2]);
+                        "R" + Constants.GroupDelimiter + login + Constants.GroupDelimiter + input[1] + Constants.GroupDelimiter + input[2]);
                 }
                 else //User is not online
                 {
@@ -383,11 +385,31 @@ namespace Examples.System.Net
         static void HandleSendFriendRequest(string[] input, string login, SslStream sslStream)
         {
             AddFriend.AddFriendRequest(login, input[1]);
+
+            //Check if username is already in logged in
+            if (userStreams.ContainsKey(input[1]))
+            {
+                sender.SendString(userStreams[input[1]], "FRR" + Constants.GroupDelimiter + login);
+            }
+            else
+            {
+                Console.WriteLine("Send friendrequest. User: " + input[1] + " is not online");
+            }
         }
 
         static void HandleFriendRequestAccept(string[] input, string login, SslStream sslStream)
         {
             AcceptFriendRequest.AcceptRequest(login, input[1]);
+
+            //Check if username is already in logged in
+            if (userStreams.ContainsKey(input[1]))
+            {
+                sender.SendString(userStreams[input[1]], "FRA" + Constants.GroupDelimiter + login);
+            }
+            else
+            {
+                Console.WriteLine("Accept friendrequest. User: " + input[1] + " is not online");
+            }
         }
 
         static void FailedLogin()
