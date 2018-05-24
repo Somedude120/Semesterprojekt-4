@@ -184,11 +184,37 @@ namespace Examples.System.Net
                     case "RFL":
                         HandleGetFriendlist(userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
+                    case Constants.GetUsernamesByTag:
+                        HandleGetUserNamesByTag(input, sslStream);
+                        break;
                     default:
                         Console.WriteLine("String is not recognized");
                         break;
                 }
 
+            }
+        }
+
+        private static void HandleGetUserNamesByTag(string[] input, SslStream sslStream)
+        {
+            var tag = SearchByTags.RequestTag(input[1]);
+
+            try
+            {
+                var tags = tag.UserInformation;
+                var stringBuilder = new StringBuilder();
+
+                foreach (var userInformation in tags)
+                {
+                    stringBuilder.Append(userInformation.UserName);
+                    stringBuilder.Append(Constants.DataDelimiter);
+                }
+
+                sender.SendString(sslStream, Constants.GetUsernamesByTag + Constants.GroupDelimiter + stringBuilder.ToString());
+            }
+            catch (Exception e)
+            {
+                sender.SendString(sslStream, "NOK");
             }
         }
 
