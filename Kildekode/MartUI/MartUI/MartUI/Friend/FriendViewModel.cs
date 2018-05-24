@@ -17,6 +17,7 @@ using MartUI.FriendNotification;
 using MartUI.Group;
 using MartUI.Main;
 using MartUI.Me;
+using MartUI.Tag;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -34,6 +35,7 @@ namespace MartUI.Friend
         private ICommand _removeFriendCommand;
         private ICommand _showNotificationsCommand;
         private ICommand _viewProfileCommand;
+        private ICommand _showTagCommand;
         private string _username;
         private MyData _userData;
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
@@ -62,6 +64,12 @@ namespace MartUI.Friend
         //public Brush Background => NotificationReceived ? Brushes.White : Brushes.Red;
         public ICommand ChooseFriendCommand => _chooseFriendCommand ?? (_chooseFriendCommand = new DelegateCommand<FriendModel>(SelectFriend));
         public ICommand ViewProfileCommand => _viewProfileCommand ?? (_viewProfileCommand = new DelegateCommand<FriendModel>(HandleViewProfile));
+        public ICommand ShowTagCommand => _showTagCommand ?? (_showTagCommand = new DelegateCommand(HandleShowTag));
+
+        private void HandleShowTag()
+        {
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new TagViewModel());
+        }
 
         public FriendViewModel()
         {
@@ -79,11 +87,6 @@ namespace MartUI.Friend
             // Mulig løsning til når venner logger ind:
             // Subscribe på et event som serveren sender så man kan se når en ven logger ind
 
-            var marto = new FriendModel() { Username = "Marto" };
-            var alexD = new FriendModel() { Username = "AlexD" };
-            FriendList.Add(marto);
-            FriendList.Add(alexD);
-
             //Tilføj eventuelt et eller andet som første plads i arrayet
             //Skal bruge metode fra server/database til at få en liste af alle ens venner
             //Samt kun alle som er online 
@@ -100,6 +103,7 @@ namespace MartUI.Friend
             string[] temp = friendlist.Split(Constants.DataDelimiter);
             foreach (var f in temp)
             {
+                if(f != "")
                 FriendList.Add(new FriendModel(){Username = f});
             }
 
@@ -152,7 +156,6 @@ namespace MartUI.Friend
 
         private void SelectFriend(FriendModel friend)
         {
-
             _eventAggregator.GetEvent<SelectedFriendEvent>().Publish(friend);
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(friend.Chat);
         }
@@ -168,6 +171,9 @@ namespace MartUI.Friend
                     friendInList = true;
                     break;
                 }
+
+                if (Username == "")
+                    friendInList = true;
             }
 
             if (!friendInList)
@@ -190,6 +196,9 @@ namespace MartUI.Friend
                     friendInList = true;
                     break;
                 }
+
+                if (username == "")
+                    friendInList = true;
             }
 
             if (!friendInList)
@@ -217,6 +226,9 @@ namespace MartUI.Friend
                     friendInList = true;
                     break;
                 }
+
+                if (username == "")
+                    friendInList = true;
             }
             if (!friendInList)
             {
@@ -229,7 +241,7 @@ namespace MartUI.Friend
             if (FriendList.Contains(friend))
             {
                 FriendList.Remove(friend);
-                var message = Constants.RemoveFriend + Constants.GroupDelimiter + Username;
+                var message = Constants.RemoveFriend + Constants.GroupDelimiter + friend.Username;
                 _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             }
             else
@@ -288,15 +300,22 @@ namespace MartUI.Friend
             DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
     }
 
-    public class Converter : IValueConverter
+    public class Converter : IMultiValueConverter
     {
-        
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            var text1 = values[0].ToString();
+            var text2 = values[1].ToString();
+
+            MessageBox.Show(text1 + " " + text2);
+            //if (text1 == text2)
+            //    return Visibility.Hidden;
+            //else
+            return true;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
         }

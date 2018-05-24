@@ -11,6 +11,7 @@ using MartUI.Friend;
 using MartUI.Helpers;
 using MartUI.Main;
 using MartUI.Me;
+using MartUI.Settings.BlankSetting;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -64,7 +65,12 @@ namespace MartUI.Login
         {
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
+            _eventAggregator.GetEvent<LogoutPublishLoginEvent>().Subscribe(HandleLogoutPublishLogin);
+
             _eventAggregator.GetEvent<LoginResponseEvent>().Subscribe(HandleLogin);
+
+            _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
+            _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
         }
 
         private void HandleLogin(string response)
@@ -75,15 +81,17 @@ namespace MartUI.Login
                     // Fullpage is null, show friendlist and initialize chatview
                     _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestProfile 
                                                                                   + Constants.GroupDelimiter
-                                                                                  + UserData.Username);
-                    _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
-                                                                                  + Constants.GroupDelimiter
-                                                                                  + UserData.Username);
-                    _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
-                    _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
+                                                                                  + Username);
+                    //_eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
+                    //                                                              + Constants.GroupDelimiter
+                    //                                                              + UserData.Username);
+
+                    //_eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
+
+                    //_eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
                     break;
                 case "NOK":
-                    MessageBox.Show("Wrong username or password!");
+                    MessageBox.Show("Cannot login! Wrong username or password!");
                     break;
             }
         }
@@ -95,35 +103,49 @@ namespace MartUI.Login
             // Change view to "Main View"
             _eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
             _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
-            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
+            _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new BlankSettingViewModel());
 
             // Unsubscribe events to be able to handle new login request
             _eventAggregator.GetEvent<GetProfile>().Unsubscribe(ProfileInfo);
             _eventAggregator.GetEvent<GetFriendList>().Unsubscribe(FriendListInfo);
         }
 
+        private void HandleLogoutPublishLogin()
+        {
+            _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
+            _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
+        }
+
         private void ProfileInfo(string profile)
         {
             // Get full profile info (description + tags)
-            var fullProfile = profile.Split(Constants.GroupDelimiter);
+           // MessageBox.Show(profile);
+            var fullProfile = profile.Split(Constants.GroupDelimiter).ToList();
 
-            UserData.Description = fullProfile[0];
+            UserData.Description = fullProfile[1];
 
             // Split tags into list
-            var tagsOnly = fullProfile[1].Split(Constants.DataDelimiter).ToList();
+            if (fullProfile.Count == 3)
+            {
+                var tagsOnly = fullProfile[2].Split(Constants.DataDelimiter).ToList();
+                UserData.Tags = tagsOnly;
+            }
 
-            UserData.Tags = tagsOnly;
+
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
+                                                                          + Constants.GroupDelimiter
+                                                                          + UserData.Username);
         }
 
         private bool LoginCanExecute()
         {
-            return !string.IsNullOrWhiteSpace(Username) && Username.Length > 4
-                    && !string.IsNullOrWhiteSpace(Password) && Password.Length > 5;
+            return !string.IsNullOrWhiteSpace(Username) && Username.Length > 1
+                                                        && !string.IsNullOrWhiteSpace(Password) && Password.Length > 1;
         }
 
         private void LoginExecute()
         {
-            var msg = Constants.LoginResponse + Constants.GroupDelimiter + UserData.Username + Constants.GroupDelimiter + UserData.Password;
+            var msg = Constants.RequestLogin + Constants.GroupDelimiter + UserData.Username + Constants.GroupDelimiter + Password;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
 

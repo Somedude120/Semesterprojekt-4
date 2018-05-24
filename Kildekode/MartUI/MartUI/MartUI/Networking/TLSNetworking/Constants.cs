@@ -31,12 +31,13 @@
     /*
      * FRIEND REQUESTS
      */
-    public const string SendFriendRequest = "SFR"; // SFR + MiddelDelimiter + Username
-    public const string RemoveFriend = "RF"; // RF + MiddeDelimiter + Username
+    public const string SendFriendRequest = "SFR"; // SFR + GroupDelimiter + Username
+    public const string RemoveFriend = "RF"; // RF + GroupDelimiter + Username
     public const string AcceptFriendRequest = "AFR"; // AFR + GroupDelimiter + Username
     public const string DeclineFriendRequest = "DFR"; // DFR + GroupDelimiter + Username
     public const string BlockFriendRequest = "BFR"; // BFR + GroupDelimiter + Username
     public const string FriendRequestReceived = "FRR"; // FR + GroupDelimiter + Username
+    public const string FriendRequestAccepted = "FRA"; // FRA + GroupDelimiter + Username
     public const string FriendRequestDeclined = "FRD"; // FRD + GroupDelimiter + Username
 
     /*
@@ -63,7 +64,7 @@
     * REQUEST USER DATA
     */
     public const string RequestProfile = "RP"; // RU + GroupDelimiter + Username
-    public const string RequestFriendList = "RF"; // RF + GroupDelimiter + Username
+    public const string RequestFriendList = "RFL"; // RF + GroupDelimiter + Username
     public const string GetProfile = "P"; // P + GroupDelimiter + Username + GroupDelimiter + Descrip. + Group + Tag + DataDel. + Tag ..
     public const string GetFriendList = "FL"; // FL + GroupDelimiter + FriendUsername + DataDelimiter + Friend ...
 

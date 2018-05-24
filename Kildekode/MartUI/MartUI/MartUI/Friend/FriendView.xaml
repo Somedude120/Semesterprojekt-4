@@ -9,6 +9,7 @@
              d:DesignHeight="600" d:DesignWidth="200"
              Background="#2f3136">
     <!--<UserControl.Resources>
+        <local:Converter x:Key="CheckBlink"/>
         <Style x:Key="FieldToValidate" TargetType="{x:Type Button}">
             <Style.Triggers>
                 <DataTrigger Value="True">
@@ -18,9 +19,7 @@
                             <Binding RelativeSource="{RelativeSource AncestorType={x:Type DockPanel}}" Path="DataContext.ErrorFieldName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" />
                         </MultiBinding>
                     </DataTrigger.Binding>
-                    <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource self}}" />
                     <Setter Property="Background" Value="Red" />
-                    <Setter Property="Foreground" Value="White" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -94,7 +93,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <TextBox Width="144" HorizontalAlignment="Left" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" x:Name="AddFriendTextBox" Visibility="Hidden"
+                <TextBox Width="120" HorizontalAlignment="Left" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" x:Name="AddFriendTextBox" Visibility="Hidden"
                      MouseDoubleClick="SelectAddress"
                      GotKeyboardFocus="SelectAddress"
                      PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
@@ -103,7 +102,13 @@
                         <KeyBinding Command="{Binding AddFriendCommand}" Key="Return"/>
                     </TextBox.InputBindings>
                 </TextBox>
-                <Button Width="16" HorizontalAlignment="Right" Margin="0,0,6,0" Background="White" BorderBrush="Transparent"  Height="16" 
+                <Button Width="16" HorizontalAlignment="Right" Margin="6,0,0,0" Background="White" BorderBrush="Transparent"  Height="16" 
+                        Style="{StaticResource NoButtonHighlight}" Command="{Binding ShowTagCommand}">
+                    <Button.OpacityMask>
+                        <VisualBrush Visual="{iconPacks:Modern Tag}" />
+                    </Button.OpacityMask>
+                </Button>
+                <Button Width="16" HorizontalAlignment="Right" Margin="4,0,0,0" Background="White" BorderBrush="Transparent"  Height="16" 
                     Name="AddFriendButton" Style="{StaticResource NoButtonHighlight}" Click="AddFriendButton_OnClick">
                     <Button.OpacityMask>
                         <VisualBrush Visual="{iconPacks:Modern UserAdd}" />
