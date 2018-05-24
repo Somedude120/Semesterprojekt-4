@@ -21,38 +21,48 @@ namespace ProfileConsole.Core.ServerCommunication
         public static MyProfile RequestOwnInformation(string Username)
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
-            var person = unitOfWork.UserInformation.GetString(Username);
-            
-            if (person.UserName == Username)
-            {
-                using (var db = new ProfileContext())
-                {
-                    var profile =
-                        from p in db.UserInformation
-                        where p.UserName == Username
-                        select p;
 
-                    
-                    try
+            try
+            {
+                var person = unitOfWork.UserInformation.GetString(Username);
+
+                if (person.UserName == Username)
+                {
+                    using (var db = new ProfileContext())
                     {
-                        var tagList = new List<Tags>();
-                        foreach (var pers in profile)
+                        var profile =
+                            from p in db.UserInformation
+                            where p.UserName == Username
+                            select p;
+
+
+                        try
                         {
-                            var temp = unitOfWork.UserInformation.GetTagsWithUserInformation(pers.UserName);
-                            foreach (var tag in temp.Tags)
+                            var tagList = new List<Tags>();
+                            foreach (var pers in profile)
                             {
-                                tagList.Add(tag);
+                                var temp = unitOfWork.UserInformation.GetTagsWithUserInformation(pers.UserName);
+                                foreach (var tag in temp.Tags)
+                                {
+                                    tagList.Add(tag);
+                                }
+
+                                MyProfile myProfile = new MyProfile(pers.Description, tagList);
+                                return myProfile;
+
                             }
-                            MyProfile myProfile = new MyProfile(pers.Description, tagList);
-                            return myProfile;
-                            
+                        }
+                        catch (Exception e)
+                        {
+                            return null;
                         }
                     }
-                    catch (Exception e)
-                    {
-                        return null;
-                    }
                 }
+
+            }
+            catch (Exception e)
+            {
+                return null;
             }
 
             return null;

@@ -214,7 +214,7 @@ namespace Examples.System.Net
             foreach (var message in messages)
             {
                 string messageToSend;
-                messageToSend = Constants.MessageReceived + Constants.GroupDelimiter + message.Sender + Constants.GroupDelimiter + 
+                messageToSend = Constants.MessageReceived + Constants.GroupDelimiter + message.Sender + Constants.GroupDelimiter +
                                 message.Receiver + Constants.GroupDelimiter + message.Message;
                 sender.SendString(sslStream, messageToSend);
             }
@@ -356,18 +356,26 @@ namespace Examples.System.Net
                 username = input[1];
             }
             var profile = GetMyProfile.RequestOwnInformation(username);
+            string messageToSend = null;
 
-            string messageToSend = Constants.GetProfile + Constants.GroupDelimiter + username + Constants.GroupDelimiter + profile.description + Constants.GroupDelimiter;
-
-            var stringBuilder = new StringBuilder();
-            foreach (var tag in profile.tags)
+            try
             {
-                stringBuilder.Append(tag.TagName);
-                stringBuilder.Append(Constants.DataDelimiter);
+                messageToSend = Constants.GetProfile + Constants.GroupDelimiter + username + Constants.GroupDelimiter + profile.description + Constants.GroupDelimiter;
+                var stringBuilder = new StringBuilder();
+                foreach (var tag in profile.tags)
+                {
+                    stringBuilder.Append(tag.TagName);
+                    stringBuilder.Append(Constants.DataDelimiter);
+                }
+
+                messageToSend = messageToSend + stringBuilder.ToString();
+                sender.SendString(sslStream, messageToSend);
+            }
+            catch (Exception e)
+            {
+                sender.SendString(sslStream, "NOK");
             }
 
-            messageToSend = messageToSend + stringBuilder.ToString();
-            sender.SendString(sslStream, messageToSend);
         }
 
         static void HandleUpdateProfile(string[] input, SslStream sslStream)
@@ -482,7 +490,7 @@ namespace Examples.System.Net
             string certificate = null;
             //if (args == null || args.Length < 1)
             //{
-                //DisplayUsage();
+            //DisplayUsage();
             //}
             //certificate = args[0];
             //certificate = "D:/Users/Martin/Dropbox/IKT/4.Semester/PROJ4/Semesterprojekt-4/Feature test/SSL-Test/MartoTestCer.cer";
