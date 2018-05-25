@@ -2,10 +2,10 @@
 {
     //Delimiters
     public const char EndDelimiter = (char)29;  //Ends all messages
-    //public const char MiddleDelimiter = (char)30;
-    public const char GroupDelimiter = (char)59;    //Splits a message into its different groups of data
-    //public const char DataDelimiter = (char) 31;
-    public const char DataDelimiter = (char)58; //Splits a data group into its different data parts
+    public const char GroupDelimiter = (char)30;
+    //public const char GroupDelimiter = (char)59;    //Splits a message into its different groups of data
+    public const char DataDelimiter = (char)31;
+    //public const char DataDelimiter = (char)58; //Splits a data group into its different data parts
 
     /*
      * MESSAGES

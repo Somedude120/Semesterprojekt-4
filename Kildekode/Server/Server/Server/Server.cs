@@ -131,6 +131,7 @@ namespace Examples.System.Net
             //Client that is not logged in, should only be able to get to HandleLogin
             if (userStreams.FirstOrDefault(x => x.Value == sslStream).Key == null)  //If client isn't logged in
             {
+                Console.WriteLine("First" + input[0]);
                 switch (input[0])
                 {
                     case Constants.Signup:
