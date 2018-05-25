@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using MartUI.Events;
 using MartUI.Friend;
@@ -64,10 +65,13 @@ namespace MartUI.Tag
 
         private void HandleGetTag(string username)
         {
-            string[] temp = username.Split(Constants.DataDelimiter);
-            foreach (var u in temp)
+            _userList.Clear();
+
+            var users = username.Split(Constants.DataDelimiter).ToList();
+            foreach (var u in users)
             {
-                _userList.Add(username);
+                if (!string.IsNullOrEmpty(u))
+                    _userList.Add(u);
             }
         }
 

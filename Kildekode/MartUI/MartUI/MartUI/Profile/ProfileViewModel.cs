@@ -101,13 +101,7 @@ namespace MartUI.Profile
 
         public ProfileViewModel()
         {
-            //OtherUser = false;
             _eventAggregator.GetEvent<ShowOtherUserProfile>().Subscribe(ShowFriendProfile);
-
-            if (!OtherUser)
-            {
-                Username = UserData.Username;
-            }
         }
 
         private void ShowFriendProfile(string username)

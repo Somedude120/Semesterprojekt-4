@@ -203,7 +203,7 @@ namespace MartUI.Friend
 
             if (!friendInList)
             {
-                var message = Constants.SendFriendRequest + Constants.GroupDelimiter + Username;
+                var message = Constants.SendFriendRequest + Constants.GroupDelimiter + username;
                 _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(message);
             }
 
