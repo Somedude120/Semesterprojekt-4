@@ -116,6 +116,7 @@ namespace Examples.System.Net
 
         static string[] ParseMessage(string message)
         {
+            Console.WriteLine(message);
             return message.Split(Constants.GroupDelimiter);
         }
 
@@ -157,7 +158,8 @@ namespace Examples.System.Net
                     case Constants.Write:   //Write message
                         HandleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
-                    case Constants.GetProfile:   //Profile get
+                    case "RP":   //Profile get
+                        Console.WriteLine("GetProfile");
                         HandleGetProfile(input, sslStream);
                         break;
                     case "U":   //Update profile
@@ -179,14 +181,40 @@ namespace Examples.System.Net
                     case Constants.GetOldMessages:
                         HandleGetOldMessages(userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
-                    case Constants.GetFriendList:
+                    case "RFL":
                         HandleGetFriendlist(userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
+                        break;
+                    case Constants.GetUsernamesByTag:
+                        HandleGetUserNamesByTag(input, sslStream);
                         break;
                     default:
                         Console.WriteLine("String is not recognized");
                         break;
                 }
 
+            }
+        }
+
+        private static void HandleGetUserNamesByTag(string[] input, SslStream sslStream)
+        {
+            var tag = SearchByTags.RequestTag(input[1].ToUpper());
+
+            try
+            {
+                var tags = tag.UserInformation;
+                var stringBuilder = new StringBuilder();
+
+                foreach (var userInformation in tags)
+                {
+                    stringBuilder.Append(userInformation.UserName);
+                    stringBuilder.Append(Constants.DataDelimiter);
+                }
+
+                sender.SendString(sslStream, Constants.GetUsernamesByTag + Constants.GroupDelimiter + stringBuilder.ToString());
+            }
+            catch (Exception e)
+            {
+                sender.SendString(sslStream, "NOK");
             }
         }
 
@@ -212,7 +240,7 @@ namespace Examples.System.Net
             foreach (var message in messages)
             {
                 string messageToSend;
-                messageToSend = Constants.MessageReceived + Constants.GroupDelimiter + message.Sender + Constants.GroupDelimiter + 
+                messageToSend = Constants.MessageReceived + Constants.GroupDelimiter + message.Sender + Constants.GroupDelimiter +
                                 message.Receiver + Constants.GroupDelimiter + message.Message;
                 sender.SendString(sslStream, messageToSend);
             }
@@ -230,12 +258,12 @@ namespace Examples.System.Net
             if (result == "OK")
             {
                 Console.WriteLine("User: " + input[1] + " created");
-                sender.SendString(sslStream, "OK");
+                sender.SendString(sslStream, "SOK");
             }
             else
             {
                 Console.WriteLine("User not created");
-                sender.SendString(sslStream, "NOK");
+                sender.SendString(sslStream, "SNOK");
             }
         }
 
@@ -328,7 +356,7 @@ namespace Examples.System.Net
                 {
                     Console.WriteLine("From: " + login + " to " + input[1]);
                     sender.SendString(userStreams[input[1]],
-                        "R" + Constants.GroupDelimiter + login + Constants.GroupDelimiter + input[2]);
+                        "R" + Constants.GroupDelimiter + login + Constants.GroupDelimiter + input[1] + Constants.GroupDelimiter + input[2]);
                 }
                 else //User is not online
                 {
@@ -354,18 +382,26 @@ namespace Examples.System.Net
                 username = input[1];
             }
             var profile = GetMyProfile.RequestOwnInformation(username);
+            string messageToSend = null;
 
-            string messageToSend = Constants.GetProfile + Constants.GroupDelimiter + username + Constants.GroupDelimiter + profile.description + Constants.GroupDelimiter;
-
-            var stringBuilder = new StringBuilder();
-            foreach (var tag in profile.tags)
+            try
             {
-                stringBuilder.Append(tag.TagName);
-                stringBuilder.Append(Constants.DataDelimiter);
+                messageToSend = Constants.GetProfile + Constants.GroupDelimiter + username + Constants.GroupDelimiter + profile.description + Constants.GroupDelimiter;
+                var stringBuilder = new StringBuilder();
+                foreach (var tag in profile.tags)
+                {
+                    stringBuilder.Append(tag.TagName);
+                    stringBuilder.Append(Constants.DataDelimiter);
+                }
+
+                messageToSend = messageToSend + stringBuilder.ToString();
+                sender.SendString(sslStream, messageToSend);
+            }
+            catch (Exception e)
+            {
+                sender.SendString(sslStream, "NOK");
             }
 
-            messageToSend = messageToSend + stringBuilder.ToString();
-            sender.SendString(sslStream, messageToSend);
         }
 
         static void HandleUpdateProfile(string[] input, SslStream sslStream)
@@ -375,7 +411,13 @@ namespace Examples.System.Net
             string username = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
 
             var tagList = new List<string>();
-            tagList.AddRange(tags);
+
+            //Capitalize all tags
+            foreach (var tag in tags)
+            {
+                tagList.Add(tag.ToUpper());
+            }
+            //tagList.AddRange(tags);
 
             UpdateProfile.UpdateProfileInformation(username, input[2], tagList);
         }
@@ -383,11 +425,31 @@ namespace Examples.System.Net
         static void HandleSendFriendRequest(string[] input, string login, SslStream sslStream)
         {
             AddFriend.AddFriendRequest(login, input[1]);
+
+            //Check if username is already in logged in
+            if (userStreams.ContainsKey(input[1]))
+            {
+                sender.SendString(userStreams[input[1]], "FRR" + Constants.GroupDelimiter + login);
+            }
+            else
+            {
+                Console.WriteLine("Send friendrequest. User: " + input[1] + " is not online");
+            }
         }
 
         static void HandleFriendRequestAccept(string[] input, string login, SslStream sslStream)
         {
             AcceptFriendRequest.AcceptRequest(login, input[1]);
+
+            //Check if username is already in logged in
+            if (userStreams.ContainsKey(input[1]))
+            {
+                sender.SendString(userStreams[input[1]], "FRA" + Constants.GroupDelimiter + login);
+            }
+            else
+            {
+                Console.WriteLine("Accept friendrequest. User: " + input[1] + " is not online");
+            }
         }
 
         static void FailedLogin()
@@ -460,7 +522,7 @@ namespace Examples.System.Net
             string certificate = null;
             //if (args == null || args.Length < 1)
             //{
-                //DisplayUsage();
+            //DisplayUsage();
             //}
             //certificate = args[0];
             //certificate = "D:/Users/Martin/Dropbox/IKT/4.Semester/PROJ4/Semesterprojekt-4/Feature test/SSL-Test/MartoTestCer.cer";

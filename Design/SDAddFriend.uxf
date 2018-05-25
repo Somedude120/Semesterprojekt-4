@@ -4,18 +4,18 @@
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>170</x>
+      <x>120</x>
       <y>30</y>
       <w>780</w>
       <h>560</h>
     </coordinates>
-    <panel_attributes>SD - AddFriend</panel_attributes>
+    <panel_attributes>SD - AddFriend/AcceptFriendRequest</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>220</x>
+      <x>170</x>
       <y>110</y>
       <w>100</w>
       <h>30</h>
@@ -26,7 +26,7 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>400</x>
+      <x>350</x>
       <y>110</y>
       <w>100</w>
       <h>30</h>
@@ -37,7 +37,7 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>630</x>
+      <x>580</x>
       <y>130</y>
       <w>30</w>
       <h>80</h>
@@ -48,7 +48,7 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>590</x>
+      <x>540</x>
       <y>110</y>
       <w>100</w>
       <h>30</h>
@@ -59,7 +59,7 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>820</x>
+      <x>770</x>
       <y>130</y>
       <w>30</w>
       <h>180</h>
@@ -70,7 +70,7 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>780</x>
+      <x>730</x>
       <y>110</y>
       <w>100</w>
       <h>30</h>
@@ -81,7 +81,7 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>270</x>
+      <x>220</x>
       <y>150</y>
       <w>190</w>
       <h>40</h>
@@ -93,7 +93,7 @@ AddFriend(ID2)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>260</x>
+      <x>210</x>
       <y>140</y>
       <w>20</w>
       <h>60</h>
@@ -104,7 +104,7 @@ AddFriend(ID2)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>440</x>
+      <x>390</x>
       <y>140</y>
       <w>20</w>
       <h>370</h>
@@ -115,7 +115,7 @@ AddFriend(ID2)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
+      <x>400</x>
       <y>170</y>
       <w>200</w>
       <h>40</h>
@@ -127,7 +127,7 @@ AddFriend(ID2)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>630</x>
+      <x>580</x>
       <y>190</y>
       <w>20</w>
       <h>60</h>
@@ -138,7 +138,7 @@ AddFriend(ID2)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
+      <x>400</x>
       <y>230</y>
       <w>200</w>
       <h>40</h>
@@ -150,19 +150,19 @@ AddFriend(ID2)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
+      <x>400</x>
       <y>270</y>
       <w>390</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-Send(ID1)</panel_attributes>
+SendFriendRequest(ID1)</panel_attributes>
     <additional_attributes>370.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>260</x>
+      <x>210</x>
       <y>190</y>
       <w>30</w>
       <h>300</h>
@@ -173,7 +173,7 @@ Send(ID1)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>820</x>
+      <x>770</x>
       <y>290</y>
       <w>20</w>
       <h>60</h>
@@ -184,19 +184,19 @@ Send(ID1)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
+      <x>400</x>
       <y>330</y>
       <w>390</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-Add(ID1)</panel_attributes>
+AcceptRequest(ID1)</panel_attributes>
     <additional_attributes>10.0;20.0;370.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>630</x>
+      <x>580</x>
       <y>240</y>
       <w>30</w>
       <h>150</h>
@@ -207,19 +207,19 @@ Add(ID1)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
+      <x>400</x>
       <y>370</y>
       <w>200</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-Accept(ID1)</panel_attributes>
+AcceptRequest(ID1)</panel_attributes>
     <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>630</x>
+      <x>580</x>
       <y>370</y>
       <w>20</w>
       <h>60</h>
@@ -230,7 +230,7 @@ Accept(ID1)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
+      <x>400</x>
       <y>410</y>
       <w>200</w>
       <h>40</h>
@@ -242,7 +242,7 @@ OK</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>270</x>
+      <x>220</x>
       <y>450</y>
       <w>190</w>
       <h>40</h>
@@ -254,7 +254,7 @@ OK/FriendAdded</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>820</x>
+      <x>770</x>
       <y>340</y>
       <w>30</w>
       <h>150</h>
@@ -265,7 +265,7 @@ OK/FriendAdded</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>630</x>
+      <x>580</x>
       <y>420</y>
       <w>30</w>
       <h>110</h>
@@ -276,7 +276,7 @@ OK/FriendAdded</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>260</x>
+      <x>210</x>
       <y>470</y>
       <w>20</w>
       <h>60</h>
@@ -287,7 +287,7 @@ OK/FriendAdded</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
+      <x>400</x>
       <y>450</y>
       <w>390</w>
       <h>40</h>
@@ -299,12 +299,36 @@ OK/FriendAdded</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>820</x>
+      <x>770</x>
       <y>470</y>
       <w>20</w>
       <h>60</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>200</y>
+      <w>200</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+FriendStatus = Pending</panel_attributes>
+    <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>380</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+FriendStatus = Added</panel_attributes>
+    <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>

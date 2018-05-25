@@ -18,29 +18,37 @@ namespace ProfileConsole.Core.ServerCommunication
         public static Tags RequestTag(string tag)
         {
             unitOfWork = new UnitOfWork(new ProfileContext());
-            var person = unitOfWork.Tags.GetString(tag);
-            if(person.TagName == tag)
-            using (var db = new ProfileContext())
+
+            try
             {
-                var profile =
-                    from p in db.Tags
-                    where p.TagName == tag 
-                    select p;
-
-                try
-                {
-                    foreach (var tags in profile)
+                var person = unitOfWork.Tags.GetString(tag);
+                if (person.TagName == tag)
+                    using (var db = new ProfileContext())
                     {
-                        return new Tags{ TagName = tags.TagName, UserInformation = tags.UserInformation};
-                    }
-                }
-                catch (Exception e)
-                {
-                    return null;
-                }
-            }
+                        var profile =
+                            from p in db.Tags
+                            where p.TagName == tag
+                            select p;
 
-            return null;
+                        try
+                        {
+                            foreach (var tags in profile)
+                            {
+                                return new Tags {TagName = tags.TagName, UserInformation = tags.UserInformation};
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            return null;
+                        }
+                    }
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }
