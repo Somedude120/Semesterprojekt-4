@@ -65,13 +65,13 @@ namespace MartUI.Tag
 
         private void HandleGetTag(string username)
         {
-            _userList.Clear();
+            UserList.Clear();
 
             var users = username.Split(Constants.DataDelimiter).ToList();
             foreach (var u in users)
             {
                 if (!string.IsNullOrEmpty(u))
-                    _userList.Add(u);
+                    UserList.Add(u);
             }
         }
 
