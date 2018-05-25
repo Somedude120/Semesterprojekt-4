@@ -197,7 +197,7 @@ namespace Examples.System.Net
 
         private static void HandleGetUserNamesByTag(string[] input, SslStream sslStream)
         {
-            var tag = SearchByTags.RequestTag(input[1]);
+            var tag = SearchByTags.RequestTag(input[1].ToUpper());
 
             try
             {
@@ -411,7 +411,13 @@ namespace Examples.System.Net
             string username = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
 
             var tagList = new List<string>();
-            tagList.AddRange(tags);
+
+            //Capitalize all tags
+            foreach (var tag in tags)
+            {
+                tagList.Add(tag.ToUpper());
+            }
+            //tagList.AddRange(tags);
 
             UpdateProfile.UpdateProfileInformation(username, input[2], tagList);
         }
