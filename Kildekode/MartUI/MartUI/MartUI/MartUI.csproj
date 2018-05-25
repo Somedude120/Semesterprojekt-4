@@ -153,9 +153,6 @@
     <Compile Include="Login\ReplaceCharactersInPassword.cs" />
     <Compile Include="Networking\Client\Client.cs" />
     <Compile Include="Networking\OtherProfile\OtherProfile.cs" />
-    <Compile Include="Networking\TLSNetworking\Constants.cs" />
-    <Compile Include="Networking\TLSNetworking\Receiver.cs" />
-    <Compile Include="Networking\TLSNetworking\Sender.cs" />
     <Compile Include="Profile\ProfileView.xaml.cs">
       <DependentUpon>ProfileView.xaml</DependentUpon>
     </Compile>
@@ -301,6 +298,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GroupChat\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TLSNetworking\TLSNetworking.csproj">
+      <Project>{48f4c855-b35d-4cec-803b-d8e9a0c8b33f}</Project>
+      <Name>TLSNetworking</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
