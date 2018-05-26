@@ -173,7 +173,7 @@ namespace Examples.System.Net
 
             Console.WriteLine();
 
-            Console.WriteLine("************Marto Server is running************");
+            Console.WriteLine("************ Marto Server is running ************");
 
             listener.Start();
 
