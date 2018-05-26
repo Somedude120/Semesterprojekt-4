@@ -39,16 +39,17 @@ namespace MartUI
             SizeChanged += MainView_SizeChanged;
         }
 
+        //Allows the user to move the window when pressing the titlebar.
         private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed && e.ClickCount == 1)
             {
-                if (Maximized)
+                if (Maximized) //Places the middle of the titlebar at the mouse and reverts to previous window size
                 {
                         Point Position = Mouse.GetPosition(TitleBar);
 
                         ExpandApplication(sender, e);
-                        Left = Position.X - 7 - Width / 2;
+                        Left = Position.X - 7 - Width / 2; //Windows randomly moves the window 7 pixels to the right
                         Top = Position.Y - 9;
                 }
             }
@@ -60,7 +61,7 @@ namespace MartUI
 
         private void MainView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (WindowState == WindowState.Maximized)
+            if (WindowState == WindowState.Maximized) //Makes sure the window doesn't fullscreen when maximized
             {
                 WindowState = WindowState.Normal;
                 PrevLeft = Left;
@@ -77,18 +78,18 @@ namespace MartUI
 
         private void ExitApplication(object sender, RoutedEventArgs e)
         {
-            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.Logout);
+            _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.Logout); //Logs out before exiting the application
             Environment.Exit(0);
         }
 
         private void MinimizeApplication(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized; //Minimizes application to taskbar
         }
 
         private void ExpandApplication(object sender, RoutedEventArgs e)
         {
-            if (Maximized)
+            if (Maximized) //Return to previous size if window is maximized
             {
                 Left = PrevLeft;
                 Top = PrevTop;
@@ -96,7 +97,7 @@ namespace MartUI
                 Height = PrevHeight;
                 Maximized = false;
             }
-            else
+            else //Maximizes window if window is not maximized
             {
                 PrevLeft = Left;
                 PrevTop = Top;
@@ -113,7 +114,7 @@ namespace MartUI
         private void TitleBar_LeftMouseButtonDoubleClick(object sender, MouseButtonEventArgs e)
         {
             {
-                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2) //Enables double click on titlebar to expand application
                 {
                     if (Maximized)
                     {
