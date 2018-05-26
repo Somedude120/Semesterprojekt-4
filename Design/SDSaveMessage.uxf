@@ -76,7 +76,7 @@
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-SendMessage(String msg, string username)</panel_attributes>
+Send Message</panel_attributes>
     <additional_attributes>290.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
@@ -110,7 +110,7 @@ SendMessage(String msg, string username)</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-SaveMessage(string sender, string receiver, string msg)</panel_attributes>
+Save Message</panel_attributes>
     <additional_attributes>370.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
@@ -133,7 +133,7 @@ SaveMessage(string sender, string receiver, string msg)</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-SendMessage(string msg)</panel_attributes>
+Send Message</panel_attributes>
     <additional_attributes>560.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
@@ -185,11 +185,11 @@ SendMessage(string msg)</panel_attributes>
     <coordinates>
       <x>960</x>
       <y>310</y>
-      <w>190</w>
+      <w>150</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
- Read(string message)</panel_attributes>
+ Read Message</panel_attributes>
     <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
