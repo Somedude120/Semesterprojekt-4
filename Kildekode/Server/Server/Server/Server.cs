@@ -30,8 +30,8 @@ namespace Examples.System.Net
         private static Mutex _mutex = new Mutex();
         public LoginRequest loginRequest = new LoginRequest();
 
-        public static Receiver receiver = new Receiver();
-        public static Sender sender = new Sender();
+        //public static Receiver receiver = new Receiver();
+        //public static Sender sender = new Sender();
 
         public static Dictionary<string, string> userID = new Dictionary<string, string>();
         public static Dictionary<string, SslStream> userStreams = new Dictionary<string, SslStream>();
