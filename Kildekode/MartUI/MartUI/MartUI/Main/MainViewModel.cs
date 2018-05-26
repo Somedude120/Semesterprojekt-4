@@ -50,45 +50,16 @@ namespace MartUI.Main
             _eventAggregator.GetEvent<ChangeSideBarPage>().Subscribe(ChangeSideBarView);
             _eventAggregator.GetEvent<NotificationReceivedEvent>().Subscribe(Notify);
 
-            //_eventAggregator.GetEvent<ReturnToProfile>().Subscribe(RevertToMainUser);
-
             ViewList.Add(new LoginViewModel());
             ViewList.Add(new FriendViewModel());
             ViewList.Add(new ChatViewModel());
             ViewList.Add(new ProfileViewModel());
             ViewList.Add(new FriendNotificationViewModel());
-            //ViewList.Add(new GroupViewModel());
-
-            FullView = ViewList[0];
-            //_eventAggregator.GetEvent<ChangeSideBarPage>().Publish(new GroupViewModel());
-
-            //SideBarView = ViewList[3];
-            //ViewList.Add(new ProfileViewModel());
             ViewList.Add(new SettingsViewModel());
 
-            //FriendListView = ViewList[1];
-
-            //MyData.GetInstance().Tags.Add("sup");
-            //MyData.GetInstance().Tags.Add("heheheh");
-            //FullView = ViewList[0];
-            //FullView = ViewList[0];
+            FullView = ViewList[0];
         }
 
-        //private void RevertToMainUser(string s)
-        //{
-        //    var fullInfo = s.Split(Constants.GroupDelimiter);
-
-        //    MyData.GetInstance().Username = fullInfo[0];
-        //    MyData.GetInstance().Description = fullInfo[1];
-
-        //    var tags = fullInfo[2].Split(',').ToList();
-
-        //    foreach (var tag in tags)
-        //    {
-        //        MyData.GetInstance().Tags.Add(tag);
-        //    }
-
-        //}
 
         private void Notify(string unused)
         {
@@ -180,6 +151,7 @@ namespace MartUI.Main
 
         public void ShowSettings()
         {
+            _eventAggregator.GetEvent<ReturnToProfile>().Publish();
             _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new SettingsViewModel());
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ProfileViewModel());
         }

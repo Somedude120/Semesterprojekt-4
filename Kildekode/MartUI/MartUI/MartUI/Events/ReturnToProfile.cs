@@ -2,7 +2,7 @@
 
 namespace MartUI.Events
 {
-    public class ReturnToProfile : PubSubEvent<string>
+    public class ReturnToProfile : PubSubEvent
     {
 
     }
