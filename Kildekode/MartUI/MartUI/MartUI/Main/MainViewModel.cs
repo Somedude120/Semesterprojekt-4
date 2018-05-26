@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using MartUI.Events;
-using MartUI.Focus;
 using MartUI.Friend;
 using MartUI.Login;
 using Prism.Commands;
@@ -57,6 +56,7 @@ namespace MartUI.Main
             ViewList.Add(new FriendViewModel());
             ViewList.Add(new ChatViewModel());
             ViewList.Add(new ProfileViewModel());
+            ViewList.Add(new FriendNotificationViewModel());
             //ViewList.Add(new GroupViewModel());
 
             FullView = ViewList[0];
@@ -93,7 +93,7 @@ namespace MartUI.Main
         private void Notify(string unused)
         {
             // Make sure not to notify if FocusView is FriendNotificationView
-            if (FocusView.GetType().Name != "FriendNotificationViewModel")
+            if (FocusView.GetType().Name != "FriendNotificationViewModel" && unused == null)
                 _eventAggregator.GetEvent<NotificationReceivedChangeColor>().Publish();
         }
 

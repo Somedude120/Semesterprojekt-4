@@ -82,13 +82,6 @@ namespace MartUI.Login
                     _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestProfile 
                                                                                   + Constants.GroupDelimiter
                                                                                   + Username);
-                    //_eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
-                    //                                                              + Constants.GroupDelimiter
-                    //                                                              + UserData.Username);
-
-                    //_eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
-
-                    //_eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
                     break;
                 case "NOK":
                     MessageBox.Show("Cannot login! Wrong username or password!");
@@ -119,7 +112,6 @@ namespace MartUI.Login
         private void ProfileInfo(string profile)
         {
             // Get full profile info (description + tags)
-           // MessageBox.Show(profile);
             var fullProfile = profile.Split(Constants.GroupDelimiter).ToList();
 
             UserData.Description = fullProfile[1];
@@ -130,7 +122,6 @@ namespace MartUI.Login
                 var tagsOnly = fullProfile[2].Split(Constants.DataDelimiter).ToList();
                 UserData.Tags = tagsOnly;
             }
-
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.RequestFriendList
                                                                           + Constants.GroupDelimiter
@@ -148,19 +139,6 @@ namespace MartUI.Login
             var msg = Constants.RequestLogin + Constants.GroupDelimiter + UserData.Username + Constants.GroupDelimiter + Password;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
-
-            // Validate name and password with server
-            // Navigate to main window (friend list shows, etc).
-
-            //if (DatabaseDummy.ValidateUser(Username, Password))
-            //{
-            //    // Fullpage is null, show friendlist and initialize chatview
-            //    _eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
-            //    _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
-            //    _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ChatViewModel());
-            //}
-            //else
-            //    MessageBox.Show("Wrong username or password!");
         }
     }
 }

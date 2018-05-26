@@ -7,7 +7,6 @@ using System.Web.Profile;
 using System.Windows;
 using System.Windows.Input;
 using MartUI.Events;
-using MartUI.Focus;
 using MartUI.Friend;
 using MartUI.Helpers;
 using MartUI.Main;
@@ -121,11 +120,16 @@ namespace MartUI.Profile
             var fullProfile = profile.Split(';').ToList();
 
             Username = fullProfile[0];
-            Description = fullProfile[1];
+
+            Description = "";
+
+            if (fullProfile.Count > 1)
+                Description = fullProfile[1];
+
 
             Tags = "";
 
-            if (!string.IsNullOrEmpty(fullProfile[2]))
+            if (fullProfile.Count > 2)
             {
                 var tags = fullProfile[2].Split(':').ToList();
 

@@ -136,8 +136,11 @@ namespace MartUI.FriendNotification
             foreach (var n in FriendNotifications)
                 if (n == notification)
                     isNotInList = false;
-            if(isNotInList)
+            if (isNotInList)
+            {
                 FriendNotifications.Add(notification);
+                _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(null);
+            }
         }
 
         private void HandleFriendRequestReceived(string username)
@@ -147,13 +150,17 @@ namespace MartUI.FriendNotification
                 if (u == username)
                     isNotInList = false;
             if (isNotInList)
+            {
                 FriendRequests.Add(username);
+                _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(null);
+            }
         }
 
         private void HandeFriendRequestDeclined(string username)
         {
             var message = username + " has declined your friendrequest";
             FriendNotifications.Add(message);
+            _eventAggregator.GetEvent<NotificationReceivedEvent>().Publish(null);
         }
     }
 }

@@ -8,7 +8,6 @@
         xmlns:local="clr-namespace:MartUI"
 
         xmlns:friend="clr-namespace:MartUI.Friend"
-        xmlns:focus="clr-namespace:MartUI.Focus"
         xmlns:login="clr-namespace:MartUI.Login"
         xmlns:createuser="clr-namespace:MartUI.CreateUser"
         xmlns:mvvm="http://prismlibrary.com/"
@@ -30,9 +29,6 @@
     <Window.Resources>
         <DataTemplate DataType="{x:Type friend:FriendViewModel}">
             <friend:FriendView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type focus:FocusViewModel}">
-            <focus:FocusView DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type login:LoginViewModel}">
             <login:LoginView DataContext="{Binding}"/>
