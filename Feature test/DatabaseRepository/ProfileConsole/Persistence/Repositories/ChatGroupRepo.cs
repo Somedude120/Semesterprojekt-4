@@ -24,6 +24,11 @@ namespace ProfileConsole.Persistence.Repositories
             return ProfileContext.ChatGroups.Include(a => a.Chat).SingleOrDefault(a => a.GroupName == groupName);
         }
 
+        public ChatGroups GetUsersWithChatGroups(string groupName)
+        {
+            return ProfileContext.ChatGroups.Include(a => a.UserInformation).SingleOrDefault(a => a.GroupName == groupName);
+        }
+
         public ProfileContext ProfileContext
         {
             get { return Context as ProfileContext; }
