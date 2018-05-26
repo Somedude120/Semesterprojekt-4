@@ -1,371 +1,313 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>8</zoom_level>
-  <element>
-    <id>UMLFrame</id>
-    <coordinates>
-      <x>32</x>
-      <y>8</y>
-      <w>976</w>
-      <h>512</h>
-    </coordinates>
-    <panel_attributes>*CD - Server*</panel_attributes>
-    <additional_attributes/>
-  </element>
+  <zoom_level>6</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>216</x>
-      <y>280</y>
-      <w>144</w>
-      <h>64</h>
+      <x>114</x>
+      <y>210</y>
+      <w>270</w>
+      <h>42</h>
     </coordinates>
-    <panel_attributes>SignUp
+    <panel_attributes>Friendlist
 -
-</panel_attributes>
++ static HandleGetFriendlist(string login, SslStream sslStream) : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>832</x>
-      <y>408</y>
-      <w>144</w>
-      <h>64</h>
+      <x>456</x>
+      <y>264</y>
+      <w>510</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>FriendRequest
+-
++ static HandleSendFriendRequest(string[] input, string login, SslStream sslStream, Dictionary&lt;string, SslStream&gt; userStreams) : void
++ static HandleFriendRequestAccept(string[] input, string login, SslStream sslStream, Dictionary&lt;string, SslStream&gt; userStreams) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>456</x>
+      <y>360</y>
+      <w>420</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>Logout
+-
++ static HandleLogout(SslStream sslStream, Dictionary&lt;string, SslStream&gt; userStreams, Mutex mutex) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>456</x>
+      <y>312</y>
+      <w>462</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>Login
 -
-</panel_attributes>
++ static HandleLogin(string[] input, SslStream sslStream, Dictionary&lt;string, SslStream&gt; userStreams, Mutex mutex) : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>568</x>
-      <y>280</y>
-      <w>144</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes>GetMyProfile
--
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>392</x>
-      <y>280</y>
-      <w>144</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes>GetFriends
--
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>752</x>
-      <y>280</y>
-      <w>144</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes>GetAllMsgs
--
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>304</x>
+      <x>456</x>
       <y>408</y>
-      <w>144</w>
-      <h>64</h>
+      <w>456</w>
+      <h>42</h>
     </coordinates>
-    <panel_attributes>SearchUserName
+    <panel_attributes>Message
 -
-</panel_attributes>
+static HandleMessage(string[] input, string login, SslStream sslStream, Dictionary&lt;string, SslStream&gt; userStreams) : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
+      <x>456</x>
+      <y>210</y>
+      <w>432</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>Profile
+-
++ static HandleGetProfile(string[] input, SslStream sslStream, Dictionary&lt;string, SslStream&gt; userStreams) : void
++ static HandleUpdateProfile(string[] input, SslStream sslStream, Dictionary&lt;string, SslStream&gt; userStreams) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>102</x>
+      <y>312</y>
+      <w>282</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>OldMessages
+-
++ static HandleGetOldMessages(string login, SslStream sslStream) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>66</x>
       <y>408</y>
-      <w>144</w>
-      <h>64</h>
+      <w>318</w>
+      <h>42</h>
     </coordinates>
-    <panel_attributes>SearchTags
+    <panel_attributes>Search
 -
++ static HandleGetUserNamesByTag(string[] input, SslStream sslStream) : void 
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>656</x>
-      <y>408</y>
-      <w>144</w>
-      <h>64</h>
+      <x>174</x>
+      <y>156</y>
+      <w>474</w>
+      <h>36</h>
     </coordinates>
-    <panel_attributes>AddFriend
+    <panel_attributes>MessageHandler
 -
-</panel_attributes>
++ static StringHandler(string[] input, SslStream sslStream, Dictionary&lt;string, SslStream&gt; userStreams, Mutex mutex) : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
-    <coordinates>
-      <x>568</x>
-      <y>32</y>
-      <w>144</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes>Sender
--
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>632</x>
-      <y>88</y>
-      <w>24</w>
-      <h>168</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>120</x>
-      <y>224</y>
-      <w>720</w>
-      <h>32</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;20.0;880.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
     <coordinates>
       <x>192</x>
-      <y>352</y>
-      <w>728</w>
-      <h>32</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;20.0;890.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>280</x>
-      <y>232</y>
-      <w>24</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>456</x>
-      <y>232</y>
-      <w>24</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>632</x>
-      <y>232</y>
-      <w>24</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>816</x>
-      <y>232</y>
-      <w>24</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>544</x>
-      <y>232</y>
-      <w>24</w>
-      <h>152</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>360</x>
       <y>360</y>
-      <w>24</w>
-      <h>64</h>
+      <w>192</w>
+      <h>42</h>
     </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>544</x>
-      <y>360</y>
-      <w>24</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>720</x>
-      <y>360</y>
-      <w>24</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>896</x>
-      <y>360</y>
-      <w>24</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>392</x>
-      <y>32</y>
-      <w>144</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes>Receiver
+    <panel_attributes>Parsing
 -
-</panel_attributes>
++ static ParseMessage(string message) : string[]
++ static ParseData(string dataCollection) : string[]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>456</x>
-      <y>88</y>
-      <w>24</w>
-      <h>168</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>144</y>
-      <w>144</w>
-      <h>64</h>
+      <x>288</x>
+      <y>24</y>
+      <w>258</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>Server
 -
++ static RunServer(string certificate, TcpClient client) : void
++ static ProcessClient(TcpClient client) : void
++ static DisplaySecurityLevel(SslStream stream) : void
++ static DisplaySecurityServices(SslStream stream) : void
++ static DisplayStreamProperties(SslStream stream) : void
++ static DisplayCertificateInformation(SslStream stream) : void
 </panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>592</x>
-      <y>88</y>
-      <w>24</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>496</x>
-      <y>88</y>
-      <w>24</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>128</x>
-      <y>408</y>
-      <w>144</w>
-      <h>64</h>
+      <x>132</x>
+      <y>264</y>
+      <w>252</w>
+      <h>42</h>
     </coordinates>
-    <panel_attributes>LogOut
+    <panel_attributes>Signup
 -
-</panel_attributes>
++ static HandleSignup(string[] input, SslStream sslStream) : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>192</x>
-      <y>360</y>
-      <w>24</w>
-      <h>64</h>
+      <x>414</x>
+      <y>120</y>
+      <w>18</w>
+      <h>48</h>
     </coordinates>
-    <panel_attributes/>
+    <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>48</x>
-      <y>280</y>
-      <w>144</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes>UpdateProfile
--
-</panel_attributes>
-    <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
-      <y>232</y>
-      <w>24</w>
-      <h>64</h>
+      <x>414</x>
+      <y>186</y>
+      <w>18</w>
+      <h>258</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;410.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>378</x>
+      <y>426</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>414</x>
+      <y>426</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>378</x>
+      <y>378</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>414</x>
+      <y>378</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>414</x>
+      <y>330</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>378</x>
+      <y>330</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>414</x>
+      <y>282</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>378</x>
+      <y>282</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>414</x>
+      <y>228</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>378</x>
+      <y>228</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>42</x>
+      <y>0</y>
+      <w>948</w>
+      <h>486</h>
+    </coordinates>
+    <panel_attributes>interaction frame</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
