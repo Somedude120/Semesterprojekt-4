@@ -9,7 +9,7 @@ namespace TLSNetworking
 {
     public class Receiver
     {
-        public string ReceiveString(SslStream sslStream)
+        public static string ReceiveString(SslStream sslStream)
         {
             // Read the  message sent by the client.
             // The client signals the end of the message using the
