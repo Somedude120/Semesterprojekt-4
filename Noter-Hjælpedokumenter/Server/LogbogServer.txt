@@ -68,3 +68,17 @@ Arbejdstid 10 timer
 
 
 23-05-2018:
+I dag er server blevet mere integreret med DB. Efter dette er server blevet testet sammen med GUI klient og forekommende fejl er rettet.
+Produktet ses nu som at være færdigt, med kun få manglende features såsom fjernelse af ven og decline friend request. Men oprettelse af bruger, venneandmodning og chat mm. virker nu.
+
+Arbejdstid 14 timer
+
+
+25-05-2018:
+
+
+Arbejdstid 5 timer
+
+
+
+Samlet arbejdstid: 67 timer
