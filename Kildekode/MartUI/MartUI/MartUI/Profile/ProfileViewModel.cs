@@ -7,12 +7,12 @@ using System.Web.Profile;
 using System.Windows;
 using System.Windows.Input;
 using MartUI.Events;
-using MartUI.Focus;
 using MartUI.Friend;
 using MartUI.Helpers;
 using MartUI.Main;
 using MartUI.Me;
 using MartUI.Settings.BlankSetting;
+using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -25,9 +25,10 @@ namespace MartUI.Profile
         private MyData _userData;
         private ICommand _return;
         private ICommand _saveChanges;
+        private ICommand _chooseProfilePicture;
         private bool _otherUser;
-
         private string _username;
+        private Uri _image;
 
         // When set, will not be able to change information
         public bool OtherUser
@@ -39,6 +40,12 @@ namespace MartUI.Profile
         public string ReferenceName => "Profile";
         public MyData UserData => _userData ?? (_userData = MyData.GetInstance());
 
+        public Uri Image
+        {
+            get => _image ?? (_image = new Uri("pack://application:,,,/Images/ProfilePicPlaceholder.PNG"));
+            set => SetProperty(ref _image, value);
+        }
+
         public string Username
         {
             get => _username ?? (_username = UserData.Username);
@@ -48,7 +55,18 @@ namespace MartUI.Profile
         private string _description;
         public string Description
         {
-            get => _description ?? (_description = UserData.Description);
+            get
+            {
+                if (_description == null)
+                    _description = UserData.Description;
+                {
+                    if (_description == "")
+                        _description = "Describe yourself!";
+                }
+
+                return _description;
+            }
+
             set => _description = value;
         }
 
@@ -83,7 +101,7 @@ namespace MartUI.Profile
                 return str.ToString();
             }
 
-            return "";
+            return "Insert some tags!";
         }
 
         // Update tags of UserData
@@ -102,6 +120,7 @@ namespace MartUI.Profile
         public ProfileViewModel()
         {
             _eventAggregator.GetEvent<ShowOtherUserProfile>().Subscribe(ShowFriendProfile);
+            _eventAggregator.GetEvent<ReturnToProfile>().Subscribe(ToMyProfile);
         }
 
         private void ShowFriendProfile(string username)
@@ -121,11 +140,15 @@ namespace MartUI.Profile
             var fullProfile = profile.Split(';').ToList();
 
             Username = fullProfile[0];
-            Description = fullProfile[1];
 
-            Tags = "";
+            Description = "No description! :(";
 
-            if (!string.IsNullOrEmpty(fullProfile[2]))
+            if (fullProfile.Count > 1)
+                Description = fullProfile[1];
+
+            Tags = "No tags! :'(";
+
+            if (fullProfile.Count > 2)
             {
                 var tags = fullProfile[2].Split(':').ToList();
 
@@ -145,9 +168,38 @@ namespace MartUI.Profile
         public ICommand Return => _return ?? (_return = new DelegateCommand(ShowFriends));
 
         public ICommand SaveChanges => _saveChanges ?? (_saveChanges = new DelegateCommand(Save));
+        public ICommand ChooseProfilePicture => _chooseProfilePicture ?? (_chooseProfilePicture = new DelegateCommand(ChoosePicture));
+
+        private void ChoosePicture()
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Title = "Select a picture",
+                Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*"
+            };
+
+            if (dialog.ShowDialog() == true)
+                UserData.Image = new Uri(dialog.FileName);
+        }
+
+        public void ToMyProfile()
+        {
+            Username = UserData.Username;
+            Description = UserData.Description;
+            Tags = ConvertTagsToString(',');
+
+            OtherUser = false;
+        }
 
         private void Save()
         {
+
+            if (Tags == "Insert some tags!")
+                Tags = "";
+
+            if (Description == "Describe yourself!")
+                Description = "";
+
             UpdateTags();
             UserTagsInOneString = ConvertTagsToString(',');
             UserData.Description = Description;
@@ -160,7 +212,6 @@ namespace MartUI.Profile
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
 
-            //OtherUser = false;
             // Send profile to server
         }
 
@@ -181,8 +232,6 @@ namespace MartUI.Profile
                     if (result == MessageBoxResult.Yes)
                     {
                         Save();
-
-                        // send profile to server
                     }
                     else if (result == MessageBoxResult.No)
                     {
@@ -195,16 +244,7 @@ namespace MartUI.Profile
             _eventAggregator.GetEvent<ChangeFriendPage>().Publish(new FriendViewModel());
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new BlankSettingViewModel());
 
-
-            Username = UserData.Username;
-            Description = UserData.Description;
-            Tags = ConvertTagsToString(',');
-
-            OtherUser = false;
-
-            //_eventAggregator.GetEvent<ReturnToProfile>().Publish(Username + Constants.GroupDelimiter +
-            //                                                     Description + Constants.GroupDelimiter +
-            //                                                     Tags);
+           ToMyProfile();
         }
     }
 }

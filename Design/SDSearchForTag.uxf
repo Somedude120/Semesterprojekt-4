@@ -6,7 +6,7 @@
     <coordinates>
       <x>130</x>
       <y>50</y>
-      <w>620</w>
+      <w>660</w>
       <h>440</h>
     </coordinates>
     <panel_attributes>SD - SearchForTag</panel_attributes>
@@ -87,7 +87,7 @@
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-SearchTag(ID)</panel_attributes>
+Search For Tag</panel_attributes>
     <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
@@ -99,7 +99,7 @@ SearchTag(ID)</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-SearchTag(ID)</panel_attributes>
+Search For Tag</panel_attributes>
     <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
@@ -118,11 +118,11 @@ SearchTag(ID)</panel_attributes>
     <coordinates>
       <x>600</x>
       <y>260</y>
-      <w>110</w>
+      <w>190</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
- Read(ID)</panel_attributes>
+ Read Users with Tag</panel_attributes>
     <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
@@ -134,7 +134,7 @@ SearchTag(ID)</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-List&lt;String&gt; UsersWithTag</panel_attributes>
+Users with Tag</panel_attributes>
     <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
   </element>
   <element>
@@ -146,7 +146,7 @@ List&lt;String&gt; UsersWithTag</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-String User</panel_attributes>
+Users with Tag</panel_attributes>
     <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
   </element>
   <element>

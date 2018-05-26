@@ -150,7 +150,6 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Login\LoginViewModel.cs" />
-    <Compile Include="Login\ReplaceCharactersInPassword.cs" />
     <Compile Include="Networking\Client\Client.cs" />
     <Compile Include="Networking\OtherProfile\OtherProfile.cs" />
     <Compile Include="Profile\ProfileView.xaml.cs">
@@ -174,10 +173,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CreateUser\CreateUserView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Focus\FocusView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,10 +201,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Events\SelectedFriendEvent.cs" />
-    <Compile Include="Focus\FocusView.xaml.cs">
-      <DependentUpon>FocusView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Focus\FocusViewModel.cs" />
     <Compile Include="Friend\FriendModel.cs" />
     <Compile Include="Friend\FriendView.xaml.cs">
       <DependentUpon>FriendView.xaml</DependentUpon>

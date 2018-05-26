@@ -54,11 +54,7 @@ namespace MartUI.Friend
         public bool NotificationReceived
         {
             get => _notificionReceived;
-            set
-            {
-                SetProperty(ref _notificionReceived, value);
-
-            }
+            set => SetProperty(ref _notificionReceived, value);
         }
 
         //public Brush Background => NotificationReceived ? Brushes.White : Brushes.Red;
@@ -75,7 +71,7 @@ namespace MartUI.Friend
         {
             Username = "Enter Username!";
 
-            NotificationReceived = true;
+            //NotificationReceived = true;
             _eventAggregator.GetEvent<ReceiveMessageFromServerEvent>().Subscribe(HandleNewMessage);
             _eventAggregator.GetEvent<NewMessageEvent>().Subscribe(HandleNewMessage);
             _eventAggregator.GetEvent<NotificationReceivedChangeColor>().Subscribe(() => NotificationReceived = true);

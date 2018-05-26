@@ -6,7 +6,7 @@
     <coordinates>
       <x>150</x>
       <y>0</y>
-      <w>620</w>
+      <w>660</w>
       <h>630</h>
     </coordinates>
     <panel_attributes>SD - Signup</panel_attributes>
@@ -87,7 +87,7 @@
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-SignUp(ID, password)</panel_attributes>
+Sign Up</panel_attributes>
     <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
@@ -99,7 +99,7 @@ SignUp(ID, password)</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-SignUp(ID,password)</panel_attributes>
+Sign Up</panel_attributes>
     <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
@@ -118,11 +118,11 @@ SignUp(ID,password)</panel_attributes>
     <coordinates>
       <x>620</x>
       <y>210</y>
-      <w>110</w>
+      <w>170</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
- Read(ID)</panel_attributes>
+ Check Credentials</panel_attributes>
     <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
@@ -134,7 +134,7 @@ SignUp(ID,password)</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-IDAlreadyExists(ID)</panel_attributes>
+ID Already Exists</panel_attributes>
     <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
   </element>
   <element>
@@ -146,7 +146,7 @@ IDAlreadyExists(ID)</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-IDAlreadyExists(ID)</panel_attributes>
+ID Already Exists</panel_attributes>
     <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
   </element>
   <element>
@@ -220,11 +220,11 @@ IDAlreadyExists(ID)</panel_attributes>
     <coordinates>
       <x>620</x>
       <y>430</y>
-      <w>110</w>
+      <w>160</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-Create(ID)</panel_attributes>
+Create New User</panel_attributes>
     <additional_attributes>10.0;30.0;30.0;30.0;30.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
