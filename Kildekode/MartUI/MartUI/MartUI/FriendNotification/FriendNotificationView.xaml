@@ -82,7 +82,7 @@
                             <Border CornerRadius="3" Height="36"
                                     Margin="2" HorizontalAlignment="Stretch">
                                 <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
-                                    <TextBlock Text="{Binding UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" 
+                                    <TextBlock Text="{Binding UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" TextTrimming="CharacterEllipsis"
                                                TextWrapping="Wrap" Margin="5,2,5,2" FontSize="16" DockPanel.Dock="Left" Foreground="White"/>
                                     <Button Style="{StaticResource NoButtonHighlight}" Background="White" DockPanel.Dock="Right" 
                                             Width="12" Height="12" Margin="0,0,10,0"

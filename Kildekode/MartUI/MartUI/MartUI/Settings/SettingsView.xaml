@@ -7,16 +7,19 @@
              d:DesignHeight="600" d:DesignWidth="200"
              Background="#2f3136">
     <StackPanel VerticalAlignment="Bottom">
-        <Button Width="185" Height="20" Background="Transparent" Margin="0,20"
+        <Button Width="185" Height="24" Margin="0,20"
                 Content="Change password"
+                Style="{StaticResource RoundCornerButton}"
                 Command="{Binding ChangePassword}" 
                 VerticalAlignment="Bottom"/>
-        <Button Width="185" Height="20" Background="Transparent" 
+        <Button Width="185" Height="24"
+                Style="{StaticResource RoundCornerButton}"
                 Foreground="Red"
                 Content="Delete profile"
                 Command="{Binding DeleteProfile}" 
                 VerticalAlignment="Bottom"/>
-        <Button Width="185" Height="20" Background="Transparent" Margin="0,20"
+        <Button Width="185" Height="24" Margin="0,20"
+                Style="{StaticResource RoundCornerButton}"
                 Content="Logout"
                 Command="{Binding LogoutCommand}" 
                 VerticalAlignment="Bottom"/>

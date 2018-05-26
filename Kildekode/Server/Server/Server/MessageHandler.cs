@@ -44,11 +44,10 @@ namespace Server
                     case Constants.Write:   //Write message
                         Message.HandleMessage(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream, userStreams);
                         break;
-                    case "RP":   //Profile get
-                        Console.WriteLine("GetProfile");
+                    case Constants.RequestProfile:   //Profile get
                         Profile.HandleGetProfile(input, sslStream, userStreams);
                         break;
-                    case "U":   //Update profile
+                    case Constants.UpdateProfile:   //Update profile
                         Profile.HandleUpdateProfile(input, sslStream, userStreams);
                         break;
                     case Constants.RequestLogin:   //Login
@@ -67,7 +66,7 @@ namespace Server
                     case Constants.GetOldMessages:
                         OldMessages.HandleGetOldMessages(userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
-                    case "RFL":
+                    case Constants.RequestFriendList:
                         Friendlist.HandleGetFriendlist(userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream);
                         break;
                     case Constants.GetUsernamesByTag:

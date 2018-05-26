@@ -1,29 +1,46 @@
 Constants.GroupDelimiter = ';'
 Constants.DataDelimiter = ':'
 
-Alle beskeder skal slutte med Constants.EndDelimiter
+Alle beskeder slutter med Constants.EndDelimiter
 
 
-Send message:	W;DestinationUsername;Message
+Send message:		W;DestinationUsername;Message
 
-Signup:		S;Username;password
+Receive message:	R;Sender;Receiver;Message
 
-Login:		L;Username;password
+Signup:			S;Username;password
 
-Logout:		Q
+Login:			L;Username;password
 
-GetProfile:	P;Username
+Logout:			Q
 
-UpdateProfile:	U;Description;Tag1:Tag2:Tag3:(...)
+RequestOwnProfile:	RP
 
-SearchUsers:	;Username
+RequestProfile:		RP;Username
 
-SearchTag:	T;Tag
+RequestProfileResponse:	RP;Username;Description;Tag1:Tag2:(...)
+
+UpdateProfile:		U;Description;Tag1:Tag2:Tag3:(...)
+
+SearchByTag:		GUBT;Tag
+
+SearchByTagResponse:	GUBT;User1:User2:(...)
+
+SendFriendRequest:	SFR;NewFriend
+
+AcceptFriendRequest:	AFR;NewFriend
+
+GetOldMessages:		GOM;
+
+FriendRequestReceived:	FRR;Sender
+
+RequestFriendlist:	RFL
+
 
 
 Acknowledges:
 
-Efter nogle beskeder vil der komme en acknowledge tilbage. Disse er
+Efter nogle beskeder vil der komme en acknowledge tilbage. Disse er:
 
 Constants.Acknowledged:		"OK"
 Constants.NotAcknowledged:	"NOK"

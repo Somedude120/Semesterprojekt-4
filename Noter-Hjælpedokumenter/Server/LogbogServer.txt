@@ -75,10 +75,15 @@ Arbejdstid 14 timer
 
 
 25-05-2018:
-
+Mange diagrammer er i dag blevet lavet finpudset fra tidligere design, sammen med skrivning i dokumentation.
 
 Arbejdstid 5 timer
 
 
+26-05-2018:
+I dag er der igen finpudset diagrammer samt skrivning. Produktet er også blevet lidt stresstestet med flere brugere online. Dette har virket fint og brugerne har kunne chatte med hinanden.
 
-Samlet arbejdstid: 67 timer
+Arbejdstid 6 timer
+
+
+Samlet arbejdstid: 74 timer
