@@ -9,7 +9,7 @@ namespace TLSNetworking
 {
     public class Sender
     {
-        public void SendString(SslStream sslStream, string message)
+        public static void SendString(SslStream sslStream, string message)
         {
             sslStream.Write(Encoding.UTF8.GetBytes(message + Constants.EndDelimiter));
         }

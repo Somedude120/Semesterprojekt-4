@@ -53,6 +53,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\Friendlist.cs" />
+    <Compile Include="Handlers\FriendRequest.cs" />
+    <Compile Include="Handlers\Login.cs" />
+    <Compile Include="Handlers\Logout.cs" />
+    <Compile Include="Handlers\Message.cs" />
+    <Compile Include="Handlers\OldMessages.cs" />
+    <Compile Include="Handlers\Profile.cs" />
+    <Compile Include="Handlers\Search.cs" />
+    <Compile Include="Handlers\Signup.cs" />
+    <Compile Include="MessageHandler.cs" />
+    <Compile Include="Parsing.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -74,6 +85,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

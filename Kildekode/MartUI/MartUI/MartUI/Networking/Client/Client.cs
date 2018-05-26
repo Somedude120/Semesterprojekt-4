@@ -138,7 +138,7 @@ namespace Examples.System.Net
         // Send messages to server
         public void SendMessage(string message)
         {
-            sender.SendString(sslStream, message);
+            Sender.SendString(sslStream, message);
         }
 
         //// Receive messages from server - handle by publishing events to GUI
@@ -210,7 +210,7 @@ namespace Examples.System.Net
         {
             while (true)
             {
-                string tempString = receiver.ReceiveString(sslStream);
+                string tempString = Receiver.ReceiveString(sslStream);
                 string[] tempStringList = tempString.Split(Constants.GroupDelimiter);
 
                 switch (tempStringList[0])
