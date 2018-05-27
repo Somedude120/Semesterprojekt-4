@@ -30,7 +30,7 @@ namespace Server
             }
             catch (Exception e)
             {
-                Sender.SendString(sslStream, "NOK");
+                Sender.SendString(sslStream, Constants.GetUsernamesByTag + Constants.GroupDelimiter);
             }
         }
     }
