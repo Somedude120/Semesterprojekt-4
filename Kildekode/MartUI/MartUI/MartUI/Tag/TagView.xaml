@@ -37,7 +37,7 @@
                                                TextWrapping="Wrap" Margin="5,2,5,2" FontSize="16" DockPanel.Dock="Left" Foreground="White"/>
                                     <Button Content="Add" Style="{StaticResource RoundCornerButton}" FontSize="10" Height="16" DockPanel.Dock="Right"
                                             Command="{Binding DataContext.AddFriendFromTagCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"/>
-                                    <Button Content="View Profile" Style="{StaticResource RoundCornerButton}" FontSize="10" Height="16" DockPanel.Dock="Right" 
+                                    <Button Content="View Profile" Style="{StaticResource RoundCornerButton}" FontSize="10" Height="16" DockPanel.Dock="Right" Width="70"
                                             Command="{Binding DataContext.ShowProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"/>
                                 </DockPanel>
                                 <Border.Style>
