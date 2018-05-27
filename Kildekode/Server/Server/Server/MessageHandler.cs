@@ -13,7 +13,7 @@ namespace Server
     {
         public static void StringHandler(string[] input, SslStream sslStream, Dictionary<string, SslStream> userStreams, Mutex mutex)
         {
-            //Check if client is logged in
+            //Check if client is logged in.
             //Client that is not logged in, should only be able to get to HandleLogin
             if (userStreams.FirstOrDefault(x => x.Value == sslStream).Key == null)  //If client isn't logged in
             {

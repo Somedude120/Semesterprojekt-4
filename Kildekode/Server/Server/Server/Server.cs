@@ -23,9 +23,9 @@ using Server;
 
 //Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
-namespace Examples.System.Net
+namespace Server
 {
-    public sealed class SslTcpServer
+    public sealed class Server
     {
         private static Mutex _mutex = new Mutex();
         public LoginRequest loginRequest = new LoginRequest();
@@ -63,10 +63,7 @@ namespace Examples.System.Net
                 DisplayStreamProperties(sslStream);
                 Console.WriteLine();
 
-                //string IPId = ((IPEndPoint)client.Client.RemoteEndPoint).Address + "," + ((IPEndPoint)client.Client.RemoteEndPoint).Port;
-
-                // Set timeouts for the read and write to 5 seconds.
-                //sslStream.ReadTimeout = 5000;
+                // Set timeouts for write to 5 seconds.
                 sslStream.WriteTimeout = 5000;
 
                 while (true)
@@ -77,12 +74,13 @@ namespace Examples.System.Net
                     try
                     {
                         messageData = Receiver.ReceiveString(sslStream);
-                        //Console.WriteLine((char)7);   //Makes bell sound
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
-                        Server.Logout.HandleLogout(sslStream, userStreams, _mutex);
+                        Logout.HandleLogout(sslStream, userStreams, _mutex);
+                        sslStream.Close();
+                        client.Close();
                         return;
                     }
 
@@ -90,8 +88,6 @@ namespace Examples.System.Net
                     MessageHandler.StringHandler(parsedMessage, sslStream, userStreams, _mutex);
                     Console.WriteLine();
                 }
-
-                //Console.ReadLine();
             }
             catch (AuthenticationException e)
             {
