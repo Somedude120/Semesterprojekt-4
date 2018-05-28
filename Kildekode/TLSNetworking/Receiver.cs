@@ -9,11 +9,13 @@ namespace TLSNetworking
 {
     public class Receiver
     {
+        //Modified from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
+
         public static string ReceiveString(SslStream sslStream)
         {
             // Read the  message sent by the client.
             // The client signals the end of the message using the
-            // "<EOF>" marker.
+            // EndDelimiter
             byte[] buffer = new byte[2048];
             StringBuilder messageData = new StringBuilder();
             int bytes = -1;
@@ -37,10 +39,10 @@ namespace TLSNetworking
                 char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
                 decoder.GetChars(buffer, 0, bytes, chars, 0);
                 messageData.Append(chars);
-                // Check for EOF or an empty message.
+                // Check for EndDelimiter or an empty message.
                 if (messageData.ToString().IndexOf(Constants.EndDelimiter) != -1)
                 {
-                    messageData.Remove(messageData.ToString().IndexOf(Constants.EndDelimiter), 1);
+                    messageData.Remove(messageData.ToString().IndexOf(Constants.EndDelimiter), 1);  //Removes EndDelimiter from the message
                     break;
                 }
             } while (bytes != 0);

@@ -21,7 +21,7 @@ using ProfileConsole.Core.ServerCommunication;
 using Salt_And_Hash;
 using Server;
 
-//Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
+//Modified from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
 namespace Server
 {
