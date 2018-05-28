@@ -14,8 +14,7 @@ namespace TLSNetworking
         public static string ReceiveString(SslStream sslStream)
         {
             // Read the  message sent by the client.
-            // The client signals the end of the message using the
-            // EndDelimiter
+            // The client signals the end of the message using the EndDelimiter
             byte[] buffer = new byte[2048];
             StringBuilder messageData = new StringBuilder();
             int bytes = -1;
@@ -31,7 +30,6 @@ namespace TLSNetworking
                     Console.WriteLine(e);
                     throw;
                 }
-                // Read the client's test message.
 
                 // Use Decoder class to convert from bytes to UTF8
                 // in case a character spans two buffers.

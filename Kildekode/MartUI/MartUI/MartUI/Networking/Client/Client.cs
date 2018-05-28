@@ -99,8 +99,8 @@ namespace Examples.System.Net
         {
             while (true)
             {
-                string tempString = Receiver.ReceiveString(sslStream);
-                string[] tempStringList = tempString.Split(Constants.GroupDelimiter);
+                string tempString = Receiver.ReceiveString(sslStream);  //Blocking read
+                string[] tempStringList = tempString.Split(Constants.GroupDelimiter);   //Parsing
 
                 switch (tempStringList[0])
                 {
