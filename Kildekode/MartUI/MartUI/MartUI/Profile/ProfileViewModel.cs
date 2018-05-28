@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web.Profile;
 using System.Windows;
 using System.Windows.Input;
 using MartUI.Events;
 using MartUI.Friend;
-using MartUI.Helpers;
 using MartUI.Main;
 using MartUI.Me;
 using MartUI.Settings.BlankSetting;
@@ -55,19 +51,8 @@ namespace MartUI.Profile
         private string _description;
         public string Description
         {
-            get
-            {
-                if (_description == null)
-                    _description = UserData.Description;
-                {
-                    if (_description == "")
-                        _description = "Describe yourself!";
-                }
-
-                return _description;
-            }
-
-            set => _description = value;
+            get => _description ?? (_description = UserData.Description);
+            set => SetProperty(ref _description, value);
         }
 
         private string _tags;
@@ -92,16 +77,14 @@ namespace MartUI.Profile
                 StringBuilder str = new StringBuilder();
 
                 for (int i = 0; i < UserData.Tags.Count - 1; i++)
-                {
                     str.Append(UserData.Tags[i] + delimiter);
-                }
 
                 str.Append(UserData.Tags[UserData.Tags.Count - 1]);
 
                 return str.ToString();
             }
 
-            return "Insert some tags!";
+            return "";
         }
 
         // Update tags of UserData
@@ -135,22 +118,19 @@ namespace MartUI.Profile
 
         private void Profile(string profile)
         {
+            //MessageBox.Show(profile);
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new ProfileViewModel());
 
-            var fullProfile = profile.Split(';').ToList();
+            var fullProfile = profile.Split(Constants.GroupDelimiter).ToList();
 
             Username = fullProfile[0];
-
-            Description = "No description! :(";
 
             if (fullProfile.Count > 1)
                 Description = fullProfile[1];
 
-            Tags = "No tags! :'(";
-
             if (fullProfile.Count > 2)
             {
-                var tags = fullProfile[2].Split(':').ToList();
+                var tags = fullProfile[2].Split(Constants.DataDelimiter).ToList();
 
                 StringBuilder prettyTags = new StringBuilder();
 
@@ -179,7 +159,10 @@ namespace MartUI.Profile
             };
 
             if (dialog.ShowDialog() == true)
+            {
                 UserData.Image = new Uri(dialog.FileName);
+                Image = UserData.Image;
+            }
         }
 
         public void ToMyProfile()
@@ -193,26 +176,18 @@ namespace MartUI.Profile
 
         private void Save()
         {
-
-            if (Tags == "Insert some tags!")
-                Tags = "";
-
-            if (Description == "Describe yourself!")
-                Description = "";
-
             UpdateTags();
             UserTagsInOneString = ConvertTagsToString(',');
             UserData.Description = Description;
 
             var tagsToSend = ConvertTagsToString(Constants.DataDelimiter);
 
+            // Send profile to server
             var msg = Constants.UpdateProfile + Constants.GroupDelimiter + 
                       UserData.Username + Constants.GroupDelimiter + UserData.Description
                       + Constants.GroupDelimiter + tagsToSend;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
-
-            // Send profile to server
         }
 
         // Will update based on user input (YES/NO/CANCEL)
@@ -220,6 +195,7 @@ namespace MartUI.Profile
         {
             if (Username == UserData.Username)
             {
+
                 if (Tags != UserTagsInOneString || Description != UserData.Description)
                 {
                     var result = MessageBox.Show("You have made changes that are not saved. Save?", "Confirmation",

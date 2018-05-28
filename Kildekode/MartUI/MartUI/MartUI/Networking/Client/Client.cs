@@ -174,6 +174,7 @@ namespace Examples.System.Net
                         });
                         break;
                     case Constants.GetProfile:
+
                         //If it receives ok from server, get profile
                         Application.Current.Dispatcher.Invoke(() =>
                         {

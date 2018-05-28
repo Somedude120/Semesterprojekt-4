@@ -28,18 +28,14 @@ namespace MartUI.Main
     class MainViewModel : BindableBase
     {
         private readonly IEventAggregator _eventAggregator = GetEventAggregator.Get();
-        //IRegionManager regionManager = new RegionManager();
 
         private IViewModel _fullView;
-        //private ICommand _changeView;
         private IViewModel _focusView;
         private IViewModel _sideBarView;
         private IViewModel _friendListView;
-
-        public List<IViewModel> _viewList;
-
         private ICommand _settingsViewCommand;
 
+        public List<IViewModel> _viewList;
 
         public MainViewModel()
         {

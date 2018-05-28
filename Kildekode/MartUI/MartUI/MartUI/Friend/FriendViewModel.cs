@@ -80,18 +80,7 @@ namespace MartUI.Friend
             _eventAggregator.GetEvent<AddFriendFromTagEvent>().Subscribe(HandleAddFriendFromTag);
             _eventAggregator.GetEvent<GetFriendListEvent>().Subscribe(HandleGetFriendList);
 
-            // Mulig løsning til når venner logger ind:
-            // Subscribe på et event som serveren sender så man kan se når en ven logger ind
-
-            //Tilføj eventuelt et eller andet som første plads i arrayet
-            //Skal bruge metode fra server/database til at få en liste af alle ens venner
-            //Samt kun alle som er online 
         }
-
-        //private void ReceivedNotification()
-        //{
-
-        //}
 
         private void HandleGetFriendList(string friendlist)
         {
