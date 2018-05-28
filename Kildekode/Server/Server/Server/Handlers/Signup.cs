@@ -24,12 +24,12 @@ namespace Server
             if (result == "OK")
             {
                 Console.WriteLine("User: " + input[1] + " created");
-                Sender.SendString(sslStream, "SOK");
+                Sender.SendString(sslStream, "SOK");    //Signup OK
             }
             else
             {
                 Console.WriteLine("User not created");
-                Sender.SendString(sslStream, "SNOK");
+                Sender.SendString(sslStream, "SNOK");   //Signup Not OK
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Server
         {
             string username;
 
+            //if no profile is specified, find the stream's owner's username
             if (input.Length == 1 || string.IsNullOrEmpty(input[1]))
             {
                 username = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
@@ -41,7 +42,7 @@ namespace Server
             }
             catch (Exception e)
             {
-                Sender.SendString(sslStream, "NOK");
+                Sender.SendString(sslStream, "RPNOK");  //Request Profile Not OK
             }
 
         }

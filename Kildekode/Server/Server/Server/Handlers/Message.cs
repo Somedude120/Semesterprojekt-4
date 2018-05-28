@@ -27,7 +27,6 @@ namespace Server
                 else //User is not online
                 {
                     Console.WriteLine("User " + input[1] + " isn't logged in");
-                    Sender.SendString(userStreams[login], "User: " + input[1] + " isn't logged in");
                 }
 
                 //Save to database
