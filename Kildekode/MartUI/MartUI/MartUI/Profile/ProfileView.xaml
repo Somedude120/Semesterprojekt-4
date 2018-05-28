@@ -45,7 +45,8 @@
                    MaxWidth="200" MaxHeight="200" Stretch="Uniform"
                    Margin="20"/>
             <Button Content="Change" Background="Transparent" Width="auto" 
-                    Command="{Binding ChooseProfilePicture}"/>
+                    Command="{Binding ChooseProfilePicture}"
+                    Style="{StaticResource CannotSee}"/>
         </StackPanel>
         <TextBlock Grid.Row="0" Grid.Column="1"
                    Text="{Binding Username}"

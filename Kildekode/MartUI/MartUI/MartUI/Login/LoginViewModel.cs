@@ -66,9 +66,7 @@ namespace MartUI.Login
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
             _eventAggregator.GetEvent<LogoutPublishLoginEvent>().Subscribe(HandleLogoutPublishLogin);
-
             _eventAggregator.GetEvent<LoginResponseEvent>().Subscribe(HandleLogin);
-
             _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
             _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
         }
@@ -116,7 +114,7 @@ namespace MartUI.Login
 
             UserData.Description = fullProfile[1];
 
-            // Split tags into list
+            // Split possible tags into list
             if (fullProfile.Count == 3)
             {
                 var tagsOnly = fullProfile[2].Split(Constants.DataDelimiter).ToList();
@@ -136,6 +134,7 @@ namespace MartUI.Login
 
         private void LoginExecute()
         {
+            MessageBox.Show($"Username: {Username}, Password: {Password}");
             var msg = Constants.RequestLogin + Constants.GroupDelimiter + UserData.Username + Constants.GroupDelimiter + Password;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);

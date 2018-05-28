@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using MartUI.Events;
@@ -106,6 +107,15 @@ namespace MartUI.CreateUser
 
         private void CreateNewUser()
         {
+            StringBuilder str = new StringBuilder();
+
+            foreach (var userDataTag in UserData.Tags)
+            {
+                str.Append(userDataTag + " ");
+            }
+
+            MessageBox.Show($"{Username} {Password} {str} {UserData.Image.AbsoluteUri}");
+
             string msg = Constants.Signup + Constants.GroupDelimiter + 
                          Username + Constants.GroupDelimiter +
                          Password;
