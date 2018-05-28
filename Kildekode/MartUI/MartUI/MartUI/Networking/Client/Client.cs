@@ -17,7 +17,7 @@ using MartUI.Me;
 using Prism.Events;
 using TLSNetworking;
 
-//Taken from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
+//Modified from: https://msdn.microsoft.com/en-us/library/system.net.security.sslstream.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
 namespace Examples.System.Net
 {
@@ -38,20 +38,11 @@ namespace Examples.System.Net
             //Get certain event from GUI
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Subscribe(SendMessage);
-            //Server subscription
-            //Here the new event should be
-            //_eventAggregator.GetEvent<SendMessageToServerEvent>().Subscribe(SendMessage);
 
-            string machineName = "192.168.101.1";
-            string serverCertificateName = "Martin-MSI";
+            string machineName = "192.168.101.1";   //IP Address of the server
+            string serverCertificateName = "Martin-MSI";    //Name of the server to connect to
+
             SslTcpClient.RunClient(machineName, serverCertificateName);
-
-            //From MyData
-            //Login(UserData);
-            //UserData.Username = "Hans";
-            //string loginString = "L;" + UserData.Username;
-            //sender.SendString(sslStream, loginString);
-
         }
 
         // The following method is invoked by the RemoteCertificateValidationDelegate.
@@ -61,23 +52,14 @@ namespace Examples.System.Net
               X509Chain chain,
               SslPolicyErrors sslPolicyErrors)
         {
-            //X509ChainPolicy pol = new X509ChainPolicy()
-            //{
-            //    VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority | X509VerificationFlags.IgnoreCertificateAuthorityRevocationUnknown
-            //                        | X509VerificationFlags.IgnoreCtlSignerRevocationUnknown | X509VerificationFlags.IgnoreEndRevocationUnknown
-            //                        | X509VerificationFlags.IgnoreInvalidPolicy | X509VerificationFlags.IgnoreRootRevocationUnknown
-            //                        | X509VerificationFlags.IgnoreWrongUsage | X509VerificationFlags.IgnoreInvalidName
-            //};
-
-            //chain.ChainPolicy = pol;
             
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
 
             Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
 
-            // Do not allow this client to communicate with unauthenticated servers.
-            //return false;
+            //Since Marto does not have a certificate from a Certificate Authority, the server authentication will always fail.
+            //If a real certificate is used, the following line should return false
             return true;    //Ignore false certificate. Used because of selfsigned certificate
         }
         public static void RunClient(string machineName, string serverName)
@@ -86,11 +68,9 @@ namespace Examples.System.Net
             
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
-            //TcpClient client = new TcpClient("192.168.173.1", 443);   //When client is not on localhost
             TcpClient client = new TcpClient(machineName, 443);
-            //Console.WriteLine("Client connected.");
-            // Create an SSL stream that will close the client's stream.
 
+            // Create an SSL stream that will close the client's stream.
             sslStream = new SslStream(
                 client.GetStream(),
                 false,
@@ -99,19 +79,11 @@ namespace Examples.System.Net
                 );
             // The server name must match the name on the server certificate.
             try
-            {
-                Console.WriteLine(serverName);
-                
+            {       
                 sslStream.AuthenticateAsClient(serverName);
             }
             catch (AuthenticationException e)
             {
-                Console.WriteLine("Exception: {0}", e.Message);
-                if (e.InnerException != null)
-                {
-                    Console.WriteLine("Inner exception: {0}", e.InnerException.Message);
-                }
-                Console.WriteLine("Authentication failed - closing the connection.");
                 client.Close();
                 return;
             }
@@ -127,8 +99,8 @@ namespace Examples.System.Net
         {
             while (true)
             {
-                string tempString = Receiver.ReceiveString(sslStream);
-                string[] tempStringList = tempString.Split(Constants.GroupDelimiter);
+                string tempString = Receiver.ReceiveString(sslStream);  //Blocking read
+                string[] tempStringList = tempString.Split(Constants.GroupDelimiter);   //Parsing
 
                 switch (tempStringList[0])
                 {
@@ -224,7 +196,6 @@ namespace Examples.System.Net
                         });
                         break;
                     default:
-                        Console.WriteLine($"Error Messagehandler: {tempStringList[0]}");
                         break;
                 }
             }

@@ -1,5 +1,9 @@
 Logbog Server:
 
+Før disse datoer er der ikke skrevet detaljeret logbog. Før dette har der været meget arbejde med analyse af forskellige teknologier.
+Og før det, er hele systemets arkitektur lavet, sammen med en del design. 40+ timers arbejde er lagt i denne del.
+
+
 29-04-2018:
 I dag er der blevet arbejdet med at få TLS til at virker mellem server og flere klienter.
 Lang tid blev brugt på at tilføje TLS til et Async socket test program, men efter flere timer uden rigtigt fremskridt blev TLS i stedet tilføjet til et testprogram hvor en server har flere tråde i stedet for async sockets.
@@ -86,4 +90,22 @@ I dag er der igen finpudset diagrammer samt skrivning. Produktet er også blevet 
 Arbejdstid 6 timer
 
 
-Samlet arbejdstid: 74 timer
+27-05-2018:
+I dag er dokumentation næsten skrevet færdigt, og dele af rapporten også.
+
+Arbejdstid 8 timer
+
+
+28-05-2018:
+I dag er dokumentation skrevet færdig, og rapporten er færdig men mangler en gennemgang.
+
+Arbejdstid 8 timer
+
+
+29-05-2018:
+I dag er rapporten skrevet færdigt.
+
+Arbejdstid 10 timer
+
+
+Samlet arbejdstid: 140+ timer
