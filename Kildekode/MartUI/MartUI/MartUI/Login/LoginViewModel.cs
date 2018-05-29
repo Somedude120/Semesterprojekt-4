@@ -134,7 +134,6 @@ namespace MartUI.Login
 
         private void LoginExecute()
         {
-            MessageBox.Show($"Username: {Username}, Password: {Password}");
             var msg = Constants.RequestLogin + Constants.GroupDelimiter + UserData.Username + Constants.GroupDelimiter + Password;
 
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(msg);
