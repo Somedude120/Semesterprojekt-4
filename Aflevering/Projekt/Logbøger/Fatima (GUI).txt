@@ -1,0 +1,25 @@
+Fatima Kodro:
+
+
+11/3: Lavet udkast til layout af MartUI. Lavet første udkast af layout af login.
+13/3: Kigget på MVVM implementering, fået overblik over det, lavet mindre "plan" over implementering.
+14/3: Mere MVVM implementering. 
+15/3: Mere MVVM eksperimentering ..
+16/3: Lavet en test med en fake database (blot en liste i programmet), hvori der kan indsættes en bruger. Hvis brugernavnet findes, kan brugeren ikke laves.
+Næste step er at få koblet en anden View på når brugeren laves som fører brugeren til Main Menu.
+22/3: GUI login/create user: Kan skifte view, ikke optimalt endnu. Skal have et view til at være startup view
+31/3: Skrevet analyse til GUI.
+2/4: Arbejdet på GUI. Næsten lavet layout færdigt til CreateUser. Opdelt koden så den er mere klar i forhold til views/viewmodels.
+27/4: Samlet alle tre mapper og ændret implementering af forskellige ting såsom FriendList og PubSub deraf.
+29/4: Tilføjet navigering mellem Login og CreateUser (samt back-knappen på CreateUser tilbage til Login). Dog 
+er dette ikke optimalt endnu.
+3/5: GUI: Gjort det muligt at aflæse password .. what a struggle. Tilføjet "DetailedPersonModel" i CreateUser og 
+beautified CreateUser lidt. Testet med OnPropertyChanged vs SetProperty ... 
+6/5: Kan hente Username og Password fra CreateUserView. Tilføjet DetailedPerson/DetailedPersonModel. 
+8/5: Tilføjet tags og billede i createuser.
+12/5: Fået ting til at fungere ordentligt i createuser. Kan observere password/username og grey/ungrey Register knappen
+baseret på input.
+16/5: Tilføjet statisk klasse til user info i stedet. Tilføjet en test som kan "tilføje" en person til en "database" ..
+Testet med en falsk database -> skifter til loginview når der laves en ny. ellers en msgbox som siger at 
+brugernavnet er taget.
+29/5: Rapport ..
