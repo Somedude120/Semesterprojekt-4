@@ -1,0 +1,157 @@
+﻿<UserControl x:Class="MartUI.CreateUser.CreateUserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:helpers="clr-namespace:MartUI.Helpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1000">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="NameTokenTemplate">
+            <DataTemplate.Resources>
+                <Storyboard x:Key="OnLoaded1">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border">
+                        <SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+                        <SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </DataTemplate.Resources>
+            <Border x:Name="border" BorderBrush="#FF7E7E7E" BorderThickness="2" CornerRadius="5" Height="Auto" d:DesignWidth="139" d:DesignHeight="40" Padding="5,3" Margin="3,0,3,3">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#32CD32" Offset="0"/>
+                        <GradientStop Color="#228B22" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid HorizontalAlignment="Left" Width="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.21*"/>
+                        <ColumnDefinition Width="0.79*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image HorizontalAlignment="Right" Source="../Images/14-tag.png" Stretch="None" Width="Auto" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBlock TextWrapping="NoWrap" Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Margin="10,0,0,0" FontWeight="Bold"/>
+                </Grid>
+            </Border>
+            <DataTemplate.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard Storyboard="{StaticResource OnLoaded1}"/>
+                </EventTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid MaxWidth="500" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.ColumnSpan="2"
+                   Grid.Column="1"
+                   Text="Create new profile"
+                   FontSize="50" FontStyle="Italic" FontWeight="Bold" Foreground="DarkGreen"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,50"/>
+        <TextBlock Grid.Column="0"
+                   Grid.Row="1"
+                   FontWeight="Bold" 
+                   Foreground="Red" 
+                   Text="*" 
+                   VerticalAlignment="Center"
+                   Margin="0,0,10,0"
+                   FontSize="20"/>
+        <TextBlock Grid.Column="1"
+                   Grid.Row="1"
+                   Text="Name"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   FontSize="20"/>
+        <TextBox Grid.Column="2"
+                 Grid.Row="1"
+                 Margin="10" 
+                 MaxLength="15" MaxWidth="200" MinWidth="200"
+                 Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Column="0"
+                   Grid.Row="2"
+                   FontWeight="Bold" 
+                   Foreground="Red" 
+                   Text="*" 
+                   FontSize="20"
+                   VerticalAlignment="Center"
+                   Margin="0,0,10,0"/>
+        <TextBlock Grid.Column="1"
+                   Grid.Row="2"
+                   Text="Password"
+                   FontSize="20"
+                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <PasswordBox Grid.Column="2"
+                 Grid.Row="2"
+                 Margin="10"
+                 MaxLength="20" MaxWidth="200" MinWidth="200"
+                 Name="CreateUserPasswordBx" PasswordChanged="CreateUserPasswordBx_OnPasswordChanged"
+                     />
+        <TextBlock Grid.Column="1"
+                   Grid.Row="3"
+                   Text="Tags"
+                   FontSize="20"
+                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <helpers:TokenizingControl x:Name="Tokenizer" Grid.Column="2"
+                   Grid.Row="3"
+                   Margin="10"
+                   MaxWidth="200" MinWidth="200" MinHeight="26"
+                   TokenTemplate="{DynamicResource NameTokenTemplate}"
+                                 MaxHeight="190"
+                   VerticalScrollBarVisibility="Auto">
+            <!--<FlowDocument>
+                <Paragraph>
+                    <Run />
+                </Paragraph>
+            </FlowDocument>-->
+        </helpers:TokenizingControl>
+        <TextBlock Grid.Column="1"
+                   Grid.Row="4"
+                   Text="Picture"
+                   FontSize="20"
+                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <Button Grid.Column="2"
+               Grid.Row="4"
+               Content="..."
+               HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="30,0,0,0"
+               Command="{Binding ChooseProfilePicture}"/>
+        <Image Grid.Column="2"
+               Grid.Row="4"
+               Source="{Binding UserData.Image}"
+               HorizontalAlignment="Center" VerticalAlignment="Center" 
+               MaxWidth="200" MaxHeight="200" Stretch="Uniform"/>
+        <Button Grid.Column="1"
+                Grid.Row="5"
+                Content="Back"
+                HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Margin="0,40,10,0"
+                Command="{Binding BackButton}"/>
+        <Button Grid.Column="2"
+                Grid.Row="5" 
+                HorizontalAlignment="Right" VerticalAlignment="Center"
+                Content="Register"
+                Command="{Binding RegisterButton}"
+                Margin="0,40,50,0"/>
+        <TextBlock Grid.Column="0" 
+                Grid.Row="6" 
+                HorizontalAlignment="Left" VerticalAlignment="Center"
+                   FontWeight="Bold" 
+                   Foreground="Red"
+                   Text="* Required"/>
+    </Grid>
+</UserControl>
+

@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="MartUI.Friend.FriendView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MartUI.Friend"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="200"
+             Background="#2f3136">
+    <!--<UserControl.Resources>
+        <local:Converter x:Key="CheckBlink"/>
+        <Style x:Key="FieldToValidate" TargetType="{x:Type Button}">
+            <Style.Triggers>
+                <DataTrigger Value="True">
+                    <DataTrigger.Binding>
+                        <MultiBinding Converter="{StaticResource VisualQueueOnErrorConverter}">
+                            <Binding RelativeSource="{RelativeSource self}" Path="Name" />
+                            <Binding RelativeSource="{RelativeSource AncestorType={x:Type DockPanel}}" Path="DataContext.ErrorFieldName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" />
+                        </MultiBinding>
+                    </DataTrigger.Binding>
+                    <Setter Property="Background" Value="Red" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>-->
+    
+
+    <Grid x:Name="FriendGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="26"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.Resources>
+            <local:BindingProxy x:Key="Proxy" Data="{Binding}"/>
+        </Grid.Resources>
+
+        <Grid Row="0">
+            <ScrollViewer HorizontalAlignment="Right" Width="200">
+                <ItemsControl ItemsSource="{Binding FriendList, UpdateSourceTrigger=PropertyChanged}" Width="185">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button
+                            Content="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                            Command="{Binding  DataContext.ChooseFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                            CommandParameter="{Binding}"
+                            Margin="0,3" Width="185" Style="{StaticResource RoundCornerButton}">
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="View Profile" Command="{Binding Source={StaticResource Proxy}, Path=Data.ViewProfileCommand}" CommandParameter="{Binding}"/>
+                                        <MenuItem Header="Remove" Command="{Binding Source={StaticResource Proxy}, Path=Data.RemoveFriendCommand}" CommandParameter="{Binding}"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+        <Grid Row="1" Width="180" Background="#202225">
+        </Grid>
+        <Grid Row="2">
+            <StackPanel Orientation="Horizontal">
+                <Button Width="16" HorizontalAlignment="Left" Margin="6,0,0,0" BorderBrush="Transparent"  Height="16" 
+                    Command="{Binding ShowNotificationsCommand}">
+                    <Button.OpacityMask>
+                        <VisualBrush Visual="{iconPacks:Entypo Notification}" />
+                    </Button.OpacityMask>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource NoButtonHighlight}">
+                            <Setter Property="Background" Value="White" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding NotificationReceived}" Value="True">
+                                    <DataTrigger.EnterActions >
+                                        <BeginStoryboard Name="NotificationBlink">
+                                            <Storyboard AutoReverse="True" RepeatBehavior="Forever">
+                                                <ColorAnimation Duration="00:00:00.5"
+                                                                Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                                                From="White"
+                                                                To="Green" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding NotificationReceived}" Value="False">
+                                    <DataTrigger.EnterActions>
+                                        <RemoveStoryboard BeginStoryboardName="NotificationBlink" />
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <TextBox Width="120" HorizontalAlignment="Left" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" x:Name="AddFriendTextBox" Visibility="Hidden"
+                     MouseDoubleClick="SelectAddress"
+                     GotKeyboardFocus="SelectAddress"
+                     PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
+                     Margin="5,0,5,0">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding AddFriendCommand}" Key="Return"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Button Width="16" HorizontalAlignment="Right" Margin="6,0,0,0" Background="White" BorderBrush="Transparent"  Height="16" 
+                        Style="{StaticResource NoButtonHighlight}" Command="{Binding ShowTagCommand}">
+                    <Button.OpacityMask>
+                        <VisualBrush Visual="{iconPacks:Modern Tag}" />
+                    </Button.OpacityMask>
+                </Button>
+                <Button Width="16" HorizontalAlignment="Right" Margin="4,0,0,0" Background="White" BorderBrush="Transparent"  Height="16" 
+                    Name="AddFriendButton" Style="{StaticResource NoButtonHighlight}" Click="AddFriendButton_OnClick">
+                    <Button.OpacityMask>
+                        <VisualBrush Visual="{iconPacks:Modern UserAdd}" />
+                    </Button.OpacityMask>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

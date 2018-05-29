@@ -1,0 +1,124 @@
+﻿<Window x:Class="MartUI.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:MartUI"
+
+        xmlns:friend="clr-namespace:MartUI.Friend"
+        xmlns:login="clr-namespace:MartUI.Login"
+        xmlns:createuser="clr-namespace:MartUI.CreateUser"
+        xmlns:mvvm="http://prismlibrary.com/"
+        xmlns:chat="clr-namespace:MartUI.Chat"
+        xmlns:settings="clr-namespace:MartUI.Settings"
+        xmlns:blankSetting="clr-namespace:MartUI.Settings.BlankSetting"
+        xmlns:profile="clr-namespace:MartUI.Profile"
+        xmlns:friendnotification="clr-namespace:MartUI.FriendNotification"
+        xmlns:group="clr-namespace:MartUI.Group"
+        xmlns:tag="clr-namespace:MartUI.Tag"
+        mvvm:ViewModelLocator.AutoWireViewModel="True"
+
+        mc:Ignorable="d"
+        Title="MartUI" Height="618" Width="1000" MinHeight="618" MinWidth="1000" x:Name="MartUI" 
+        WindowStyle="None" ResizeMode="CanResize"
+        BorderThickness="0"
+        Background="#36393e">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type friend:FriendViewModel}">
+            <friend:FriendView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type login:LoginViewModel}">
+            <login:LoginView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type createuser:CreateUserViewModel}">
+            <createuser:CreateUserView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type chat:ChatViewModel}">
+            <chat:ChatView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type settings:SettingsViewModel}">
+            <settings:SettingsView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type blankSetting:BlankSettingViewModel}">
+            <blankSetting:BlankSettingView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type profile:ProfileViewModel}">
+            <profile:ProfileView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type friendnotification:FriendNotificationViewModel}">
+             <friendnotification:FriendNotificationView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type tag:TagViewModel}">
+            <tag:TagView DataContext="{Binding}"/>
+        </DataTemplate>
+        <!--<DataTemplate DataType="{x:Type group:GroupViewModel}">
+            <group:GroupView DataContext="{Binding}"/>
+        </DataTemplate>-->
+    </Window.Resources>
+
+    <!--MARTUI REAL-->
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            CaptionHeight="0"
+            ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Height="18" Width="Auto" Background="#202225" Grid.ColumnSpan="4" MouseDown="MoveWindow" Name="TitleBar" MouseLeftButtonDown="TitleBar_LeftMouseButtonDoubleClick">
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,2,0" Background="White" BorderBrush="Transparent" Height="16"
+                    Click="ExitApplication"  Name="ExitBtn" Style="{StaticResource NoButtonHighlight}">
+                <Button.OpacityMask>
+                    <VisualBrush Visual="{iconPacks:Material Close}"/>
+                </Button.OpacityMask>
+            </Button>
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,26,0" Background="White" BorderBrush="Transparent"  Height="16" 
+                    Click="ExpandApplication"  Name="ExpandBtn" Style="{StaticResource NoButtonHighlight}">
+                <Button.OpacityMask>
+                    <VisualBrush Visual="{iconPacks:Material WindowMaximize}"/>
+                </Button.OpacityMask>
+            </Button>
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,50,0" Background="White" BorderBrush="Transparent" Height="2"
+                    Click="MinimizeApplication" Name="MinimizeBtn" Style="{StaticResource NoButtonHighlight}">
+                <Button.OpacityMask >
+                    <VisualBrush Visual="{iconPacks:Material WindowMinimize}"/>
+                </Button.OpacityMask>
+            </Button>
+            <Button Width="16" HorizontalAlignment="Right" Margin="0,0,74,0" Background="White" BorderBrush="Transparent" Height="16"
+                    Name="SettingsBtn" Style="{StaticResource NoButtonHighlight}"
+                    Command="{Binding DataContext.SettingsViewCommand, RelativeSource={RelativeSource AncestorType={x:Type local:MainView}}}">
+                <Button.OpacityMask>
+                    <VisualBrush Visual="{iconPacks:Modern Settings}"/>
+                </Button.OpacityMask>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Width="Auto">
+            <ContentControl Content ="{Binding FullView}" />
+        </Grid>
+
+        <Grid Grid.Column="0" Grid.Row="1">
+           <ContentControl Content ="{Binding SideBarView}" />
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="1" >
+            <ContentControl Content ="{Binding FriendListView}" />
+        </Grid>
+
+        <Grid Grid.Column="2" Grid.Row="1" Width="Auto">
+            <ContentControl Content ="{Binding FocusView}" />
+        </Grid>
+    </Grid>
+</Window>
