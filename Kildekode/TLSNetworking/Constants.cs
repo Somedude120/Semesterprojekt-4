@@ -7,6 +7,9 @@
     public const char GroupDelimiter = (char)30;    //'RS' Splits a message into its different groups of data
     public const char DataDelimiter = (char)31; //'US' Splits a data group into its different data parts
 
+    //public const char GroupDelimiter = ';';    //'RS' Splits a message into its different groups of data
+    //public const char DataDelimiter = ':';
+
     /*
      * MESSAGES
      */
@@ -72,4 +75,5 @@
      * UPDATE PROFILE
      */
     public const string UpdateProfile = "U"; // U + GroupDelimiter + Username + GroupDelimiter + Descrip. + Group + Tag + DataDel. + Tag ..
+    public const string DeleteProfile = "DP";
 }
