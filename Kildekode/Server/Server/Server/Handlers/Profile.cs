@@ -37,6 +37,7 @@ namespace Server
                     stringBuilder.Append(Constants.DataDelimiter);
                 }
 
+                Console.WriteLine(messageToSend);
                 messageToSend = messageToSend + stringBuilder.ToString();
                 Sender.SendString(sslStream, messageToSend);
             }

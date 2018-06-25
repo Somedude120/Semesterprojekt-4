@@ -18,6 +18,7 @@ namespace Server
             //Check if username is already in logged in
             if (userStreams.ContainsKey(input[1]))
             {
+                Console.WriteLine("FRR" + Constants.GroupDelimiter + login);
                 Sender.SendString(userStreams[input[1]], "FRR" + Constants.GroupDelimiter + login);
             }
             else

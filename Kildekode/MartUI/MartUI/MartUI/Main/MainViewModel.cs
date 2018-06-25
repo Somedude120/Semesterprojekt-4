@@ -45,6 +45,7 @@ namespace MartUI.Main
             _eventAggregator.GetEvent<ChangeFriendPage>().Subscribe(ChangeFriendView);
             _eventAggregator.GetEvent<ChangeSideBarPage>().Subscribe(ChangeSideBarView);
             _eventAggregator.GetEvent<NotificationReceivedEvent>().Subscribe(Notify);
+            _eventAggregator.GetEvent<DeleteProfileEvent>().Subscribe(ClearAll);
 
             ViewList.Add(new LoginViewModel());
             ViewList.Add(new FriendViewModel());
@@ -54,6 +55,11 @@ namespace MartUI.Main
             ViewList.Add(new SettingsViewModel());
 
             FullView = ViewList[0];
+        }
+
+        private void ClearAll()
+        {
+            ViewList.Clear();
         }
 
 

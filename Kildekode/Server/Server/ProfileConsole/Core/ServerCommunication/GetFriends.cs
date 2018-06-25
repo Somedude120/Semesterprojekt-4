@@ -24,15 +24,43 @@ namespace ProfileConsole.Core.ServerCommunication
             var returnList = new List<string>();
             foreach (var friend in friendlist)
             {
-                if(friend.User1 == Username)
-                    returnList.Add(friend.User2);
+                Console.WriteLine(friend.Status);
+                if (friend.Status == "Added     ")
+                {
+                    if (friend.User1 == Username)
+                        returnList.Add(friend.User2);
 
-                else if (friend.User2 == Username)
-                    returnList.Add(friend.User1);
+                    else if (friend.User2 == Username)
+                        returnList.Add(friend.User1);
+                }
             }
 
             return returnList;
             
+        }
+
+
+        public static List<string> GetPendingFriends(string Username)
+        {
+            unitOfWork = new UnitOfWork(new ProfileContext());
+            var friendlist = unitOfWork.FriendList.GetAll();
+
+            var returnList = new List<string>();
+            foreach (var friend in friendlist)
+            {
+                Console.WriteLine(friend.Status);
+                if (friend.Status == "Pending   " && friend.Action_User != Username)
+                {
+                    if (friend.User1 == Username)
+                        returnList.Add(friend.User2);
+
+                    else if (friend.User2 == Username)
+                        returnList.Add(friend.User1);
+                }
+            }
+
+            return returnList;
+
         }
 
     }

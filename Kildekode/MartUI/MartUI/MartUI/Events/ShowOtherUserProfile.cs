@@ -6,4 +6,9 @@ namespace MartUI.Events
     {
 
     }
+
+    public class DeleteProfileEvent : PubSubEvent
+    {
+
+    }
 }

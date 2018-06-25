@@ -105,6 +105,7 @@
     <Compile Include="CreateUser\DetailedPersonModel.cs" />
     <Compile Include="Events\AcceptedFriendRequestEvent.cs" />
     <Compile Include="Events\AddFriendFromTagEvent.cs" />
+    <Compile Include="Events\ClearFriendReqEvent.cs" />
     <Compile Include="Events\CreateUserResponseEvent.cs" />
     <Compile Include="Events\GetFriendList.cs" />
     <Compile Include="Events\FriendRequestDeclinedEvent.cs" />

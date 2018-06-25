@@ -67,6 +67,13 @@ namespace MartUI.FriendNotification
             _eventAggregator.GetEvent<NotificationReceivedEvent>().Subscribe(HandleNotificationReceived);
             _eventAggregator.GetEvent<FriendRequestReceivedEvent>().Subscribe(HandleFriendRequestReceived);
             _eventAggregator.GetEvent<FriendRequestDeclinedEvent>().Subscribe(HandeFriendRequestDeclined);
+            _eventAggregator.GetEvent<ClearFriendReqEvent>().Subscribe(Clear);
+        }
+
+        private void Clear()
+        {
+            FriendRequests.Clear();
+            FriendNotifications.Clear();
         }
 
         private void AcceptFriendRequest(string username)
