@@ -72,6 +72,12 @@ namespace Server
                     case Constants.GetUsernamesByTag:
                         Search.HandleGetUserNamesByTag(input, sslStream);
                         break;
+                    case Constants.RemoveFriend:
+                        FriendRequest.HandleRemoveFriendRequest(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream, userStreams);
+                        break;
+                    case Constants.DeleteProfile:
+                        Profile.HandleDeleteProfile(input, sslStream, userStreams);
+                        break;
                     default:
                         Console.WriteLine("String is not recognized");
                         break;

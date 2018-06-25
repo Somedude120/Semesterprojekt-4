@@ -26,6 +26,12 @@ namespace Server
             }
         }
 
+        public static void HandleRemoveFriendRequest(string[] input, string login, SslStream sslStream, Dictionary<string, SslStream> userStreams)
+        {
+            RemoveFriend.RemoveFriendRequest(login, input[1]);
+            Console.WriteLine("Removed friend. Username: " + login + " Removed friend: " + input[1]);
+        }
+
         public static void HandleFriendRequestAccept(string[] input, string login, SslStream sslStream, Dictionary<string, SslStream> userStreams)
         {
             AcceptFriendRequest.AcceptRequest(login, input[1]);

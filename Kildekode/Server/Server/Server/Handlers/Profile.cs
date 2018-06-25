@@ -63,5 +63,14 @@ namespace Server
 
             UpdateProfile.UpdateProfileInformation(username, input[2], tagList);
         }
+
+        public static void HandleDeleteProfile(string[] input, SslStream sslStream, Dictionary<string, SslStream> userStreams)
+        {
+            Console.WriteLine("Deleting profile");
+
+            string username = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
+            RemoveProfile.RemoveProfileRequest(username);
+            userStreams.Remove(username);
+        }
     }
 }

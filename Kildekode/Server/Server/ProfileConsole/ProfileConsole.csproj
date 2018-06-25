@@ -78,6 +78,8 @@
     <Compile Include="Core\Domain\Login.cs" />
     <Compile Include="Core\Domain\Tags.cs" />
     <Compile Include="Core\Domain\UserInformation.cs" />
+    <Compile Include="Core\ServerCommunication\RemoveProfile.cs" />
+    <Compile Include="Core\ServerCommunication\RemoveFriend.cs" />
     <Compile Include="Migrations\201805230953538_Initial.cs" />
     <Compile Include="Migrations\201805230953538_Initial.Designer.cs">
       <DependentUpon>201805230953538_Initial.cs</DependentUpon>
