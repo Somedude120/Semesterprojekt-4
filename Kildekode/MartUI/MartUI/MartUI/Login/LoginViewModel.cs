@@ -65,7 +65,7 @@ namespace MartUI.Login
         {
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
-            _eventAggregator.GetEvent<LogoutPublishLoginEvent>().Subscribe(HandleLogoutPublishLogin);
+            //_eventAggregator.GetEvent<LogoutPublishLoginEvent>().Subscribe(HandleLogoutPublishLogin);
             _eventAggregator.GetEvent<LoginResponseEvent>().Subscribe(HandleLogin);
             _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
             _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
@@ -101,11 +101,11 @@ namespace MartUI.Login
             _eventAggregator.GetEvent<GetFriendList>().Unsubscribe(FriendListInfo);
         }
 
-        private void HandleLogoutPublishLogin()
-        {
-            _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
-            _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
-        }
+        //private void HandleLogoutPublishLogin()
+        //{
+        //    _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
+        //    _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
+        //}
 
         private void ProfileInfo(string profile)
         {

@@ -33,11 +33,12 @@ namespace MartUI.Settings
 
         private void Logout()
         {
-            _eventAggregator.GetEvent<LoginResponseEvent>().Publish("");
-            _eventAggregator.GetEvent<ClearFriendReqEvent>().Publish();
+            //_eventAggregator.GetEvent<LoginResponseEvent>().Publish("");
+            //_eventAggregator.GetEvent<ClearFriendReqEvent>().Publish();
             _eventAggregator.GetEvent<SendMessageToServerEvent>().Publish(Constants.Logout);
+            //_eventAggregator.GetEvent<ResetUser>().Publish();
             _eventAggregator.GetEvent<ChangeFullPage>().Publish(new LoginViewModel());
-            _eventAggregator.GetEvent<LogoutPublishLoginEvent>().Publish();
+            //_eventAggregator.GetEvent<LogoutPublishLoginEvent>().Publish();
 
         }
 
