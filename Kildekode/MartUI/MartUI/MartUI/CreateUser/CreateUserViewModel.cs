@@ -114,8 +114,6 @@ namespace MartUI.CreateUser
                 str.Append(userDataTag + " ");
             }
 
-            MessageBox.Show($"{Username} {Password} {str} {UserData.Image.AbsoluteUri}");
-
             string msg = Constants.Signup + Constants.GroupDelimiter + 
                          Username + Constants.GroupDelimiter +
                          Password;
