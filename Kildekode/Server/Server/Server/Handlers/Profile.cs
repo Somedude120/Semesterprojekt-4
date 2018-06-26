@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Security;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ProfileConsole.Core.ServerCommunication;
 using TLSNetworking;
@@ -65,13 +66,13 @@ namespace Server
             UpdateProfile.UpdateProfileInformation(username, input[2], tagList);
         }
 
-        public static void HandleDeleteProfile(string[] input, SslStream sslStream, Dictionary<string, SslStream> userStreams)
+        public static void HandleDeleteProfile(string[] input, SslStream sslStream, Dictionary<string, SslStream> userStreams, Mutex mutex)
         {
             Console.WriteLine("Deleting profile");
 
             string username = userStreams.FirstOrDefault(x => x.Value == sslStream).Key;
+            Logout.HandleLogout(sslStream, userStreams, mutex);
             RemoveProfile.RemoveProfileRequest(username);
-            userStreams.Remove(username);
         }
     }
 }

@@ -76,7 +76,7 @@ namespace Server
                         FriendRequest.HandleRemoveFriendRequest(input, userStreams.FirstOrDefault(x => x.Value == sslStream).Key, sslStream, userStreams);
                         break;
                     case Constants.DeleteProfile:
-                        Profile.HandleDeleteProfile(input, sslStream, userStreams);
+                        Profile.HandleDeleteProfile(input, sslStream, userStreams, mutex);
                         break;
                     default:
                         Console.WriteLine("String is not recognized");
