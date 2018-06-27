@@ -53,6 +53,8 @@ namespace MartUI.Login
             // if username != value, notify
         }
 
+        public bool Send { get; set; }
+
         // Navigate to CreateUserView
         public ICommand CreateUserCommand => _createUserCommand ?? (_createUserCommand = new DelegateCommand(() =>
                                                      _eventAggregator.GetEvent<ChangeFullPage>().Publish(new CreateUserViewModel())));
@@ -63,6 +65,8 @@ namespace MartUI.Login
                                                 .ObservesProperty(() => Password));
         public LoginViewModel()
         {
+            //MessageBox.Show("subs");
+            Send = false;
             _eventAggregator = GetEventAggregator.Get();
             _eventAggregator.GetEvent<PasswordChangedInLogin>().Subscribe(paraPass => Password = paraPass);
             //_eventAggregator.GetEvent<LogoutPublishLoginEvent>().Subscribe(HandleLogoutPublishLogin);
@@ -70,6 +74,13 @@ namespace MartUI.Login
             _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
             _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
         }
+
+        private void SubscribeToEvents()
+        {
+            _eventAggregator.GetEvent<GetProfile>().Subscribe(ProfileInfo);
+            _eventAggregator.GetEvent<GetFriendList>().Subscribe(FriendListInfo);
+        }
+
 
         private void HandleLogin(string response)
         {
@@ -89,7 +100,15 @@ namespace MartUI.Login
 
         private void FriendListInfo(string s)
         {
+            //if (Send == false)
+            //    return;
+            //MessageBox.Show("her");
+
+            //Send = true;
             _eventAggregator.GetEvent<GetFriendListEvent>().Publish(s);
+
+            _eventAggregator.GetEvent<GetProfile>().Unsubscribe(ProfileInfo);
+            _eventAggregator.GetEvent<GetFriendList>().Unsubscribe(FriendListInfo);
 
             // Change view to "Main View"
             _eventAggregator.GetEvent<ChangeFullPage>().Publish(null);
@@ -97,8 +116,6 @@ namespace MartUI.Login
             _eventAggregator.GetEvent<ChangeFocusPage>().Publish(new BlankSettingViewModel());
 
             // Unsubscribe events to be able to handle new login request
-            _eventAggregator.GetEvent<GetProfile>().Unsubscribe(ProfileInfo);
-            _eventAggregator.GetEvent<GetFriendList>().Unsubscribe(FriendListInfo);
         }
 
         //private void HandleLogoutPublishLogin()
