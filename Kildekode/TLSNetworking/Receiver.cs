@@ -27,7 +27,7 @@ namespace TLSNetworking
                 catch (Exception e)
                 {
                     Console.WriteLine("Read Error");
-                    Console.WriteLine(e);
+                    //Console.WriteLine(e);
                     throw;
                 }
 

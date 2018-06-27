@@ -30,12 +30,26 @@ namespace ProfileConsole.Core.ServerCommunication
                         from p in db.UserInformation
                         where p.UserName == Username
                         select p;
-                    
+
+                    var friendList =
+                        from f in db.FriendList
+                        where f.Action_User == newFriend
+                        select f;
+
                     try
                     {
+                        foreach (var friend in friendList)
+                        {
+                            if (friend.User1 == Username || friend.User2 == Username)
+                            {
+                                Console.WriteLine(friend.User1 + " and " + friend.User2 + " are already friends or pending");
+                                throw new Exception();
+                            }
+
+                        }
+
                         foreach (var pers in profile)
                         {
-
                             var friendlist = new FriendList
                             {
                                 User1 = Username,
@@ -54,6 +68,7 @@ namespace ProfileConsole.Core.ServerCommunication
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
+                        throw;
                     }
 
                 }

@@ -77,7 +77,7 @@ namespace Server
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
+                        //Console.WriteLine(e);
                         Logout.HandleLogout(sslStream, userStreams, _mutex);
                         sslStream.Close();
                         client.Close();
