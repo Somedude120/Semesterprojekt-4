@@ -13,23 +13,38 @@ namespace Server
     {
         public static void HandleSendFriendRequest(string[] input, string login, SslStream sslStream, Dictionary<string, SslStream> userStreams)
         {
-            AddFriend.AddFriendRequest(login, input[1]);
+            try
+            {
+                AddFriend.AddFriendRequest(login, input[1]);
 
-            //Check if username is already in logged in
-            if (userStreams.ContainsKey(input[1]))
-            {
-                Console.WriteLine("FRR" + Constants.GroupDelimiter + login);
-                Sender.SendString(userStreams[input[1]], "FRR" + Constants.GroupDelimiter + login);
+                //Check if username is already in logged in
+                if (userStreams.ContainsKey(input[1]))
+                {
+                    Console.WriteLine(Constants.FriendRequestReceived + Constants.GroupDelimiter + login);
+                    Sender.SendString(userStreams[input[1]], Constants.FriendRequestReceived + Constants.GroupDelimiter + login);
+                }
+                else
+                {
+                    Console.WriteLine("Send friendrequest. User: " + input[1] + " is not online");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("Send friendrequest. User: " + input[1] + " is not online");
+                
             }
+            
         }
 
         public static void HandleRemoveFriendRequest(string[] input, string login, SslStream sslStream, Dictionary<string, SslStream> userStreams)
         {
             RemoveFriend.RemoveFriendRequest(login, input[1]);
+            
+            //Check if username is already in logged in
+            if (userStreams.ContainsKey(input[1]))
+            {
+                Console.WriteLine(Constants.RemoveFriendReceived + Constants.GroupDelimiter + login);
+                Sender.SendString(userStreams[input[1]], Constants.RemoveFriendReceived + Constants.GroupDelimiter + login);
+            }
             Console.WriteLine("Removed friend. Username: " + login + " Removed friend: " + input[1]);
         }
 
