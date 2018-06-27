@@ -61,6 +61,12 @@ namespace MartUI.Main
         private void ClearAll()
         {
             ViewList.Clear();
+
+            ViewList.Add(new FriendViewModel());
+            ViewList.Add(new ChatViewModel());
+            ViewList.Add(new ProfileViewModel());
+            ViewList.Add(new FriendNotificationViewModel());
+            ViewList.Add(new SettingsViewModel());
         }
 
         private void Notify(string unused)
